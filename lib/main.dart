@@ -6,6 +6,7 @@ import 'package:lawan/features/admin/admin_main_binding.dart';
 import 'package:lawan/firebase_options.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
