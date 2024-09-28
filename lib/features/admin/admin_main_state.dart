@@ -3,6 +3,13 @@ import 'package:get/get.dart';
 
 class AdminMainState {
   var selectedIndex = 1.obs;
+  var activeAlignment = Alignment.centerLeft.obs;
+  var tabActive = 'Details'.obs;
+  List<String> tabBarTitle = [
+    'Details',
+    'Hour',
+    'Rate',
+  ];
 
   var rateList = [
     RateModel(name: 'Weekend Rate', price: 300, hour: 1),

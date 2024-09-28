@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
+import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
+import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 
 import '../../utility/shared/constants/constants_ui.dart';
 import '../../utility/util/helper.dart';
@@ -121,27 +123,6 @@ class AdminAddArena {
           ),
         )
       ],
-    );
-  }
-
-  Widget selectionItem({required String title, required bool isSelected}) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      margin: const EdgeInsets.only(right: 12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50),
-        border: Border.all(
-          width: 1,
-          color: isSelected ? Colors.transparent : kWhiteColor,
-        ),
-        color: isSelected ? kBlackColor : Colors.transparent,
-      ),
-      child: Text(
-        title,
-        style: whiteTextStyle.copyWith(
-          color: isSelected ? kWhiteColor : kDarkgreyColor,
-        ),
-      ),
     );
   }
 
@@ -369,26 +350,7 @@ class AdminAddArena {
           'Add photos, name and location',
           style: darkGreyTextStyle.copyWith(fontSize: 12),
         ),
-        Container(
-          width: 160,
-          height: 120,
-          margin: const EdgeInsets.symmetric(vertical: 12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(32),
-            color: kWhiteColor,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/icons/picture.png', width: 24, height: 24),
-              const SizedBox(height: 8),
-              Text(
-                'Add Picture',
-                style: midGreyTextStyle,
-              ),
-            ],
-          ),
-        ),
+        const AddPictureButtonWidget(),
         CustomTextFormField(
           hintText: 'Location',
           controller: TextEditingController(),
@@ -428,22 +390,42 @@ class AdminAddArena {
         const SizedBox(height: 6),
         Text('Arena Type', style: darkGreyTextStyle),
         const SizedBox(height: 4),
-        Row(
+        const Row(
           children: [
-            selectionItem(title: 'Indoor', isSelected: true),
-            selectionItem(title: 'Outdoor', isSelected: false),
+            SelectedContainerWidget(
+              title: 'Indoor',
+              isSelected: true,
+              isTransparent: true,
+            ),
+            SelectedContainerWidget(
+              title: 'Outdoor',
+              isSelected: false,
+              isTransparent: true,
+            ),
           ],
         ),
         const SizedBox(height: 12),
         Text('Flooring', style: darkGreyTextStyle),
         const SizedBox(height: 4),
-        SingleChildScrollView(
+        const SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              selectionItem(title: 'Court Turf', isSelected: true),
-              selectionItem(title: 'Court Grass', isSelected: false),
-              selectionItem(title: 'Cement', isSelected: false),
+              SelectedContainerWidget(
+                title: 'Court Turf',
+                isSelected: true,
+                isTransparent: true,
+              ),
+              SelectedContainerWidget(
+                title: 'Court Grass',
+                isSelected: false,
+                isTransparent: true,
+              ),
+              SelectedContainerWidget(
+                title: 'Cement',
+                isSelected: false,
+                isTransparent: true,
+              ),
             ],
           ),
         ),
