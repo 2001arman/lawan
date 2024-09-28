@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/admin/admin_main_logic.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
@@ -12,8 +15,9 @@ import '../../utility/util/helper.dart';
 
 class AdminAddArena {
   final AdminMainState state;
+  final AdminMainLogic logic;
 
-  AdminAddArena({required this.state});
+  AdminAddArena({required this.state, required this.logic});
 
   void successCreateArena() {
     Get.dialog(
@@ -194,7 +198,7 @@ class AdminAddArena {
       ),
       isScrollControlled: true,
       enableDrag: true,
-    ).whenComplete(() => state.selectedIndex.value = 1);
+    ).whenComplete(() => logic.clearState());
   }
 
   Widget rateSection() {
@@ -356,6 +360,7 @@ class AdminAddArena {
               title: 'Add Arena',
               isBlack: true,
               onTap: () async {
+                logic.createArena();
                 Get.back();
                 await Future.delayed(const Duration(seconds: 1));
                 successCreateArena();
@@ -381,10 +386,40 @@ class AdminAddArena {
           'Add photos, name and location',
           style: darkGreyTextStyle.copyWith(fontSize: 12),
         ),
-        const AddPictureButtonWidget(),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              Obx(
+                () => Row(
+                  children: state.uploadedPictures
+                      .map(
+                        (data) => Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: Image.file(
+                              File(data.path),
+                              fit: BoxFit.cover,
+                              width: 160,
+                              height: 120,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+              AddPictureButtonWidget(
+                onTap: logic.image,
+              ),
+            ],
+          ),
+        ),
         CustomTextFormField(
           hintText: 'Location',
           controller: TextEditingController(),
+          isReadOnly: true,
           suffix: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -400,11 +435,11 @@ class AdminAddArena {
         ),
         CustomTextFormField(
           hintText: 'Enter Arena Name',
-          controller: TextEditingController(),
+          controller: state.nameController,
         ),
         CustomTextFormField(
           hintText: 'Enter Court Name',
-          controller: TextEditingController(),
+          controller: state.courtController,
           suffix: Padding(
             padding: const EdgeInsets.only(right: 16),
             child: Column(
@@ -421,43 +456,38 @@ class AdminAddArena {
         const SizedBox(height: 6),
         Text('Arena Type', style: darkGreyTextStyle),
         const SizedBox(height: 4),
-        const Row(
-          children: [
-            SelectedContainerWidget(
-              title: 'Indoor',
-              isSelected: true,
-              isTransparent: true,
-            ),
-            SelectedContainerWidget(
-              title: 'Outdoor',
-              isSelected: false,
-              isTransparent: true,
-            ),
-          ],
+        Obx(
+          () => Row(
+            children: state.arenaType
+                .map(
+                  (data) => SelectedContainerWidget(
+                    title: data,
+                    isSelected: data == state.selectedArenaType.value,
+                    onTap: () => state.selectedArenaType.value = data,
+                    isTransparent: true,
+                  ),
+                )
+                .toList(),
+          ),
         ),
         const SizedBox(height: 12),
         Text('Flooring', style: darkGreyTextStyle),
         const SizedBox(height: 4),
-        const SingleChildScrollView(
+        SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SelectedContainerWidget(
-                title: 'Court Turf',
-                isSelected: true,
-                isTransparent: true,
-              ),
-              SelectedContainerWidget(
-                title: 'Court Grass',
-                isSelected: false,
-                isTransparent: true,
-              ),
-              SelectedContainerWidget(
-                title: 'Cement',
-                isSelected: false,
-                isTransparent: true,
-              ),
-            ],
+          child: Obx(
+            () => Row(
+              children: state.flooringType
+                  .map(
+                    (data) => SelectedContainerWidget(
+                      title: data,
+                      isSelected: data == state.selectedFlooringType.value,
+                      isTransparent: true,
+                      onTap: () => state.selectedFlooringType.value = data,
+                    ),
+                  )
+                  .toList(),
+            ),
           ),
         ),
         const SizedBox(height: 30),

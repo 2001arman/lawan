@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:lawan/utility/util/helper.dart';
 
 class AdminMainState {
   var selectedIndex = 1.obs;
@@ -12,62 +14,32 @@ class AdminMainState {
     'Rate',
   ];
 
-  var rateList = [
-    RateModel(name: 'Weekend Rate', price: 300.obs, hour: 1.0.obs),
-    RateModel(name: 'Weekdays Rate', price: 200.obs, hour: 1.0.obs),
-  ].obs;
+  var listArena = <ArenaModel>[].obs;
+  var selectedListArena = 0.obs;
 
-  var listOperationalHour = [
-    OperationalHour(
-      isActive: false.obs,
-      dayName: 'Sunday',
-      openTime: const TimeOfDay(hour: 9, minute: 00).obs,
-      closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
-      chooseTime: false.obs,
-    ),
-    OperationalHour(
+  TextEditingController nameController = TextEditingController();
+  TextEditingController courtController = TextEditingController();
+  var uploadedPictures = <XFile>[].obs;
+  var selectedArenaType = 'Indoor'.obs;
+  var selectedFlooringType = 'Court Turf'.obs;
+
+  List<String> arenaType = ["Indoor", "Outdoor"];
+  List<String> flooringType = ["Court Turf", "Court Grass", "Cement"];
+  var rateList = [
+    RateModel(name: 'Weekend Rate', price: 10.obs, hour: 1.0.obs),
+    RateModel(name: 'Weekdays Rate', price: 10.obs, hour: 1.0.obs),
+  ];
+
+  var listOperationalHour = List.generate(
+    7,
+    (index) => OperationalHour(
       isActive: true.obs,
-      dayName: 'Monday',
+      dayName: Helper.dayName[index],
       openTime: const TimeOfDay(hour: 9, minute: 00).obs,
       closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
       chooseTime: false.obs,
     ),
-    OperationalHour(
-      isActive: true.obs,
-      dayName: 'Tuesday (Today)',
-      openTime: const TimeOfDay(hour: 9, minute: 00).obs,
-      closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
-      chooseTime: false.obs,
-    ),
-    OperationalHour(
-      isActive: true.obs,
-      dayName: 'Wednesday',
-      openTime: const TimeOfDay(hour: 9, minute: 00).obs,
-      closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
-      chooseTime: false.obs,
-    ),
-    OperationalHour(
-      isActive: true.obs,
-      dayName: 'Thursday',
-      openTime: const TimeOfDay(hour: 9, minute: 00).obs,
-      closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
-      chooseTime: false.obs,
-    ),
-    OperationalHour(
-      isActive: true.obs,
-      dayName: 'Friday',
-      openTime: const TimeOfDay(hour: 9, minute: 00).obs,
-      closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
-      chooseTime: false.obs,
-    ),
-    OperationalHour(
-      isActive: false.obs,
-      dayName: 'Saturday',
-      openTime: const TimeOfDay(hour: 9, minute: 00).obs,
-      closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
-      chooseTime: false.obs,
-    ),
-  ].obs;
+  );
 }
 
 class OperationalHour {
@@ -97,4 +69,26 @@ class RateModel {
     required this.price,
     required this.hour,
   }) : finalPrice = (price.value + (price * 0.2).toInt()).obs;
+}
+
+class ArenaModel {
+  final List<XFile> pictures;
+  final String location;
+  final String name;
+  final String courtName;
+  final String arenaType;
+  final String flooringType;
+  final List<OperationalHour> operationalHours;
+  final List<RateModel> rateArena;
+
+  ArenaModel({
+    required this.pictures,
+    required this.location,
+    required this.name,
+    required this.courtName,
+    required this.arenaType,
+    required this.flooringType,
+    required this.operationalHours,
+    required this.rateArena,
+  });
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/admin/admin_main_logic.dart';
@@ -309,16 +311,21 @@ class AdminMainUi extends StatelessWidget {
                     width: 20,
                   ),
                 ),
-                const SelectedContainerWidget(
-                  title: 'MBPJ Sports Complex',
-                  isSelected: true,
-                ),
-                const SelectedContainerWidget(
-                  title: 'KLFA Court',
-                  isSelected: false,
+                Row(
+                  children: state.listArena
+                      .asMap()
+                      .entries
+                      .map(
+                        (data) => SelectedContainerWidget(
+                          title: data.value.name,
+                          isSelected: state.selectedListArena.value == data.key,
+                          onTap: () => state.selectedListArena.value = data.key,
+                        ),
+                      )
+                      .toList(),
                 ),
                 CircleButtonWidget(
-                  onTap: () {},
+                  onTap: logic.createNewArena,
                 ),
               ],
             ),
@@ -346,17 +353,6 @@ class AdminMainUi extends StatelessWidget {
                       style: whiteTextStyle,
                     ),
                   ),
-                  margin: const EdgeInsets.only(right: 12),
-                  onTap: () {},
-                ),
-                CircleButtonWidget(
-                  widget: Center(
-                    child: Text(
-                      '2',
-                      style: blackTextStyle,
-                    ),
-                  ),
-                  isActive: false,
                   margin: const EdgeInsets.only(right: 12),
                   onTap: () {},
                 ),
@@ -399,7 +395,13 @@ class AdminMainUi extends StatelessWidget {
       appBar: const CustomAppbar(),
       body: Stack(
         children: [
-          emptyArena(),
+          Obx(() {
+            if (state.listArena.isEmpty) {
+              return emptyArena();
+            } else {
+              return detailArenaSection();
+            }
+          }),
           Align(
             alignment: Alignment.bottomCenter,
             child: customNavbar(),
@@ -425,7 +427,8 @@ class AdminMainUi extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Column(
-            children: state.listOperationalHour
+            children: state
+                .listArena[state.selectedListArena.value].operationalHours
                 .map(
                   (data) => Column(
                     children: [
@@ -558,7 +561,7 @@ class AdminMainUi extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Column(
-          children: state.rateList
+          children: state.listArena[state.selectedListArena.value].rateArena
               .map(
                 (data) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -670,17 +673,31 @@ class AdminMainUi extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(32),
-                child: Image.asset(
-                  'assets/images/selangor_field.png',
-                  width: 160,
-                  height: 120,
-                  fit: BoxFit.cover,
+              Obx(
+                () => Row(
+                  children:
+                      state.listArena[state.selectedListArena.value].pictures
+                          .map(
+                            (data) => Padding(
+                              padding: const EdgeInsets.only(right: 16),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(30),
+                                child: Image.file(
+                                  File(data.path),
+                                  fit: BoxFit.cover,
+                                  width: 160,
+                                  height: 120,
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
                 ),
               ),
-              const SizedBox(width: 16),
-              const AddPictureButtonWidget(margin: 0),
+              AddPictureButtonWidget(
+                margin: 0,
+                onTap: () {},
+              ),
             ],
           ),
         ),
@@ -710,18 +727,17 @@ class AdminMainUi extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: [
-              const SelectedContainerWidget(
-                title: 'Indoor',
-                isSelected: true,
-              ),
-              SelectedContainerWidget(
-                title: 'Outdoor',
-                isTransparent: true,
-                isSelected: false,
-                borderColor: kGreyColor,
-              ),
-            ],
+            children: state.arenaType
+                .map(
+                  (data) => SelectedContainerWidget(
+                    title: data,
+                    isSelected: state.listArena[state.selectedListArena.value]
+                            .arenaType ==
+                        data,
+                    onTap: () {},
+                  ),
+                )
+                .toList(),
           ),
         ),
         SizedBox(height: defaultMargin),
@@ -733,22 +749,17 @@ class AdminMainUi extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: [
-              const SelectedContainerWidget(
-                title: 'Court Turf',
-                isSelected: true,
-              ),
-              SelectedContainerWidget(
-                title: 'Court Grass',
-                isSelected: false,
-                borderColor: kGreyColor,
-              ),
-              SelectedContainerWidget(
-                title: 'Cement',
-                isSelected: false,
-                borderColor: kGreyColor,
-              ),
-            ],
+            children: state.flooringType
+                .map(
+                  (data) => SelectedContainerWidget(
+                    title: data,
+                    isSelected: data ==
+                        state.listArena[state.selectedListArena.value]
+                            .flooringType,
+                    onTap: () {},
+                  ),
+                )
+                .toList(),
           ),
         ),
       ],
