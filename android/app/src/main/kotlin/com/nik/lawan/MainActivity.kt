@@ -1,4 +1,4 @@
-package com.example.lawan
+package com.nik.lawan
 
 import io.flutter.embedding.android.FlutterActivity
 

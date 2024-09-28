@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "720319461950",
+    "project_id": "lawan-fb375",
+    "storage_bucket": "lawan-fb375.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720319461950:android:3eb8267d987e45eed36f6f",
+        "android_client_info": {
+          "package_name": "com.nik.lawan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD23UUU4BH8y91M1_9pMFQItpWt5CA_SM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
