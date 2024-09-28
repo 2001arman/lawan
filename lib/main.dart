@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lawan/core/app_route.dart';
+import 'package:lawan/features/admin/admin_main_binding.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,12 +12,18 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return GetMaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Lufga',
       ),
+      navigatorKey: Get.key,
+      getPages: AppRoute.routes,
+      initialRoute: AppRoute.initialRoute,
+      initialBinding: AdminMainBinding(),
+      // builder: (context, child) {
+      //   child = EasyLoading.init()(context, child);
+      //   return MediaQuery(data: MediaQuery.of(context), child: child);
+      // },
     );
   }
 }
