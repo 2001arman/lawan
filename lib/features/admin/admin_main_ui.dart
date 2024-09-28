@@ -290,114 +290,116 @@ class AdminMainUi extends StatelessWidget {
       );
     }
 
+    Widget detailArenaSection() {
+      return ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Text(
+            'Arena',
+            style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Image.asset(
+                    'assets/icons/pencil.png',
+                    width: 20,
+                  ),
+                ),
+                const SelectedContainerWidget(
+                  title: 'MBPJ Sports Complex',
+                  isSelected: true,
+                ),
+                const SelectedContainerWidget(
+                  title: 'KLFA Court',
+                  isSelected: false,
+                ),
+                CircleButtonWidget(
+                  onTap: () {},
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: defaultMargin),
+          Text(
+            'Court',
+            style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Image.asset(
+                    'assets/icons/pencil.png',
+                    width: 20,
+                  ),
+                ),
+                CircleButtonWidget(
+                  widget: Center(
+                    child: Text(
+                      '1',
+                      style: whiteTextStyle,
+                    ),
+                  ),
+                  margin: const EdgeInsets.only(right: 12),
+                  onTap: () {},
+                ),
+                CircleButtonWidget(
+                  widget: Center(
+                    child: Text(
+                      '2',
+                      style: blackTextStyle,
+                    ),
+                  ),
+                  isActive: false,
+                  margin: const EdgeInsets.only(right: 12),
+                  onTap: () {},
+                ),
+                CircleButtonWidget(
+                  onTap: () {},
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          TabbarWidget(
+            tabBarTitle: state.tabBarTitle,
+            tabActive: state.tabActive,
+            onTap: (title) {
+              state.tabActive.value = title;
+              logic.alignmentTabbar(title);
+            },
+            alignment: state.activeAlignment,
+          ),
+          SizedBox(height: defaultMargin),
+          Obx(() {
+            switch (state.tabActive.value) {
+              case 'Details':
+                return arenaDetailSection();
+              case 'Hour':
+                return arenaHourSection();
+              case 'Rate':
+                return arenaRateSection();
+              default:
+                return arenaDetailSection();
+            }
+          }),
+          const SizedBox(height: 100),
+        ],
+      );
+    }
+
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: const CustomAppbar(),
       body: Stack(
         children: [
-          ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              Text(
-                'Arena',
-                style:
-                    blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Image.asset(
-                        'assets/icons/pencil.png',
-                        width: 20,
-                      ),
-                    ),
-                    const SelectedContainerWidget(
-                      title: 'MBPJ Sports Complex',
-                      isSelected: true,
-                    ),
-                    const SelectedContainerWidget(
-                      title: 'KLFA Court',
-                      isSelected: false,
-                    ),
-                    CircleButtonWidget(
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: defaultMargin),
-              Text(
-                'Court',
-                style:
-                    blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Image.asset(
-                        'assets/icons/pencil.png',
-                        width: 20,
-                      ),
-                    ),
-                    CircleButtonWidget(
-                      widget: Center(
-                        child: Text(
-                          '1',
-                          style: whiteTextStyle,
-                        ),
-                      ),
-                      margin: const EdgeInsets.only(right: 12),
-                      onTap: () {},
-                    ),
-                    CircleButtonWidget(
-                      widget: Center(
-                        child: Text(
-                          '2',
-                          style: blackTextStyle,
-                        ),
-                      ),
-                      isActive: false,
-                      margin: const EdgeInsets.only(right: 12),
-                      onTap: () {},
-                    ),
-                    CircleButtonWidget(
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-              TabbarWidget(
-                tabBarTitle: state.tabBarTitle,
-                tabActive: state.tabActive,
-                onTap: (title) {
-                  state.tabActive.value = title;
-                  logic.alignmentTabbar(title);
-                },
-                alignment: state.activeAlignment,
-              ),
-              SizedBox(height: defaultMargin),
-              Obx(() {
-                switch (state.tabActive.value) {
-                  case 'Details':
-                    return arenaDetailSection();
-                  case 'Hour':
-                    return arenaHourSection();
-                  case 'Rate':
-                    return arenaRateSection();
-                  default:
-                    return arenaDetailSection();
-                }
-              }),
-              const SizedBox(height: 100),
-            ],
-          ),
+          emptyArena(),
           Align(
             alignment: Alignment.bottomCenter,
             child: customNavbar(),
@@ -474,7 +476,8 @@ class AdminMainUi extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
-                                      Helper.formatTime12Hour(data.openTime),
+                                      Helper.formatTime12Hour(
+                                          data.openTime.value),
                                       style: blackTextStyle.copyWith(
                                           fontWeight: medium),
                                     ),
@@ -511,7 +514,8 @@ class AdminMainUi extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
-                                      Helper.formatTime12Hour(data.closeTIme),
+                                      Helper.formatTime12Hour(
+                                          data.closeTIme.value),
                                       style: blackTextStyle.copyWith(
                                           fontWeight: medium),
                                     ),

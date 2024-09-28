@@ -6,11 +6,14 @@ class CustomButton extends StatelessWidget {
   final String title;
   final bool isBlack;
   final VoidCallback onTap;
-  const CustomButton(
-      {super.key,
-      required this.title,
-      required this.isBlack,
-      required this.onTap});
+  final Color? borderColor;
+  const CustomButton({
+    super.key,
+    required this.title,
+    required this.isBlack,
+    required this.onTap,
+    this.borderColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,9 @@ class CustomButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
             border: Border.all(
-                width: 1, color: isBlack ? Colors.transparent : kWhiteColor),
+              width: 1,
+              color: isBlack ? Colors.transparent : borderColor ?? kWhiteColor,
+            ),
             color: isBlack ? kBlackColor : Colors.transparent,
           ),
           child: Center(

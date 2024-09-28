@@ -5,6 +5,7 @@ import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
+import 'package:lawan/utility/util/custom_dialog.dart';
 
 import '../../utility/shared/constants/constants_ui.dart';
 import '../../utility/util/helper.dart';
@@ -222,60 +223,88 @@ class AdminAddArena {
                     Row(
                       children: [
                         Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(80),
-                              color: kWhiteColor,
+                          child: GestureDetector(
+                            onTap: () => CustomDialog.showChoosePriceDialog(
+                              selectedHour: data.hour.value,
+                              selectedPrice: data.price.value,
+                              onSave: (price, hour) {
+                                Get.back();
+                                data.hour.value = hour;
+                                data.price.value = price;
+                                data.finalPrice.value =
+                                    (price + (price * 0.2).toInt());
+                              },
                             ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'RM',
-                                  style: blackTextStyle,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  '${data.price}',
-                                  style: blackTextStyle.copyWith(
-                                      fontWeight: medium),
-                                ),
-                                const Spacer(),
-                                Image.asset('assets/icons/arrow_up_down.png',
-                                    width: 20, height: 20),
-                              ],
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(80),
+                                color: kWhiteColor,
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'RM',
+                                    style: blackTextStyle,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    '${data.price}',
+                                    style: blackTextStyle.copyWith(
+                                        fontWeight: medium),
+                                  ),
+                                  const Spacer(),
+                                  Image.asset('assets/icons/arrow_up_down.png',
+                                      width: 20, height: 20),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(80),
-                              color: kWhiteColor,
+                          child: GestureDetector(
+                            onTap: () => CustomDialog.showChoosePriceDialog(
+                              selectedHour: data.hour.value,
+                              selectedPrice: data.price.value,
+                              onSave: (price, hour) {
+                                Get.back();
+                                data.hour.value = hour;
+                                data.price.value = price;
+                                data.finalPrice.value =
+                                    (price + (price * 0.2).toInt());
+                              },
                             ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  '${data.hour}',
-                                  style: blackTextStyle.copyWith(
-                                      fontWeight: medium),
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  'Hour',
-                                  style: blackTextStyle,
-                                ),
-                                const Spacer(),
-                                Image.asset(
-                                  'assets/icons/arrow_up_down.png',
-                                  width: 20,
-                                  height: 20,
-                                ),
-                              ],
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(80),
+                                color: kWhiteColor,
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    data.hour.value != 0.5
+                                        ? data.hour.toStringAsFixed(0)
+                                        : '${data.hour.value}',
+                                    style: blackTextStyle.copyWith(
+                                        fontWeight: medium),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    'Hour',
+                                    style: blackTextStyle,
+                                  ),
+                                  const Spacer(),
+                                  Image.asset(
+                                    'assets/icons/arrow_up_down.png',
+                                    width: 20,
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -295,10 +324,12 @@ class AdminAddArena {
                             'Listing Price',
                             style: midGreyTextStyle.copyWith(fontSize: 12),
                           ),
-                          Text(
-                            'RM${data.finalPrice}',
-                            style: whiteTextStyle.copyWith(
-                                fontSize: 24, fontWeight: semiBold),
+                          Obx(
+                            () => Text(
+                              'RM${data.finalPrice}',
+                              style: whiteTextStyle.copyWith(
+                                  fontSize: 24, fontWeight: semiBold),
+                            ),
                           ),
                           Text(
                             '20% hosting fee by Lawan included',
@@ -501,31 +532,46 @@ class AdminAddArena {
                         child: Row(
                           children: [
                             Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(80),
-                                  color: kWhiteColor,
+                              child: GestureDetector(
+                                onTap: () => CustomDialog.showChooseTimeDialog(
+                                  startTime: data.openTime.value.hour,
+                                  endTime: data.closeTIme.value.hour,
+                                  onSave: (startTime, endTime) {
+                                    Get.back();
+
+                                    data.openTime.value =
+                                        TimeOfDay(hour: startTime, minute: 0);
+                                    data.closeTIme.value =
+                                        TimeOfDay(hour: endTime, minute: 0);
+                                  },
                                 ),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      'assets/icons/clock.png',
-                                      width: 16,
-                                      height: 16,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      Helper.formatTime12Hour(data.openTime),
-                                      style: blackTextStyle.copyWith(
-                                          fontWeight: medium),
-                                    ),
-                                    const Spacer(),
-                                    Image.asset(
-                                        'assets/icons/arrow_up_down.png',
-                                        width: 20,
-                                        height: 20),
-                                  ],
+                                child: Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(80),
+                                    color: kWhiteColor,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        'assets/icons/clock.png',
+                                        width: 16,
+                                        height: 16,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        Helper.formatTime12Hour(
+                                            data.openTime.value),
+                                        style: blackTextStyle.copyWith(
+                                            fontWeight: medium),
+                                      ),
+                                      const Spacer(),
+                                      Image.asset(
+                                          'assets/icons/arrow_up_down.png',
+                                          width: 20,
+                                          height: 20),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -538,32 +584,46 @@ class AdminAddArena {
                               ),
                             ),
                             Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(80),
-                                  color: kWhiteColor,
+                              child: GestureDetector(
+                                onTap: () => CustomDialog.showChooseTimeDialog(
+                                  startTime: data.openTime.value.hour,
+                                  endTime: data.closeTIme.value.hour,
+                                  onSave: (startTime, endTime) {
+                                    Get.back();
+                                    data.openTime.value =
+                                        TimeOfDay(hour: startTime, minute: 0);
+                                    data.closeTIme.value =
+                                        TimeOfDay(hour: endTime, minute: 0);
+                                  },
                                 ),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      'assets/icons/clock.png',
-                                      width: 16,
-                                      height: 16,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      Helper.formatTime12Hour(data.closeTIme),
-                                      style: blackTextStyle.copyWith(
-                                          fontWeight: medium),
-                                    ),
-                                    const Spacer(),
-                                    Image.asset(
-                                      'assets/icons/arrow_up_down.png',
-                                      width: 20,
-                                      height: 20,
-                                    ),
-                                  ],
+                                child: Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(80),
+                                    color: kWhiteColor,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        'assets/icons/clock.png',
+                                        width: 16,
+                                        height: 16,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        Helper.formatTime12Hour(
+                                            data.closeTIme.value),
+                                        style: blackTextStyle.copyWith(
+                                            fontWeight: medium),
+                                      ),
+                                      const Spacer(),
+                                      Image.asset(
+                                        'assets/icons/arrow_up_down.png',
+                                        width: 20,
+                                        height: 20,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
