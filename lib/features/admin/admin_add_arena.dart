@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/admin/admin_main_logic.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
@@ -97,37 +100,40 @@ class AdminAddArena {
 
   Widget topItemBottomSheet(
       {required int number, required String title, required bool isActive}) {
-    return Column(
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          margin: const EdgeInsets.only(bottom: 8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-                width: 1, color: isActive ? Colors.transparent : kWhiteColor),
-            color: isActive ? kGreenColor : Colors.transparent,
-          ),
-          child: Center(
-            child: Text(
-              '$number',
-              style: whiteTextStyle.copyWith(
-                fontSize: 16,
-                fontWeight: isActive ? medium : reguler,
-                color: isActive ? kWhiteColor : kDarkgreyColor,
+    return GestureDetector(
+      onTap: () => state.selectedIndex.value = number,
+      child: Column(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            margin: const EdgeInsets.only(bottom: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                  width: 1, color: isActive ? Colors.transparent : kWhiteColor),
+              color: isActive ? kGreenColor : Colors.transparent,
+            ),
+            child: Center(
+              child: Text(
+                '$number',
+                style: whiteTextStyle.copyWith(
+                  fontSize: 16,
+                  fontWeight: isActive ? medium : reguler,
+                  color: isActive ? kWhiteColor : kDarkgreyColor,
+                ),
               ),
             ),
           ),
-        ),
-        Text(
-          title,
-          style: greenTextStyle.copyWith(
-            fontWeight: isActive ? medium : reguler,
-            color: isActive ? kGreenColor : kDarkgreyColor,
-          ),
-        )
-      ],
+          Text(
+            title,
+            style: greenTextStyle.copyWith(
+              fontWeight: isActive ? medium : reguler,
+              color: isActive ? kGreenColor : kDarkgreyColor,
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -161,9 +167,10 @@ class AdminAddArena {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     topItemBottomSheet(
-                        number: 1,
-                        title: 'Details',
-                        isActive: state.selectedIndex.value == 1),
+                      number: 1,
+                      title: 'Details',
+                      isActive: state.selectedIndex.value == 1,
+                    ),
                     Container(
                       width: 24,
                       height: 1,
@@ -172,9 +179,10 @@ class AdminAddArena {
                           horizontal: defaultMargin, vertical: 20),
                     ),
                     topItemBottomSheet(
-                        number: 2,
-                        title: 'Hour',
-                        isActive: state.selectedIndex.value == 2),
+                      number: 2,
+                      title: 'Hour',
+                      isActive: state.selectedIndex.value == 2,
+                    ),
                     Container(
                       width: 24,
                       height: 1,
@@ -183,9 +191,10 @@ class AdminAddArena {
                           horizontal: defaultMargin, vertical: 20),
                     ),
                     topItemBottomSheet(
-                        number: 3,
-                        title: 'Rate',
-                        isActive: state.selectedIndex.value == 3),
+                      number: 3,
+                      title: 'Rate',
+                      isActive: state.selectedIndex.value == 3,
+                    ),
                   ],
                 ),
               ),
@@ -360,6 +369,20 @@ class AdminAddArena {
               title: 'Add Arena',
               isBlack: true,
               onTap: () async {
+                final validationName =
+                    Helper.regularValidator(state.nameController.text);
+                final validationCourt =
+                    Helper.regularValidator(state.courtController.text);
+                if (validationName != null && validationCourt != null) {
+                  FToast().init(Get.context!).showToast(
+                        child: Helper.toast(
+                          message: 'Please fill Arena and Court name',
+                        ),
+                        gravity: ToastGravity.BOTTOM,
+                        toastDuration: const Duration(seconds: 2),
+                      );
+                  return;
+                }
                 logic.createArena();
                 Get.back();
                 await Future.delayed(const Duration(seconds: 1));
@@ -373,140 +396,181 @@ class AdminAddArena {
   }
 
   Widget detailSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: defaultMargin),
-        Text(
-          'Add Arena Details',
-          style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          'Add photos, name and location',
-          style: darkGreyTextStyle.copyWith(fontSize: 12),
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              Obx(
-                () => Row(
-                  children: state.uploadedPictures
-                      .map(
-                        (data) => Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(30),
-                            child: Image.file(
-                              File(data.path),
-                              fit: BoxFit.cover,
-                              width: 160,
-                              height: 120,
-                            ),
+    return Form(
+      key: state.textFormKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: defaultMargin),
+          Text(
+            'Add Arena Details',
+            style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            'Add photos, name and location',
+            style: darkGreyTextStyle.copyWith(fontSize: 12),
+          ),
+          CarouselSlider(
+            options: CarouselOptions(
+              height: 120,
+              viewportFraction: 1.0,
+              enlargeCenterPage: false,
+              enableInfiniteScroll: false,
+            ),
+            items: state.uploadedPictures.asMap().entries.map((data) {
+              return Builder(
+                builder: (BuildContext context) {
+                  if (data.value.path == 'empty') {
+                    return AddPictureButtonWidget(
+                      onTap: logic.image,
+                    );
+                  }
+                  return Container(
+                    margin: EdgeInsets.only(
+                      top: defaultMargin,
+                      bottom: defaultMargin,
+                      right: 8,
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    width: double.infinity,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      image: DecorationImage(
+                        image: FileImage(
+                          File(data.value.path),
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () => logic.changeImage(index: data.key),
+                          child: SvgPicture.asset(
+                            'assets/icons/container_rotate.svg',
+                            width: 36,
+                            height: 36,
                           ),
                         ),
-                      )
-                      .toList(),
-                ),
-              ),
-              AddPictureButtonWidget(
-                onTap: logic.image,
-              ),
-            ],
+                        const SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: () => logic.deleteImage(index: data.key),
+                          child: SvgPicture.asset(
+                            'assets/icons/container_trash.svg',
+                            width: 36,
+                            height: 36,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }).toList(),
           ),
-        ),
-        CustomTextFormField(
-          hintText: 'Location',
-          controller: TextEditingController(),
-          isReadOnly: true,
-          suffix: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/icons/location.png',
-                width: 20,
-                height: 20,
-                fit: BoxFit.cover,
-                color: kMidgreyColor,
-              ),
-            ],
-          ),
-        ),
-        CustomTextFormField(
-          hintText: 'Enter Arena Name',
-          controller: state.nameController,
-        ),
-        CustomTextFormField(
-          hintText: 'Enter Court Name',
-          controller: state.courtController,
-          suffix: Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Column(
+          CustomTextFormField(
+            hintText: 'Location',
+            controller: TextEditingController(),
+            isReadOnly: true,
+            suffix: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Optional',
-                  style: blackTextStyle,
+                Image.asset(
+                  'assets/icons/location.png',
+                  width: 20,
+                  height: 20,
+                  fit: BoxFit.cover,
+                  color: kMidgreyColor,
                 ),
               ],
             ),
           ),
-        ),
-        const SizedBox(height: 6),
-        Text('Arena Type', style: darkGreyTextStyle),
-        const SizedBox(height: 4),
-        Obx(
-          () => Row(
-            children: state.arenaType
-                .map(
-                  (data) => SelectedContainerWidget(
-                    title: data,
-                    isSelected: data == state.selectedArenaType.value,
-                    onTap: () => state.selectedArenaType.value = data,
-                    isTransparent: true,
-                  ),
-                )
-                .toList(),
+          CustomTextFormField(
+            hintText: 'Enter Arena Name',
+            controller: state.nameController,
+            validator: (data) => Helper.regularValidator(data),
           ),
-        ),
-        const SizedBox(height: 12),
-        Text('Flooring', style: darkGreyTextStyle),
-        const SizedBox(height: 4),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Obx(
+          CustomTextFormField(
+            hintText: 'Enter Court Name',
+            controller: state.courtController,
+            validator: (data) => Helper.regularValidator(data),
+            suffix: Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Optional',
+                    style: blackTextStyle,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text('Arena Type', style: darkGreyTextStyle),
+          const SizedBox(height: 4),
+          Obx(
             () => Row(
-              children: state.flooringType
+              children: state.arenaType
                   .map(
                     (data) => SelectedContainerWidget(
                       title: data,
-                      isSelected: data == state.selectedFlooringType.value,
+                      isSelected: data == state.selectedArenaType.value,
+                      onTap: () => state.selectedArenaType.value = data,
                       isTransparent: true,
-                      onTap: () => state.selectedFlooringType.value = data,
                     ),
                   )
                   .toList(),
             ),
           ),
-        ),
-        const SizedBox(height: 30),
-        Row(
-          children: [
-            CustomButton(
-              title: 'Cancel',
-              isBlack: false,
-              onTap: () => Get.back(),
+          const SizedBox(height: 12),
+          Text('Flooring', style: darkGreyTextStyle),
+          const SizedBox(height: 4),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Obx(
+              () => Row(
+                children: state.flooringType
+                    .map(
+                      (data) => SelectedContainerWidget(
+                        title: data,
+                        isSelected: data == state.selectedFlooringType.value,
+                        isTransparent: true,
+                        onTap: () => state.selectedFlooringType.value = data,
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
-            const SizedBox(width: 16),
-            CustomButton(
-              title: 'Next',
-              isBlack: true,
-              onTap: () => state.selectedIndex.value++,
-            ),
-          ],
-        ),
-      ],
+          ),
+          const SizedBox(height: 30),
+          Row(
+            children: [
+              CustomButton(
+                title: 'Cancel',
+                isBlack: false,
+                onTap: () => Get.back(),
+              ),
+              const SizedBox(width: 16),
+              CustomButton(
+                title: 'Next',
+                isBlack: true,
+                onTap: () {
+                  final validation = logic.checkValidator();
+                  if (validation) {
+                    state.selectedIndex.value++;
+                  }
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

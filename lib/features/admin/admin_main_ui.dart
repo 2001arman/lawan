@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/admin/admin_main_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
@@ -669,37 +671,69 @@ class AdminMainUi extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              Obx(
-                () => Row(
-                  children:
-                      state.listArena[state.selectedListArena.value].pictures
-                          .map(
-                            (data) => Padding(
-                              padding: const EdgeInsets.only(right: 16),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
-                                child: Image.file(
-                                  File(data.path),
-                                  fit: BoxFit.cover,
-                                  width: 160,
-                                  height: 120,
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                ),
-              ),
-              AddPictureButtonWidget(
-                margin: 0,
-                onTap: () {},
-              ),
-            ],
+        CarouselSlider(
+          options: CarouselOptions(
+            height: 120,
+            viewportFraction: 1.0,
+            enlargeCenterPage: false,
+            enableInfiniteScroll: false,
           ),
+          items: state.listArena[state.selectedListArena.value].pictures
+              .asMap()
+              .entries
+              .map((data) {
+            return Builder(
+              builder: (BuildContext context) {
+                if (data.value.path == 'empty') {
+                  return AddPictureButtonWidget(
+                    onTap: logic.image,
+                  );
+                }
+                return Container(
+                  margin: EdgeInsets.only(
+                    top: defaultMargin,
+                    bottom: defaultMargin,
+                    right: 8,
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  width: double.infinity,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    image: DecorationImage(
+                      image: FileImage(
+                        File(data.value.path),
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () => logic.changeImage(index: data.key),
+                        child: SvgPicture.asset(
+                          'assets/icons/container_rotate.svg',
+                          width: 36,
+                          height: 36,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      GestureDetector(
+                        onTap: () => logic.deleteImage(index: data.key),
+                        child: SvgPicture.asset(
+                          'assets/icons/container_trash.svg',
+                          width: 36,
+                          height: 36,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }).toList(),
         ),
         SizedBox(height: defaultMargin),
         CustomTextFormField(

@@ -5,8 +5,12 @@ import 'package:lawan/features/admin/admin_add_arena.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
 import 'package:lawan/utility/util/helper.dart';
 
-class AdminMainLogic {
+class AdminMainLogic extends GetxController {
   AdminMainState state = AdminMainState();
+
+  bool checkValidator() {
+    return state.textFormKey.currentState!.validate();
+  }
 
   void createArena() {
     List<XFile> uploaded = [];
@@ -46,15 +50,34 @@ class AdminMainLogic {
       RateModel(name: 'Weekend Rate', price: 10.obs, hour: 1.0.obs),
       RateModel(name: 'Weekdays Rate', price: 10.obs, hour: 1.0.obs),
     ];
-    state.uploadedPictures.clear();
+    state.uploadedPictures.assignAll([
+      XFile('empty'),
+    ]);
   }
 
   void image() async {
     final ImagePicker picker = ImagePicker();
-    final List<XFile> image = await picker.pickMultiImage(imageQuality: 10);
+    final List<XFile> image = await picker.pickMultiImage(
+      imageQuality: 10,
+      limit: 5,
+    );
     if (image.isNotEmpty) {
-      state.uploadedPictures.addAll(image);
+      state.uploadedPictures.insertAll(0, image);
     }
+  }
+
+  void changeImage({required int index}) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 10);
+    if (image != null) {
+      state.uploadedPictures.removeAt(index);
+      state.uploadedPictures.insert(index, image);
+    }
+  }
+
+  void deleteImage({required int index}) {
+    state.uploadedPictures.removeAt(index);
   }
 
   void createNewArena() {

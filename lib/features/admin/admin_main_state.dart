@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lawan/utility/util/helper.dart';
 
 class AdminMainState {
+  final textFormKey = GlobalKey<FormState>();
   var selectedIndex = 1.obs;
   var activeAlignment = Alignment.centerLeft.obs;
   var tabActive = 'Details'.obs;
@@ -19,7 +20,9 @@ class AdminMainState {
 
   TextEditingController nameController = TextEditingController();
   TextEditingController courtController = TextEditingController();
-  var uploadedPictures = <XFile>[].obs;
+  var uploadedPictures = <XFile>[
+    XFile('empty'),
+  ].obs;
   var selectedArenaType = 'Indoor'.obs;
   var selectedFlooringType = 'Court Turf'.obs;
 

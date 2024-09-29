@@ -13,7 +13,7 @@ class AddPictureButtonWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 160,
+        width: double.infinity,
         height: 120,
         margin: EdgeInsets.symmetric(vertical: margin),
         decoration: BoxDecoration(
@@ -26,7 +26,7 @@ class AddPictureButtonWidget extends StatelessWidget {
             Image.asset('assets/icons/picture.png', width: 24, height: 24),
             const SizedBox(height: 8),
             Text(
-              'Add Picture',
+              'Add Picture (23:8 aspect ratio)',
               style: midGreyTextStyle,
             ),
           ],

@@ -84,7 +84,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                               color: kBlackColor)
                           : Icon(Icons.visibility_outlined, color: kBlackColor),
                     ),
-                    hintStyle: midGreyTextStyle,
+                    hintStyle: midGreyTextStyle.copyWith(
+                        fontSize: 14, fontWeight: FontWeight.normal),
                   ),
                 )
               : TextFormField(
@@ -96,7 +97,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   decoration: InputDecoration(
                     suffixIcon: widget.suffix,
                     hintText: widget.hintText,
-                    hintStyle: midGreyTextStyle,
+                    hintStyle: midGreyTextStyle.copyWith(
+                        fontSize: 14, fontWeight: FontWeight.normal),
                     isDense: false,
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 16),
