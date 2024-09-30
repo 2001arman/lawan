@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/admin/admin_main_logic.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
@@ -22,7 +23,11 @@ class AdminMainUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget bottomNavbarItem({required String title, required bool isActive}) {
+    Widget bottomNavbarItem({
+      required String title,
+      required bool isActive,
+      required String icon,
+    }) {
       return Container(
         width: 60,
         height: 60,
@@ -33,6 +38,12 @@ class AdminMainUi extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SvgPicture.asset(
+              icon,
+              width: 16,
+              height: 16,
+            ),
+            const SizedBox(height: 4),
             Text(
               title,
               style: blackTextStyle.copyWith(
@@ -82,11 +93,23 @@ class AdminMainUi extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  bottomNavbarItem(title: 'Session', isActive: false),
+                  bottomNavbarItem(
+                    title: 'Session',
+                    isActive: false,
+                    icon: 'assets/icons/session.svg',
+                  ),
                   const SizedBox(width: 4),
-                  bottomNavbarItem(title: 'Arena', isActive: true),
+                  bottomNavbarItem(
+                    title: 'Arena',
+                    isActive: true,
+                    icon: 'assets/icons/arena.svg',
+                  ),
                   const SizedBox(width: 4),
-                  bottomNavbarItem(title: 'Sales', isActive: false),
+                  bottomNavbarItem(
+                    title: 'Sales',
+                    isActive: false,
+                    icon: 'assets/icons/sales.svg',
+                  ),
                 ],
               ),
             ),
