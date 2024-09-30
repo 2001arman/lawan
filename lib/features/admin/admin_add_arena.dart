@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:blur/blur.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/admin/admin_main_logic.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
@@ -22,7 +22,7 @@ class AdminAddArena {
 
   AdminAddArena({required this.state, required this.logic});
 
-  void successCreateArena() {
+  static void successCreateArena() {
     Get.dialog(
       Dialog(
         backgroundColor: Colors.transparent,
@@ -139,69 +139,91 @@ class AdminAddArena {
 
   void createNewArena() {
     Get.bottomSheet(
-      Container(
-        margin: const EdgeInsets.all(8),
-        height: Get.height * 0.85,
-        width: Get.width,
-        padding: EdgeInsets.all(defaultMargin),
-        decoration: BoxDecoration(
-          color: kModalColor,
+      Padding(
+        padding: const EdgeInsets.all(8),
+        child: SizedBox(
+          height: Get.height * 0.9,
+          width: Get.width,
+        ).blurred(
+          blur: 7,
+          blurColor: Colors.white,
+          colorOpacity: 0,
           borderRadius: BorderRadius.circular(32),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, -0.5),
-              blurStyle: BlurStyle.inner,
-              spreadRadius: 0,
-              blurRadius: 0,
-              color: kBlackColor.withOpacity(0.9),
-            ),
-          ],
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Obx(
-                () => Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    topItemBottomSheet(
-                      number: 1,
-                      title: 'Details',
-                      isActive: state.selectedIndex.value == 1,
-                    ),
-                    Container(
-                      width: 24,
-                      height: 1,
-                      color: kWhiteColor,
-                      margin: EdgeInsets.symmetric(
-                          horizontal: defaultMargin, vertical: 20),
-                    ),
-                    topItemBottomSheet(
-                      number: 2,
-                      title: 'Hour',
-                      isActive: state.selectedIndex.value == 2,
-                    ),
-                    Container(
-                      width: 24,
-                      height: 1,
-                      color: kWhiteColor,
-                      margin: EdgeInsets.symmetric(
-                          horizontal: defaultMargin, vertical: 20),
-                    ),
-                    topItemBottomSheet(
-                      number: 3,
-                      title: 'Rate',
-                      isActive: state.selectedIndex.value == 3,
-                    ),
-                  ],
+          overlay: Container(
+            padding: EdgeInsets.all(defaultMargin),
+            decoration: BoxDecoration(
+              color: kModalColor,
+              borderRadius: BorderRadius.circular(32),
+              boxShadow: [
+                BoxShadow(
+                  offset: const Offset(0, -0.5),
+                  blurStyle: BlurStyle.inner,
+                  spreadRadius: 0,
+                  blurRadius: 0,
+                  color: kBlackColor.withOpacity(0.1),
                 ),
+              ],
+            ),
+            child: Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      topItemBottomSheet(
+                        number: 1,
+                        title: 'Details',
+                        isActive: state.selectedIndex.value == 1,
+                      ),
+                      Container(
+                        width: 24,
+                        height: 1,
+                        color: kWhiteColor,
+                        margin: EdgeInsets.symmetric(
+                            horizontal: defaultMargin, vertical: 20),
+                      ),
+                      topItemBottomSheet(
+                        number: 2,
+                        title: 'Hour',
+                        isActive: state.selectedIndex.value == 2,
+                      ),
+                      Container(
+                        width: 24,
+                        height: 1,
+                        color: kWhiteColor,
+                        margin: EdgeInsets.symmetric(
+                            horizontal: defaultMargin, vertical: 20),
+                      ),
+                      topItemBottomSheet(
+                        number: 3,
+                        title: 'Rate',
+                        isActive: state.selectedIndex.value == 3,
+                      ),
+                    ],
+                  ),
+                  contentSection(),
+                  Row(
+                    children: [
+                      CustomButton(
+                        title: 'Cancel',
+                        isBlack: false,
+                        onTap: () => Get.back(),
+                      ),
+                      const SizedBox(width: 16),
+                      CustomButton(
+                        title: state.selectedIndex.value == 3
+                            ? 'Add Arena'
+                            : 'Next',
+                        isBlack: true,
+                        onTap: logic.handleNextButton,
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Obx(
-                () => contentSection(),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -211,451 +233,61 @@ class AdminAddArena {
   }
 
   Widget rateSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: defaultMargin),
-        Text(
-          'Configure the rate',
-          style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          'Customize to fit your needs',
-          style: darkGreyTextStyle.copyWith(fontSize: 12),
-        ),
-        const SizedBox(height: 16),
-        Column(
-          children: state.rateList
-              .map(
-                (data) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(data.name, style: darkGreyTextStyle),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => CustomDialog.showChoosePriceDialog(
-                              selectedHour: data.hour.value,
-                              selectedPrice: data.price.value,
-                              onSave: (price, hour) {
-                                Get.back();
-                                data.hour.value = hour;
-                                data.price.value = price;
-                                data.finalPrice.value =
-                                    (price + (price * 0.2).toInt());
-                              },
-                            ),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(80),
-                                color: kWhiteColor,
-                              ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'RM',
-                                    style: blackTextStyle,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    '${data.price}',
-                                    style: blackTextStyle.copyWith(
-                                        fontWeight: medium),
-                                  ),
-                                  const Spacer(),
-                                  Image.asset('assets/icons/arrow_up_down.png',
-                                      width: 20, height: 20),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => CustomDialog.showChoosePriceDialog(
-                              selectedHour: data.hour.value,
-                              selectedPrice: data.price.value,
-                              onSave: (price, hour) {
-                                Get.back();
-                                data.hour.value = hour;
-                                data.price.value = price;
-                                data.finalPrice.value =
-                                    (price + (price * 0.2).toInt());
-                              },
-                            ),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(80),
-                                color: kWhiteColor,
-                              ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    data.hour.value != 0.5
-                                        ? data.hour.toStringAsFixed(0)
-                                        : '${data.hour.value}',
-                                    style: blackTextStyle.copyWith(
-                                        fontWeight: medium),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    'Hour',
-                                    style: blackTextStyle,
-                                  ),
-                                  const Spacer(),
-                                  Image.asset(
-                                    'assets/icons/arrow_up_down.png',
-                                    width: 20,
-                                    height: 20,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      margin: EdgeInsets.symmetric(vertical: defaultMargin),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(32),
-                        gradient: mainGradient,
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Listing Price',
-                            style: midGreyTextStyle.copyWith(fontSize: 12),
-                          ),
-                          Obx(
-                            () => Text(
-                              'RM${data.finalPrice}',
-                              style: whiteTextStyle.copyWith(
-                                  fontSize: 24, fontWeight: semiBold),
-                            ),
-                          ),
-                          Text(
-                            '20% hosting fee by Lawan included',
-                            style: greyTextStyle.copyWith(fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              )
-              .toList(),
-        ),
-        const SizedBox(height: 50),
-        Row(
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomButton(
-              title: 'Cancel',
-              isBlack: false,
-              onTap: () => Get.back(),
+            SizedBox(height: defaultMargin),
+            Text(
+              'Configure the rate',
+              style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
             ),
-            const SizedBox(width: 16),
-            CustomButton(
-              title: 'Add Arena',
-              isBlack: true,
-              onTap: () async {
-                final validationName =
-                    Helper.regularValidator(state.nameController.text);
-                final validationCourt =
-                    Helper.regularValidator(state.courtController.text);
-                if (validationName != null && validationCourt != null) {
-                  FToast().init(Get.context!).showToast(
-                        child: Helper.toast(
-                          message: 'Please fill Arena and Court name',
-                        ),
-                        gravity: ToastGravity.BOTTOM,
-                        toastDuration: const Duration(seconds: 2),
-                      );
-                  return;
-                }
-                logic.createArena();
-                Get.back();
-                await Future.delayed(const Duration(seconds: 1));
-                successCreateArena();
-              },
+            const SizedBox(height: 2),
+            Text(
+              'Customize to fit your needs',
+              style: darkGreyTextStyle.copyWith(fontSize: 12),
             ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget detailSection() {
-    return Form(
-      key: state.textFormKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: defaultMargin),
-          Text(
-            'Add Arena Details',
-            style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            'Add photos, name and location',
-            style: darkGreyTextStyle.copyWith(fontSize: 12),
-          ),
-          CarouselSlider(
-            options: CarouselOptions(
-              height: 120,
-              viewportFraction: 1.0,
-              enlargeCenterPage: false,
-              enableInfiniteScroll: false,
-            ),
-            items: state.uploadedPictures.asMap().entries.map((data) {
-              return Builder(
-                builder: (BuildContext context) {
-                  if (data.value.path == 'empty') {
-                    return AddPictureButtonWidget(
-                      onTap: logic.image,
-                    );
-                  }
-                  return Container(
-                    margin: EdgeInsets.only(
-                      top: defaultMargin,
-                      bottom: defaultMargin,
-                      right: 8,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    width: double.infinity,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      image: DecorationImage(
-                        image: FileImage(
-                          File(data.value.path),
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: () => logic.changeImage(index: data.key),
-                          child: SvgPicture.asset(
-                            'assets/icons/container_rotate.svg',
-                            width: 36,
-                            height: 36,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        GestureDetector(
-                          onTap: () => logic.deleteImage(index: data.key),
-                          child: SvgPicture.asset(
-                            'assets/icons/container_trash.svg',
-                            width: 36,
-                            height: 36,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            }).toList(),
-          ),
-          CustomTextFormField(
-            hintText: 'Location',
-            controller: TextEditingController(),
-            isReadOnly: true,
-            suffix: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/icons/location.png',
-                  width: 20,
-                  height: 20,
-                  fit: BoxFit.cover,
-                  color: kMidgreyColor,
-                ),
-              ],
-            ),
-          ),
-          CustomTextFormField(
-            hintText: 'Enter Arena Name',
-            controller: state.nameController,
-            validator: (data) => Helper.regularValidator(data),
-          ),
-          CustomTextFormField(
-            hintText: 'Enter Court Name',
-            controller: state.courtController,
-            validator: (data) => Helper.regularValidator(data),
-            suffix: Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Optional',
-                    style: blackTextStyle,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text('Arena Type', style: darkGreyTextStyle),
-          const SizedBox(height: 4),
-          Obx(
-            () => Row(
-              children: state.arenaType
+            const SizedBox(height: 16),
+            Column(
+              children: state.rateList
                   .map(
-                    (data) => SelectedContainerWidget(
-                      title: data,
-                      isSelected: data == state.selectedArenaType.value,
-                      onTap: () => state.selectedArenaType.value = data,
-                      isTransparent: true,
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text('Flooring', style: darkGreyTextStyle),
-          const SizedBox(height: 4),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Obx(
-              () => Row(
-                children: state.flooringType
-                    .map(
-                      (data) => SelectedContainerWidget(
-                        title: data,
-                        isSelected: data == state.selectedFlooringType.value,
-                        isTransparent: true,
-                        onTap: () => state.selectedFlooringType.value = data,
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
-          ),
-          const SizedBox(height: 30),
-          Row(
-            children: [
-              CustomButton(
-                title: 'Cancel',
-                isBlack: false,
-                onTap: () => Get.back(),
-              ),
-              const SizedBox(width: 16),
-              CustomButton(
-                title: 'Next',
-                isBlack: true,
-                onTap: () {
-                  final validation = logic.checkValidator();
-                  if (validation) {
-                    state.selectedIndex.value++;
-                  }
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget hourSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: defaultMargin),
-        Text(
-          'Set Standard Hours',
-          style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          'Standard hours of operation for this arena',
-          style: darkGreyTextStyle.copyWith(fontSize: 12),
-        ),
-        Obx(
-          () => Column(
-            children: state.listOperationalHour
-                .map(
-                  (data) => Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(data.dayName, style: darkGreyTextStyle),
-                          const Spacer(),
-                          Text(data.isActive.value ? 'Open' : 'Closed',
-                              style: darkGreyTextStyle),
-                          SizedBox(
-                            height: 30,
-                            width: 50,
-                            child: FittedBox(
-                              fit: BoxFit.fitWidth,
-                              child: Switch(
-                                value: data.isActive.value,
-                                onChanged: (active) {
-                                  data.isActive.value = active;
-                                  Get.log('cek isActive ${data.isActive}');
-                                },
-                                activeColor: kWhiteColor,
-                                activeTrackColor: kGreenColor,
-                                inactiveThumbColor: kDarkgreyColor,
-                                inactiveTrackColor: Colors.transparent,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      if (data.isActive.value) const SizedBox(height: 8),
-                      Visibility(
-                        visible: data.isActive.value,
-                        child: Row(
+                    (data) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(data.name, style: darkGreyTextStyle),
+                        const SizedBox(height: 4),
+                        Row(
                           children: [
                             Expanded(
                               child: GestureDetector(
-                                onTap: () => CustomDialog.showChooseTimeDialog(
-                                  startTime: data.openTime.value.hour,
-                                  endTime: data.closeTIme.value.hour,
-                                  onSave: (startTime, endTime) {
+                                onTap: () => CustomDialog.showChoosePriceDialog(
+                                  selectedHour: data.hour.value,
+                                  selectedPrice: data.price.value,
+                                  onSave: (price, hour) {
                                     Get.back();
-
-                                    data.openTime.value =
-                                        TimeOfDay(hour: startTime, minute: 0);
-                                    data.closeTIme.value =
-                                        TimeOfDay(hour: endTime, minute: 0);
+                                    data.hour.value = hour;
+                                    data.price.value = price;
+                                    data.finalPrice.value =
+                                        (price + (price * 0.2).toInt());
                                   },
                                 ),
                                 child: Container(
-                                  padding: const EdgeInsets.all(12),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 12),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(80),
                                     color: kWhiteColor,
                                   ),
                                   child: Row(
                                     children: [
-                                      Image.asset(
-                                        'assets/icons/clock.png',
-                                        width: 16,
-                                        height: 16,
+                                      Text(
+                                        'RM',
+                                        style: blackTextStyle,
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
-                                        Helper.formatTime12Hour(
-                                            data.openTime.value),
+                                        '${data.price}',
                                         style: blackTextStyle.copyWith(
                                             fontWeight: medium),
                                       ),
@@ -669,46 +301,40 @@ class AdminAddArena {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 12),
-                              child: Text(
-                                'to',
-                                style: darkGreyTextStyle,
-                              ),
-                            ),
+                            const SizedBox(width: 12),
                             Expanded(
                               child: GestureDetector(
-                                onTap: () => CustomDialog.showChooseTimeDialog(
-                                  startTime: data.openTime.value.hour,
-                                  endTime: data.closeTIme.value.hour,
-                                  onSave: (startTime, endTime) {
+                                onTap: () => CustomDialog.showChoosePriceDialog(
+                                  selectedHour: data.hour.value,
+                                  selectedPrice: data.price.value,
+                                  onSave: (price, hour) {
                                     Get.back();
-                                    data.openTime.value =
-                                        TimeOfDay(hour: startTime, minute: 0);
-                                    data.closeTIme.value =
-                                        TimeOfDay(hour: endTime, minute: 0);
+                                    data.hour.value = hour;
+                                    data.price.value = price;
+                                    data.finalPrice.value =
+                                        (price + (price * 0.2).toInt());
                                   },
                                 ),
                                 child: Container(
-                                  padding: const EdgeInsets.all(12),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 12),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(80),
                                     color: kWhiteColor,
                                   ),
                                   child: Row(
                                     children: [
-                                      Image.asset(
-                                        'assets/icons/clock.png',
-                                        width: 16,
-                                        height: 16,
+                                      Text(
+                                        data.hour.value != 0.5
+                                            ? data.hour.toStringAsFixed(0)
+                                            : '${data.hour.value}',
+                                        style: blackTextStyle.copyWith(
+                                            fontWeight: medium),
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
-                                        Helper.formatTime12Hour(
-                                            data.closeTIme.value),
-                                        style: blackTextStyle.copyWith(
-                                            fontWeight: medium),
+                                        'Hour',
+                                        style: blackTextStyle,
                                       ),
                                       const Spacer(),
                                       Image.asset(
@@ -723,30 +349,376 @@ class AdminAddArena {
                             ),
                           ],
                         ),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          margin: EdgeInsets.symmetric(vertical: defaultMargin),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(32),
+                            gradient: mainGradient,
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Listing Price',
+                                style: midGreyTextStyle.copyWith(fontSize: 12),
+                              ),
+                              Obx(
+                                () => Text(
+                                  'RM${data.finalPrice}',
+                                  style: whiteTextStyle.copyWith(
+                                      fontSize: 24, fontWeight: semiBold),
+                                ),
+                              ),
+                              Text(
+                                '20% hosting fee by Lawan included',
+                                style: greyTextStyle.copyWith(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                  .toList(),
+            ),
+            const SizedBox(height: 50),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget detailSection() {
+    return Expanded(
+      child: Form(
+        key: state.textFormKey,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: defaultMargin),
+              Text(
+                'Add Arena Details',
+                style:
+                    blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                'Add photos, name and location',
+                style: darkGreyTextStyle.copyWith(fontSize: 12),
+              ),
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: 120,
+                  viewportFraction: 1.0,
+                  enlargeCenterPage: false,
+                  enableInfiniteScroll: false,
+                ),
+                items: state.uploadedPictures.asMap().entries.map((data) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      if (data.value.path == 'empty') {
+                        return AddPictureButtonWidget(
+                          onTap: logic.image,
+                        );
+                      }
+                      return Container(
+                        margin: EdgeInsets.only(
+                          top: defaultMargin,
+                          bottom: defaultMargin,
+                          right: 8,
+                        ),
+                        padding: const EdgeInsets.all(8),
+                        width: double.infinity,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          image: DecorationImage(
+                            image: FileImage(
+                              File(data.value.path),
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                              onTap: () => logic.changeImage(index: data.key),
+                              child: SvgPicture.asset(
+                                'assets/icons/container_rotate.svg',
+                                width: 36,
+                                height: 36,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            GestureDetector(
+                              onTap: () => logic.deleteImage(index: data.key),
+                              child: SvgPicture.asset(
+                                'assets/icons/container_trash.svg',
+                                width: 36,
+                                height: 36,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+              CustomTextFormField(
+                hintText: 'Location',
+                controller: TextEditingController(),
+                isReadOnly: true,
+                suffix: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/icons/location.png',
+                      width: 20,
+                      height: 20,
+                      fit: BoxFit.cover,
+                      color: kMidgreyColor,
+                    ),
+                  ],
+                ),
+              ),
+              CustomTextFormField(
+                hintText: 'Enter Arena Name',
+                controller: state.nameController,
+                validator: (data) => Helper.regularValidator(data),
+              ),
+              CustomTextFormField(
+                hintText: 'Enter Court Name',
+                controller: state.courtController,
+                validator: (data) => Helper.regularValidator(data),
+                suffix: Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Optional',
+                        style: blackTextStyle.copyWith(fontSize: 12),
                       ),
-                      const SizedBox(height: 8),
                     ],
                   ),
-                )
-                .toList(),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text('Arena Type', style: darkGreyTextStyle),
+              const SizedBox(height: 4),
+              Obx(
+                () => Row(
+                  children: state.arenaType
+                      .map(
+                        (data) => SelectedContainerWidget(
+                          title: data,
+                          isSelected: data == state.selectedArenaType.value,
+                          onTap: () => state.selectedArenaType.value = data,
+                          isTransparent: true,
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text('Flooring', style: darkGreyTextStyle),
+              const SizedBox(height: 4),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Obx(
+                  () => Row(
+                    children: state.flooringType
+                        .map(
+                          (data) => SelectedContainerWidget(
+                            title: data,
+                            isSelected:
+                                data == state.selectedFlooringType.value,
+                            isTransparent: true,
+                            onTap: () =>
+                                state.selectedFlooringType.value = data,
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+            ],
           ),
         ),
-        Row(
+      ),
+    );
+  }
+
+  Widget hourSection() {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomButton(
-              title: 'Cancel',
-              isBlack: false,
-              onTap: () => Get.back(),
+            SizedBox(height: defaultMargin),
+            Text(
+              'Set Standard Hours',
+              style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
             ),
-            const SizedBox(width: 16),
-            CustomButton(
-              title: 'Next',
-              isBlack: true,
-              onTap: () => state.selectedIndex.value++,
+            const SizedBox(height: 2),
+            Text(
+              'Standard hours of operation for this arena',
+              style: darkGreyTextStyle.copyWith(fontSize: 12),
+            ),
+            Obx(
+              () => Column(
+                children: state.listOperationalHour
+                    .map(
+                      (data) => Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(data.dayName, style: darkGreyTextStyle),
+                              const Spacer(),
+                              Text(data.isActive.value ? 'Open' : 'Closed',
+                                  style: darkGreyTextStyle),
+                              SizedBox(
+                                height: 30,
+                                width: 50,
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Switch(
+                                    value: data.isActive.value,
+                                    onChanged: (active) {
+                                      data.isActive.value = active;
+                                      Get.log('cek isActive ${data.isActive}');
+                                    },
+                                    activeColor: kWhiteColor,
+                                    activeTrackColor: kGreenColor,
+                                    inactiveThumbColor: kDarkgreyColor,
+                                    inactiveTrackColor: Colors.transparent,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (data.isActive.value) const SizedBox(height: 8),
+                          Visibility(
+                            visible: data.isActive.value,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () =>
+                                        CustomDialog.showChooseTimeDialog(
+                                      startTime: data.openTime.value.hour,
+                                      endTime: data.closeTIme.value.hour,
+                                      onSave: (startTime, endTime) {
+                                        Get.back();
+
+                                        data.openTime.value = TimeOfDay(
+                                            hour: startTime, minute: 0);
+                                        data.closeTIme.value =
+                                            TimeOfDay(hour: endTime, minute: 0);
+                                      },
+                                    ),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(80),
+                                        color: kWhiteColor,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            'assets/icons/clock.png',
+                                            width: 16,
+                                            height: 16,
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            Helper.formatTime12Hour(
+                                                data.openTime.value),
+                                            style: blackTextStyle.copyWith(
+                                                fontWeight: medium),
+                                          ),
+                                          const Spacer(),
+                                          Image.asset(
+                                              'assets/icons/arrow_up_down.png',
+                                              width: 20,
+                                              height: 20),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  child: Text(
+                                    'to',
+                                    style: darkGreyTextStyle,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () =>
+                                        CustomDialog.showChooseTimeDialog(
+                                      startTime: data.openTime.value.hour,
+                                      endTime: data.closeTIme.value.hour,
+                                      onSave: (startTime, endTime) {
+                                        Get.back();
+                                        data.openTime.value = TimeOfDay(
+                                            hour: startTime, minute: 0);
+                                        data.closeTIme.value =
+                                            TimeOfDay(hour: endTime, minute: 0);
+                                      },
+                                    ),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(80),
+                                        color: kWhiteColor,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            'assets/icons/clock.png',
+                                            width: 16,
+                                            height: 16,
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            Helper.formatTime12Hour(
+                                                data.closeTIme.value),
+                                            style: blackTextStyle.copyWith(
+                                                fontWeight: medium),
+                                          ),
+                                          const Spacer(),
+                                          Image.asset(
+                                            'assets/icons/arrow_up_down.png',
+                                            width: 20,
+                                            height: 20,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                        ],
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 }
