@@ -58,6 +58,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   obscureText: obscure,
                   onChanged: widget.onChanged,
                   validator: widget.validator,
+                  style:
+                      blackTextStyle.copyWith(fontWeight: medium, fontSize: 14),
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 16),
@@ -94,6 +96,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   readOnly: widget.isReadOnly,
                   onChanged: widget.onChanged,
                   validator: widget.validator,
+                  style:
+                      blackTextStyle.copyWith(fontWeight: medium, fontSize: 14),
                   decoration: InputDecoration(
                     suffixIcon: widget.suffix,
                     hintText: widget.hintText,

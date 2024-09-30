@@ -45,6 +45,38 @@ class AdminMainState {
   );
 }
 
+enum ArenaType {
+  arena,
+  court;
+
+  String get title {
+    switch (this) {
+      case ArenaType.arena:
+        return 'Arena';
+      case ArenaType.court:
+        return 'Court';
+      default:
+        return '';
+    }
+  }
+}
+
+enum ActionType {
+  delete,
+  edit;
+
+  String get title {
+    switch (this) {
+      case ActionType.delete:
+        return 'Delete';
+      case ActionType.edit:
+        return 'Update';
+      default:
+        return '';
+    }
+  }
+}
+
 class OperationalHour {
   Rx<bool> isActive;
   String dayName;
@@ -77,8 +109,8 @@ class RateModel {
 class ArenaModel {
   final List<XFile> pictures;
   final String location;
-  final String name;
-  final String courtName;
+  String name;
+  String courtName;
   final String arenaType;
   final String flooringType;
   final List<OperationalHour> operationalHours;

@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/admin/admin_main_logic.dart';
+import 'package:lawan/features/admin/admin_main_state.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_appbar.dart';
@@ -304,11 +305,14 @@ class AdminMainUi extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Image.asset(
-                    'assets/icons/pencil.png',
-                    width: 20,
+                GestureDetector(
+                  onTap: () => logic.editArena(arenaType: ArenaType.arena),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Image.asset(
+                      'assets/icons/pencil.png',
+                      width: 20,
+                    ),
                   ),
                 ),
                 Row(
@@ -339,17 +343,20 @@ class AdminMainUi extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Image.asset(
-                    'assets/icons/pencil.png',
-                    width: 20,
+                GestureDetector(
+                  onTap: () => logic.editArena(arenaType: ArenaType.court),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Image.asset(
+                      'assets/icons/pencil.png',
+                      width: 20,
+                    ),
                   ),
                 ),
                 CircleButtonWidget(
                   widget: Center(
                     child: Text(
-                      '1',
+                      state.listArena[state.selectedListArena.value].courtName,
                       style: whiteTextStyle,
                     ),
                   ),

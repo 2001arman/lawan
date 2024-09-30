@@ -14,6 +14,38 @@ class AdminMainLogic extends GetxController {
     return state.textFormKey.currentState!.validate();
   }
 
+  void editArena({required ArenaType arenaType}) {
+    String data = '';
+    switch (arenaType) {
+      case ArenaType.arena:
+        data = state.listArena[state.selectedListArena.value].name;
+        break;
+      default:
+        data = state.listArena[state.selectedListArena.value].courtName;
+        break;
+    }
+    CustomDialogSuccess.editArenaDialog(
+      arenaType: arenaType,
+      data: data,
+      onAction: (newData) {
+        if (arenaType == ArenaType.arena) {
+          state.listArena[state.selectedListArena.value].name = newData;
+        } else {
+          state.listArena[state.selectedListArena.value].courtName = newData;
+        }
+        Get.back();
+        Get.back();
+        state.listArena.refresh();
+      },
+      onDelete: () {
+        state.listArena.removeAt(state.selectedListArena.value);
+        Get.back();
+        Get.back();
+        state.listArena.refresh();
+      },
+    );
+  }
+
   void createNewArena() {
     AdminAddArena(state: state, logic: this).createNewArena();
   }

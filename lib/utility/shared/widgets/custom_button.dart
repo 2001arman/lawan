@@ -7,12 +7,14 @@ class CustomButton extends StatelessWidget {
   final bool isBlack;
   final VoidCallback onTap;
   final Color? borderColor;
+  final Color? textColor;
   const CustomButton({
     super.key,
     required this.title,
     required this.isBlack,
     required this.onTap,
     this.borderColor,
+    this.textColor,
   });
 
   @override
@@ -34,8 +36,9 @@ class CustomButton extends StatelessWidget {
             child: Text(
               title,
               style: blackTextStyle.copyWith(
-                  fontWeight: medium,
-                  color: isBlack ? kWhiteColor : kBlackColor),
+                fontWeight: medium,
+                color: textColor ?? (isBlack ? kWhiteColor : kBlackColor),
+              ),
             ),
           ),
         ),
