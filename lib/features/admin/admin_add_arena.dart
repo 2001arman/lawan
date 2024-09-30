@@ -20,68 +20,7 @@ class AdminAddArena {
 
   AdminAddArena({required this.state, required this.logic});
 
-  static void successCreateArena() {
-    Get.dialog(
-      Dialog(
-        backgroundColor: Colors.transparent,
-        insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Container(
-          margin: const EdgeInsets.all(8),
-          width: Get.width,
-          padding: EdgeInsets.all(defaultMargin),
-          decoration: BoxDecoration(
-            color: kModalColor,
-            borderRadius: BorderRadius.circular(32),
-            boxShadow: [
-              BoxShadow(
-                offset: const Offset(0, -0.5),
-                blurStyle: BlurStyle.inner,
-                spreadRadius: 0,
-                blurRadius: 0,
-                color: kBlackColor.withOpacity(0.6),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Arena Added Successfully!',
-                style:
-                    blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
-              ),
-              const SizedBox(height: 8),
-              Image.asset(
-                'assets/icons/field_gradient.png',
-                width: 60,
-                height: 60,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'You can now start earning from this arena',
-                style: darkGreyTextStyle.copyWith(fontSize: 12),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  CustomButton(
-                      title: 'Add Another Court',
-                      isBlack: false,
-                      onTap: Get.back),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  CustomButton(title: 'Done', isBlack: true, onTap: Get.back),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  
 
   Widget contentSection() {
     switch (state.selectedIndex.value) {

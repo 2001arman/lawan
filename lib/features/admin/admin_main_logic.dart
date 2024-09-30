@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lawan/features/admin/admin_add_arena.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
+import 'package:lawan/utility/util/custom_dialog_success.dart';
 import 'package:lawan/utility/util/helper.dart';
 
 class AdminMainLogic extends GetxController {
@@ -11,6 +12,10 @@ class AdminMainLogic extends GetxController {
 
   bool checkValidator() {
     return state.textFormKey.currentState!.validate();
+  }
+
+  void createNewArena() {
+    AdminAddArena(state: state, logic: this).createNewArena();
   }
 
   void handleNextButton() async {
@@ -35,7 +40,7 @@ class AdminMainLogic extends GetxController {
       createArena();
       Get.back();
       await Future.delayed(const Duration(seconds: 1));
-      AdminAddArena.successCreateArena();
+      CustomDialogSuccess.successCreateArena();
     } else {
       state.selectedIndex.value++;
     }
@@ -107,10 +112,6 @@ class AdminMainLogic extends GetxController {
 
   void deleteImage({required int index}) {
     state.uploadedPictures.removeAt(index);
-  }
-
-  void createNewArena() {
-    AdminAddArena(state: state, logic: this).createNewArena();
   }
 
   void alignmentTabbar(String title) {
