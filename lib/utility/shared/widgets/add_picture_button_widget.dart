@@ -14,7 +14,7 @@ class AddPictureButtonWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        height: 120,
+        height: 126,
         margin: EdgeInsets.symmetric(vertical: margin),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),

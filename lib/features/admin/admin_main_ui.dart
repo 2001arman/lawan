@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/admin/admin_main_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
@@ -13,6 +10,7 @@ import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:lawan/utility/shared/widgets/tab_bar_widget.dart';
 import 'package:lawan/utility/util/helper.dart';
 
+import '../../utility/shared/widgets/custom_image_widget.dart';
 import '../../utility/shared/widgets/custom_text_form_fields.dart';
 
 class AdminMainUi extends StatelessWidget {
@@ -673,7 +671,7 @@ class AdminMainUi extends StatelessWidget {
       children: [
         CarouselSlider(
           options: CarouselOptions(
-            height: 120,
+            height: 126,
             viewportFraction: 1.0,
             enlargeCenterPage: false,
             enableInfiniteScroll: false,
@@ -689,47 +687,10 @@ class AdminMainUi extends StatelessWidget {
                     onTap: logic.image,
                   );
                 }
-                return Container(
-                  margin: EdgeInsets.only(
-                    top: defaultMargin,
-                    bottom: defaultMargin,
-                    right: 8,
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  width: double.infinity,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    image: DecorationImage(
-                      image: FileImage(
-                        File(data.value.path),
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () => logic.changeImage(index: data.key),
-                        child: SvgPicture.asset(
-                          'assets/icons/container_rotate.svg',
-                          width: 36,
-                          height: 36,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      GestureDetector(
-                        onTap: () => logic.deleteImage(index: data.key),
-                        child: SvgPicture.asset(
-                          'assets/icons/container_trash.svg',
-                          width: 36,
-                          height: 36,
-                        ),
-                      ),
-                    ],
-                  ),
+                return CustomImageWidget(
+                  path: data.value.path,
+                  changeImage: () {},
+                  deleteImage: () {},
                 );
               },
             );
