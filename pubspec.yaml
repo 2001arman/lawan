@@ -21,6 +21,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   fluttertoast: ^8.2.8
   blur: ^4.0.0
+  table_calendar: ^3.1.2
 
 dev_dependencies:
   flutter_test:

@@ -8,13 +8,15 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
   final Color? borderColor;
   final Color? textColor;
+  final Widget? widget;
   const CustomButton({
     super.key,
-    required this.title,
+    this.title = '',
     required this.isBlack,
     required this.onTap,
     this.borderColor,
     this.textColor,
+    this.widget,
   });
 
   @override
@@ -33,13 +35,14 @@ class CustomButton extends StatelessWidget {
             color: isBlack ? kBlackColor : Colors.transparent,
           ),
           child: Center(
-            child: Text(
-              title,
-              style: blackTextStyle.copyWith(
-                fontWeight: medium,
-                color: textColor ?? (isBlack ? kWhiteColor : kBlackColor),
-              ),
-            ),
+            child: widget ??
+                Text(
+                  title,
+                  style: blackTextStyle.copyWith(
+                    fontWeight: medium,
+                    color: textColor ?? (isBlack ? kWhiteColor : kBlackColor),
+                  ),
+                ),
           ),
         ),
       ),

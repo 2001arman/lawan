@@ -5,8 +5,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lawan/utility/util/helper.dart';
 
 class AdminMainState {
+  var selectedNavbarIndex = 1.obs;
+
   final textFormKey = GlobalKey<FormState>();
   var selectedIndex = 1.obs;
+
   var activeAlignment = Alignment.centerLeft.obs;
   var tabActive = 'Details'.obs;
   List<String> tabBarTitle = [

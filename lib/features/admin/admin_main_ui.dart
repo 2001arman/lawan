@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/admin/admin_main_logic.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
+import 'package:lawan/features/admin/session/session_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_appbar.dart';
@@ -23,38 +24,42 @@ class AdminMainUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget bottomNavbarItem({
-      required String title,
-      required bool isActive,
-      required String icon,
-    }) {
-      return Container(
-        width: 60,
-        height: 60,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: isActive ? kBlackColor : kWhiteColor,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              icon,
-              width: 16,
-              height: 16,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              title,
-              style: blackTextStyle.copyWith(
+    Widget bottomNavbarItem(
+        {required String title,
+        required bool isActive,
+        required String icon,
+        required int index}) {
+      return GestureDetector(
+        onTap: () => state.selectedNavbarIndex.value = index,
+        child: Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: isActive ? kBlackColor : kWhiteColor,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                icon,
+                width: 16,
+                height: 16,
                 color: isActive ? kWhiteColor : kBlackColor,
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                height: 15.66 / 12,
-                letterSpacing: -0.24,
               ),
-            )
-          ],
+              const SizedBox(height: 4),
+              Text(
+                title,
+                style: blackTextStyle.copyWith(
+                  color: isActive ? kWhiteColor : kBlackColor,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  height: 15.66 / 12,
+                  letterSpacing: -0.24,
+                ),
+              )
+            ],
+          ),
         ),
       );
     }
@@ -91,26 +96,31 @@ class AdminMainUi extends StatelessWidget {
                   )
                 ],
               ),
-              child: Row(
-                children: [
-                  bottomNavbarItem(
-                    title: 'Session',
-                    isActive: false,
-                    icon: 'assets/icons/session.svg',
-                  ),
-                  const SizedBox(width: 4),
-                  bottomNavbarItem(
-                    title: 'Arena',
-                    isActive: true,
-                    icon: 'assets/icons/arena.svg',
-                  ),
-                  const SizedBox(width: 4),
-                  bottomNavbarItem(
-                    title: 'Sales',
-                    isActive: false,
-                    icon: 'assets/icons/sales.svg',
-                  ),
-                ],
+              child: Obx(
+                () => Row(
+                  children: [
+                    bottomNavbarItem(
+                      title: 'Session',
+                      isActive: state.selectedNavbarIndex.value == 0,
+                      index: 0,
+                      icon: 'assets/icons/session.svg',
+                    ),
+                    const SizedBox(width: 4),
+                    bottomNavbarItem(
+                      title: 'Arena',
+                      isActive: state.selectedNavbarIndex.value == 1,
+                      icon: 'assets/icons/arena.svg',
+                      index: 1,
+                    ),
+                    const SizedBox(width: 4),
+                    bottomNavbarItem(
+                      title: 'Sales',
+                      isActive: state.selectedNavbarIndex.value == 2,
+                      icon: 'assets/icons/sales.svg',
+                      index: 2,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -426,10 +436,17 @@ class AdminMainUi extends StatelessWidget {
       body: Stack(
         children: [
           Obx(() {
-            if (state.listArena.isEmpty) {
-              return emptyArena();
-            } else {
-              return detailArenaSection();
+            switch (state.selectedNavbarIndex.value) {
+              case 0:
+                return SessionUi();
+              case 2:
+                return const Center(child: Text('Sales'));
+              default:
+                if (state.listArena.isEmpty) {
+                  return emptyArena();
+                } else {
+                  return detailArenaSection();
+                }
             }
           }),
           Align(

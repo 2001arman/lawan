@@ -5,27 +5,33 @@ class CircleButtonTransparentWidget extends StatelessWidget {
   final VoidCallback onTap;
   final Widget widget;
   final EdgeInsets? margin;
+  final Color? borderColor;
+  final double size;
   const CircleButtonTransparentWidget(
-      {super.key, required this.onTap, required this.widget, this.margin});
+      {super.key,
+      required this.onTap,
+      required this.widget,
+      this.margin,
+      this.borderColor,
+      this.size = 48});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 48,
-        height: 48,
+        width: size,
+        height: size,
         margin: margin,
-        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.transparent,
           border: Border.all(
             width: 1,
-            color: kWhiteColor,
+            color: borderColor ?? kWhiteColor,
           ),
         ),
-        child: widget,
+        child: Center(child: widget),
       ),
     );
   }
