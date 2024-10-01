@@ -11,6 +11,7 @@ import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_appbar.dart';
 import 'package:lawan/utility/shared/widgets/circle_button_widget.dart';
+import 'package:lawan/utility/shared/widgets/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:lawan/utility/shared/widgets/tab_bar_widget.dart';
 import 'package:lawan/utility/util/helper.dart';
@@ -341,7 +342,8 @@ class AdminMainUi extends StatelessWidget {
             child: Row(
               children: [
                 GestureDetector(
-                  onTap: () => logic.editArena(arenaType: ArenaType.arena),
+                  // onTap: () => logic.editArena(arenaType: ArenaType.arena),
+                  onTap: logic.showEditAddDialog,
                   child: Padding(
                     padding: const EdgeInsets.all(12),
                     child: Image.asset(
@@ -350,21 +352,22 @@ class AdminMainUi extends StatelessWidget {
                     ),
                   ),
                 ),
-                Row(
-                  children: state.listArena
-                      .asMap()
-                      .entries
-                      .map(
-                        (data) => SelectedContainerWidget(
-                          title: data.value.name,
-                          isSelected: state.selectedListArena.value == data.key,
-                          onTap: () => state.selectedListArena.value = data.key,
-                        ),
+                GradientButton(
+                  onTap: logic.chooseArenaDialog,
+                  widget: Row(
+                    children: [
+                      Text(
+                        state.listArena[state.selectedListArena.value].name,
+                        style: whiteTextStyle.copyWith(fontWeight: medium),
+                      ),
+                      const SizedBox(width: 4),
+                      Icon(
+                        Icons.keyboard_arrow_down,
+                        color: kWhiteColor,
+                        size: 18,
                       )
-                      .toList(),
-                ),
-                CircleButtonWidget(
-                  onTap: logic.createNewArena,
+                    ],
+                  ),
                 ),
               ],
             ),

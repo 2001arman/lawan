@@ -1,11 +1,184 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/admin/admin_main_state.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/util/helper.dart';
 import 'package:wheel_picker/wheel_picker.dart';
 
 class CustomDialog {
+  static Future<void> editAddDialog(
+      {required VoidCallback onTapEdit, required VoidCallback onTapAdd}) {
+    return Get.dialog(
+      Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Container(
+          width: Get.width * .8,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: kWhiteColor,
+            borderRadius: BorderRadius.circular(32),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: onTapEdit,
+                child: Container(
+                  color: Colors.transparent,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/icons/pencil.png',
+                        width: 15,
+                        height: 15,
+                        color: kDarkgreyColor,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Edit',
+                        style: blackTextStyle.copyWith(fontWeight: medium),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: kGreyColor,
+              ),
+              GestureDetector(
+                onTap: onTapAdd,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  color: Colors.transparent,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add,
+                        color: kDarkgreyColor,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Add',
+                        style: blackTextStyle.copyWith(fontWeight: medium),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Future<void> chooseArenaDialog({
+    required List<ArenaModel> listArena,
+    required int selectedArena,
+    required Function(int index) onSelected,
+    required Function(String name) onSearch,
+  }) {
+    var tempArena = <ArenaModel>[].obs;
+    tempArena.addAll(listArena);
+    TextStyle textStyle =
+        blackTextStyle.copyWith(fontSize: 14, height: 1.5, fontFamily: 'Lufga');
+    TextEditingController nameController = TextEditingController();
+    var startWheel = WheelPickerController(
+      itemCount: tempArena.length,
+      initialIndex: selectedArena,
+    );
+    return Get.dialog(
+      Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Container(
+          width: Get.width * .8,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: kWhiteColor,
+            borderRadius: BorderRadius.circular(32),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomTextFormField(
+                hintText: '',
+                controller: nameController,
+                onChanged: (data) {
+                  tempArena.assignAll(listArena.where((arena) =>
+                      arena.name.toLowerCase().contains(data.toLowerCase())));
+                  Get.log('cek arena $tempArena');
+                  tempArena.refresh();
+                  selectedArena = 0;
+                  startWheel =
+                      WheelPickerController(itemCount: tempArena.length);
+                },
+                borderColor: kGreyColor,
+                prefix: Icon(
+                  Icons.search,
+                  color: kDarkgreyColor,
+                ),
+                suffix: Icon(
+                  Icons.highlight_remove_outlined,
+                  color: kDarkgreyColor,
+                ),
+              ),
+              SizedBox(
+                height: 160,
+                width: double.infinity,
+                child: WheelPicker(
+                  builder: (context, index) => Text(
+                    tempArena[index].name,
+                    style: textStyle.copyWith(
+                      fontFamily: 'Lufga',
+                    ),
+                  ),
+                  controller: startWheel,
+                  selectedIndexColor: Colors.black,
+                  looping: false,
+                  // onIndexChanged: (index) {},
+                  style: WheelPickerStyle(
+                    itemExtent:
+                        textStyle.fontSize! * textStyle.height!, // Text height
+                    squeeze: 0.9,
+                    diameterRatio: 1,
+                    surroundingOpacity: .25,
+                    magnification: 1.2,
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  CustomButton(
+                    isBlack: false,
+                    onTap: Get.back,
+                    title: 'Cancel',
+                    borderColor: kGreyColor,
+                  ),
+                  SizedBox(width: defaultMargin),
+                  CustomButton(
+                    isBlack: true,
+                    onTap: () => onSelected(startWheel.selected),
+                    title: 'Okay',
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   static Future<void> showChooseTimeDialog({
     required int startTime,
     required int endTime,

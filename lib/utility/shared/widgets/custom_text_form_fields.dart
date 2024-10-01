@@ -16,6 +16,8 @@ class CustomTextFormField extends StatefulWidget {
     this.validator,
     this.suffix,
     this.margin = 12,
+    this.borderColor,
+    this.prefix,
   });
 
   final String hintText;
@@ -26,8 +28,9 @@ class CustomTextFormField extends StatefulWidget {
   final Function(String)? onChanged;
   final TextInputType textInputType;
   final String? Function(String?)? validator;
-  final Widget? suffix;
+  final Widget? suffix, prefix;
   final double margin;
+  final Color? borderColor;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -69,7 +72,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     border: OutlineInputBorder(
                       borderRadius:
                           BorderRadius.circular(30.0), // Rounded corners
-                      borderSide: BorderSide.none, // No border
+                      borderSide: BorderSide(
+                          color: widget.borderColor ??
+                              Colors.transparent), // No border
                     ),
                     hintText: widget.hintText,
                     suffixIcon: GestureDetector(
@@ -99,6 +104,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   style:
                       blackTextStyle.copyWith(fontWeight: medium, fontSize: 14),
                   decoration: InputDecoration(
+                    prefixIcon: widget.prefix,
                     suffixIcon: widget.suffix,
                     hintText: widget.hintText,
                     hintStyle: midGreyTextStyle.copyWith(
@@ -109,10 +115,26 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     filled: true,
                     focusColor: kWhiteColor,
                     fillColor: kWhiteColor,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius:
+                          BorderRadius.circular(30.0), // Rounded corners
+                      borderSide: BorderSide(
+                        color: widget.borderColor ?? Colors.transparent,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius:
+                          BorderRadius.circular(30.0), // Rounded corners
+                      borderSide: BorderSide(
+                        color: widget.borderColor ?? Colors.transparent,
+                      ),
+                    ),
                     border: OutlineInputBorder(
                       borderRadius:
                           BorderRadius.circular(30.0), // Rounded corners
-                      borderSide: BorderSide.none, // No border
+                      borderSide: BorderSide(
+                        color: widget.borderColor ?? Colors.transparent,
+                      ),
                     ),
                   ),
                   maxLines: widget.minLines,

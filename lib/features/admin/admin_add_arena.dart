@@ -20,8 +20,6 @@ class AdminAddArena {
 
   AdminAddArena({required this.state, required this.logic});
 
-  
-
   Widget contentSection() {
     switch (state.selectedIndex.value) {
       case 1:

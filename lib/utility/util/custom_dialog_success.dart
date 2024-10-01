@@ -168,10 +168,13 @@ class CustomDialogSuccess {
                 Row(
                   children: [
                     CircleButtonTransparentWidget(
-                      onTap: () => confirmDialog(
-                        actionType: ActionType.delete,
-                        onAction: onDelete,
-                      ),
+                      onTap: () {
+                        Get.back();
+                        confirmDialog(
+                          actionType: ActionType.delete,
+                          onAction: onDelete,
+                        );
+                      },
                       widget: SvgPicture.asset(
                         'assets/icons/trash.svg',
                       ),
@@ -180,10 +183,13 @@ class CustomDialogSuccess {
                     CustomButton(
                       title: 'Update',
                       isBlack: true,
-                      onTap: () => confirmDialog(
-                        actionType: ActionType.edit,
-                        onAction: () => onAction(dataController.text),
-                      ),
+                      onTap: () {
+                        Get.back();
+                        confirmDialog(
+                          actionType: ActionType.edit,
+                          onAction: () => onAction(dataController.text),
+                        );
+                      },
                     ),
                   ],
                 ),

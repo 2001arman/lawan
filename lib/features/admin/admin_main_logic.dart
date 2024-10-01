@@ -1,17 +1,62 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lawan/features/admin/admin_add_arena.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
+import 'package:lawan/utility/util/custom_dialog.dart';
 import 'package:lawan/utility/util/custom_dialog_success.dart';
 import 'package:lawan/utility/util/helper.dart';
 
 class AdminMainLogic extends GetxController {
   AdminMainState state = AdminMainState();
+  Timer? _debounce;
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
 
   bool checkValidator() {
     return state.textFormKey.currentState!.validate();
+  }
+
+  void showEditAddDialog() {
+    CustomDialog.editAddDialog(onTapAdd: () {
+      Get.back();
+      createNewArena();
+    }, onTapEdit: () {
+      Get.back();
+      editArena(arenaType: ArenaType.arena);
+    });
+  }
+
+  // void onSearchFriend(String name) async {
+  //   if (_debounce?.isActive ?? false) _debounce?.cancel();
+  //   _debounce = Timer(const Duration(milliseconds: 500), () async {
+  //     state.selectedFriendId.value = '';
+  //     state.tempListFriends.assignAll(
+  //       state.listFriends
+  //           .where((friend) =>
+  //               friend.name.toLowerCase().contains(name.toLowerCase()))
+  //           .toList(),
+  //     );
+  //   });
+  // }
+
+  void chooseArenaDialog() {
+    CustomDialog.chooseArenaDialog(
+      listArena: state.listArena,
+      selectedArena: state.selectedListArena.value,
+      onSelected: (index) {
+        Get.back();
+        state.selectedListArena.value = index;
+      },
+      onSearch: (name) => Get.log('cek search'),
+    );
   }
 
   void editArena({required ArenaType arenaType}) {
@@ -34,12 +79,10 @@ class AdminMainLogic extends GetxController {
           state.listArena[state.selectedListArena.value].courtName = newData;
         }
         Get.back();
-        Get.back();
         state.listArena.refresh();
       },
       onDelete: () {
         state.listArena.removeAt(state.selectedListArena.value);
-        Get.back();
         Get.back();
         state.listArena.refresh();
       },
