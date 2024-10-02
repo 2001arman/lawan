@@ -5,8 +5,11 @@ import 'package:get/get.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/field_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/field_number_widget.dart';
+import 'package:lawan/utility/shared/widgets/host_avatar_widget.dart';
 import 'package:lawan/utility/shared/widgets/text_boder.dart';
+import 'package:lawan/utility/shared/widgets/text_pill_widget.dart';
 
 class AdminSessionBottomSheet {
   Widget cardDetailSession({
@@ -68,7 +71,7 @@ class AdminSessionBottomSheet {
     );
   }
 
-  void showDetailSessionSheet() {
+  void sessionContainerSheet({required Widget widgetContent}) {
     Get.bottomSheet(
       Padding(
         padding: const EdgeInsets.all(8),
@@ -100,146 +103,22 @@ class AdminSessionBottomSheet {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: defaultMargin),
                   child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: Get.width * 0.5,
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          decoration: BoxDecoration(
-                            gradient: mainGradient,
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(80),
-                              bottomRight: Radius.circular(80),
-                            ),
-                          ),
-                          child: Text(
-                            'MBPJ Sports Complex',
-                            style: whiteTextStyle.copyWith(
-                              fontSize: 12,
-                              fontWeight: medium,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        SvgPicture.asset(
-                          'assets/icons/QR.svg',
-                          width: Get.width * 0.5,
-                        ),
-                        const SizedBox(height: 12),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FieldNumberWidget(
-                              iconColor: kDarkgreyColor,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: kGreenColor),
-                          child: Text(
-                            'Complete',
-                            style: whiteTextStyle.copyWith(
-                              fontSize: 10,
-                              fontWeight: medium,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          margin: EdgeInsets.symmetric(vertical: defaultMargin),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 16),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(32),
-                            color: kWhiteColor,
-                          ),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                'assets/icons/image_person.png',
-                                width: 40,
-                                height: 40,
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Jese Leos',
-                                      style: blackTextStyle.copyWith(
-                                          fontWeight: medium),
-                                    ),
-                                    const TextBoder(textTitle: 'Host'),
-                                  ],
-                                ),
-                              ),
-                              CircleButtonTransparentWidget(
-                                onTap: () {},
-                                borderColor: kGreyColor,
-                                size: 36,
-                                widget: SvgPicture.asset(
-                                  'assets/icons/chat.svg',
-                                ),
-                              ),
-                              const SizedBox(width: 4),
-                              CircleButtonTransparentWidget(
-                                borderColor: kGreyColor,
-                                onTap: () {},
-                                size: 36,
-                                widget: Icon(
-                                  Icons.more_vert,
-                                  color: kDarkgreyColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            cardDetailSession(
-                              contentText: 'Tue,  25 Sep 2024',
-                              title: 'Date',
-                              icon: Icons.date_range_outlined,
-                              fontSize: 14,
-                            ),
-                            const SizedBox(width: 8),
-                            cardDetailSession(
-                              contentText: '9:00 AM - 11:00 AM',
-                              title: 'Time',
-                              icon: Icons.access_time_outlined,
-                              fontSize: 14,
-                              description: '2hr',
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            cardDetailSession(
-                              contentText: 'Petaling Jaya, Selangor',
-                              title: 'Location',
-                              icon: Icons.location_on_outlined,
-                              fontSize: 14,
-                            ),
-                            const SizedBox(width: 8),
-                            cardDetailSession(
-                              contentText: 'RM220',
-                              title: 'Price',
-                              icon: Icons.monetization_on_outlined,
-                              fontSize: 20,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 100),
-                      ],
+                    child: widgetContent,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: CircleButtonTransparentWidget(
+                      size: 40,
+                      onTap: Get.back,
+                      borderColor: kGreyColor,
+                      widget: Icon(
+                        Icons.close,
+                        color: kDarkgreyColor,
+                        size: 20,
+                      ),
                     ),
                   ),
                 ),
@@ -313,6 +192,193 @@ class AdminSessionBottomSheet {
       ),
       isScrollControlled: true,
       enableDrag: true,
+    );
+  }
+
+  void showDetailSessionSheet() {
+    return sessionContainerSheet(
+      widgetContent: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: Get.width * 0.5,
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            decoration: BoxDecoration(
+              gradient: mainGradient,
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(80),
+                bottomRight: Radius.circular(80),
+              ),
+            ),
+            child: Text(
+              'MBPJ Sports Complex',
+              style: whiteTextStyle.copyWith(
+                fontSize: 12,
+                fontWeight: medium,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 12),
+          SvgPicture.asset(
+            'assets/icons/QR.svg',
+            width: Get.width * 0.5,
+          ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FieldNumberWidget(
+                iconColor: kDarkgreyColor,
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          const TextPillWidget(data: 'Complete'),
+          const HostAvatarWidget(),
+          Row(
+            children: [
+              cardDetailSession(
+                contentText: 'Tue,  25 Sep 2024',
+                title: 'Date',
+                icon: Icons.date_range_outlined,
+                fontSize: 14,
+              ),
+              const SizedBox(width: 8),
+              cardDetailSession(
+                contentText: '9:00 AM - 11:00 AM',
+                title: 'Time',
+                icon: Icons.access_time_outlined,
+                fontSize: 14,
+                description: '2hr',
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              cardDetailSession(
+                contentText: 'Petaling Jaya, Selangor',
+                title: 'Location',
+                icon: Icons.location_on_outlined,
+                fontSize: 14,
+              ),
+              const SizedBox(width: 8),
+              cardDetailSession(
+                contentText: 'RM220',
+                title: 'Price',
+                icon: Icons.monetization_on_outlined,
+                fontSize: 20,
+              ),
+            ],
+          ),
+          const SizedBox(height: 100),
+        ],
+      ),
+    );
+  }
+
+  void successCreateSesssionSheet() {
+    return sessionContainerSheet(
+      widgetContent: SizedBox(
+        width: Get.width,
+        child: Column(
+          children: [
+            SizedBox(height: defaultMargin),
+            Container(
+              width: 40,
+              height: 40,
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: kGreenColor),
+              child: Icon(
+                Icons.check,
+                color: kWhiteColor,
+                size: 20,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Session Succesfully Created',
+              style: darkGreyTextStyle.copyWith(fontWeight: medium),
+            ),
+            SizedBox(height: defaultMargin),
+            const FieldImageWidget(),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                CustomButton(
+                  isBlack: true,
+                  onTap: () {},
+                  paddingVertical: 8,
+                  widget: Column(
+                    children: [
+                      Text(
+                        'Sesssion starting in',
+                        style: midGreyTextStyle.copyWith(fontSize: 12),
+                      ),
+                      Text(
+                        '2 days 2 hours 6 mins 3 sec ',
+                        style: whiteTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: semiBold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const HostAvatarWidget(),
+            // const Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     TextPillWidget(data: '25 - 35 years'),
+            //     SizedBox(width: 8),
+            //     TextPillWidget(data: 'Male & Female'),
+            //     SizedBox(width: 8),
+            //     TextPillWidget(data: 'English & Malay'),
+            //   ],
+            // ),
+            Row(
+              children: [
+                cardDetailSession(
+                  contentText: 'Tue,  25 Sep 2024',
+                  title: 'Date',
+                  icon: Icons.date_range_outlined,
+                  fontSize: 14,
+                ),
+                const SizedBox(width: 8),
+                cardDetailSession(
+                  contentText: '9:00 AM - 11:00 AM',
+                  title: 'Time',
+                  icon: Icons.access_time_outlined,
+                  fontSize: 14,
+                  description: '2hr',
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                cardDetailSession(
+                  contentText: 'Petaling Jaya, Selangor',
+                  title: 'Location',
+                  icon: Icons.location_on_outlined,
+                  fontSize: 14,
+                ),
+                const SizedBox(width: 8),
+                cardDetailSession(
+                  contentText: 'RM220',
+                  title: 'Price',
+                  icon: Icons.monetization_on_outlined,
+                  fontSize: 20,
+                ),
+              ],
+            ),
+            const SizedBox(height: 100),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
 import 'package:lawan/features/admin/session/admin_add_session.dart';
 import 'package:lawan/features/admin/session/admin_session_bottom_sheet.dart';
@@ -21,9 +22,13 @@ class SessionLogic {
 
   void handleNextButton() async {
     if (state.selectedIndex.value == 3) {
+      Get.back();
       CustomDialogSuccess.confirmDialog(
         actionType: ActionType.booking,
-        onAction: () {},
+        onAction: () {
+          Get.back();
+          AdminSessionBottomSheet().successCreateSesssionSheet();
+        },
       );
       return;
     }
