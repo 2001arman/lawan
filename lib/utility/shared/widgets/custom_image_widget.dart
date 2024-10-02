@@ -16,46 +16,47 @@ class CustomImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-        top: defaultMargin,
-        bottom: defaultMargin,
-        right: 8,
-      ),
-      padding: const EdgeInsets.all(8),
-      width: double.infinity,
-      height: 126,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        image: DecorationImage(
-          image: FileImage(
-            File(path),
-          ),
-          fit: BoxFit.cover,
+    return AspectRatio(
+      aspectRatio: 2.88 / 1,
+      child: Container(
+        margin: EdgeInsets.only(
+          top: defaultMargin,
+          bottom: defaultMargin,
+          right: 8,
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          GestureDetector(
-            onTap: changeImage,
-            child: SvgPicture.asset(
-              'assets/icons/container_rotate.svg',
-              width: 36,
-              height: 36,
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          image: DecorationImage(
+            image: FileImage(
+              File(path),
             ),
+            fit: BoxFit.cover,
           ),
-          const SizedBox(width: 8),
-          GestureDetector(
-            onTap: deleteImage,
-            child: SvgPicture.asset(
-              'assets/icons/container_trash.svg',
-              width: 36,
-              height: 36,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            GestureDetector(
+              onTap: changeImage,
+              child: SvgPicture.asset(
+                'assets/icons/container_rotate.svg',
+                width: 36,
+                height: 36,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: deleteImage,
+              child: SvgPicture.asset(
+                'assets/icons/container_trash.svg',
+                width: 36,
+                height: 36,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

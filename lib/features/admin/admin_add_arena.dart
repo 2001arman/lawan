@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/admin/admin_main_logic.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
+import 'package:lawan/features/domain/arena/arena_model.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/choose_time_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
@@ -21,16 +22,16 @@ class AdminAddArena {
 
   AdminAddArena({required this.state, required this.logic});
 
-  Widget contentSection() {
+  Widget contentSection({ArenaModel? arenaData}) {
     switch (state.selectedIndex.value) {
       case 1:
-        return detailSection();
+        return detailSection(arenaData: arenaData);
       case 2:
         return hourSection();
       case 3:
         return rateSection();
       default:
-        return detailSection();
+        return detailSection(arenaData: arenaData);
     }
   }
 
@@ -73,7 +74,11 @@ class AdminAddArena {
     );
   }
 
-  void createNewArena() {
+  void createNewArena({ArenaModel? arenaData}) {
+    if (arenaData != null) {
+      state.nameController.text = arenaData.name;
+      state.locationController.text = 'Petaling Jaya, Selangor';
+    }
     Get.bottomSheet(
       Padding(
         padding: const EdgeInsets.all(8),
@@ -139,7 +144,7 @@ class AdminAddArena {
                       ),
                     ],
                   ),
-                  contentSection(),
+                  contentSection(arenaData: arenaData),
                   Row(
                     children: [
                       CustomButton(
@@ -150,10 +155,13 @@ class AdminAddArena {
                       const SizedBox(width: 16),
                       CustomButton(
                         title: state.selectedIndex.value == 3
-                            ? 'Add Arena'
+                            ? arenaData == null
+                                ? 'Add Arena'
+                                : 'Add Court'
                             : 'Next',
                         isBlack: true,
-                        onTap: logic.handleNextButton,
+                        onTap: () =>
+                            logic.handleNextButton(arenaData: arenaData),
                       ),
                     ],
                   ),
@@ -325,7 +333,7 @@ class AdminAddArena {
     );
   }
 
-  Widget detailSection() {
+  Widget detailSection({ArenaModel? arenaData}) {
     return Expanded(
       child: Form(
         key: state.textFormKey,
@@ -370,7 +378,7 @@ class AdminAddArena {
               ),
               CustomTextFormField(
                 hintText: 'Location',
-                controller: TextEditingController(),
+                controller: state.locationController,
                 isReadOnly: true,
                 suffix: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -387,6 +395,7 @@ class AdminAddArena {
               ),
               CustomTextFormField(
                 hintText: 'Enter Arena Name',
+                isReadOnly: arenaData != null,
                 controller: state.nameController,
                 validator: (data) => Helper.regularValidator(data),
               ),

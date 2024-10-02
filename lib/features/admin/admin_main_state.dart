@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lawan/utility/util/helper.dart';
 
+import '../domain/arena/arena_model.dart';
+
 class AdminMainState {
   var selectedNavbarIndex = 1.obs;
 
@@ -20,12 +22,15 @@ class AdminMainState {
 
   var listArena = <ArenaModel>[].obs;
   var selectedListArena = 0.obs;
+  var selectedListCourt = 0.obs;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController courtController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
   var uploadedPictures = <XFile>[
     XFile('empty'),
   ].obs;
+
   var selectedArenaType = 'Indoor'.obs;
   var selectedFlooringType = 'Court Turf'.obs;
 
@@ -94,55 +99,4 @@ enum ActionType {
         return '';
     }
   }
-}
-
-class OperationalHour {
-  Rx<bool> isActive;
-  String dayName;
-  Rx<TimeOfDay> openTime;
-  Rx<TimeOfDay> closeTIme;
-  Rx<bool> chooseTime;
-
-  OperationalHour({
-    required this.isActive,
-    required this.dayName,
-    required this.openTime,
-    required this.closeTIme,
-    required this.chooseTime,
-  });
-}
-
-class RateModel {
-  final String name;
-  Rx<int> price;
-  Rx<double> hour;
-  Rx<int> finalPrice;
-
-  RateModel({
-    required this.name,
-    required this.price,
-    required this.hour,
-  }) : finalPrice = (price.value + (price * 0.2).toInt()).obs;
-}
-
-class ArenaModel {
-  final List<XFile> pictures;
-  final String location;
-  String name;
-  String courtName;
-  final String arenaType;
-  final String flooringType;
-  final List<OperationalHour> operationalHours;
-  final List<RateModel> rateArena;
-
-  ArenaModel({
-    required this.pictures,
-    required this.location,
-    required this.name,
-    required this.courtName,
-    required this.arenaType,
-    required this.flooringType,
-    required this.operationalHours,
-    required this.rateArena,
-  });
 }

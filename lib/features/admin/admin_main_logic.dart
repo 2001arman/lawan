@@ -10,6 +10,8 @@ import 'package:lawan/utility/util/custom_dialog.dart';
 import 'package:lawan/utility/util/custom_dialog_success.dart';
 import 'package:lawan/utility/util/helper.dart';
 
+import '../domain/arena/arena_model.dart';
+
 class AdminMainLogic extends GetxController {
   AdminMainState state = AdminMainState();
   Timer? _debounce;
@@ -66,7 +68,8 @@ class AdminMainLogic extends GetxController {
         data = state.listArena[state.selectedListArena.value].name;
         break;
       default:
-        data = state.listArena[state.selectedListArena.value].courtName;
+        data = state.listArena[state.selectedListArena.value]
+            .courtData[state.selectedListCourt.value].courtName;
         break;
     }
     CustomDialogSuccess.editArenaDialog(
@@ -76,7 +79,8 @@ class AdminMainLogic extends GetxController {
         if (arenaType == ArenaType.arena) {
           state.listArena[state.selectedListArena.value].name = newData;
         } else {
-          state.listArena[state.selectedListArena.value].courtName = newData;
+          state.listArena[state.selectedListArena.value]
+              .courtData[state.selectedListCourt.value].courtName = newData;
         }
         Get.back();
         state.listArena.refresh();
@@ -93,7 +97,13 @@ class AdminMainLogic extends GetxController {
     AdminAddArena(state: state, logic: this).createNewArena();
   }
 
-  void handleNextButton() async {
+  void createNewCourt() {
+    AdminAddArena(state: state, logic: this).createNewArena(
+      arenaData: state.listArena[state.selectedListArena.value],
+    );
+  }
+
+  void handleNextButton({ArenaModel? arenaData}) async {
     if (state.selectedIndex.value == 1) {
       final validator = state.textFormKey.currentState!.validate();
       if (!validator) return;
@@ -112,7 +122,11 @@ class AdminMainLogic extends GetxController {
             );
         return;
       }
-      createArena();
+      if (arenaData != null) {
+        createCourt();
+      } else {
+        createArena();
+      }
       Get.back();
       await Future.delayed(const Duration(seconds: 1));
       CustomDialogSuccess.successCreateArena();
@@ -126,16 +140,40 @@ class AdminMainLogic extends GetxController {
     uploaded.addAll(state.uploadedPictures);
 
     ArenaModel arena = ArenaModel(
-      pictures: uploaded,
       location: 'Selangor',
       name: state.nameController.text,
-      courtName: state.courtController.text,
-      arenaType: state.selectedArenaType.value,
-      flooringType: state.selectedFlooringType.value,
-      operationalHours: state.listOperationalHour,
-      rateArena: state.rateList,
+      courtData: [
+        CourtModel(
+          courtName: state.courtController.text,
+          pictures: uploaded,
+          arenaType: state.selectedArenaType.value,
+          flooringType: state.selectedFlooringType.value,
+          operationalHours: state.listOperationalHour,
+          rateArena: state.rateList,
+        )
+      ],
     );
     state.listArena.add(arena);
+    clearState();
+  }
+
+  void createCourt() {
+    List<XFile> uploaded = [];
+    uploaded.addAll(state.uploadedPictures);
+
+    state.listArena[state.selectedListArena.value].courtData.add(
+      CourtModel(
+        courtName: state.courtController.text,
+        pictures: uploaded,
+        arenaType: state.selectedArenaType.value,
+        flooringType: state.selectedFlooringType.value,
+        operationalHours: state.listOperationalHour,
+        rateArena: state.rateList,
+      ),
+    );
+    Get.log(
+        'cek court ${state.listArena[state.selectedListArena.value].courtData}');
+    state.listArena.refresh();
     clearState();
   }
 

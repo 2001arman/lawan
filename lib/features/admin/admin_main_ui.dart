@@ -391,18 +391,37 @@ class AdminMainUi extends StatelessWidget {
                     ),
                   ),
                 ),
-                CircleButtonWidget(
-                  widget: Center(
-                    child: Text(
-                      state.listArena[state.selectedListArena.value].courtName,
-                      style: whiteTextStyle,
-                    ),
+                Obx(
+                  () => Row(
+                    children: state
+                        .listArena[state.selectedListArena.value].courtData
+                        .asMap()
+                        .entries
+                        .map(
+                          (court) => CircleButtonWidget(
+                            widget: Center(
+                              child: Text(
+                                court.value.courtName,
+                                style: whiteTextStyle.copyWith(
+                                  color:
+                                      court.key == state.selectedListCourt.value
+                                          ? kWhiteColor
+                                          : kBlackColor,
+                                ),
+                              ),
+                            ),
+                            margin: const EdgeInsets.only(right: 12),
+                            onTap: () =>
+                                state.selectedListCourt.value = court.key,
+                            isActive:
+                                court.key == state.selectedListCourt.value,
+                          ),
+                        )
+                        .toList(),
                   ),
-                  margin: const EdgeInsets.only(right: 12),
-                  onTap: () {},
                 ),
                 CircleButtonWidget(
-                  onTap: () {},
+                  onTap: logic.createNewCourt,
                 ),
               ],
             ),
@@ -480,8 +499,8 @@ class AdminMainUi extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Column(
-            children: state
-                .listArena[state.selectedListArena.value].operationalHours
+            children: state.listArena[state.selectedListArena.value]
+                .courtData[state.selectedListCourt.value].operationalHours
                 .map(
                   (data) => Column(
                     children: [
@@ -500,7 +519,6 @@ class AdminMainUi extends StatelessWidget {
                                 value: data.isActive.value,
                                 onChanged: (active) {
                                   data.isActive.value = active;
-                                  Get.log('cek isActive ${data.isActive}');
                                 },
                                 activeColor: kWhiteColor,
                                 activeTrackColor: kGreenColor,
@@ -614,7 +632,8 @@ class AdminMainUi extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Column(
-          children: state.listArena[state.selectedListArena.value].rateArena
+          children: state.listArena[state.selectedListArena.value]
+              .courtData[state.selectedListCourt.value].rateArena
               .map(
                 (data) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -729,7 +748,8 @@ class AdminMainUi extends StatelessWidget {
             enlargeCenterPage: false,
             enableInfiniteScroll: false,
           ),
-          items: state.listArena[state.selectedListArena.value].pictures
+          items: state.listArena[state.selectedListArena.value]
+              .courtData[state.selectedListCourt.value].pictures
               .asMap()
               .entries
               .map((data) {
@@ -779,7 +799,9 @@ class AdminMainUi extends StatelessWidget {
                 .map(
                   (data) => SelectedContainerWidget(
                     title: data,
-                    isSelected: state.listArena[state.selectedListArena.value]
+                    isSelected: state
+                            .listArena[state.selectedListArena.value]
+                            .courtData[state.selectedListCourt.value]
                             .arenaType ==
                         data,
                     onTap: () {},
@@ -802,7 +824,9 @@ class AdminMainUi extends StatelessWidget {
                   (data) => SelectedContainerWidget(
                     title: data,
                     isSelected: data ==
-                        state.listArena[state.selectedListArena.value]
+                        state
+                            .listArena[state.selectedListArena.value]
+                            .courtData[state.selectedListCourt.value]
                             .flooringType,
                     onTap: () {},
                   ),
