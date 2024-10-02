@@ -43,7 +43,7 @@ class TabbarWidget extends StatelessWidget {
                       builder:
                           (BuildContext context, BoxConstraints constraints) {
                         return Container(
-                          width: constraints.maxWidth / 3,
+                          width: constraints.maxWidth / tabBarTitle.length,
                           decoration: BoxDecoration(
                             color: kWhiteColor,
                             borderRadius: BorderRadius.circular(100),

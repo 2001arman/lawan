@@ -244,13 +244,13 @@ class CustomDialogSuccess {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Confirm Update?',
+                  'Confirm ${actionType.title}',
                   style:
                       blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Proceed with applying the changes.',
+                  actionType.description,
                   style: blackTextStyle.copyWith(
                     fontSize: 12,
                     fontWeight: reguler,
@@ -270,17 +270,17 @@ class CustomDialogSuccess {
                 Row(
                   children: [
                     Visibility(
-                      visible: actionType == ActionType.edit,
+                      visible: actionType == ActionType.delete,
                       replacement: CustomButton(
+                        title: 'Confirm',
+                        isBlack: true,
+                        onTap: onAction,
+                      ),
+                      child: CustomButton(
                         title: 'Delete',
                         isBlack: false,
                         borderColor: kRedColor,
                         textColor: kRedColor,
-                        onTap: onAction,
-                      ),
-                      child: CustomButton(
-                        title: 'Confirm',
-                        isBlack: true,
                         onTap: onAction,
                       ),
                     ),

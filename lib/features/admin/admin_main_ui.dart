@@ -437,6 +437,7 @@ class AdminMainUi extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: kBackgroundColor,
+      resizeToAvoidBottomInset: false,
       appBar: const CustomAppbar(),
       body: Stack(
         children: [

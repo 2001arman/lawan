@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lawan/features/admin/admin_main_logic.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
+import 'package:lawan/utility/shared/widgets/choose_time_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
@@ -490,7 +491,6 @@ class AdminAddArena {
                                     value: data.isActive.value,
                                     onChanged: (active) {
                                       data.isActive.value = active;
-                                      Get.log('cek isActive ${data.isActive}');
                                     },
                                     activeColor: kWhiteColor,
                                     activeTrackColor: kGreenColor,
@@ -503,110 +503,22 @@ class AdminAddArena {
                           ),
                           if (data.isActive.value) const SizedBox(height: 8),
                           Visibility(
-                            visible: data.isActive.value,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () =>
-                                        CustomDialog.showChooseTimeDialog(
-                                      startTime: data.openTime.value.hour,
-                                      endTime: data.closeTIme.value.hour,
-                                      onSave: (startTime, endTime) {
-                                        Get.back();
-
-                                        data.openTime.value = TimeOfDay(
-                                            hour: startTime, minute: 0);
-                                        data.closeTIme.value =
-                                            TimeOfDay(hour: endTime, minute: 0);
-                                      },
-                                    ),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(80),
-                                        color: kWhiteColor,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Image.asset(
-                                            'assets/icons/clock.png',
-                                            width: 16,
-                                            height: 16,
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            Helper.formatTime12Hour(
-                                                data.openTime.value),
-                                            style: blackTextStyle.copyWith(
-                                                fontWeight: medium),
-                                          ),
-                                          const Spacer(),
-                                          Image.asset(
-                                              'assets/icons/arrow_up_down.png',
-                                              width: 20,
-                                              height: 20),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12),
-                                  child: Text(
-                                    'to',
-                                    style: darkGreyTextStyle,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () =>
-                                        CustomDialog.showChooseTimeDialog(
-                                      startTime: data.openTime.value.hour,
-                                      endTime: data.closeTIme.value.hour,
-                                      onSave: (startTime, endTime) {
-                                        Get.back();
-                                        data.openTime.value = TimeOfDay(
-                                            hour: startTime, minute: 0);
-                                        data.closeTIme.value =
-                                            TimeOfDay(hour: endTime, minute: 0);
-                                      },
-                                    ),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(80),
-                                        color: kWhiteColor,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Image.asset(
-                                            'assets/icons/clock.png',
-                                            width: 16,
-                                            height: 16,
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            Helper.formatTime12Hour(
-                                                data.closeTIme.value),
-                                            style: blackTextStyle.copyWith(
-                                                fontWeight: medium),
-                                          ),
-                                          const Spacer(),
-                                          Image.asset(
-                                            'assets/icons/arrow_up_down.png',
-                                            width: 20,
-                                            height: 20,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                              visible: data.isActive.value,
+                              child: ChooseTimeWidget(
+                                openTime: data.openTime,
+                                closeTime: data.closeTIme,
+                                onSave: (startTime, endTime) {
+                                  Get.back();
+                                  data.openTime.value = TimeOfDay(
+                                    hour: startTime,
+                                    minute: 0,
+                                  );
+                                  data.closeTIme.value = TimeOfDay(
+                                    hour: endTime,
+                                    minute: 0,
+                                  );
+                                },
+                              )),
                           const SizedBox(height: 8),
                         ],
                       ),

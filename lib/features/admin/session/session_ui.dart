@@ -1,55 +1,17 @@
-// ignore_for_file: deprecated_member_use
-
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:lawan/features/admin/session/session_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
+import 'package:lawan/utility/shared/widgets/calendar_picker_widget.dart';
 import 'package:lawan/utility/shared/widgets/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/gradient_circle_button.dart';
 import 'package:lawan/utility/shared/widgets/session_item_card.dart';
-import 'package:table_calendar/table_calendar.dart';
 
-final kToday = DateTime.now();
-final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
-final ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
-final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
-
-int getHashCode(DateTime key) {
-  return key.day * 1000000 + key.month * 10000 + key.year;
-}
-
-class SessionUi extends StatefulWidget {
+class SessionUi extends StatelessWidget {
   SessionUi({super.key});
   static const String namePath = '/testing';
   final logic = SessionLogic();
   final state = SessionLogic().state;
-
-  @override
-  State<SessionUi> createState() => _SessionUiState();
-}
-
-final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
-  equals: isSameDay,
-  hashCode: getHashCode,
-);
-
-// ignore: unused_element
-late PageController _pageController;
-RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
-CalendarFormat _calendarFormat = CalendarFormat.month;
-
-class _SessionUiState extends State<SessionUi> {
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    setState(() {
-      _selectedDays.clear();
-      _selectedDays.add(selectedDay);
-
-      _focusedDay.value = focusedDay;
-      _rangeSelectionMode = RangeSelectionMode.toggledOff;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +23,7 @@ class _SessionUiState extends State<SessionUi> {
             child: Row(
               children: [
                 CircleButtonTransparentWidget(
-                  onTap: () => _pageController.previousPage(
+                  onTap: () => state.pageController.previousPage(
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeOut,
                   ),
@@ -70,7 +32,7 @@ class _SessionUiState extends State<SessionUi> {
                 ),
                 const SizedBox(width: 4),
                 CircleButtonTransparentWidget(
-                  onTap: () => _pageController.nextPage(
+                  onTap: () => state.pageController.nextPage(
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeOut,
                   ),
@@ -108,64 +70,23 @@ class _SessionUiState extends State<SessionUi> {
                   ),
                 ),
                 SizedBox(width: defaultMargin),
-                const GradientCircleButton(),
+                GradientCircleButton(
+                  onTap: logic.showAddArenaBottomSheet,
+                ),
               ],
             ),
           ),
-          TableCalendar(
-            firstDay: kFirstDay,
-            lastDay: kLastDay,
-            focusedDay: _focusedDay.value,
-            headerVisible: false,
-            selectedDayPredicate: (day) => _selectedDays.contains(day),
-            calendarFormat: _calendarFormat,
-            rangeSelectionMode: _rangeSelectionMode,
-            calendarStyle: CalendarStyle(
-              rangeHighlightColor: kBlackColor,
-              todayDecoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: kBlackColor,
-              ),
-              selectedDecoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: kBlackColor,
-              ),
-            ),
-            onDaySelected: _onDaySelected,
-            onCalendarCreated: (controller) => _pageController = controller,
-            onPageChanged: (focusedDay) => _focusedDay.value = focusedDay,
-            onFormatChanged: (format) {
-              if (_calendarFormat == CalendarFormat.month) {
-                setState(() => _calendarFormat = CalendarFormat.week);
-              } else {
-                setState(() => _calendarFormat = CalendarFormat.month);
-              }
-            },
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: kBlackColor,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              )
-            ],
-          ),
+          CalendarPickerWidget(pageController: logic.setController),
           const SizedBox(height: 8),
           Expanded(
             child: ListView(
               padding: EdgeInsets.symmetric(horizontal: defaultMargin),
               children: [
                 Column(
-                    children: widget.state.listSession
+                    children: state.listSession
                         .map(
                           (data) => GestureDetector(
-                            onTap: widget.logic.showDetailArena,
+                            onTap: logic.showDetailArena,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

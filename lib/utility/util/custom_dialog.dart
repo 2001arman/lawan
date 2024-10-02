@@ -116,7 +116,6 @@ class CustomDialog {
                 onChanged: (data) {
                   tempArena.assignAll(listArena.where((arena) =>
                       arena.name.toLowerCase().contains(data.toLowerCase())));
-                  Get.log('cek arena $tempArena');
                   tempArena.refresh();
                   selectedArena = 0;
                   startWheel =

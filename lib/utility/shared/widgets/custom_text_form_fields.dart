@@ -54,7 +54,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                 fontSize: 14,
               ),
             ),
-          if (widget.title != null) const SizedBox(height: 10),
+          if (widget.title != null) const SizedBox(height: 4),
           widget.isPassword
               ? TextFormField(
                   controller: widget.controller,

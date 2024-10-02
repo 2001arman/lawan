@@ -1,4 +1,25 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 class SessionState {
+  var selectedIndex = 1.obs;
+
+  PageController pageController = PageController();
+
+  List<int> optionHour = [1, 2, 3, 4, 5];
+  var selectedHour = 1.obs;
+
+  var openTime = const TimeOfDay(hour: 9, minute: 00).obs;
+  var closeTime = const TimeOfDay(hour: 18, minute: 00).obs;
+
+  // arena
+  var activeAlignment = Alignment.centerLeft.obs;
+  var tabActive = 'Indoor'.obs;
+  List<String> tabBarTitle = [
+    'Indoor',
+    'Outdoor',
+  ];
+
   var listSession = [
     SessionDate(
       date: '23 Sep',
