@@ -6,6 +6,7 @@ import 'package:lawan/utility/shared/widgets/circle_button_transparent_widget.da
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/gradient_circle_button.dart';
 import 'package:lawan/utility/shared/widgets/session_item_card.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class SessionUi extends StatelessWidget {
   SessionUi({super.key});
@@ -76,7 +77,10 @@ class SessionUi extends StatelessWidget {
               ],
             ),
           ),
-          CalendarPickerWidget(pageController: logic.setController),
+          CalendarPickerWidget(
+            pageController: logic.setController,
+            calendarMode: CalendarFormat.week,
+          ),
           const SizedBox(height: 8),
           Expanded(
             child: ListView(

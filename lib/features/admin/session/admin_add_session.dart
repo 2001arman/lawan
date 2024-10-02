@@ -7,6 +7,7 @@ import 'package:lawan/features/admin/session/session_state.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/field_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 import '../../../utility/shared/constants/constants_ui.dart';
 import '../../../utility/shared/widgets/calendar_picker_widget.dart';
@@ -347,7 +348,12 @@ class AdminAddSession {
             ],
           ),
           SizedBox(height: defaultMargin),
-          CalendarPickerWidget(pageController: logic.setController),
+          CalendarPickerWidget(
+            pageController: logic.setController,
+            calendarMode: CalendarFormat.month,
+            cellColor: kWhiteColor,
+            cellMargin: 3,
+          ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Obx(
