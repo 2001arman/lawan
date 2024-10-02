@@ -18,7 +18,7 @@ class ArenaModel {
 class CourtModel {
   String courtName;
   final List<XFile> pictures;
-  final String arenaType;
+  String arenaType;
   final String flooringType;
   final List<OperationalHour> operationalHours;
   final List<RateModel> rateArena;

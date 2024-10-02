@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lawan/features/admin/admin_add_arena.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
+import 'package:lawan/features/infrastructure/arena/arena_data_source.dart';
 import 'package:lawan/utility/util/custom_dialog.dart';
 import 'package:lawan/utility/util/custom_dialog_success.dart';
 import 'package:lawan/utility/util/helper.dart';
@@ -14,6 +15,7 @@ import '../domain/arena/arena_model.dart';
 
 class AdminMainLogic extends GetxController {
   AdminMainState state = AdminMainState();
+  ArenaDataSource arenaDataSource = Get.find<ArenaDataSource>();
   Timer? _debounce;
 
   @override
@@ -36,22 +38,9 @@ class AdminMainLogic extends GetxController {
     });
   }
 
-  // void onSearchFriend(String name) async {
-  //   if (_debounce?.isActive ?? false) _debounce?.cancel();
-  //   _debounce = Timer(const Duration(milliseconds: 500), () async {
-  //     state.selectedFriendId.value = '';
-  //     state.tempListFriends.assignAll(
-  //       state.listFriends
-  //           .where((friend) =>
-  //               friend.name.toLowerCase().contains(name.toLowerCase()))
-  //           .toList(),
-  //     );
-  //   });
-  // }
-
   void chooseArenaDialog() {
     CustomDialog.chooseArenaDialog(
-      listArena: state.listArena,
+      listArena: arenaDataSource.listArena,
       selectedArena: state.selectedListArena.value,
       onSelected: (index) {
         Get.back();
@@ -65,10 +54,10 @@ class AdminMainLogic extends GetxController {
     String data = '';
     switch (arenaType) {
       case ArenaType.arena:
-        data = state.listArena[state.selectedListArena.value].name;
+        data = arenaDataSource.listArena[state.selectedListArena.value].name;
         break;
       default:
-        data = state.listArena[state.selectedListArena.value]
+        data = arenaDataSource.listArena[state.selectedListArena.value]
             .courtData[state.selectedListCourt.value].courtName;
         break;
     }
@@ -77,18 +66,22 @@ class AdminMainLogic extends GetxController {
       data: data,
       onAction: (newData) {
         if (arenaType == ArenaType.arena) {
-          state.listArena[state.selectedListArena.value].name = newData;
+          arenaDataSource.editArenaName(
+              index: state.selectedListArena.value, name: newData);
         } else {
-          state.listArena[state.selectedListArena.value]
-              .courtData[state.selectedListCourt.value].courtName = newData;
+          arenaDataSource.editCourtName(
+            arenaIndex: state.selectedListArena.value,
+            courtIndex: state.selectedListCourt.value,
+            name: newData,
+          );
         }
         Get.back();
-        state.listArena.refresh();
+        arenaDataSource.listArena.refresh();
       },
       onDelete: () {
-        state.listArena.removeAt(state.selectedListArena.value);
+        arenaDataSource.deleteArena(index: state.selectedListArena.value);
         Get.back();
-        state.listArena.refresh();
+        arenaDataSource.listArena.refresh();
       },
     );
   }
@@ -99,7 +92,7 @@ class AdminMainLogic extends GetxController {
 
   void createNewCourt() {
     AdminAddArena(state: state, logic: this).createNewArena(
-      arenaData: state.listArena[state.selectedListArena.value],
+      arenaData: arenaDataSource.getArena(index: state.selectedListArena.value),
     );
   }
 
@@ -153,7 +146,7 @@ class AdminMainLogic extends GetxController {
         )
       ],
     );
-    state.listArena.add(arena);
+    arenaDataSource.addArena(arena: arena);
     clearState();
   }
 
@@ -161,8 +154,9 @@ class AdminMainLogic extends GetxController {
     List<XFile> uploaded = [];
     uploaded.addAll(state.uploadedPictures);
 
-    state.listArena[state.selectedListArena.value].courtData.add(
-      CourtModel(
+    arenaDataSource.addCourt(
+      arenaIndex: state.selectedListArena.value,
+      court: CourtModel(
         courtName: state.courtController.text,
         pictures: uploaded,
         arenaType: state.selectedArenaType.value,
@@ -171,9 +165,7 @@ class AdminMainLogic extends GetxController {
         rateArena: state.rateList,
       ),
     );
-    Get.log(
-        'cek court ${state.listArena[state.selectedListArena.value].courtData}');
-    state.listArena.refresh();
+    arenaDataSource.listArena.refresh();
     clearState();
   }
 

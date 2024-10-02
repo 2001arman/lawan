@@ -23,6 +23,7 @@ class AdminMainUi extends StatelessWidget {
   static const namePath = '/main_page';
   final logic = Get.find<AdminMainLogic>();
   final state = Get.find<AdminMainLogic>().state;
+  final arenaDataSource = Get.find<AdminMainLogic>().arenaDataSource;
   AdminMainUi({super.key});
 
   @override
@@ -357,7 +358,9 @@ class AdminMainUi extends StatelessWidget {
                   widget: Row(
                     children: [
                       Text(
-                        state.listArena[state.selectedListArena.value].name,
+                        arenaDataSource
+                            .getArena(index: state.selectedListArena.value)
+                            .name,
                         style: whiteTextStyle.copyWith(fontWeight: medium),
                       ),
                       const SizedBox(width: 4),
@@ -393,8 +396,8 @@ class AdminMainUi extends StatelessWidget {
                 ),
                 Obx(
                   () => Row(
-                    children: state
-                        .listArena[state.selectedListArena.value].courtData
+                    children: arenaDataSource
+                        .getCourt(indexArena: state.selectedListArena.value)
                         .asMap()
                         .entries
                         .map(
@@ -467,7 +470,7 @@ class AdminMainUi extends StatelessWidget {
               case 2:
                 return const Center(child: Text('Sales'));
               default:
-                if (state.listArena.isEmpty) {
+                if (arenaDataSource.listArena.isEmpty) {
                   return emptyArena();
                 } else {
                   return detailArenaSection();
@@ -499,8 +502,10 @@ class AdminMainUi extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Column(
-            children: state.listArena[state.selectedListArena.value]
-                .courtData[state.selectedListCourt.value].operationalHours
+            children: arenaDataSource
+                .getOperationalHour(
+                    indexArena: state.selectedListArena.value,
+                    indexCourt: state.selectedListCourt.value)
                 .map(
                   (data) => Column(
                     children: [
@@ -632,8 +637,10 @@ class AdminMainUi extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Column(
-          children: state.listArena[state.selectedListArena.value]
-              .courtData[state.selectedListCourt.value].rateArena
+          children: arenaDataSource
+              .getRateArena(
+                  indexArena: state.selectedListArena.value,
+                  indexCourt: state.selectedListCourt.value)
               .map(
                 (data) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -748,8 +755,10 @@ class AdminMainUi extends StatelessWidget {
             enlargeCenterPage: false,
             enableInfiniteScroll: false,
           ),
-          items: state.listArena[state.selectedListArena.value]
-              .courtData[state.selectedListCourt.value].pictures
+          items: arenaDataSource
+              .getPicturesArena(
+                  indexArena: state.selectedListArena.value,
+                  indexCourt: state.selectedListCourt.value)
               .asMap()
               .entries
               .map((data) {
@@ -799,10 +808,10 @@ class AdminMainUi extends StatelessWidget {
                 .map(
                   (data) => SelectedContainerWidget(
                     title: data,
-                    isSelected: state
-                            .listArena[state.selectedListArena.value]
-                            .courtData[state.selectedListCourt.value]
-                            .arenaType ==
+                    isSelected: arenaDataSource.getArenaType(
+                          indexArena: state.selectedListArena.value,
+                          indexCourt: state.selectedListCourt.value,
+                        ) ==
                         data,
                     onTap: () {},
                   ),
@@ -824,10 +833,10 @@ class AdminMainUi extends StatelessWidget {
                   (data) => SelectedContainerWidget(
                     title: data,
                     isSelected: data ==
-                        state
-                            .listArena[state.selectedListArena.value]
-                            .courtData[state.selectedListCourt.value]
-                            .flooringType,
+                        arenaDataSource.getFlooringType(
+                          indexArena: state.selectedListArena.value,
+                          indexCourt: state.selectedListCourt.value,
+                        ),
                     onTap: () {},
                   ),
                 )

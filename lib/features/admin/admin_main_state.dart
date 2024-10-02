@@ -20,7 +20,6 @@ class AdminMainState {
     'Rate',
   ];
 
-  var listArena = <ArenaModel>[].obs;
   var selectedListArena = 0.obs;
   var selectedListCourt = 0.obs;
 
