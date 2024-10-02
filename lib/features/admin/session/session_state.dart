@@ -19,6 +19,7 @@ class SessionState {
     'Indoor',
     'Outdoor',
   ];
+  final ValueNotifier<DateTime> focusedDay = ValueNotifier(DateTime.now());
 
   var listSession = [
     SessionDate(

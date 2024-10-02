@@ -7,7 +7,7 @@ import '../constants/constants_ui.dart';
 
 final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
-final ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
+final ValueNotifier<DateTime> focusedDayData = ValueNotifier(DateTime.now());
 final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
 
 int getHashCode(DateTime key) {
@@ -44,7 +44,7 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
       _selectedDays.clear();
       _selectedDays.add(selectedDay);
 
-      _focusedDay.value = focusedDay;
+      focusedDayData.value = focusedDay;
       _rangeSelectionMode = RangeSelectionMode.toggledOff;
     });
   }
@@ -54,7 +54,7 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
     return TableCalendar(
       firstDay: kFirstDay,
       lastDay: kLastDay,
-      focusedDay: _focusedDay.value,
+      focusedDay: focusedDayData.value,
       headerVisible: false,
       selectedDayPredicate: (day) => _selectedDays.contains(day),
       calendarFormat: widget.calendarMode,
@@ -84,7 +84,7 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
       ),
       onDaySelected: _onDaySelected,
       onCalendarCreated: widget.pageController,
-      onPageChanged: (focusedDay) => _focusedDay.value = focusedDay,
+      onPageChanged: (focusedDay) => focusedDayData.value = focusedDay,
       onFormatChanged: (format) {
         if (widget.calendarMode == CalendarFormat.month) {
           setState(() => widget.calendarMode = CalendarFormat.week);

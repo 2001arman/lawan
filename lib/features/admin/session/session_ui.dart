@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lawan/features/admin/session/session_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/calendar_picker_widget.dart';
@@ -55,9 +56,12 @@ class SessionUi extends StatelessWidget {
                           size: 18,
                         ),
                         const SizedBox(width: 8),
-                        Text(
-                          'September',
-                          style: whiteTextStyle.copyWith(fontWeight: medium),
+                        ValueListenableBuilder<DateTime>(
+                          valueListenable: focusedDayData,
+                          builder: (context, value, _) => Text(
+                            DateFormat.MMMM().format(value),
+                            style: whiteTextStyle.copyWith(fontWeight: medium),
+                          ),
                         ),
                         const Spacer(),
                         Image.asset(

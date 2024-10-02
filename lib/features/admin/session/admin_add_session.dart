@@ -2,6 +2,7 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:lawan/features/admin/session/session_logic.dart';
 import 'package:lawan/features/admin/session/session_state.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
@@ -302,9 +303,12 @@ class AdminAddSession {
                         size: 18,
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        'September',
-                        style: whiteTextStyle.copyWith(fontWeight: medium),
+                      ValueListenableBuilder<DateTime>(
+                        valueListenable: focusedDayData,
+                        builder: (context, value, _) => Text(
+                          DateFormat.MMMM().format(value),
+                          style: whiteTextStyle.copyWith(fontWeight: medium),
+                        ),
                       ),
                       const Spacer(),
                       Image.asset(
