@@ -34,8 +34,16 @@ class SessionLogic extends GetxController {
     super.onInit();
   }
 
-  void showDetailSession({required SessionModel sessionData}) {
-    AdminSessionBottomSheet().showDetailSessionSheet(sessionData: sessionData);
+  void showDetailSession({
+    required SessionModel sessionData,
+    required int dateIndex,
+    required int sessionIndex,
+  }) {
+    AdminSessionBottomSheet().showDetailSessionSheet(
+      sessionData: sessionData,
+      onDelete: () =>
+          deleteSession(dateIndex: dateIndex, sessionIndex: sessionIndex),
+    );
   }
 
   void showAddArenaBottomSheet() {
@@ -45,7 +53,7 @@ class SessionLogic extends GetxController {
   PageController setController(PageController controller) =>
       state.pageController = controller;
 
-  void handleNextButton() async {
+  void handleNextButton() {
     if (state.selectedIndex.value == 3) {
       Get.back();
       CustomDialogSuccess.confirmDialog(
@@ -60,6 +68,19 @@ class SessionLogic extends GetxController {
       return;
     }
     state.selectedIndex.value++;
+  }
+
+  void deleteSession({required int dateIndex, required int sessionIndex}) {
+    Get.back();
+    Get.log('date $dateIndex session $sessionIndex');
+    CustomDialogSuccess.confirmDialog(
+      actionType: ActionType.delete,
+      onAction: () {
+        Get.back();
+        state.listSession[dateIndex].sessionsData.removeAt(sessionIndex);
+        state.listSession.refresh();
+      },
+    );
   }
 
   void alignmentTabbar(String title) {

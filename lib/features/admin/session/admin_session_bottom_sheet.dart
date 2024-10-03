@@ -75,7 +75,8 @@ class AdminSessionBottomSheet {
     );
   }
 
-  void sessionContainerSheet({required Widget widgetContent}) {
+  void sessionContainerSheet(
+      {required Widget widgetContent, required VoidCallback onDelete}) {
     Get.bottomSheet(
       Padding(
         padding: const EdgeInsets.all(8),
@@ -136,7 +137,7 @@ class AdminSessionBottomSheet {
                     child: Row(
                       children: [
                         CircleButtonTransparentWidget(
-                          onTap: () {},
+                          onTap: onDelete,
                           borderColor: kGreyColor,
                           widget: SvgPicture.asset(
                             'assets/icons/trash.svg',
@@ -199,8 +200,12 @@ class AdminSessionBottomSheet {
     );
   }
 
-  void showDetailSessionSheet({required SessionModel sessionData}) {
+  void showDetailSessionSheet({
+    required SessionModel sessionData,
+    required VoidCallback onDelete,
+  }) {
     return sessionContainerSheet(
+      onDelete: onDelete,
       widgetContent: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -287,6 +292,7 @@ class AdminSessionBottomSheet {
 
   void successCreateSesssionSheet({required ArenaModel arenaModel}) {
     return sessionContainerSheet(
+      onDelete: () {},
       widgetContent: SizedBox(
         width: Get.width,
         child: Column(

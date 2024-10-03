@@ -93,6 +93,8 @@ class SessionUi extends StatelessWidget {
               children: [
                 Column(
                   children: state.listSession
+                      .asMap()
+                      .entries
                       .map(
                         (data) => Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +103,7 @@ class SessionUi extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  data.date,
+                                  data.value.date,
                                   style: blackTextStyle.copyWith(
                                     fontSize: 16,
                                     fontWeight: medium,
@@ -109,12 +111,12 @@ class SessionUi extends StatelessWidget {
                                 ),
                                 SizedBox(width: defaultMargin),
                                 Text(
-                                  data.dayName,
+                                  data.value.dayName,
                                   style: darkGreyTextStyle,
                                 ),
                               ],
                             ),
-                            if (data.sessionsData.isEmpty)
+                            if (data.value.sessionsData.isEmpty)
                               Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
                                 child: Text(
@@ -123,16 +125,21 @@ class SessionUi extends StatelessWidget {
                                       darkGreyTextStyle.copyWith(fontSize: 12),
                                 ),
                               ),
-                            if (data.sessionsData.isNotEmpty)
+                            if (data.value.sessionsData.isNotEmpty)
                               Column(
-                                children: data.sessionsData
+                                children: data.value.sessionsData
+                                    .asMap()
+                                    .entries
                                     .map(
                                       (session) => GestureDetector(
                                         onTap: () => logic.showDetailSession(
-                                          sessionData: session,
+                                          sessionData: session.value,
+                                          sessionIndex: session.key,
+                                          dateIndex: data.key,
                                         ),
                                         child: SessionItemCard(
-                                          sessionData: session,
+                                          sessionData: session.value,
+                                          
                                         ),
                                       ),
                                     )
