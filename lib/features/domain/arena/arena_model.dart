@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,9 +16,15 @@ class ArenaModel {
   });
 }
 
+enum PictureType {
+  asset,
+  file;
+}
+
 class CourtModel {
   String courtName;
   final List<XFile> pictures;
+  final PictureType pictureType;
   String arenaType;
   final String flooringType;
   final List<OperationalHour> operationalHours;
@@ -25,6 +32,7 @@ class CourtModel {
 
   CourtModel({
     required this.pictures,
+    this.pictureType = PictureType.file,
     required this.courtName,
     required this.arenaType,
     required this.flooringType,

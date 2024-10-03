@@ -1,10 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../utility/util/helper.dart';
 import '../../domain/arena/arena_model.dart';
 
 class ArenaDataSource {
   var listArena = <ArenaModel>[].obs;
+
+  ArenaDataSource() {
+    listArena.add(dummyArenaData);
+  }
 
   ArenaModel getArena({required int index}) {
     return listArena[index];
@@ -33,6 +39,13 @@ class ArenaDataSource {
     required int indexCourt,
   }) {
     return listArena[indexArena].courtData[indexCourt].pictures;
+  }
+
+  PictureType getPicturesType({
+    required int indexArena,
+    required int indexCourt,
+  }) {
+    return listArena[indexArena].courtData[indexCourt].pictureType;
   }
 
   String getArenaType({
@@ -68,4 +81,57 @@ class ArenaDataSource {
   void deleteArena({required int index}) {
     listArena.removeAt(index);
   }
+
+  ArenaModel dummyArenaData = ArenaModel(
+    location: 'Petaling Jaya, Selangor',
+    name: 'MBPJ Sports Complex',
+    courtData: [
+      CourtModel(
+        pictures: [
+          XFile('assets/images/field1.png'),
+        ],
+        pictureType: PictureType.asset,
+        courtName: '1',
+        arenaType: 'Indoor',
+        flooringType: 'Court Turf',
+        operationalHours: List.generate(
+          7,
+          (index) => OperationalHour(
+            isActive: true.obs,
+            dayName: Helper.dayName[index],
+            openTime: const TimeOfDay(hour: 9, minute: 00).obs,
+            closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
+            chooseTime: true.obs,
+          ),
+        ),
+        rateArena: [
+          RateModel(name: 'Weekend Rate', price: 10.obs, hour: 1.0.obs),
+          RateModel(name: 'Weekdays Rate', price: 10.obs, hour: 1.0.obs),
+        ],
+      ),
+      CourtModel(
+        pictures: [
+          XFile('assets/images/field2.png'),
+        ],
+        pictureType: PictureType.asset,
+        courtName: '2',
+        arenaType: 'Indoor',
+        flooringType: 'Court Turf',
+        operationalHours: List.generate(
+          7,
+          (index) => OperationalHour(
+            isActive: true.obs,
+            dayName: Helper.dayName[index],
+            openTime: const TimeOfDay(hour: 9, minute: 00).obs,
+            closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
+            chooseTime: true.obs,
+          ),
+        ),
+        rateArena: [
+          RateModel(name: 'Weekend Rate', price: 10.obs, hour: 1.0.obs),
+          RateModel(name: 'Weekdays Rate', price: 10.obs, hour: 1.0.obs),
+        ],
+      ),
+    ],
+  );
 }

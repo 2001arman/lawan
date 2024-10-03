@@ -771,6 +771,9 @@ class AdminMainUi extends StatelessWidget {
                 }
                 return CustomImageWidget(
                   path: data.value.path,
+                  pictureType: arenaDataSource.getPicturesType(
+                      indexArena: state.selectedListArena.value,
+                      indexCourt: state.selectedListCourt.value),
                   changeImage: () {},
                   deleteImage: () {},
                 );

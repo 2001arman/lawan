@@ -369,6 +369,9 @@ class AdminAddArena {
                       }
                       return CustomImageWidget(
                         path: data.value.path,
+                        pictureType: logic.arenaDataSource.getPicturesType(
+                            indexArena: state.selectedListArena.value,
+                            indexCourt: state.selectedListCourt.value),
                         changeImage: () => logic.changeImage(index: data.key),
                         deleteImage: () => logic.deleteImage(index: data.key),
                       );

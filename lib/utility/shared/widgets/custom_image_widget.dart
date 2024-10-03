@@ -2,17 +2,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lawan/features/domain/arena/arena_model.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 
 class CustomImageWidget extends StatelessWidget {
   final String path;
   final VoidCallback changeImage;
   final VoidCallback deleteImage;
+  final PictureType pictureType;
   const CustomImageWidget(
       {super.key,
       required this.path,
       required this.changeImage,
-      required this.deleteImage});
+      required this.deleteImage,
+      required this.pictureType});
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +31,11 @@ class CustomImageWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           image: DecorationImage(
-            image: FileImage(
-              File(path),
-            ),
+            image: pictureType == PictureType.file
+                ? FileImage(
+                    File(path),
+                  )
+                : AssetImage(path),
             fit: BoxFit.cover,
           ),
         ),
