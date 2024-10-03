@@ -77,7 +77,7 @@ class SessionUi extends StatelessWidget {
                 ),
                 SizedBox(width: defaultMargin),
                 GradientCircleButton(
-                  onTap: logic.showAddArenaBottomSheet,
+                  onTap: logic.showAddSessionBottomSheet,
                 ),
               ],
             ),
@@ -85,6 +85,7 @@ class SessionUi extends StatelessWidget {
           CalendarPickerWidget(
             pageController: logic.setController,
             calendarMode: CalendarFormat.week,
+            onDaySelected: (_) {},
           ),
           const SizedBox(height: 8),
           Expanded(
@@ -139,7 +140,6 @@ class SessionUi extends StatelessWidget {
                                         ),
                                         child: SessionItemCard(
                                           sessionData: session.value,
-                                          
                                         ),
                                       ),
                                     )

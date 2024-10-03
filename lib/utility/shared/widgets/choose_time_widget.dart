@@ -8,11 +8,13 @@ import '../constants/constants_ui.dart';
 class ChooseTimeWidget extends StatelessWidget {
   final Rx<TimeOfDay> openTime, closeTime;
   final Function(int, int) onSave;
+  final int? totalHour;
   const ChooseTimeWidget({
     super.key,
     required this.openTime,
     required this.closeTime,
     required this.onSave,
+    this.totalHour,
   });
 
   @override
@@ -24,6 +26,7 @@ class ChooseTimeWidget extends StatelessWidget {
             onTap: () => CustomDialog.showChooseTimeDialog(
               startTime: openTime.value.hour,
               endTime: closeTime.value.hour,
+              totalHour: totalHour,
               onSave: (startTime, endTime) {
                 openTime.value = TimeOfDay(
                   hour: startTime,

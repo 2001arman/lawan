@@ -183,6 +183,7 @@ class CustomDialog {
     required int startTime,
     required int endTime,
     required Function(int startTime, int endTime) onSave,
+    int? totalHour,
   }) {
     final startWheel = WheelPickerController(
       itemCount: 24,
@@ -223,7 +224,11 @@ class CustomDialog {
                         ),
                         controller: startWheel,
                         selectedIndexColor: Colors.black,
-                        onIndexChanged: (index) {},
+                        onIndexChanged: (index) {
+                          if (totalHour != null) {
+                            endWheel.setCurrent(index + totalHour);
+                          }
+                        },
                         style: WheelPickerStyle(
                           itemExtent: textStyle.fontSize! *
                               textStyle.height!, // Text height
@@ -253,7 +258,12 @@ class CustomDialog {
                         ),
                         controller: endWheel,
                         selectedIndexColor: Colors.black,
-                        onIndexChanged: (index) {},
+                        onIndexChanged: (index) {
+                          if (totalHour != null) {
+                            endWheel
+                                .setCurrent(startWheel.selected + totalHour);
+                          }
+                        },
                         style: WheelPickerStyle(
                           itemExtent: textStyle.fontSize! *
                               textStyle.height!, // Text height

@@ -321,7 +321,11 @@ class AdminSessionBottomSheet {
     );
   }
 
-  void successCreateSesssionSheet({required ArenaModel arenaModel}) {
+  void successCreateSesssionSheet({
+    required ArenaModel arenaModel,
+    required int selectedCourt,
+    required SessionModel session,
+  }) {
     return sessionContainerSheet(
       onDelete: () {},
       widgetContent: SizedBox(
@@ -349,31 +353,41 @@ class AdminSessionBottomSheet {
             FieldImageWidget(
               arenaModel: arenaModel,
               isSelected: false,
+              onChangeCourt: (_) {},
+              selectedCourt: selectedCourt,
             ),
             const SizedBox(height: 12),
-            Row(
-              children: [
-                CustomButton(
-                  isBlack: true,
-                  onTap: () {},
-                  paddingVertical: 8,
-                  widget: Column(
-                    children: [
-                      Text(
-                        'Sesssion starting in',
-                        style: midGreyTextStyle.copyWith(fontSize: 12),
-                      ),
-                      Text(
-                        '2 days 2 hours 6 mins 3 sec ',
-                        style: whiteTextStyle.copyWith(
-                          fontSize: 16,
-                          fontWeight: semiBold,
+            Visibility(
+              visible: Helper.isUpcoming(
+                session.getStartDateTime(),
+              ),
+              replacement: const TextPillWidget(data: 'Complete'),
+              child: Row(
+                children: [
+                  CustomButton(
+                    isBlack: true,
+                    onTap: () {},
+                    paddingVertical: 8,
+                    widget: Column(
+                      children: [
+                        Text(
+                          'Sesssion starting in',
+                          style: midGreyTextStyle.copyWith(fontSize: 12),
                         ),
-                      ),
-                    ],
+                        Text(
+                          Helper.timeBetweenNowAndSession(
+                            session.getStartDateTime(),
+                          ),
+                          style: whiteTextStyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: semiBold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             const HostAvatarWidget(),
             // const Row(
@@ -389,18 +403,19 @@ class AdminSessionBottomSheet {
             Row(
               children: [
                 cardDetailSession(
-                  contentText: 'Tue,  25 Sep 2024',
+                  contentText: Helper.formatFullDate(session.dateTime),
                   title: 'Date',
                   icon: Icons.date_range_outlined,
                   fontSize: 14,
                 ),
                 const SizedBox(width: 8),
                 cardDetailSession(
-                  contentText: '9:00 AM - 11:00 AM',
+                  contentText:
+                      '${Helper.formatTime12Hour(session.startHour)} - ${Helper.formatTime12Hour(session.endHour)}',
                   title: 'Time',
                   icon: Icons.access_time_outlined,
                   fontSize: 14,
-                  description: '2hr',
+                  description: '${session.totalHour}hr',
                 ),
               ],
             ),
@@ -408,14 +423,14 @@ class AdminSessionBottomSheet {
             Row(
               children: [
                 cardDetailSession(
-                  contentText: 'Petaling Jaya, Selangor',
+                  contentText: session.arena.location,
                   title: 'Location',
                   icon: Icons.location_on_outlined,
                   fontSize: 14,
                 ),
                 const SizedBox(width: 8),
                 cardDetailSession(
-                  contentText: 'RM220',
+                  contentText: session.price.toString(),
                   title: 'Price',
                   icon: Icons.monetization_on_outlined,
                   fontSize: 20,

@@ -17,6 +17,7 @@ int getHashCode(DateTime key) {
 // ignore: must_be_immutable
 class CalendarPickerWidget extends StatefulWidget {
   final Function(PageController)? pageController;
+  final Function(DateTime) onDaySelected;
   CalendarFormat calendarMode;
   final Color? cellColor;
   final double cellMargin;
@@ -26,6 +27,7 @@ class CalendarPickerWidget extends StatefulWidget {
     required this.calendarMode,
     this.cellColor,
     this.cellMargin = 6.0,
+    required this.onDaySelected,
   });
 
   @override
@@ -40,13 +42,21 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
 
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    widget.onDaySelected(selectedDay);
     setState(() {
       _selectedDays.clear();
       _selectedDays.add(selectedDay);
 
-      focusedDayData.value = focusedDay;
-      _rangeSelectionMode = RangeSelectionMode.toggledOff;
+      focusedDayData.value = selectedDay;
+      _rangeSelectionMode = RangeSelectionMode.disabled;
     });
+  }
+
+  @override
+  void initState() {
+    _selectedDays.clear();
+    _selectedDays.add(kToday);
+    super.initState();
   }
 
   @override
@@ -63,7 +73,7 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
         rangeHighlightColor: kBlackColor,
         cellMargin: EdgeInsets.all(widget.cellMargin),
         todayDecoration: BoxDecoration(
-          color: kBlackColor,
+          color: kBlackColor.withOpacity(0.4),
           shape: BoxShape.circle,
         ),
         outsideDecoration: const BoxDecoration(

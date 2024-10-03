@@ -14,8 +14,15 @@ import 'text_boder.dart';
 class FieldImageWidget extends StatefulWidget {
   final ArenaModel arenaModel;
   final bool isSelected;
-  const FieldImageWidget(
-      {super.key, required this.arenaModel, required this.isSelected});
+  final int? selectedCourt;
+  final Function(int selectedCourt) onChangeCourt;
+  const FieldImageWidget({
+    super.key,
+    required this.arenaModel,
+    required this.isSelected,
+    required this.onChangeCourt,
+    this.selectedCourt,
+  });
 
   @override
   State<FieldImageWidget> createState() => _FieldImageWidgetState();
@@ -27,6 +34,7 @@ class _FieldImageWidgetState extends State<FieldImageWidget> {
   late String path;
   @override
   void initState() {
+    selectedCourtIndex = widget.selectedCourt ?? 0;
     pictureType = widget.arenaModel.courtData[selectedCourtIndex].pictureType;
     path = widget.arenaModel.courtData[selectedCourtIndex].pictures.first.path;
     super.initState();
@@ -178,6 +186,7 @@ class _FieldImageWidgetState extends State<FieldImageWidget> {
                             margin: const EdgeInsets.only(right: 12),
                             borderColor: kGreyColor,
                             onTap: () {
+                              widget.onChangeCourt(court.key);
                               setState(() {
                                 selectedCourtIndex = court.key;
                                 path = widget.arenaModel.courtData[court.key]

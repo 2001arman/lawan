@@ -75,7 +75,7 @@ class AdminAddSession {
     );
   }
 
-  void createNewArena() {
+  void createNewSession() {
     Get.bottomSheet(
       Padding(
         padding: const EdgeInsets.all(8),
@@ -187,12 +187,12 @@ class AdminAddSession {
           const SizedBox(height: 12),
           CustomTextFormField(
             hintText: 'First Name',
-            controller: TextEditingController(),
+            controller: state.firstNameController,
             title: 'First Name',
           ),
           CustomTextFormField(
             hintText: 'Last Name / Family Name',
-            controller: TextEditingController(),
+            controller: state.lastNameController,
             title: 'Last Name',
           ),
           Text(
@@ -228,15 +228,17 @@ class AdminAddSession {
               Expanded(
                 child: CustomTextFormField(
                   hintText: '12 345 6789',
-                  controller: TextEditingController(),
+                  controller: state.contactController,
+                  textInputType: TextInputType.number,
                 ),
               ),
             ],
           ),
           CustomTextFormField(
             hintText: 'Enter Identification Number',
-            controller: TextEditingController(),
+            controller: state.identificationController,
             title: 'Identification Number',
+            textInputType: TextInputType.number,
             prefix: Padding(
               padding: const EdgeInsets.only(
                 top: 10,
@@ -253,7 +255,8 @@ class AdminAddSession {
           ),
           CustomTextFormField(
             hintText: '0.00',
-            controller: TextEditingController(),
+            controller: state.priceController,
+            textInputType: TextInputType.number,
             title: 'Price',
             prefix: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -287,6 +290,7 @@ class AdminAddSession {
             style: darkGreyTextStyle.copyWith(fontSize: 12),
           ),
           const SizedBox(height: 8),
+          // calendar
           Row(
             children: [
               CustomButton(
@@ -357,7 +361,9 @@ class AdminAddSession {
             calendarMode: CalendarFormat.month,
             cellColor: kWhiteColor,
             cellMargin: 3,
+            onDaySelected: (data) => state.selectedDate = data,
           ),
+          // option hour
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Obx(
@@ -367,7 +373,13 @@ class AdminAddSession {
                       (data) => SelectedContainerWidget(
                         title: '$data hr',
                         isSelected: data == state.selectedHour.value,
-                        onTap: () => state.selectedHour.value = data,
+                        onTap: () {
+                          state.selectedHour.value = data;
+                          state.closeTime.value = TimeOfDay(
+                            hour: state.openTime.value.hour + data,
+                            minute: 0,
+                          );
+                        },
                         isTransparent: true,
                       ),
                     )
@@ -379,6 +391,7 @@ class AdminAddSession {
           ChooseTimeWidget(
             openTime: state.openTime,
             closeTime: state.closeTime,
+            totalHour: state.selectedHour.value,
             onSave: (startTime, endTime) {
               Get.back();
               state.openTime.value = TimeOfDay(
@@ -474,10 +487,15 @@ class AdminAddSession {
                   .entries
                   .map(
                     (data) => GestureDetector(
-                      onTap: () => state.selectedArenaIndex.value = data.key,
+                      onTap: () {
+                        state.selectedArenaIndex.value = data.key;
+                        state.selectedCourtIndex.value = 0;
+                      },
                       child: FieldImageWidget(
                         arenaModel: data.value,
                         isSelected: data.key == state.selectedArenaIndex.value,
+                        onChangeCourt: (courtIndex) =>
+                            state.selectedCourtIndex.value = courtIndex,
                       ),
                     ),
                   )

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:lawan/features/admin/admin_main_state.dart';
 import 'package:lawan/features/admin/session/admin_add_session.dart';
 import 'package:lawan/features/admin/session/admin_session_bottom_sheet.dart';
 import 'package:lawan/features/admin/session/session_state.dart';
+import 'package:lawan/features/domain/arena/arena_model.dart';
 import 'package:lawan/features/domain/session/session_model.dart';
 import 'package:lawan/utility/util/custom_dialog_success.dart';
 
+import '../../../utility/util/helper.dart';
 import '../../infrastructure/arena/arena_data_source.dart';
 
 class SessionLogic extends GetxController {
@@ -46,8 +49,8 @@ class SessionLogic extends GetxController {
     );
   }
 
-  void showAddArenaBottomSheet() {
-    AdminAddSession(state: state, logic: this).createNewArena();
+  void showAddSessionBottomSheet() {
+    AdminAddSession(state: state, logic: this).createNewSession();
   }
 
   PageController setController(PageController controller) =>
@@ -59,15 +62,79 @@ class SessionLogic extends GetxController {
       CustomDialogSuccess.confirmDialog(
         actionType: ActionType.booking,
         onAction: () {
+          createSession();
           Get.back();
           AdminSessionBottomSheet().successCreateSesssionSheet(
-            arenaModel: arenaDataSource.listArena.first,
+            arenaModel: arenaDataSource.getArena(
+              index: state.selectedArenaIndex.value,
+            ),
+            selectedCourt: state.selectedCourtIndex.value,
+            session: factorySession(),
           );
+          resetState();
         },
       );
       return;
     }
     state.selectedIndex.value++;
+  }
+
+  SessionModel factorySession() {
+    ArenaModel arena =
+        arenaDataSource.getArena(index: state.selectedArenaIndex.value);
+    String firstName = state.firstNameController.text;
+    String lastName = state.lastNameController.text;
+    String contactNumber = state.contactController.text;
+    String identificationNumber = state.identificationController.text;
+    String price = state.priceController.text;
+    DateTime selectedDate = state.selectedDate;
+
+    return SessionModel(
+      arena: arena,
+      selectedCourt: state.selectedCourtIndex.value,
+      dateTime: selectedDate,
+      startHour: state.openTime.value,
+      endHour: state.closeTime.value,
+      totalHour: state.selectedHour.value,
+      firstName: firstName,
+      lastName: lastName,
+      contactNumber: contactNumber,
+      identificationNumber: identificationNumber,
+      price: int.parse(price),
+    );
+  }
+
+  void createSession() {
+    int indexDate = state.listSession.indexWhere(
+      (session) =>
+          session.date ==
+          DateFormat('dd MMM').format(factorySession().dateTime),
+    );
+    if (indexDate != -1) {
+      state.listSession[indexDate].sessionsData.add(factorySession());
+    } else {
+      state.listSession.add(
+        SessionDate(
+          date: DateFormat('dd MMM')
+              .format(factorySession().dateTime), // Date as '23 Sep'
+          dayName: Helper.formatDayName(factorySession().dateTime.day),
+          sessionsData: [
+            factorySession(),
+          ],
+        ),
+      );
+    }
+    state.listSession.refresh();
+  }
+
+  void resetState() {
+    state.selectedIndex.value = 1;
+    state.selectedDate = DateTime.now();
+    state.firstNameController.text = '';
+    state.lastNameController.text = '';
+    state.contactController.text = '';
+    state.identificationController.text = '';
+    state.priceController.text = '';
   }
 
   void deleteSession({required int dateIndex, required int sessionIndex}) {
