@@ -73,4 +73,8 @@ class Helper {
     String dayName = DateFormat('EEE').format(now); // e.g., "Mon"
     return index <= 1 ? '$dayName, ${getDayLabel(index)}' : dayName;
   }
+
+  static String formatFullDate(DateTime date) {
+    return DateFormat('EEE, dd MMM yyyy').format(date);
+  }
 }

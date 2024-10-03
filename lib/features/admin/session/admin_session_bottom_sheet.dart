@@ -11,7 +11,9 @@ import 'package:lawan/utility/shared/widgets/host_avatar_widget.dart';
 import 'package:lawan/utility/shared/widgets/text_boder.dart';
 import 'package:lawan/utility/shared/widgets/text_pill_widget.dart';
 
+import '../../../utility/util/helper.dart';
 import '../../domain/arena/arena_model.dart';
+import '../../domain/session/session_model.dart';
 
 class AdminSessionBottomSheet {
   Widget cardDetailSession({
@@ -197,7 +199,7 @@ class AdminSessionBottomSheet {
     );
   }
 
-  void showDetailSessionSheet() {
+  void showDetailSessionSheet({required SessionModel sessionData}) {
     return sessionContainerSheet(
       widgetContent: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -213,7 +215,7 @@ class AdminSessionBottomSheet {
               ),
             ),
             child: Text(
-              'MBPJ Sports Complex',
+              sessionData.arena.name,
               style: whiteTextStyle.copyWith(
                 fontSize: 12,
                 fontWeight: medium,
@@ -232,6 +234,8 @@ class AdminSessionBottomSheet {
             children: [
               FieldNumberWidget(
                 iconColor: kDarkgreyColor,
+                court: sessionData
+                    .arena.courtData[sessionData.selectedCourt].courtName,
               ),
             ],
           ),
@@ -241,18 +245,19 @@ class AdminSessionBottomSheet {
           Row(
             children: [
               cardDetailSession(
-                contentText: 'Tue,  25 Sep 2024',
+                contentText: Helper.formatFullDate(sessionData.dateTime),
                 title: 'Date',
                 icon: Icons.date_range_outlined,
                 fontSize: 14,
               ),
               const SizedBox(width: 8),
               cardDetailSession(
-                contentText: '9:00 AM - 11:00 AM',
+                contentText:
+                    '${Helper.formatTime12Hour(sessionData.startHour)} - ${Helper.formatTime12Hour(sessionData.endHour)}',
                 title: 'Time',
                 icon: Icons.access_time_outlined,
                 fontSize: 14,
-                description: '2hr',
+                description: '${sessionData.totalHour}hr',
               ),
             ],
           ),
@@ -260,14 +265,14 @@ class AdminSessionBottomSheet {
           Row(
             children: [
               cardDetailSession(
-                contentText: 'Petaling Jaya, Selangor',
+                contentText: sessionData.arena.location,
                 title: 'Location',
                 icon: Icons.location_on_outlined,
                 fontSize: 14,
               ),
               const SizedBox(width: 8),
               cardDetailSession(
-                contentText: 'RM220',
+                contentText: 'RM${sessionData.price}',
                 title: 'Price',
                 icon: Icons.monetization_on_outlined,
                 fontSize: 20,

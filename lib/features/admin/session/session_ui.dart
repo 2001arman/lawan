@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lawan/features/admin/session/session_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
@@ -11,9 +12,9 @@ import 'package:table_calendar/table_calendar.dart';
 
 class SessionUi extends StatelessWidget {
   SessionUi({super.key});
-  static const String namePath = '/testing';
-  final logic = SessionLogic();
-  final state = SessionLogic().state;
+  static const String namePath = '/session_page';
+  final logic = Get.find<SessionLogic>();
+  final state = Get.find<SessionLogic>().state;
 
   @override
   Widget build(BuildContext context) {
@@ -93,41 +94,51 @@ class SessionUi extends StatelessWidget {
                 Column(
                   children: state.listSession
                       .map(
-                        (data) => GestureDetector(
-                          onTap: logic.showDetailArena,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: defaultMargin),
-                              Row(
-                                children: [
-                                  Text(
-                                    data.date,
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 16,
-                                      fontWeight: medium,
-                                    ),
-                                  ),
-                                  SizedBox(width: defaultMargin),
-                                  Text(
-                                    data.dayName,
-                                    style: darkGreyTextStyle,
-                                  ),
-                                ],
-                              ),
-                              if (data.totalData == 0)
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text(
-                                    'No Session',
-                                    style: darkGreyTextStyle.copyWith(
-                                        fontSize: 12),
+                        (data) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: defaultMargin),
+                            Row(
+                              children: [
+                                Text(
+                                  data.date,
+                                  style: blackTextStyle.copyWith(
+                                    fontSize: 16,
+                                    fontWeight: medium,
                                   ),
                                 ),
-                              for (int i = 0; i < data.totalData; i++)
-                                const SessionItemCard(),
-                            ],
-                          ),
+                                SizedBox(width: defaultMargin),
+                                Text(
+                                  data.dayName,
+                                  style: darkGreyTextStyle,
+                                ),
+                              ],
+                            ),
+                            if (data.sessionsData.isEmpty)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                  'No Session',
+                                  style:
+                                      darkGreyTextStyle.copyWith(fontSize: 12),
+                                ),
+                              ),
+                            if (data.sessionsData.isNotEmpty)
+                              Column(
+                                children: data.sessionsData
+                                    .map(
+                                      (session) => GestureDetector(
+                                        onTap: () => logic.showDetailSession(
+                                          sessionData: session,
+                                        ),
+                                        child: SessionItemCard(
+                                          sessionData: session,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                          ],
                         ),
                       )
                       .toList(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:lawan/features/domain/session/session_model.dart';
 
 import '../../../utility/util/helper.dart';
 
@@ -32,20 +33,20 @@ class SessionState {
       return SessionDate(
         date: DateFormat('dd MMM').format(now), // Date as '23 Sep'
         dayName: Helper.formatDayName(index), // Day name like 'Mon, Today'
-        totalData: (index % 3), // Example totalData
+        sessionsData: [], // Example totalData
       );
     },
-  );
+  ).obs;
 }
 
 class SessionDate {
   final String date;
   final String dayName;
-  final int totalData;
+  List<SessionModel> sessionsData;
 
   SessionDate({
     required this.date,
     required this.dayName,
-    required this.totalData,
+    required this.sessionsData,
   });
 }

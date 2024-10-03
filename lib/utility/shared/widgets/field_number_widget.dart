@@ -6,7 +6,8 @@ import 'package:lawan/utility/shared/constants/constants_ui.dart';
 
 class FieldNumberWidget extends StatelessWidget {
   final Color? iconColor;
-  const FieldNumberWidget({super.key, this.iconColor});
+  final String court;
+  const FieldNumberWidget({super.key, this.iconColor, required this.court});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class FieldNumberWidget extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Text(
-          '1',
+          court,
           style: blackTextStyle.copyWith(
             fontSize: 16,
             fontWeight: medium,

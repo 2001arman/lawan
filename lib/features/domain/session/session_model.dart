@@ -6,8 +6,8 @@ class SessionModel {
   final int selectedCourt;
   final DateTime dateTime;
   final TimeOfDay startHour, endHour;
-  final int totalHour;
-  final String firstName, lastName, contactNumber, identificationNumber, price;
+  final int totalHour, price;
+  final String firstName, lastName, contactNumber, identificationNumber;
 
   SessionModel({
     required this.arena,

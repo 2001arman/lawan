@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:lawan/features/domain/session/session_model.dart';
 import 'package:lawan/utility/shared/widgets/field_number_widget.dart';
 import 'package:lawan/utility/shared/widgets/text_boder.dart';
+import 'package:lawan/utility/util/helper.dart';
 
 import '../constants/constants_ui.dart';
 
 class SessionItemCard extends StatelessWidget {
-  const SessionItemCard({super.key});
+  final SessionModel sessionData;
+
+  const SessionItemCard({super.key, required this.sessionData});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,7 @@ class SessionItemCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '9:00 AM\n-\n11:00 AM',
+                '${Helper.formatTime12Hour(sessionData.startHour)}\n-\n${Helper.formatTime12Hour(sessionData.endHour)}',
                 style: blackTextStyle.copyWith(
                   fontSize: 12,
                   fontWeight: medium,
@@ -32,7 +36,7 @@ class SessionItemCard extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
-              const TextBoder(textTitle: '2 hr'),
+              TextBoder(textTitle: '${sessionData.totalHour} hr'),
             ],
           ),
           Container(
@@ -66,10 +70,13 @@ class SessionItemCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 8),
-                const FieldNumberWidget(),
+                FieldNumberWidget(
+                  court: sessionData
+                      .arena.courtData[sessionData.selectedCourt].courtName,
+                ),
                 const SizedBox(height: 8),
                 Text(
-                  'MBPJ Sports Complex',
+                  sessionData.arena.name,
                   style: darkGreyTextStyle.copyWith(fontSize: 12),
                 ),
               ],
