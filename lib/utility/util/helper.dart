@@ -47,4 +47,30 @@ class Helper {
 
     return null;
   }
+
+  static List<String> dayNames = [
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat'
+  ];
+
+  static String getDayLabel(int index) {
+    if (index == 0) {
+      return 'Today';
+    } else if (index == 1) {
+      return 'Tomorrow';
+    } else {
+      return dayNames[DateTime.now().add(Duration(days: index)).weekday % 7];
+    }
+  }
+
+  static String formatDayName(int index) {
+    DateTime now = DateTime.now().add(Duration(days: index));
+    String dayName = DateFormat('EEE').format(now); // e.g., "Mon"
+    return index <= 1 ? '$dayName, ${getDayLabel(index)}' : dayName;
+  }
 }

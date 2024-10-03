@@ -37,6 +37,7 @@ class TextBoder extends StatelessWidget {
           fontWeight: medium,
         ),
         textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

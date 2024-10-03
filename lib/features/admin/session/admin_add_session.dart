@@ -467,11 +467,23 @@ class AdminAddSession {
             ],
           ),
           SizedBox(height: defaultMargin),
-          const FieldImageWidget(),
-          const FieldImageWidget(),
-          const FieldImageWidget(),
-          const FieldImageWidget(),
-          const FieldImageWidget(),
+          Obx(
+            () => Column(
+              children: logic.arenaDataSource.listArena
+                  .asMap()
+                  .entries
+                  .map(
+                    (data) => GestureDetector(
+                      onTap: () => state.selectedArenaIndex.value = data.key,
+                      child: FieldImageWidget(
+                        arenaModel: data.value,
+                        isSelected: data.key == state.selectedArenaIndex.value,
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
         ],
       ),
     );

@@ -6,12 +6,15 @@ class CircleButtonWidget extends StatelessWidget {
   final bool isActive;
   final Widget? widget;
   final EdgeInsets? margin;
-  const CircleButtonWidget(
-      {super.key,
-      required this.onTap,
-      this.widget,
-      this.isActive = true,
-      this.margin});
+  final Color? borderColor;
+  const CircleButtonWidget({
+    super.key,
+    required this.onTap,
+    this.widget,
+    this.isActive = true,
+    this.margin,
+    this.borderColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +27,10 @@ class CircleButtonWidget extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: isActive ? kBlackColor : kWhiteColor,
+          border: Border.all(
+            width: 1,
+            color: borderColor ?? Colors.transparent,
+          ),
         ),
         child: widget ??
             Icon(

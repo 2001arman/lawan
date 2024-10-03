@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
+import '../../../utility/util/helper.dart';
 
 class SessionState {
   var selectedIndex = 1.obs;
@@ -20,34 +23,19 @@ class SessionState {
     'Outdoor',
   ];
   final ValueNotifier<DateTime> focusedDay = ValueNotifier(DateTime.now());
+  var selectedArenaIndex = 0.obs;
 
-  var listSession = [
-    SessionDate(
-      date: '23 Sep',
-      dayName: 'Sun, Today',
-      totalData: 0,
-    ),
-    SessionDate(
-      date: '24 Sep',
-      dayName: 'Mon, Tomorrow',
-      totalData: 2,
-    ),
-    SessionDate(
-      date: '25 Sep',
-      dayName: 'Tue',
-      totalData: 1,
-    ),
-    SessionDate(
-      date: '26 Sep',
-      dayName: 'Wed',
-      totalData: 2,
-    ),
-    SessionDate(
-      date: '27 Sep',
-      dayName: 'Thu',
-      totalData: 2,
-    ),
-  ];
+  var listSession = List.generate(
+    7,
+    (index) {
+      DateTime now = DateTime.now().add(Duration(days: index));
+      return SessionDate(
+        date: DateFormat('dd MMM').format(now), // Date as '23 Sep'
+        dayName: Helper.formatDayName(index), // Day name like 'Mon, Today'
+        totalData: (index % 3), // Example totalData
+      );
+    },
+  );
 }
 
 class SessionDate {
@@ -55,6 +43,9 @@ class SessionDate {
   final String dayName;
   final int totalData;
 
-  SessionDate(
-      {required this.date, required this.dayName, required this.totalData});
+  SessionDate({
+    required this.date,
+    required this.dayName,
+    required this.totalData,
+  });
 }

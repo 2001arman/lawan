@@ -6,8 +6,11 @@ import 'package:lawan/features/admin/session/admin_session_bottom_sheet.dart';
 import 'package:lawan/features/admin/session/session_state.dart';
 import 'package:lawan/utility/util/custom_dialog_success.dart';
 
+import '../../infrastructure/arena/arena_data_source.dart';
+
 class SessionLogic {
   SessionState state = SessionState();
+  ArenaDataSource arenaDataSource = Get.find<ArenaDataSource>();
 
   void showDetailArena() {
     AdminSessionBottomSheet().showDetailSessionSheet();
@@ -27,7 +30,9 @@ class SessionLogic {
         actionType: ActionType.booking,
         onAction: () {
           Get.back();
-          AdminSessionBottomSheet().successCreateSesssionSheet();
+          AdminSessionBottomSheet().successCreateSesssionSheet(
+            arenaModel: arenaDataSource.listArena.first,
+          );
         },
       );
       return;

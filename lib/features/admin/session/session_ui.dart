@@ -91,46 +91,48 @@ class SessionUi extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: defaultMargin),
               children: [
                 Column(
-                    children: state.listSession
-                        .map(
-                          (data) => GestureDetector(
-                            onTap: logic.showDetailArena,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: defaultMargin),
-                                Row(
-                                  children: [
-                                    Text(
-                                      data.date,
-                                      style: blackTextStyle.copyWith(
-                                        fontSize: 16,
-                                        fontWeight: medium,
-                                      ),
-                                    ),
-                                    SizedBox(width: defaultMargin),
-                                    Text(
-                                      data.dayName,
-                                      style: darkGreyTextStyle,
-                                    ),
-                                  ],
-                                ),
-                                if (data.totalData == 0)
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Text(
-                                      'No Session',
-                                      style: darkGreyTextStyle.copyWith(
-                                          fontSize: 12),
+                  children: state.listSession
+                      .map(
+                        (data) => GestureDetector(
+                          onTap: logic.showDetailArena,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: defaultMargin),
+                              Row(
+                                children: [
+                                  Text(
+                                    data.date,
+                                    style: blackTextStyle.copyWith(
+                                      fontSize: 16,
+                                      fontWeight: medium,
                                     ),
                                   ),
-                                for (int i = 0; i < data.totalData; i++)
-                                  const SessionItemCard(),
-                              ],
-                            ),
+                                  SizedBox(width: defaultMargin),
+                                  Text(
+                                    data.dayName,
+                                    style: darkGreyTextStyle,
+                                  ),
+                                ],
+                              ),
+                              if (data.totalData == 0)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text(
+                                    'No Session',
+                                    style: darkGreyTextStyle.copyWith(
+                                        fontSize: 12),
+                                  ),
+                                ),
+                              for (int i = 0; i < data.totalData; i++)
+                                const SessionItemCard(),
+                            ],
                           ),
-                        )
-                        .toList()),
+                        ),
+                      )
+                      .toList(),
+                ),
+                const SizedBox(height: 100),
               ],
             ),
           )

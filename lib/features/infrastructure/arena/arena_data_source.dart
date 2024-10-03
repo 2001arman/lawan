@@ -9,7 +9,7 @@ class ArenaDataSource {
   var listArena = <ArenaModel>[].obs;
 
   ArenaDataSource() {
-    listArena.add(dummyArenaData);
+    listArena.addAll(dummyArenaData);
   }
 
   ArenaModel getArena({required int index}) {
@@ -82,56 +82,87 @@ class ArenaDataSource {
     listArena.removeAt(index);
   }
 
-  ArenaModel dummyArenaData = ArenaModel(
-    location: 'Petaling Jaya, Selangor',
-    name: 'MBPJ Sports Complex',
-    courtData: [
-      CourtModel(
-        pictures: [
-          XFile('assets/images/field1.png'),
-        ],
-        pictureType: PictureType.asset,
-        courtName: '1',
-        arenaType: 'Indoor',
-        flooringType: 'Court Turf',
-        operationalHours: List.generate(
-          7,
-          (index) => OperationalHour(
-            isActive: true.obs,
-            dayName: Helper.dayName[index],
-            openTime: const TimeOfDay(hour: 9, minute: 00).obs,
-            closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
-            chooseTime: true.obs,
+  List<ArenaModel> dummyArenaData = [
+    ArenaModel(
+      location: 'Petaling Jaya, Selangor',
+      name: 'MBPJ Sports Complex',
+      courtData: [
+        CourtModel(
+          pictures: [
+            XFile('assets/images/field1.png'),
+          ],
+          pictureType: PictureType.asset,
+          courtName: '1',
+          arenaType: 'Indoor',
+          flooringType: 'Court Turf',
+          operationalHours: List.generate(
+            7,
+            (index) => OperationalHour(
+              isActive: true.obs,
+              dayName: Helper.dayName[index],
+              openTime: const TimeOfDay(hour: 9, minute: 00).obs,
+              closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
+              chooseTime: true.obs,
+            ),
           ),
+          rateArena: [
+            RateModel(name: 'Weekend Rate', price: 10.obs, hour: 1.0.obs),
+            RateModel(name: 'Weekdays Rate', price: 10.obs, hour: 1.0.obs),
+          ],
         ),
-        rateArena: [
-          RateModel(name: 'Weekend Rate', price: 10.obs, hour: 1.0.obs),
-          RateModel(name: 'Weekdays Rate', price: 10.obs, hour: 1.0.obs),
-        ],
-      ),
-      CourtModel(
-        pictures: [
-          XFile('assets/images/field2.png'),
-        ],
-        pictureType: PictureType.asset,
-        courtName: '2',
-        arenaType: 'Indoor',
-        flooringType: 'Court Turf',
-        operationalHours: List.generate(
-          7,
-          (index) => OperationalHour(
-            isActive: true.obs,
-            dayName: Helper.dayName[index],
-            openTime: const TimeOfDay(hour: 9, minute: 00).obs,
-            closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
-            chooseTime: true.obs,
+        CourtModel(
+          pictures: [
+            XFile('assets/images/field2.png'),
+          ],
+          pictureType: PictureType.asset,
+          courtName: '2',
+          arenaType: 'Outdoor',
+          flooringType: 'Grass',
+          operationalHours: List.generate(
+            7,
+            (index) => OperationalHour(
+              isActive: true.obs,
+              dayName: Helper.dayName[index],
+              openTime: const TimeOfDay(hour: 9, minute: 00).obs,
+              closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
+              chooseTime: true.obs,
+            ),
           ),
+          rateArena: [
+            RateModel(name: 'Weekend Rate', price: 10.obs, hour: 1.0.obs),
+            RateModel(name: 'Weekdays Rate', price: 10.obs, hour: 1.0.obs),
+          ],
         ),
-        rateArena: [
-          RateModel(name: 'Weekend Rate', price: 10.obs, hour: 1.0.obs),
-          RateModel(name: 'Weekdays Rate', price: 10.obs, hour: 1.0.obs),
-        ],
-      ),
-    ],
-  );
+      ],
+    ),
+    ArenaModel(
+      location: 'Sungai Besar',
+      name: 'Padang Utama',
+      courtData: [
+        CourtModel(
+          pictures: [
+            XFile('assets/images/field3.png'),
+          ],
+          pictureType: PictureType.asset,
+          courtName: '1',
+          arenaType: 'Indoor',
+          flooringType: 'Cement',
+          operationalHours: List.generate(
+            7,
+            (index) => OperationalHour(
+              isActive: true.obs,
+              dayName: Helper.dayName[index],
+              openTime: const TimeOfDay(hour: 9, minute: 00).obs,
+              closeTIme: const TimeOfDay(hour: 18, minute: 00).obs,
+              chooseTime: true.obs,
+            ),
+          ),
+          rateArena: [
+            RateModel(name: 'Weekend Rate', price: 10.obs, hour: 1.0.obs),
+            RateModel(name: 'Weekdays Rate', price: 10.obs, hour: 1.0.obs),
+          ],
+        ),
+      ],
+    ),
+  ];
 }

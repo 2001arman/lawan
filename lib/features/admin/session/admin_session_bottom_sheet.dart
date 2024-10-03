@@ -11,6 +11,8 @@ import 'package:lawan/utility/shared/widgets/host_avatar_widget.dart';
 import 'package:lawan/utility/shared/widgets/text_boder.dart';
 import 'package:lawan/utility/shared/widgets/text_pill_widget.dart';
 
+import '../../domain/arena/arena_model.dart';
+
 class AdminSessionBottomSheet {
   Widget cardDetailSession({
     required String title,
@@ -278,7 +280,7 @@ class AdminSessionBottomSheet {
     );
   }
 
-  void successCreateSesssionSheet() {
+  void successCreateSesssionSheet({required ArenaModel arenaModel}) {
     return sessionContainerSheet(
       widgetContent: SizedBox(
         width: Get.width,
@@ -302,7 +304,10 @@ class AdminSessionBottomSheet {
               style: darkGreyTextStyle.copyWith(fontWeight: medium),
             ),
             SizedBox(height: defaultMargin),
-            const FieldImageWidget(),
+            FieldImageWidget(
+              arenaModel: arenaModel,
+              isSelected: false,
+            ),
             const SizedBox(height: 12),
             Row(
               children: [
