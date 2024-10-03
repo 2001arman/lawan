@@ -77,4 +77,19 @@ class Helper {
   static String formatFullDate(DateTime date) {
     return DateFormat('EEE, dd MMM yyyy').format(date);
   }
+
+  static String timeBetweenNowAndSession(DateTime sessionDateTime) {
+    Duration difference = sessionDateTime.difference(DateTime.now());
+
+    int days = difference.inDays;
+    int hours = difference.inHours % 24;
+    int minutes = difference.inMinutes % 60;
+    int seconds = difference.inSeconds % 60;
+
+    return '$days days $hours hours $minutes mins $seconds sec';
+  }
+
+  static bool isUpcoming(DateTime sessionDateTime) {
+    return sessionDateTime.isAfter(DateTime.now());
+  }
 }

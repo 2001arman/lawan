@@ -72,7 +72,6 @@ class SessionLogic extends GetxController {
 
   void deleteSession({required int dateIndex, required int sessionIndex}) {
     Get.back();
-    Get.log('date $dateIndex session $sessionIndex');
     CustomDialogSuccess.confirmDialog(
       actionType: ActionType.delete,
       onAction: () {

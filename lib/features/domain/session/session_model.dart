@@ -22,4 +22,14 @@ class SessionModel {
     required this.identificationNumber,
     required this.price,
   });
+
+  DateTime getStartDateTime() {
+    return DateTime(
+      dateTime.year,
+      dateTime.month,
+      dateTime.day,
+      startHour.hour,
+      startHour.minute,
+    );
+  }
 }

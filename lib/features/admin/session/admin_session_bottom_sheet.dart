@@ -245,7 +245,38 @@ class AdminSessionBottomSheet {
             ],
           ),
           const SizedBox(height: 4),
-          const TextPillWidget(data: 'Complete'),
+          Visibility(
+            visible: Helper.isUpcoming(
+              sessionData.getStartDateTime(),
+            ),
+            replacement: const TextPillWidget(data: 'Complete'),
+            child: Row(
+              children: [
+                CustomButton(
+                  isBlack: true,
+                  onTap: () {},
+                  paddingVertical: 8,
+                  widget: Column(
+                    children: [
+                      Text(
+                        'Sesssion starting in',
+                        style: midGreyTextStyle.copyWith(fontSize: 12),
+                      ),
+                      Text(
+                        Helper.timeBetweenNowAndSession(
+                          sessionData.getStartDateTime(),
+                        ),
+                        style: whiteTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: semiBold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
           const HostAvatarWidget(),
           Row(
             children: [
