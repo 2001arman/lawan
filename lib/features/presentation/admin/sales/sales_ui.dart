@@ -16,7 +16,13 @@ class SalesUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget salesContainer() {
+    Widget salesContainer({
+      required String title,
+      required String value,
+      required String percent,
+      required String infoData,
+      required Color percentColor,
+    }) {
       return Expanded(
         child: Container(
           padding: const EdgeInsets.all(12),
@@ -28,25 +34,28 @@ class SalesUi extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Today',
+                title,
                 style: darkGreyTextStyle.copyWith(fontSize: 12),
               ),
               Text(
-                'RM120',
+                'RM$value',
                 style:
                     blackTextStyle.copyWith(fontSize: 24, fontWeight: semiBold),
               ),
+              const SizedBox(height: 2),
               Row(
                 children: [
                   TextBorder(
-                    textTitle: '- 5%',
+                    textTitle: percent,
                     fontSize: 11,
-                    textColor: kRedColor,
+                    textColor: percentColor,
+                    paddingVertical: 0,
+                    paddingHorizontal: 8,
                   ),
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(
-                      'vs yesterday',
+                      'vs $infoData',
                       style: darkGreyTextStyle.copyWith(fontSize: 12),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -80,9 +89,14 @@ class SalesUi extends StatelessWidget {
       );
     }
 
-    return SafeArea(
-      child: ListView(
-        padding: EdgeInsets.all(defaultMargin),
+    return Padding(
+      padding: EdgeInsets.only(
+        left: defaultMargin,
+        right: defaultMargin,
+        bottom: defaultMargin,
+        top: defaultMargin / 2,
+      ),
+      child: Column(
         children: [
           Row(
             children: [
@@ -111,223 +125,260 @@ class SalesUi extends StatelessWidget {
               ),
             ],
           ),
-
-          // chart
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.only(
-              top: defaultMargin,
-              left: defaultMargin,
-              right: 8,
-              bottom: defaultMargin,
-            ),
-            margin: EdgeInsets.symmetric(vertical: defaultMargin),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(32),
-              color: kModalColor,
-              border: Border.all(width: 1, color: kWhiteColor),
-            ),
-            child: Column(
+          SizedBox(height: defaultMargin),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
               children: [
-                Row(
-                  children: [
-                    salesContainer(),
-                    const SizedBox(width: 12),
-                    salesContainer(),
-                    const SizedBox(width: 8),
-                  ],
-                ),
-                SizedBox(height: defaultMargin),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    circularInfoButton(title: 'Week 3'),
-                    SizedBox(width: defaultMargin),
-                    circularInfoButton(
-                      title: 'Week 2',
-                      color: kGreyColor,
-                    ),
-                    SizedBox(width: defaultMargin),
-                    circularInfoButton(
-                      title: 'Selected',
-                      color: kBlackColor,
-                    ),
-                  ],
-                ),
-                SizedBox(height: defaultMargin),
-                Obx(
-                  () => Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: logic
-                        .getChartModel()
-                        .activeChartList
-                        .asMap()
-                        .entries
-                        .map(
-                          (data) => Obx(() {
-                            bool isActive =
-                                logic.getChartModel().activeIndex.value ==
-                                        data.key &&
-                                    logic.getChartModel().activeType.value == 0;
-                            return Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  logic.getChartModel().activeIndex.value =
-                                      data.key;
-                                  logic.getChartModel().activeType.value = 0;
-                                },
-                                child: Container(
-                                  height: 120 * data.value,
-                                  margin: const EdgeInsets.only(right: 8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(200),
-                                    gradient: isActive ? null : mainGradient,
-                                    color: isActive ? kBlackColor : null,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
-                        )
-                        .toList(),
+                // chart
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.only(
+                    top: defaultMargin,
+                    left: defaultMargin,
+                    right: 8,
+                    bottom: defaultMargin,
                   ),
-                ),
-                const SizedBox(height: 8),
-                Obx(
-                  () => Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: logic
-                        .getChartModel()
-                        .inActiveChartList
-                        .asMap()
-                        .entries
-                        .map(
-                          (data) => Obx(() {
-                            bool isActive =
-                                logic.getChartModel().activeIndex.value ==
-                                        data.key &&
-                                    logic.getChartModel().activeType.value == 1;
-                            return Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  logic.getChartModel().activeIndex.value =
-                                      data.key;
-                                  logic.getChartModel().activeType.value = 1;
-                                },
-                                child: Container(
-                                  height: 120 * data.value,
-                                  margin: const EdgeInsets.only(right: 8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(200),
-                                    color:
-                                        isActive ? kBlackColor : kMidgreyColor,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
-                        )
-                        .toList(),
+                  margin: EdgeInsets.only(bottom: defaultMargin),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(32),
+                    color: kModalColor,
+                    border: Border.all(width: 1, color: kWhiteColor),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Obx(
-                  () => Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: logic
-                        .getChartModel()
-                        .titles
-                        .asMap()
-                        .entries
-                        .map(
-                          (data) => Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 8),
-                              child: Obx(
-                                () => Text(
-                                  data.value,
-                                  textAlign: TextAlign.center,
-                                  style: midGreyTextStyle.copyWith(
-                                    fontSize: 12,
-                                    color: logic
-                                                .getChartModel()
-                                                .activeIndex
-                                                .value ==
-                                            data.key
-                                        ? kBlackColor
-                                        : kMidgreyColor,
-                                    fontWeight: logic
-                                                .getChartModel()
-                                                .activeIndex
-                                                .value ==
-                                            data.key
-                                        ? medium
-                                        : reguler,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          TabbarWidget(
-            tabBarTitle: state.salesTitle,
-            tabActive: state.salesTabActive,
-            onTap: (title) {
-              state.salesTabActive.value = title;
-              logic.salesAlignmentTabbar(title);
-            },
-            alignment: state.activeSalesAlignment,
-          ),
-
-          Column(
-            children: state.listSession
-                .asMap()
-                .entries
-                .map(
-                  (data) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Column(
                     children: [
-                      SizedBox(height: defaultMargin),
                       Row(
                         children: [
-                          Text(
-                            data.value.date,
-                            style: blackTextStyle.copyWith(
-                              fontSize: 16,
-                              fontWeight: medium,
-                            ),
+                          salesContainer(
+                            title: 'Today',
+                            value: '120',
+                            percent: '-5%',
+                            infoData: 'yesterday',
+                            percentColor: kRedColor,
+                          ),
+                          const SizedBox(width: 12),
+                          salesContainer(
+                            title: 'Weekly Sales',
+                            value: '32,140',
+                            percent: '12%',
+                            infoData: 'last week',
+                            percentColor: kGreenColor,
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                      ),
+                      SizedBox(height: defaultMargin),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          circularInfoButton(title: 'Week 3'),
+                          SizedBox(width: defaultMargin),
+                          circularInfoButton(
+                            title: 'Week 2',
+                            color: kGreyColor,
                           ),
                           SizedBox(width: defaultMargin),
-                          Text(
-                            data.value.dayName,
-                            style: darkGreyTextStyle,
+                          circularInfoButton(
+                            title: 'Selected',
+                            color: kBlackColor,
                           ),
                         ],
                       ),
-                      if (data.value.totalData == 0)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            'No Session',
-                            style: darkGreyTextStyle.copyWith(fontSize: 12),
-                          ),
+                      SizedBox(height: defaultMargin),
+                      Obx(
+                        () => Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: logic
+                              .getChartModel()
+                              .activeChartList
+                              .asMap()
+                              .entries
+                              .map(
+                                (data) => Obx(() {
+                                  bool isActive = logic
+                                              .getChartModel()
+                                              .activeIndex
+                                              .value ==
+                                          data.key &&
+                                      logic.getChartModel().activeType.value ==
+                                          0;
+                                  return Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        logic
+                                            .getChartModel()
+                                            .activeIndex
+                                            .value = data.key;
+                                        logic.getChartModel().activeType.value =
+                                            0;
+                                      },
+                                      child: Container(
+                                        height: 120 * data.value,
+                                        margin: const EdgeInsets.only(right: 8),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(200),
+                                          gradient:
+                                              isActive ? null : mainGradient,
+                                          color: isActive ? kBlackColor : null,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              )
+                              .toList(),
                         ),
-                      if (data.value.totalData != 0)
-                        for (int i = 0; i < data.value.totalData; i++)
-                          SalesItemCard(
-                            onTap: () => CustomDialog().showRecipeDialog(),
-                          ),
+                      ),
+                      const SizedBox(height: 8),
+                      Obx(
+                        () => Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: logic
+                              .getChartModel()
+                              .inActiveChartList
+                              .asMap()
+                              .entries
+                              .map(
+                                (data) => Obx(() {
+                                  bool isActive = logic
+                                              .getChartModel()
+                                              .activeIndex
+                                              .value ==
+                                          data.key &&
+                                      logic.getChartModel().activeType.value ==
+                                          1;
+                                  return Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        logic
+                                            .getChartModel()
+                                            .activeIndex
+                                            .value = data.key;
+                                        logic.getChartModel().activeType.value =
+                                            1;
+                                      },
+                                      child: Container(
+                                        height: 120 * data.value,
+                                        margin: const EdgeInsets.only(right: 8),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(200),
+                                          color: isActive
+                                              ? kBlackColor
+                                              : kMidgreyColor,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Obx(
+                        () => Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: logic
+                              .getChartModel()
+                              .titles
+                              .asMap()
+                              .entries
+                              .map(
+                                (data) => Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 8),
+                                    child: Obx(
+                                      () => Text(
+                                        data.value,
+                                        textAlign: TextAlign.center,
+                                        style: midGreyTextStyle.copyWith(
+                                          fontSize: 12,
+                                          color: logic
+                                                      .getChartModel()
+                                                      .activeIndex
+                                                      .value ==
+                                                  data.key
+                                              ? kBlackColor
+                                              : kMidgreyColor,
+                                          fontWeight: logic
+                                                      .getChartModel()
+                                                      .activeIndex
+                                                      .value ==
+                                                  data.key
+                                              ? medium
+                                              : reguler,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
                     ],
                   ),
-                )
-                .toList(),
+                ),
+
+                TabbarWidget(
+                  tabBarTitle: state.salesTitle,
+                  tabActive: state.salesTabActive,
+                  onTap: (title) {
+                    state.salesTabActive.value = title;
+                    logic.salesAlignmentTabbar(title);
+                  },
+                  alignment: state.activeSalesAlignment,
+                ),
+
+                Column(
+                  children: state.listSession
+                      .asMap()
+                      .entries
+                      .map(
+                        (data) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: defaultMargin),
+                            Row(
+                              children: [
+                                Text(
+                                  data.value.date,
+                                  style: blackTextStyle.copyWith(
+                                    fontSize: 16,
+                                    fontWeight: medium,
+                                  ),
+                                ),
+                                SizedBox(width: defaultMargin),
+                                Text(
+                                  data.value.dayName,
+                                  style: darkGreyTextStyle,
+                                ),
+                              ],
+                            ),
+                            if (data.value.totalData == 0)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                  'No Session',
+                                  style:
+                                      darkGreyTextStyle.copyWith(fontSize: 12),
+                                ),
+                              ),
+                            if (data.value.totalData != 0)
+                              for (int i = 0; i < data.value.totalData; i++)
+                                SalesItemCard(
+                                  onTap: () =>
+                                      CustomDialog().showRecipeDialog(),
+                                ),
+                          ],
+                        ),
+                      )
+                      .toList(),
+                ),
+              ],
+            ),
           ),
         ],
       ),

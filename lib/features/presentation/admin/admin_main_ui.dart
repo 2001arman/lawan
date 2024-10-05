@@ -333,7 +333,12 @@ class AdminMainUi extends StatelessWidget {
 
     Widget detailArenaSection() {
       return ListView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.only(
+          left: defaultMargin,
+          right: defaultMargin,
+          bottom: defaultMargin,
+          top: defaultMargin / 2,
+        ),
         children: [
           Text(
             'Arena',
@@ -460,30 +465,56 @@ class AdminMainUi extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      // backgroundColor: kBackgroundColor,
       resizeToAvoidBottomInset: false,
-      appBar: const CustomAppbar(),
-      body: Stack(
-        children: [
-          Obx(() {
-            switch (state.selectedNavbarIndex.value) {
-              case 0:
-                return SessionUi();
-              case 2:
-                return SalesUi();
-              default:
-                if (arenaDataSource.listArena.isEmpty) {
-                  return emptyArena();
-                } else {
-                  return detailArenaSection();
-                }
-            }
-          }),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: customNavbar(),
-          ),
-        ],
+      body: Container(
+        width: Get.width,
+        height: Get.height,
+        decoration: BoxDecoration(
+          color: kBackgroundColor,
+        ),
+        child: Stack(
+          children: [
+            Obx(
+              () => Visibility(
+                visible: state.selectedNavbarIndex.value == 2,
+                child: Container(
+                  width: double.infinity,
+                  height: Get.height * 0.4,
+                  decoration: BoxDecoration(
+                    gradient: backgroundGradient,
+                  ),
+                ),
+              ),
+            ),
+            Column(
+              children: [
+                SizedBox(height: MediaQuery.paddingOf(context).top),
+                const CustomAppbar(),
+                Expanded(
+                  child: Obx(() {
+                    switch (state.selectedNavbarIndex.value) {
+                      case 0:
+                        return SessionUi();
+                      case 2:
+                        return SalesUi();
+                      default:
+                        if (arenaDataSource.listArena.isEmpty) {
+                          return emptyArena();
+                        } else {
+                          return detailArenaSection();
+                        }
+                    }
+                  }),
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: customNavbar(),
+            ),
+          ],
+        ),
       ),
     );
   }

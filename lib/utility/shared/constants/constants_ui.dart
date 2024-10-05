@@ -58,6 +58,15 @@ LinearGradient mainGradient = const LinearGradient(
   ],
 );
 
+LinearGradient backgroundGradient = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    const Color(0xFF0C1B22).withOpacity(0.8),
+    const Color(0xFF44D8BE).withOpacity(0.0),
+  ],
+);
+
 double defaultMargin = 16.0;
 
 FontWeight light = FontWeight.w300;

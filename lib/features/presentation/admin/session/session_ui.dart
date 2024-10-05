@@ -22,7 +22,12 @@ class SessionUi extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(defaultMargin),
+            padding: EdgeInsets.only(
+              left: defaultMargin,
+              right: defaultMargin,
+              bottom: defaultMargin,
+              top: defaultMargin / 2,
+            ),
             child: Row(
               children: [
                 CircleButtonTransparentWidget(
