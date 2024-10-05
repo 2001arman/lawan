@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/admin_main_logic.dart';
 import 'package:lawan/features/presentation/admin/admin_main_state.dart';
+import 'package:lawan/features/presentation/admin/sales/sales_ui.dart';
 import 'package:lawan/features/presentation/admin/session/session_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
@@ -436,6 +437,7 @@ class AdminMainUi extends StatelessWidget {
             onTap: (title) {
               state.tabActive.value = title;
               logic.alignmentTabbar(title);
+              Get.log('cek alignment ${state.activeAlignment} $title');
             },
             alignment: state.activeAlignment,
           ),
@@ -468,7 +470,7 @@ class AdminMainUi extends StatelessWidget {
               case 0:
                 return SessionUi();
               case 2:
-                return const Center(child: Text('Sales'));
+                return SalesUi();
               default:
                 if (arenaDataSource.listArena.isEmpty) {
                   return emptyArena();

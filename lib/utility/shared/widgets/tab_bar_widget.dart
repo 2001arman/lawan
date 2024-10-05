@@ -4,15 +4,21 @@ import 'package:get/get.dart';
 import '../constants/constants_ui.dart';
 
 class TabbarWidget extends StatelessWidget {
-  const TabbarWidget(
-      {super.key,
-      required this.tabBarTitle,
-      required this.tabActive,
-      required this.onTap,
-      required this.alignment});
+  const TabbarWidget({
+    super.key,
+    required this.tabBarTitle,
+    required this.tabActive,
+    required this.onTap,
+    required this.alignment,
+    this.backgroundColor,
+    this.activeColor,
+    this.textActiveColor,
+    this.textInActiveColor,
+  });
   final List<String> tabBarTitle;
   final RxString tabActive;
   final Rx<AlignmentGeometry> alignment;
+  final Color? backgroundColor, activeColor, textActiveColor, textInActiveColor;
   final Function(String title) onTap;
 
   @override
@@ -22,7 +28,7 @@ class TabbarWidget extends StatelessWidget {
       padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
-        color: kGreyColor,
+        color: backgroundColor ?? kGreyColor,
         border: Border.all(
           width: 1,
           color: Colors.transparent,
@@ -45,7 +51,7 @@ class TabbarWidget extends StatelessWidget {
                         return Container(
                           width: constraints.maxWidth / tabBarTitle.length,
                           decoration: BoxDecoration(
-                            color: kWhiteColor,
+                            color: activeColor ?? kWhiteColor,
                             borderRadius: BorderRadius.circular(100),
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -79,11 +85,14 @@ class TabbarWidget extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                                 child: Text(
-                                  title.tr,
+                                  title,
                                   style: greyTextStyle.copyWith(
                                     color: tabActive.value == title
-                                        ? kBlackColor
-                                        : kDarkgreyColor,
+                                        ? textActiveColor ?? kBlackColor
+                                        : textInActiveColor ?? kDarkgreyColor,
+                                    fontWeight: tabActive.value == title
+                                        ? medium
+                                        : reguler,
                                   ),
                                 ),
                               ),

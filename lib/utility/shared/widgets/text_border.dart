@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 
-class TextBoder extends StatelessWidget {
+class TextBorder extends StatelessWidget {
   final String textTitle;
   final double fontSize;
   final double paddingVertical, paddingHorizontal;
-  final Color? backgroundColor;
-  const TextBoder({
+  final Color? backgroundColor, textColor, borderColor;
+  const TextBorder({
     super.key,
     required this.textTitle,
     this.fontSize = 12,
     this.paddingVertical = 4,
     this.paddingHorizontal = 12,
     this.backgroundColor,
+    this.textColor,
+    this.borderColor,
   });
 
   @override
@@ -27,7 +29,7 @@ class TextBoder extends StatelessWidget {
         color: backgroundColor,
         border: Border.all(
           width: 1,
-          color: kGreyColor,
+          color: borderColor ?? kGreyColor,
         ),
       ),
       child: Text(
@@ -35,6 +37,7 @@ class TextBoder extends StatelessWidget {
         style: darkGreyTextStyle.copyWith(
           fontSize: fontSize,
           fontWeight: medium,
+          color: textColor,
         ),
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,

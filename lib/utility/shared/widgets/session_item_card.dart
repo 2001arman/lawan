@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lawan/features/domain/session/session_model.dart';
 import 'package:lawan/utility/shared/widgets/field_number_widget.dart';
-import 'package:lawan/utility/shared/widgets/text_boder.dart';
+import 'package:lawan/utility/shared/widgets/text_border.dart';
 import 'package:lawan/utility/util/helper.dart';
 
 import '../constants/constants_ui.dart';
@@ -36,7 +36,7 @@ class SessionItemCard extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
-              TextBoder(textTitle: '${sessionData.totalHour} hr'),
+              TextBorder(textTitle: '${sessionData.totalHour} hr'),
             ],
           ),
           Container(

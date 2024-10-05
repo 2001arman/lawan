@@ -9,7 +9,7 @@ import 'package:lawan/features/domain/arena/arena_model.dart';
 import 'package:lawan/utility/shared/widgets/circle_button_widget.dart';
 
 import '../constants/constants_ui.dart';
-import 'text_boder.dart';
+import 'text_border.dart';
 
 class FieldImageWidget extends StatefulWidget {
   final ArenaModel arenaModel;
@@ -105,7 +105,7 @@ class _FieldImageWidgetState extends State<FieldImageWidget> {
                         const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                     child: Row(
                       children: [
-                        TextBoder(
+                        TextBorder(
                           textTitle: '5.2km',
                           backgroundColor: kWhiteColor,
                           paddingVertical: 0,
@@ -131,7 +131,7 @@ class _FieldImageWidgetState extends State<FieldImageWidget> {
                             ],
                           ),
                         ),
-                        TextBoder(
+                        TextBorder(
                           textTitle: widget.arenaModel
                               .courtData[selectedCourtIndex].flooringType,
                           backgroundColor: kWhiteColor,

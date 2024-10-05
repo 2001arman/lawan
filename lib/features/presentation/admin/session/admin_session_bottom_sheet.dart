@@ -8,7 +8,7 @@ import 'package:lawan/utility/shared/widgets/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/field_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/field_number_widget.dart';
 import 'package:lawan/utility/shared/widgets/host_avatar_widget.dart';
-import 'package:lawan/utility/shared/widgets/text_boder.dart';
+import 'package:lawan/utility/shared/widgets/text_border.dart';
 import 'package:lawan/utility/shared/widgets/text_pill_widget.dart';
 
 import '../../../../utility/util/helper.dart';
@@ -62,7 +62,7 @@ class AdminSessionBottomSheet {
             if (description != null)
               Padding(
                 padding: const EdgeInsets.only(top: 4),
-                child: TextBoder(
+                child: TextBorder(
                   textTitle: description,
                   fontSize: 11,
                   paddingVertical: 0,

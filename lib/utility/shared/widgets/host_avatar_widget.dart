@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
-import 'package:lawan/utility/shared/widgets/text_boder.dart';
+import 'package:lawan/utility/shared/widgets/text_border.dart';
 
 import 'circle_button_transparent_widget.dart';
 
@@ -34,7 +34,7 @@ class HostAvatarWidget extends StatelessWidget {
                   'Jese Leos',
                   style: blackTextStyle.copyWith(fontWeight: medium),
                 ),
-                const TextBoder(textTitle: 'Host'),
+                const TextBorder(textTitle: 'Host'),
               ],
             ),
           ),
