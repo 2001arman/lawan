@@ -1,14 +1,51 @@
+import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
+import 'package:lawan/utility/shared/widgets/share_section.dart';
 import 'package:lawan/utility/util/helper.dart';
 import 'package:wheel_picker/wheel_picker.dart';
 
 import '../../features/domain/arena/arena_model.dart';
+import '../shared/widgets/circle_button_transparent_widget.dart';
 
 class CustomDialog {
+  Widget glassEfectDialogContainer(
+      {required Widget child, double height = 0.8}) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: SizedBox(
+        height: Get.height * height,
+        width: Get.width,
+      ).blurred(
+        blur: 7,
+        blurColor: Colors.white,
+        colorOpacity: 0,
+        borderRadius: BorderRadius.circular(32),
+        overlay: Container(
+          width: Get.width,
+          decoration: BoxDecoration(
+            color: kModalColor,
+            borderRadius: BorderRadius.circular(32),
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(0, -0.5),
+                blurStyle: BlurStyle.inner,
+                spreadRadius: 0,
+                blurRadius: 0,
+                color: kBlackColor.withOpacity(0.1),
+              ),
+            ],
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+
   static Future<void> editAddDialog(
       {required VoidCallback onTapEdit, required VoidCallback onTapAdd}) {
     return Get.dialog(
@@ -413,6 +450,174 @@ class CustomDialog {
           ),
         ),
       ),
+    );
+  }
+
+  Widget receiptDetailValue({required String title, required String value}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: darkGreyTextStyle.copyWith(fontSize: 12),
+        ),
+        Text(
+          value,
+          style: blackTextStyle.copyWith(fontSize: 12, fontWeight: medium),
+        ),
+      ],
+    );
+  }
+
+  Future<void> showRecipeDialog() {
+    return Get.bottomSheet(
+      glassEfectDialogContainer(
+        height: 0.85,
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: Get.width * 0.5,
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      decoration: BoxDecoration(
+                        gradient: mainGradient,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(80),
+                          bottomRight: Radius.circular(80),
+                        ),
+                      ),
+                      child: Text(
+                        'Receipt',
+                        style: whiteTextStyle.copyWith(
+                          fontSize: 12,
+                          fontWeight: medium,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(height: defaultMargin),
+                    SvgPicture.asset(
+                      'assets/icons/logo.svg',
+                    ),
+                    SizedBox(height: defaultMargin),
+                    Text(
+                      'Successful',
+                      style: blackTextStyle.copyWith(
+                          fontSize: 20, fontWeight: medium),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Transaction Summary',
+                      style: darkGreyTextStyle.copyWith(fontSize: 12),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'RM20.00',
+                      style: blackTextStyle.copyWith(
+                          fontSize: 20, fontWeight: medium),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '23 Jul 2024 09:57:59 PM',
+                      style: darkGreyTextStyle.copyWith(
+                          fontSize: 11, fontWeight: medium),
+                    ),
+                    SizedBox(height: defaultMargin),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(width: 1, color: kGreyColor),
+                      ),
+                      child: Column(
+                        children: [
+                          receiptDetailValue(
+                              title: 'Reference No', value: '3525224223'),
+                          const SizedBox(height: 8),
+                          receiptDetailValue(
+                              title: 'To', value: 'TEK Industries'),
+                          Container(
+                            width: double.infinity,
+                            height: 1,
+                            color: kGreyColor,
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                          ),
+                          receiptDetailValue(
+                            title: 'Payment Method',
+                            value: 'DuitNow',
+                          ),
+                          const SizedBox(height: 8),
+                          receiptDetailValue(
+                            title: 'Transfer Type',
+                            value: 'Within CIMB Bank',
+                          ),
+                          const SizedBox(height: 8),
+                          receiptDetailValue(
+                            title: 'Payment Type',
+                            value: 'Instant Transfer',
+                          ),
+                          const SizedBox(height: 8),
+                          receiptDetailValue(
+                            title: 'Recipient Reference',
+                            value: 'Lawan - Friendly Session',
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: defaultMargin),
+                    Text(
+                      'Note',
+                      textAlign: TextAlign.center,
+                      style: darkGreyTextStyle.copyWith(
+                          fontSize: 12, fontWeight: medium),
+                    ),
+                    Text(
+                      'This receipt  is computer generated\nand no signature is required.',
+                      textAlign: TextAlign.center,
+                      style: darkGreyTextStyle.copyWith(fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: CircleButtonTransparentWidget(
+                  size: 40,
+                  onTap: Get.back,
+                  borderColor: kGreyColor,
+                  widget: Icon(
+                    Icons.close,
+                    color: kDarkgreyColor,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: double.infinity,
+                height: 163,
+                padding: EdgeInsets.all(defaultMargin),
+                color: kWhiteColor,
+                child: const ShareSection(),
+              ),
+            ),
+          ],
+        ),
+      ),
+      isScrollControlled: true,
+      enableDrag: true,
     );
   }
 }
