@@ -154,109 +154,135 @@ class SalesUi extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: defaultMargin),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: state.weeklyChart.activeChartList
-                      .asMap()
-                      .entries
-                      .map(
-                        (data) => Obx(() {
-                          bool isActive =
-                              state.weeklyChart.activeIndex.value == data.key &&
-                                  state.weeklyChart.activeType.value == 0;
-                          return Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                state.weeklyChart.activeIndex.value = data.key;
-                                state.weeklyChart.activeType.value = 0;
-                              },
-                              child: Container(
-                                height: 120 * data.value,
-                                margin: const EdgeInsets.only(right: 8),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(200),
-                                  gradient: isActive ? null : mainGradient,
-                                  color: isActive ? kBlackColor : null,
+                Obx(
+                  () => Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: logic
+                        .getChartModel()
+                        .activeChartList
+                        .asMap()
+                        .entries
+                        .map(
+                          (data) => Obx(() {
+                            bool isActive =
+                                logic.getChartModel().activeIndex.value ==
+                                        data.key &&
+                                    logic.getChartModel().activeType.value == 0;
+                            return Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  logic.getChartModel().activeIndex.value =
+                                      data.key;
+                                  logic.getChartModel().activeType.value = 0;
+                                },
+                                child: Container(
+                                  height: 120 * data.value,
+                                  margin: const EdgeInsets.only(right: 8),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(200),
+                                    gradient: isActive ? null : mainGradient,
+                                    color: isActive ? kBlackColor : null,
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        }),
-                      )
-                      .toList(),
+                            );
+                          }),
+                        )
+                        .toList(),
+                  ),
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: state.weeklyChart.inActiveChartList
-                      .asMap()
-                      .entries
-                      .map(
-                        (data) => Obx(() {
-                          bool isActive =
-                              state.weeklyChart.activeIndex.value == data.key &&
-                                  state.weeklyChart.activeType.value == 1;
-                          return Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                state.weeklyChart.activeIndex.value = data.key;
-                                state.weeklyChart.activeType.value = 1;
-                              },
-                              child: Container(
-                                height: 120 * data.value,
-                                margin: const EdgeInsets.only(right: 8),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(200),
-                                  color: isActive ? kBlackColor : kMidgreyColor,
+                Obx(
+                  () => Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: logic
+                        .getChartModel()
+                        .inActiveChartList
+                        .asMap()
+                        .entries
+                        .map(
+                          (data) => Obx(() {
+                            bool isActive =
+                                logic.getChartModel().activeIndex.value ==
+                                        data.key &&
+                                    logic.getChartModel().activeType.value == 1;
+                            return Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  logic.getChartModel().activeIndex.value =
+                                      data.key;
+                                  logic.getChartModel().activeType.value = 1;
+                                },
+                                child: Container(
+                                  height: 120 * data.value,
+                                  margin: const EdgeInsets.only(right: 8),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(200),
+                                    color:
+                                        isActive ? kBlackColor : kMidgreyColor,
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        }),
-                      )
-                      .toList(),
+                            );
+                          }),
+                        )
+                        .toList(),
+                  ),
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: state.weeklyChart.titles
-                      .asMap()
-                      .entries
-                      .map(
-                        (data) => Expanded(
-                          child: Obx(
-                            () => Text(
-                              data.value,
-                              style: midGreyTextStyle.copyWith(
-                                fontSize: 12,
-                                color: state.weeklyChart.activeIndex.value ==
-                                        data.key
-                                    ? kBlackColor
-                                    : kMidgreyColor,
-                                fontWeight:
-                                    state.weeklyChart.activeIndex.value ==
+                Obx(
+                  () => Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: logic
+                        .getChartModel()
+                        .titles
+                        .asMap()
+                        .entries
+                        .map(
+                          (data) => Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Obx(
+                                () => Text(
+                                  data.value,
+                                  textAlign: TextAlign.center,
+                                  style: midGreyTextStyle.copyWith(
+                                    fontSize: 12,
+                                    color: logic
+                                                .getChartModel()
+                                                .activeIndex
+                                                .value ==
+                                            data.key
+                                        ? kBlackColor
+                                        : kMidgreyColor,
+                                    fontWeight: logic
+                                                .getChartModel()
+                                                .activeIndex
+                                                .value ==
                                             data.key
                                         ? medium
                                         : reguler,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      )
-                      .toList(),
+                        )
+                        .toList(),
+                  ),
                 ),
               ],
             ),
           ),
 
           TabbarWidget(
-            tabBarTitle: state.tabBarTitle,
-            tabActive: state.tabActive,
+            tabBarTitle: state.salesTitle,
+            tabActive: state.salesTabActive,
             onTap: (title) {
-              state.tabActive.value = title;
-              logic.alignmentTabbar(title);
+              state.salesTabActive.value = title;
+              logic.salesAlignmentTabbar(title);
             },
-            alignment: state.activeAlignment,
+            alignment: state.activeSalesAlignment,
           ),
 
           Column(
