@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lawan/features/admin/admin_add_arena.dart';
-import 'package:lawan/features/admin/admin_main_state.dart';
+import 'package:lawan/features/presentation/admin/admin_add_arena.dart';
+import 'package:lawan/features/presentation/admin/admin_main_state.dart';
 import 'package:lawan/features/infrastructure/arena/arena_data_source.dart';
 import 'package:lawan/utility/util/custom_dialog.dart';
 import 'package:lawan/utility/util/custom_dialog_success.dart';
 import 'package:lawan/utility/util/helper.dart';
 
-import '../domain/arena/arena_model.dart';
+import '../../domain/arena/arena_model.dart';
 
 class AdminMainLogic extends GetxController {
   AdminMainState state = AdminMainState();

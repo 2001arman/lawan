@@ -4,9 +4,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/admin/admin_main_logic.dart';
-import 'package:lawan/features/admin/admin_main_state.dart';
-import 'package:lawan/features/admin/session/session_ui.dart';
+import 'package:lawan/features/presentation/admin/admin_main_logic.dart';
+import 'package:lawan/features/presentation/admin/admin_main_state.dart';
+import 'package:lawan/features/presentation/admin/session/session_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_appbar.dart';
@@ -16,8 +16,8 @@ import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:lawan/utility/shared/widgets/tab_bar_widget.dart';
 import 'package:lawan/utility/util/helper.dart';
 
-import '../../utility/shared/widgets/custom_image_widget.dart';
-import '../../utility/shared/widgets/custom_text_form_fields.dart';
+import '../../../utility/shared/widgets/custom_image_widget.dart';
+import '../../../utility/shared/widgets/custom_text_form_fields.dart';
 
 class AdminMainUi extends StatelessWidget {
   static const namePath = '/main_page';

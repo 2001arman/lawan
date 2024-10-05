@@ -11,9 +11,9 @@ import 'package:lawan/utility/shared/widgets/host_avatar_widget.dart';
 import 'package:lawan/utility/shared/widgets/text_boder.dart';
 import 'package:lawan/utility/shared/widgets/text_pill_widget.dart';
 
-import '../../../utility/util/helper.dart';
-import '../../domain/arena/arena_model.dart';
-import '../../domain/session/session_model.dart';
+import '../../../../utility/util/helper.dart';
+import '../../../domain/arena/arena_model.dart';
+import '../../../domain/session/session_model.dart';
 
 class AdminSessionBottomSheet {
   Widget cardDetailSession({

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker_android/image_picker_android.dart';
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 import 'package:lawan/core/app_route.dart';
-import 'package:lawan/features/admin/admin_main_binding.dart';
+import 'package:lawan/features/presentation/admin/admin_main_binding.dart';
 import 'package:lawan/firebase_options.dart';
 
 void main() async {

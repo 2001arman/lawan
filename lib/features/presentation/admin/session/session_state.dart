@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lawan/features/domain/session/session_model.dart';
 
-import '../../../utility/util/helper.dart';
+import '../../../../utility/util/helper.dart';
 
 class SessionState {
   var selectedIndex = 1.obs;

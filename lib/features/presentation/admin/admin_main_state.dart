@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lawan/utility/util/helper.dart';
 
-import '../domain/arena/arena_model.dart';
+import '../../domain/arena/arena_model.dart';
 
 class AdminMainState {
   var selectedNavbarIndex = 1.obs;
