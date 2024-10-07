@@ -2,16 +2,18 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/admin_main_logic.dart';
 import 'package:lawan/features/presentation/admin/admin_main_state.dart';
 import 'package:lawan/features/presentation/admin/sales/sales_ui.dart';
 import 'package:lawan/features/presentation/admin/session/session_ui.dart';
+import 'package:lawan/features/presentation/player/player_main_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
+import 'package:lawan/utility/shared/widgets/bottom_navbar_item.dart';
 import 'package:lawan/utility/shared/widgets/custom_appbar.dart';
 import 'package:lawan/utility/shared/widgets/circle_button_widget.dart';
+import 'package:lawan/utility/shared/widgets/custom_bottom_navbar.dart';
 import 'package:lawan/utility/shared/widgets/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:lawan/utility/shared/widgets/tab_bar_widget.dart';
@@ -29,106 +31,33 @@ class AdminMainUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget bottomNavbarItem(
-        {required String title,
-        required bool isActive,
-        required String icon,
-        required int index}) {
-      return GestureDetector(
-        onTap: () => state.selectedNavbarIndex.value = index,
-        child: Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            color: isActive ? kBlackColor : kWhiteColor,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                icon,
-                width: 16,
-                height: 16,
-                color: isActive ? kWhiteColor : kBlackColor,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                title,
-                style: blackTextStyle.copyWith(
-                  color: isActive ? kWhiteColor : kBlackColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  height: 15.66 / 12,
-                  letterSpacing: -0.24,
-                ),
-              )
-            ],
-          ),
-        ),
-      );
-    }
-
     Widget customNavbar() {
-      return Container(
-        width: double.infinity,
-        padding: const EdgeInsets.only(top: 12),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              kBlackColor.withOpacity(0),
-              kBlackColor.withOpacity(0.3),
+      return CustomBottomNavbar(
+        navbarItemWidget: Obx(
+          () => Row(
+            children: [
+              BottomNavbarItem(
+                title: 'Session',
+                isActive: state.selectedNavbarIndex.value == 0,
+                icon: 'assets/icons/session.svg',
+                onTap: () => state.selectedNavbarIndex.value = 0,
+              ),
+              const SizedBox(width: 4),
+              BottomNavbarItem(
+                title: 'Arena',
+                isActive: state.selectedNavbarIndex.value == 1,
+                icon: 'assets/icons/arena.svg',
+                onTap: () => state.selectedNavbarIndex.value = 1,
+              ),
+              const SizedBox(width: 4),
+              BottomNavbarItem(
+                title: 'Sales',
+                isActive: state.selectedNavbarIndex.value == 2,
+                icon: 'assets/icons/sales.svg',
+                onTap: () => state.selectedNavbarIndex.value = 2,
+              ),
             ],
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(4),
-              margin: const EdgeInsets.only(bottom: 12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(80),
-                color: const Color(0xFFE5E6E5),
-                boxShadow: const [
-                  BoxShadow(
-                    offset: Offset(0, 0),
-                    blurRadius: 2,
-                    color: Colors.white,
-                    spreadRadius: 0,
-                  )
-                ],
-              ),
-              child: Obx(
-                () => Row(
-                  children: [
-                    bottomNavbarItem(
-                      title: 'Session',
-                      isActive: state.selectedNavbarIndex.value == 0,
-                      index: 0,
-                      icon: 'assets/icons/session.svg',
-                    ),
-                    const SizedBox(width: 4),
-                    bottomNavbarItem(
-                      title: 'Arena',
-                      isActive: state.selectedNavbarIndex.value == 1,
-                      icon: 'assets/icons/arena.svg',
-                      index: 1,
-                    ),
-                    const SizedBox(width: 4),
-                    bottomNavbarItem(
-                      title: 'Sales',
-                      isActive: state.selectedNavbarIndex.value == 2,
-                      icon: 'assets/icons/sales.svg',
-                      index: 2,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
         ),
       );
     }
@@ -490,7 +419,9 @@ class AdminMainUi extends StatelessWidget {
             Column(
               children: [
                 SizedBox(height: MediaQuery.paddingOf(context).top),
-                const CustomAppbar(),
+                CustomAppbar(
+                  onTap: () => Get.offAndToNamed(PlayerMainUi.namePath),
+                ),
                 Expanded(
                   child: Obx(() {
                     switch (state.selectedNavbarIndex.value) {

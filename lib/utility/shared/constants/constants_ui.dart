@@ -67,6 +67,15 @@ LinearGradient backgroundGradient = LinearGradient(
   ],
 );
 
+LinearGradient blackGradient = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    kBackgroundColor,
+    const Color(0xFF000000).withOpacity(0.0),
+  ],
+);
+
 double defaultMargin = 16.0;
 
 FontWeight light = FontWeight.w300;

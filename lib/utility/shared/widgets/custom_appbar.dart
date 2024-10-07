@@ -4,7 +4,8 @@ import '../constants/constants_ui.dart';
 
 class CustomAppbar extends StatelessWidget {
   final bool backEnable;
-  const CustomAppbar({super.key, this.backEnable = false});
+  final VoidCallback onTap;
+  const CustomAppbar({super.key, this.backEnable = false, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +33,22 @@ class CustomAppbar extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            margin: const EdgeInsets.only(right: 16, top: 6),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: kWhiteColor,
-            ),
-            child: Row(
-              children: [
-                Image.asset('assets/icons/image_person.png',
-                    width: 32, fit: BoxFit.cover),
-                Icon(Icons.keyboard_arrow_down, color: kBlackColor),
-              ],
+          GestureDetector(
+            onTap: onTap,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+              margin: const EdgeInsets.only(right: 16, top: 6),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                color: kWhiteColor,
+              ),
+              child: Row(
+                children: [
+                  Image.asset('assets/icons/image_person.png',
+                      width: 32, fit: BoxFit.cover),
+                  Icon(Icons.keyboard_arrow_down, color: kBlackColor),
+                ],
+              ),
             ),
           ),
         ],
