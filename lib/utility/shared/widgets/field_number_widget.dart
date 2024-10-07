@@ -7,7 +7,9 @@ import 'package:lawan/utility/shared/constants/constants_ui.dart';
 class FieldNumberWidget extends StatelessWidget {
   final Color? iconColor;
   final String court;
-  const FieldNumberWidget({super.key, this.iconColor, required this.court});
+  final double fontSize;
+  const FieldNumberWidget(
+      {super.key, this.iconColor, required this.court, this.fontSize = 16});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class FieldNumberWidget extends StatelessWidget {
         Text(
           court,
           style: blackTextStyle.copyWith(
-            fontSize: 16,
+            fontSize: fontSize,
             fontWeight: medium,
           ),
         ),

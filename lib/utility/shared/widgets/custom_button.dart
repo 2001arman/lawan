@@ -6,10 +6,11 @@ class CustomButton extends StatelessWidget {
   final String title;
   final bool isBlack;
   final VoidCallback onTap;
-  final Color? borderColor;
+  final Color? borderColor, backgroundColor;
   final Color? textColor;
   final Widget? widget;
   final double paddingVertical;
+
   const CustomButton({
     super.key,
     this.title = '',
@@ -19,6 +20,7 @@ class CustomButton extends StatelessWidget {
     this.textColor,
     this.widget,
     this.paddingVertical = 14,
+    this.backgroundColor,
   });
 
   @override
@@ -34,7 +36,8 @@ class CustomButton extends StatelessWidget {
               width: 1,
               color: isBlack ? Colors.transparent : borderColor ?? kWhiteColor,
             ),
-            color: isBlack ? kBlackColor : Colors.transparent,
+            color:
+                isBlack ? kBlackColor : backgroundColor ?? Colors.transparent,
           ),
           child: Center(
             child: widget ??

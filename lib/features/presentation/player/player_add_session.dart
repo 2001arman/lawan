@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:lawan/features/presentation/admin/session/session_logic.dart';
-import 'package:lawan/features/presentation/admin/session/session_state.dart';
+import 'package:lawan/features/presentation/player/player_main_logic.dart';
+import 'package:lawan/features/presentation/player/player_main_state.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/field_image_widget.dart';
-import 'package:lawan/utility/shared/widgets/filter_button.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -18,11 +17,11 @@ import '../../../../utility/shared/widgets/circle_button_transparent_widget.dart
 import '../../../../utility/shared/widgets/custom_text_form_fields.dart';
 import '../../../../utility/shared/widgets/tab_bar_widget.dart';
 
-class AdminAddSession {
-  final SessionState state;
-  final SessionLogic logic;
+class PlayerAddSession {
+  final PlayerMainState state;
+  final PlayerMainLogic logic;
 
-  AdminAddSession({required this.state, required this.logic});
+  PlayerAddSession({required this.state, required this.logic});
 
   Widget contentSection() {
     switch (state.selectedIndex.value) {
@@ -456,7 +455,28 @@ class AdminAddSession {
                 ),
               ),
               SizedBox(width: defaultMargin),
-              const FilterButton(),
+              SizedBox(
+                width: 90,
+                child: CustomButton(
+                  isBlack: false,
+                  onTap: () {},
+                  widget: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/filter.svg',
+                        width: 20,
+                        height: 20,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Filter',
+                        style: blackTextStyle.copyWith(fontWeight: medium),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
           SizedBox(height: defaultMargin),
