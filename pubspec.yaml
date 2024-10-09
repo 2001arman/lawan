@@ -36,6 +36,7 @@ flutter:
     - assets/fonts/
     - assets/icons/
     - assets/images/
+    - assets/avatars/
 
   fonts:
     - family: Lufga

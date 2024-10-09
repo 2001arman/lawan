@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:lawan/features/presentation/player/player_add_player_bottom_sheet.dart';
 import 'package:lawan/features/presentation/player/player_main_logic.dart';
 import 'package:lawan/features/presentation/player/player_main_state.dart';
 import 'package:lawan/utility/shared/widgets/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/field_image_widget.dart';
+import 'package:lawan/utility/shared/widgets/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -136,7 +138,7 @@ class PlayerAddSession {
                       ),
                       topItemBottomSheet(
                         number: 3,
-                        title: 'Details',
+                        title: 'Setting',
                         isActive: state.selectedIndex.value == 3,
                       ),
                     ],
@@ -152,7 +154,7 @@ class PlayerAddSession {
                       const SizedBox(width: 16),
                       CustomButton(
                         title: state.selectedIndex.value == 3
-                            ? 'Add Arena'
+                            ? 'Proceed to Pay'
                             : 'Next',
                         isBlack: true,
                         onTap: logic.handleNextButton,
@@ -184,91 +186,242 @@ class PlayerAddSession {
             'Sync with online booking. Key in the details below.',
             style: darkGreyTextStyle.copyWith(fontSize: 12),
           ),
-          const SizedBox(height: 12),
-          CustomTextFormField(
-            hintText: 'First Name',
-            controller: state.firstNameController,
-            title: 'First Name',
-          ),
-          CustomTextFormField(
-            hintText: 'Last Name / Family Name',
-            controller: state.lastNameController,
-            title: 'Last Name',
-          ),
-          Text(
-            'Contact Number',
-            style: blackTextStyle.copyWith(
-              fontSize: 14,
-            ),
-          ),
-          const SizedBox(height: 4),
+
+          // add friends
+          const SizedBox(height: 16),
+          Text('Invite Friend(s)', style: darkGreyTextStyle),
+          const SizedBox(height: 8),
           Row(
             children: [
-              SizedBox(
-                width: Get.width * 0.25,
-                child: CustomTextFormField(
-                  hintText: '+60',
-                  controller: TextEditingController(),
-                  prefix: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 10,
-                      bottom: 10,
-                      left: 16,
-                      right: 8,
+              CircleButtonTransparentWidget(
+                onTap: () => PlayerAddPlayerBottomSheet(
+                  logic: logic,
+                  state: state,
+                ).addPlayerBottomSheet(),
+                widget: SvgPicture.asset('assets/icons/add_user.svg'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+
+          // gender
+          Row(
+            children: [
+              Text('Gender', style: darkGreyTextStyle),
+              SizedBox(width: Get.width * 0.2),
+              CustomButton(
+                isBlack: true,
+                onTap: () {},
+                widget: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.male_outlined,
+                      color: kWhiteColor,
+                      size: 20,
                     ),
-                    child: Image.asset(
-                      'assets/images/malaysia.png',
-                      width: 16,
-                      height: 16,
-                    ),
-                  ),
+                    const SizedBox(width: 4),
+                    Text('Male', style: whiteTextStyle),
+                  ],
                 ),
               ),
               const SizedBox(width: 12),
-              Expanded(
-                child: CustomTextFormField(
-                  hintText: '12 345 6789',
-                  controller: state.contactController,
-                  textInputType: TextInputType.number,
+              CustomButton(
+                isBlack: false,
+                onTap: () {},
+                widget: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.female_outlined,
+                      color: kBlackColor,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 4),
+                    Text('Female',
+                        style: whiteTextStyle.copyWith(color: kBlackColor)),
+                  ],
                 ),
               ),
             ],
           ),
-          CustomTextFormField(
-            hintText: 'Enter Identification Number',
-            controller: state.identificationController,
-            title: 'Identification Number',
-            textInputType: TextInputType.number,
-            prefix: Padding(
-              padding: const EdgeInsets.only(
-                top: 10,
-                bottom: 10,
-                left: 16,
-                right: 8,
-              ),
-              child: SvgPicture.asset(
-                'assets/icons/identification.svg',
-                width: 24,
-                height: 24,
-              ),
-            ),
-          ),
-          CustomTextFormField(
-            hintText: '0.00',
-            controller: state.priceController,
-            textInputType: TextInputType.number,
-            title: 'Price',
-            prefix: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'RM',
-                  style: midGreyTextStyle.copyWith(
-                      fontSize: 14, fontWeight: FontWeight.normal),
+
+          // language
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Text('Language', style: darkGreyTextStyle),
+              SizedBox(width: Get.width * 0.15),
+              CustomButton(
+                isBlack: true,
+                onTap: () {},
+                widget: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/images/uk.png', width: 16),
+                    const SizedBox(width: 4),
+                    Text('English', style: whiteTextStyle),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(width: 12),
+              CustomButton(
+                isBlack: false,
+                onTap: () {},
+                widget: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/images/malaysia.png', width: 16),
+                    const SizedBox(width: 4),
+                    Text('Malay',
+                        style: whiteTextStyle.copyWith(color: kBlackColor)),
+                  ],
+                ),
+              ),
+            ],
           ),
+
+          // age range
+          const SizedBox(height: 16),
+          Column(
+            children: [
+              Row(
+                children: [
+                  Text('Age Range', style: darkGreyTextStyle),
+                  const Spacer(),
+                  Text('Enable', style: darkGreyTextStyle),
+                  SizedBox(
+                    height: 30,
+                    width: 50,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Switch(
+                        value: true,
+                        onChanged: (active) {},
+                        activeColor: kWhiteColor,
+                        activeTrackColor: kGreenColor,
+                        inactiveThumbColor: kDarkgreyColor,
+                        inactiveTrackColor: Colors.transparent,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              if (true) const SizedBox(height: 8),
+              Visibility(
+                visible: true,
+                child: ChooseTimeWidget(
+                  openTime: const TimeOfDay(hour: 1, minute: 0).obs,
+                  closeTime: const TimeOfDay(hour: 1, minute: 0).obs,
+                  onSave: (startTime, endTime) {},
+                ),
+              ),
+            ],
+          ),
+
+          // Configure Slots
+          const SizedBox(height: 16),
+          Column(
+            children: [
+              Row(
+                children: [
+                  Text('Configure Slots', style: darkGreyTextStyle),
+                  const Spacer(),
+                  Text('Enable', style: darkGreyTextStyle),
+                  SizedBox(
+                    height: 30,
+                    width: 50,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Switch(
+                        value: true,
+                        onChanged: (active) {},
+                        activeColor: kWhiteColor,
+                        activeTrackColor: kGreenColor,
+                        inactiveThumbColor: kDarkgreyColor,
+                        inactiveTrackColor: Colors.transparent,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              if (true) const SizedBox(height: 8),
+              Visibility(
+                visible: true,
+                child: ChooseTimeWidget(
+                  openTime: const TimeOfDay(hour: 1, minute: 0).obs,
+                  closeTime: const TimeOfDay(hour: 1, minute: 0).obs,
+                  onSave: (startTime, endTime) {},
+                ),
+              ),
+            ],
+          ),
+
+          //  price
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: GradientButton(
+                  onTap: () {},
+                  widget: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/tag.svg',
+                        width: 18,
+                      ),
+                      const SizedBox(width: 4),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Price to pay',
+                            style: midGreyTextStyle.copyWith(fontSize: 12),
+                          ),
+                          RichText(
+                            overflow: TextOverflow.ellipsis,
+                            text: TextSpan(
+                              text: 'RM20',
+                              style: whiteTextStyle.copyWith(
+                                  fontSize: 24, fontWeight: semiBold),
+                              children: [
+                                TextSpan(
+                                  text: ' / pax',
+                                  style: greyTextStyle.copyWith(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: GradientButton(
+                  onTap: () {},
+                  widget: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Extra Player(s)',
+                        style: midGreyTextStyle.copyWith(fontSize: 12),
+                      ),
+                      Text(
+                        '0',
+                        style: whiteTextStyle.copyWith(
+                            fontSize: 24, fontWeight: semiBold),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+
+          const SizedBox(height: 16),
         ],
       ),
     );

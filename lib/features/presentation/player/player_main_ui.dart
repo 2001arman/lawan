@@ -33,7 +33,6 @@ class PlayerMainUi extends StatelessWidget {
     Widget customNavbar() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

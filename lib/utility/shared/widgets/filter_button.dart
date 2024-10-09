@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../constants/constants_ui.dart';
-import 'custom_button.dart';
 
 class FilterButton extends StatelessWidget {
   final Color? backgroundColor;
@@ -18,12 +17,17 @@ class FilterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 90,
-      child: CustomButton(
-        isBlack: false,
-        onTap: () {},
-        paddingVertical: paddingVertical,
-        backgroundColor: backgroundColor,
-        widget: Row(
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: paddingVertical),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(
+            width: 1,
+            color: kWhiteColor,
+          ),
+          color: backgroundColor,
+        ),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(

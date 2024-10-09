@@ -249,7 +249,7 @@ class AdminSessionBottomSheet {
             visible: Helper.isUpcoming(
               sessionData.getStartDateTime(),
             ),
-            replacement: const TextPillWidget(data: 'Complete'),
+            replacement: const TextPillWidget(title: 'Complete'),
             child: Row(
               children: [
                 CustomButton(
@@ -361,7 +361,7 @@ class AdminSessionBottomSheet {
               visible: Helper.isUpcoming(
                 session.getStartDateTime(),
               ),
-              replacement: const TextPillWidget(data: 'Complete'),
+              replacement: const TextPillWidget(title: 'Complete'),
               child: Row(
                 children: [
                   CustomButton(
