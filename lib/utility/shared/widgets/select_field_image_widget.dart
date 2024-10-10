@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/domain/arena/arena_model.dart';
-import 'package:lawan/utility/shared/widgets/circle_button_widget.dart';
 
 import '../constants/constants_ui.dart';
+import 'buttons/circle_button_widget.dart';
 import 'text/text_border.dart';
 
 class SelectFieldImageWidget extends StatefulWidget {

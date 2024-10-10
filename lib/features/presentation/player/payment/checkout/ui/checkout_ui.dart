@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/controller/checkout_logic.dart';
+import 'package:lawan/features/presentation/player/payment/payment/pages/payment_page.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
@@ -31,7 +32,6 @@ class CheckoutUi extends StatelessWidget {
             ),
           ),
 
-          // appbar
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -248,7 +248,12 @@ class CheckoutUi extends StatelessWidget {
                         ),
                         const Spacer(),
                         GradientButton(
-                          onTap: () {},
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PaymentPage(),
+                            ),
+                          ),
                           widget: Text(
                             'Pay Now',
                             style: whiteTextStyle.copyWith(fontWeight: medium),
