@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lawan/utility/shared/widgets/field_number_widget.dart';
-import 'package:lawan/utility/shared/widgets/text_border.dart';
+import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
+import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 
 import '../constants/constants_ui.dart';
 

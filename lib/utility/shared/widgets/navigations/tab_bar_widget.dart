@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../constants/constants_ui.dart';
+import '../../constants/constants_ui.dart';
 
 class TabbarWidget extends StatelessWidget {
   const TabbarWidget({

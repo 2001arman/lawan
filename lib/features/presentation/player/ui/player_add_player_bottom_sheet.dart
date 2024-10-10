@@ -1,16 +1,16 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lawan/utility/shared/widgets/circle_button_transparent_widget.dart';
-import 'package:lawan/utility/shared/widgets/circle_button_widget.dart';
-import 'package:lawan/utility/shared/widgets/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
+import 'package:lawan/utility/shared/widgets/buttons/circle_button_widget.dart';
+import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
-import 'package:lawan/utility/shared/widgets/text_border.dart';
-import 'package:lawan/utility/shared/widgets/text_pill_widget.dart';
+import 'package:lawan/utility/shared/widgets/text/text_border.dart';
+import 'package:lawan/utility/shared/widgets/text/text_pill_widget.dart';
 
-import '../../../utility/shared/constants/constants_ui.dart';
-import 'player_main_logic.dart';
-import 'player_main_state.dart';
+import '../../../../utility/shared/constants/constants_ui.dart';
+import '../controller/player_main_logic.dart';
+import '../controller/player_main_state.dart';
 
 class PlayerAddPlayerBottomSheet {
   final PlayerMainState state;

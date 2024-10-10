@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/constants_ui.dart';
+import '../../constants/constants_ui.dart';
 
 class TextPillWidget extends StatelessWidget {
   final String title;

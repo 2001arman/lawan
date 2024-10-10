@@ -9,14 +9,14 @@ import 'package:lawan/features/domain/arena/arena_model.dart';
 import 'package:lawan/utility/shared/widgets/circle_button_widget.dart';
 
 import '../constants/constants_ui.dart';
-import 'text_border.dart';
+import 'text/text_border.dart';
 
-class FieldImageWidget extends StatefulWidget {
+class SelectFieldImageWidget extends StatefulWidget {
   final ArenaModel arenaModel;
   final bool isSelected;
   final int? selectedCourt;
   final Function(int selectedCourt) onChangeCourt;
-  const FieldImageWidget({
+  const SelectFieldImageWidget({
     super.key,
     required this.arenaModel,
     required this.isSelected,
@@ -25,10 +25,10 @@ class FieldImageWidget extends StatefulWidget {
   });
 
   @override
-  State<FieldImageWidget> createState() => _FieldImageWidgetState();
+  State<SelectFieldImageWidget> createState() => _SelectFieldImageWidgetState();
 }
 
-class _FieldImageWidgetState extends State<FieldImageWidget> {
+class _SelectFieldImageWidgetState extends State<SelectFieldImageWidget> {
   int selectedCourtIndex = 0;
   late PictureType pictureType;
   late String path;

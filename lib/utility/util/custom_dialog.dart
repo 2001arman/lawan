@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
-import 'package:lawan/utility/shared/widgets/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/share_section.dart';
 import 'package:lawan/utility/util/helper.dart';
 import 'package:wheel_picker/wheel_picker.dart';
 
 import '../../features/domain/arena/arena_model.dart';
-import '../shared/widgets/circle_button_transparent_widget.dart';
+import '../shared/widgets/buttons/circle_button_transparent_widget.dart';
 
 class CustomDialog {
   Widget glassEfectDialogContainer(

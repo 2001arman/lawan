@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lawan/utility/shared/widgets/field_number_widget.dart';
-import 'package:lawan/utility/shared/widgets/text_border.dart';
-import 'package:lawan/utility/shared/widgets/text_icon.dart';
+import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
+import 'package:lawan/utility/shared/widgets/text/text_border.dart';
+import 'package:lawan/utility/shared/widgets/text/text_icon.dart';
 
-import '../../../features/domain/arena/arena_model.dart';
-import '../constants/constants_ui.dart';
+import '../../../../features/domain/arena/arena_model.dart';
+import '../../constants/constants_ui.dart';
 
 class FieldSessionWidget extends StatelessWidget {
   final ArenaModel arenaModel;

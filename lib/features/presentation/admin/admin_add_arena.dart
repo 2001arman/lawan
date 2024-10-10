@@ -7,7 +7,7 @@ import 'package:lawan/features/presentation/admin/admin_main_state.dart';
 import 'package:lawan/features/domain/arena/arena_model.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/choose_time_widget.dart';
-import 'package:lawan/utility/shared/widgets/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';

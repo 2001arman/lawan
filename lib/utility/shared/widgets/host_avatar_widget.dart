@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
-import 'package:lawan/utility/shared/widgets/text_border.dart';
+import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 
-import 'circle_button_transparent_widget.dart';
+import 'buttons/circle_button_transparent_widget.dart';
 
 class HostAvatarWidget extends StatelessWidget {
   const HostAvatarWidget({super.key});

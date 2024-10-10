@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/player/player_main_state.dart';
+import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
+import 'package:lawan/features/presentation/player/payment/checkout/ui/checkout_ui.dart';
 
-import '../../infrastructure/arena/arena_data_source.dart';
+import '../../../infrastructure/arena/arena_data_source.dart';
 
 class PlayerMainLogic {
   PlayerMainState state = PlayerMainState();
@@ -22,7 +23,7 @@ class PlayerMainLogic {
 
   void handleNextButton() {
     if (state.selectedIndex.value == 3) {
-      Get.back();
+      Get.toNamed(CheckoutUi.namePath);
       return;
     }
     state.selectedIndex.value++;

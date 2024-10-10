@@ -3,78 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
-import 'package:lawan/utility/shared/widgets/circle_button_transparent_widget.dart';
-import 'package:lawan/utility/shared/widgets/custom_button.dart';
-import 'package:lawan/utility/shared/widgets/field_image_widget.dart';
-import 'package:lawan/utility/shared/widgets/field_number_widget.dart';
+import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
+import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/card_detail_session.dart';
+import 'package:lawan/utility/shared/widgets/fields/select_field_image_widget.dart';
+import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
 import 'package:lawan/utility/shared/widgets/host_avatar_widget.dart';
-import 'package:lawan/utility/shared/widgets/text_border.dart';
-import 'package:lawan/utility/shared/widgets/text_pill_widget.dart';
+import 'package:lawan/utility/shared/widgets/text/text_pill_widget.dart';
 
 import '../../../../utility/util/helper.dart';
 import '../../../domain/arena/arena_model.dart';
 import '../../../domain/session/session_model.dart';
 
 class AdminSessionBottomSheet {
-  Widget cardDetailSession({
-    required String title,
-    required IconData icon,
-    required String contentText,
-    required double fontSize,
-    String? description,
-  }) {
-    return Expanded(
-      child: Container(
-        height: 98,
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(width: 1, color: kGreyColor),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  icon,
-                  color: kDarkgreyColor,
-                  size: 18,
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  title,
-                  style: darkGreyTextStyle.copyWith(fontSize: 12),
-                ),
-              ],
-            ),
-            const SizedBox(height: 4),
-            Text(
-              contentText,
-              style: blackTextStyle.copyWith(
-                fontWeight: medium,
-                fontSize: fontSize,
-              ),
-              overflow: description != null
-                  ? TextOverflow.ellipsis
-                  : TextOverflow.visible,
-            ),
-            if (description != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: TextBorder(
-                  textTitle: description,
-                  fontSize: 11,
-                  paddingVertical: 0,
-                  paddingHorizontal: 6,
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
   void sessionContainerSheet(
       {required Widget widgetContent, required VoidCallback onDelete}) {
     Get.bottomSheet(
@@ -280,14 +221,14 @@ class AdminSessionBottomSheet {
           const HostAvatarWidget(),
           Row(
             children: [
-              cardDetailSession(
+              CardDetailSession(
                 contentText: Helper.formatFullDate(sessionData.dateTime),
                 title: 'Date',
                 icon: Icons.date_range_outlined,
                 fontSize: 14,
               ),
               const SizedBox(width: 8),
-              cardDetailSession(
+              CardDetailSession(
                 contentText:
                     '${Helper.formatTime12Hour(sessionData.startHour)} - ${Helper.formatTime12Hour(sessionData.endHour)}',
                 title: 'Time',
@@ -300,14 +241,14 @@ class AdminSessionBottomSheet {
           const SizedBox(height: 8),
           Row(
             children: [
-              cardDetailSession(
+              CardDetailSession(
                 contentText: sessionData.arena.location,
                 title: 'Location',
                 icon: Icons.location_on_outlined,
                 fontSize: 14,
               ),
               const SizedBox(width: 8),
-              cardDetailSession(
+              CardDetailSession(
                 contentText: 'RM${sessionData.price}',
                 title: 'Price',
                 icon: Icons.monetization_on_outlined,
@@ -350,7 +291,7 @@ class AdminSessionBottomSheet {
               style: darkGreyTextStyle.copyWith(fontWeight: medium),
             ),
             SizedBox(height: defaultMargin),
-            FieldImageWidget(
+            SelectFieldImageWidget(
               arenaModel: arenaModel,
               isSelected: false,
               onChangeCourt: (_) {},
@@ -402,14 +343,14 @@ class AdminSessionBottomSheet {
             // ),
             Row(
               children: [
-                cardDetailSession(
+                CardDetailSession(
                   contentText: Helper.formatFullDate(session.dateTime),
                   title: 'Date',
                   icon: Icons.date_range_outlined,
                   fontSize: 14,
                 ),
                 const SizedBox(width: 8),
-                cardDetailSession(
+                CardDetailSession(
                   contentText:
                       '${Helper.formatTime12Hour(session.startHour)} - ${Helper.formatTime12Hour(session.endHour)}',
                   title: 'Time',
@@ -422,14 +363,14 @@ class AdminSessionBottomSheet {
             const SizedBox(height: 8),
             Row(
               children: [
-                cardDetailSession(
+                CardDetailSession(
                   contentText: session.arena.location,
                   title: 'Location',
                   icon: Icons.location_on_outlined,
                   fontSize: 14,
                 ),
                 const SizedBox(width: 8),
-                cardDetailSession(
+                CardDetailSession(
                   contentText: session.price.toString(),
                   title: 'Price',
                   icon: Icons.monetization_on_outlined,

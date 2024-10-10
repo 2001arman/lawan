@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:lawan/features/presentation/player/player_add_player_bottom_sheet.dart';
-import 'package:lawan/features/presentation/player/player_main_logic.dart';
-import 'package:lawan/features/presentation/player/player_main_state.dart';
-import 'package:lawan/utility/shared/widgets/custom_button.dart';
-import 'package:lawan/utility/shared/widgets/field_image_widget.dart';
-import 'package:lawan/utility/shared/widgets/gradient_button.dart';
+import 'package:lawan/features/presentation/player/ui/player_add_player_bottom_sheet.dart';
+import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
+import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
+import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/fields/select_field_image_widget.dart';
+import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../../../utility/shared/constants/constants_ui.dart';
-import '../../../../utility/shared/widgets/calendar_picker_widget.dart';
-import '../../../../utility/shared/widgets/choose_time_widget.dart';
-import '../../../../utility/shared/widgets/circle_button_transparent_widget.dart';
-import '../../../../utility/shared/widgets/custom_text_form_fields.dart';
-import '../../../../utility/shared/widgets/tab_bar_widget.dart';
+import '../../../../../utility/shared/constants/constants_ui.dart';
+import '../../../../../utility/shared/widgets/calendar_picker_widget.dart';
+import '../../../../../utility/shared/widgets/choose_time_widget.dart';
+import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
+import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
+import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 
 class PlayerAddSession {
   final PlayerMainState state;
@@ -644,7 +644,7 @@ class PlayerAddSession {
                         state.selectedArenaIndex.value = data.key;
                         state.selectedCourtIndex.value = 0;
                       },
-                      child: FieldImageWidget(
+                      child: SelectFieldImageWidget(
                         arenaModel: data.value,
                         isSelected: data.key == state.selectedArenaIndex.value,
                         onChangeCourt: (courtIndex) =>

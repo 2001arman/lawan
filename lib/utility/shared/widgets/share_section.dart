@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lawan/utility/shared/widgets/circle_button_transparent_widget.dart';
+import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 
 import '../constants/constants_ui.dart';
-import 'custom_button.dart';
+import 'buttons/custom_button.dart';
 
 class ShareSection extends StatelessWidget {
   const ShareSection({super.key});

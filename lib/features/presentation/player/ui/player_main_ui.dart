@@ -5,22 +5,22 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
-import 'package:lawan/features/presentation/player/player_add_session.dart';
-import 'package:lawan/features/presentation/player/player_main_logic.dart';
-import 'package:lawan/utility/shared/widgets/circle_button_transparent_widget.dart';
-import 'package:lawan/utility/shared/widgets/custom_button.dart';
-import 'package:lawan/utility/shared/widgets/field_session_widget.dart';
-import 'package:lawan/utility/shared/widgets/gradient_button.dart';
-import 'package:lawan/utility/shared/widgets/text_border.dart';
+import 'package:lawan/features/presentation/player/ui/player_add_session.dart';
+import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
+import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
+import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/fields/field_session_widget.dart';
+import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
+import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 
-import '../../../utility/shared/constants/constants_ui.dart';
-import '../../../utility/shared/widgets/bottom_navbar_item.dart';
-import '../../../utility/shared/widgets/custom_appbar.dart';
-import '../../../utility/shared/widgets/custom_bottom_navbar.dart';
-import '../../../utility/shared/widgets/filter_button.dart';
-import '../../../utility/shared/widgets/tab_bar_widget.dart';
-import '../../../utility/util/helper.dart';
-import '../../domain/arena/arena_model.dart';
+import '../../../../utility/shared/constants/constants_ui.dart';
+import '../../../../utility/shared/widgets/bottom_navbar_item.dart';
+import '../../../../utility/shared/widgets/navigations/custom_appbar.dart';
+import '../../../../utility/shared/widgets/navigations/custom_bottom_navbar.dart';
+import '../../../../utility/shared/widgets/buttons/filter_button.dart';
+import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
+import '../../../../utility/util/helper.dart';
+import '../../../domain/arena/arena_model.dart';
 
 class PlayerMainUi extends StatelessWidget {
   static const String namePath = '/player_main_page';
