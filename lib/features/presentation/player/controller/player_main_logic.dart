@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/domain/arena/arena_model.dart';
+import 'package:lawan/features/domain/session/session_model.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/ui/checkout_ui.dart';
 
@@ -23,7 +25,22 @@ class PlayerMainLogic {
 
   void handleNextButton() {
     if (state.selectedIndex.value == 3) {
-      Get.toNamed(CheckoutUi.namePath);
+      ArenaModel arenaModel =
+          arenaDataSource.listArena[state.selectedArenaIndex.value];
+      SessionModel sessionModel = SessionModel(
+        arena: arenaModel,
+        selectedCourt: state.selectedCourtIndex.value,
+        dateTime: state.selectedDate,
+        startHour: state.openTime.value,
+        endHour: state.closeTime.value,
+        totalHour: state.selectedHour.value,
+        firstName: 'Ali',
+        lastName: 'Qazwini',
+        contactNumber: '',
+        identificationNumber: '',
+        price: 20,
+      );
+      Get.toNamed(CheckoutUi.namePath, arguments: [sessionModel]);
       return;
     }
     state.selectedIndex.value++;

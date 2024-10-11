@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/utility/util/dialog_wheel_picker.dart';
 
-import '../../util/custom_dialog.dart';
-import '../../util/helper.dart';
-import '../constants/constants_ui.dart';
+import '../../constants/constants_ui.dart';
 
-class ChooseTimeWidget extends StatelessWidget {
-  final Rx<TimeOfDay> openTime, closeTime;
+class ChooseSlotWidget extends StatelessWidget {
+  final Rx<int> startAge, endAge;
   final Function(int, int) onSave;
-  final int? totalHour;
-  const ChooseTimeWidget({
-    super.key,
-    required this.openTime,
-    required this.closeTime,
-    required this.onSave,
-    this.totalHour,
-  });
+  const ChooseSlotWidget(
+      {super.key,
+      required this.startAge,
+      required this.endAge,
+      required this.onSave});
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +20,13 @@ class ChooseTimeWidget extends StatelessWidget {
       children: [
         Expanded(
           child: GestureDetector(
-            onTap: () => CustomDialog.showChooseTimeDialog(
-              startTime: openTime.value.hour,
-              endTime: closeTime.value.hour,
-              totalHour: totalHour,
+            onTap: () => DialogWheelPicker.showChooseNumberRangeDialog(
+              ageEnd: endAge.value,
+              ageStart: startAge.value,
               onSave: (startTime, endTime) {
-                openTime.value = TimeOfDay(
-                  hour: startTime,
-                  minute: 0,
-                );
-                closeTime.value = TimeOfDay(
-                  hour: endTime,
-                  minute: 0,
-                );
+                Get.back();
+                startAge.value = startTime;
+                endAge.value = endTime;
                 onSave(startTime, endTime);
               },
             ),
@@ -47,15 +38,11 @@ class ChooseTimeWidget extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Image.asset(
-                    'assets/icons/clock.png',
-                    width: 16,
-                    height: 16,
-                  ),
+                  SvgPicture.asset('assets/icons/info.svg'),
                   const SizedBox(width: 8),
                   Obx(
                     () => Text(
-                      Helper.formatTime12Hour(openTime.value),
+                      '$startAge',
                       style: blackTextStyle.copyWith(fontWeight: medium),
                     ),
                   ),
@@ -76,18 +63,13 @@ class ChooseTimeWidget extends StatelessWidget {
         ),
         Expanded(
           child: GestureDetector(
-            onTap: () => CustomDialog.showChooseTimeDialog(
-              startTime: openTime.value.hour,
-              endTime: closeTime.value.hour,
+            onTap: () => DialogWheelPicker.showChooseNumberRangeDialog(
+              ageEnd: endAge.value,
+              ageStart: startAge.value,
               onSave: (startTime, endTime) {
-                openTime.value = TimeOfDay(
-                  hour: startTime,
-                  minute: 0,
-                );
-                closeTime.value = TimeOfDay(
-                  hour: endTime,
-                  minute: 0,
-                );
+                Get.back();
+                startAge.value = startTime;
+                endAge.value = endTime;
                 onSave(startTime, endTime);
               },
             ),
@@ -99,15 +81,10 @@ class ChooseTimeWidget extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Image.asset(
-                    'assets/icons/clock.png',
-                    width: 16,
-                    height: 16,
-                  ),
                   const SizedBox(width: 8),
                   Obx(
                     () => Text(
-                      Helper.formatTime12Hour(closeTime.value),
+                      '$endAge',
                       style: blackTextStyle.copyWith(fontWeight: medium),
                     ),
                   ),

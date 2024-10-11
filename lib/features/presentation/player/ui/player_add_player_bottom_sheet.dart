@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/container/select_friend_item.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 import 'package:lawan/utility/shared/widgets/text/text_pill_widget.dart';
@@ -267,53 +268,21 @@ class PlayerAddPlayerBottomSheet {
                     () => Row(
                       children: state.selectedFriends
                           .map(
-                            (data) => Container(
-                              width: 230,
-                              margin: const EdgeInsets.only(right: 8),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: defaultMargin, vertical: 12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(32),
-                                border: Border.all(width: 1, color: kGreyColor),
-                              ),
-                              child: Row(
-                                children: [
-                                  Image.asset(data.asset, width: 32),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          data.name,
-                                          style: blackTextStyle.copyWith(
-                                            fontWeight: medium,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        TextBorder(
-                                          textTitle: 'Novice',
-                                          backgroundColor: kWhiteColor,
-                                          fontSize: 10,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  CircleButtonWidget(
-                                    onTap: () {
-                                      state.listFriends.add(data);
-                                      state.selectedFriends.remove(data);
-                                    },
-                                    isActive: true,
-                                    widget: Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: kWhiteColor,
-                                    ),
-                                    size: 36,
-                                  ),
-                                ],
+                            (data) => SelectFriendItem(
+                              name: data.name,
+                              asset: data.asset,
+                              suffixWidget: CircleButtonWidget(
+                                onTap: () {
+                                  state.listFriends.add(data);
+                                  state.selectedFriends.remove(data);
+                                },
+                                isActive: true,
+                                widget: Icon(
+                                  Icons.done,
+                                  size: 20,
+                                  color: kWhiteColor,
+                                ),
+                                size: 36,
                               ),
                             ),
                           )

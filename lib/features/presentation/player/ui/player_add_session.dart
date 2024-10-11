@@ -10,11 +10,13 @@ import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/fields/select_field_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
+import 'package:lawan/utility/shared/widgets/wheel_picker/choose_age_widget.dart';
+import 'package:lawan/utility/shared/widgets/wheel_picker/choose_slot_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../../utility/shared/widgets/calendar_picker_widget.dart';
-import '../../../../../utility/shared/widgets/choose_time_widget.dart';
+import '../../../../utility/shared/widgets/wheel_picker/choose_time_widget.dart';
 import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
 import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
@@ -172,18 +174,64 @@ class PlayerAddSession {
     ).whenComplete(() {});
   }
 
+  Widget selectedFriendItem({required AvatarModel data}) {
+    return GestureDetector(
+      onTap: () {
+        state.selectedFriends.remove(data);
+        state.listFriends.add(data);
+      },
+      child: Container(
+        width: 46,
+        margin: const EdgeInsets.only(left: 8),
+        child: Stack(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: kGreenColor,
+                shape: BoxShape.circle,
+                border: Border.all(width: 1, color: kGreyColor),
+                image: DecorationImage(
+                  image: AssetImage(data.asset),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                width: 16,
+                height: 16,
+                decoration: BoxDecoration(
+                  color: kWhiteColor,
+                  shape: BoxShape.circle,
+                  border: Border.all(width: 1, color: kGreyColor),
+                ),
+                child: const Icon(
+                  Icons.close,
+                  size: 11,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget detailSection() {
     return Expanded(
       child: ListView(
         children: [
           SizedBox(height: defaultMargin),
           Text(
-            'Add Manual Booking',
+            'Session Setting',
             style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
           ),
           const SizedBox(height: 2),
           Text(
-            'Sync with online booking. Key in the details below.',
+            'Configure session preferences',
             style: darkGreyTextStyle.copyWith(fontSize: 12),
           ),
 
@@ -191,16 +239,25 @@ class PlayerAddSession {
           const SizedBox(height: 16),
           Text('Invite Friend(s)', style: darkGreyTextStyle),
           const SizedBox(height: 8),
-          Row(
-            children: [
-              CircleButtonTransparentWidget(
-                onTap: () => PlayerAddPlayerBottomSheet(
-                  logic: logic,
-                  state: state,
-                ).addPlayerBottomSheet(),
-                widget: SvgPicture.asset('assets/icons/add_user.svg'),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Obx(
+              () => Row(
+                children: [
+                  CircleButtonTransparentWidget(
+                    onTap: () => PlayerAddPlayerBottomSheet(
+                      logic: logic,
+                      state: state,
+                    ).addPlayerBottomSheet(),
+                    borderColor: kGreyColor,
+                    widget: SvgPicture.asset('assets/icons/add_user.svg'),
+                  ),
+                  ...state.selectedFriends.map(
+                    (data) => selectedFriendItem(data: data),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
           const SizedBox(height: 16),
 
@@ -296,8 +353,8 @@ class PlayerAddSession {
                     child: FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Switch(
-                        value: true,
-                        onChanged: (active) {},
+                        value: state.enableAge.value,
+                        onChanged: (active) => state.enableAge.value = active,
                         activeColor: kWhiteColor,
                         activeTrackColor: kGreenColor,
                         inactiveThumbColor: kDarkgreyColor,
@@ -307,13 +364,16 @@ class PlayerAddSession {
                   ),
                 ],
               ),
-              if (true) const SizedBox(height: 8),
+              if (state.enableAge.value) const SizedBox(height: 8),
               Visibility(
-                visible: true,
-                child: ChooseTimeWidget(
-                  openTime: const TimeOfDay(hour: 1, minute: 0).obs,
-                  closeTime: const TimeOfDay(hour: 1, minute: 0).obs,
-                  onSave: (startTime, endTime) {},
+                visible: state.enableAge.value,
+                child: ChooseAgeWidget(
+                  startAge: state.ageStart,
+                  endAge: state.ageEnd,
+                  onSave: (ageStart, ageEnd) {
+                    state.ageStart.value = ageStart;
+                    state.ageEnd.value = ageEnd;
+                  },
                 ),
               ),
             ],
@@ -334,8 +394,10 @@ class PlayerAddSession {
                     child: FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Switch(
-                        value: true,
-                        onChanged: (active) {},
+                        value: state.enableSlot.value,
+                        onChanged: (active) {
+                          state.enableSlot.value = active;
+                        },
                         activeColor: kWhiteColor,
                         activeTrackColor: kGreenColor,
                         inactiveThumbColor: kDarkgreyColor,
@@ -345,13 +407,16 @@ class PlayerAddSession {
                   ),
                 ],
               ),
-              if (true) const SizedBox(height: 8),
+              if (state.enableSlot.value) const SizedBox(height: 8),
               Visibility(
-                visible: true,
-                child: ChooseTimeWidget(
-                  openTime: const TimeOfDay(hour: 1, minute: 0).obs,
-                  closeTime: const TimeOfDay(hour: 1, minute: 0).obs,
-                  onSave: (startTime, endTime) {},
+                visible: state.enableSlot.value,
+                child: ChooseSlotWidget(
+                  startAge: state.slotStart,
+                  endAge: state.slotEnd,
+                  onSave: (slotStart, slotEnd) {
+                    state.slotStart.value = slotStart;
+                    state.slotEnd.value = slotEnd;
+                  },
                 ),
               ),
             ],

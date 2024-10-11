@@ -9,6 +9,7 @@ import 'package:lawan/features/presentation/player/ui/player_add_session.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/container/select_friend_item.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_session_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
@@ -39,26 +40,40 @@ class PlayerMainUi extends StatelessWidget {
             children: [
               FilterButton(backgroundColor: kGreyColor, paddingVertical: 12),
               SizedBox(width: defaultMargin),
-              SizedBox(
-                width: 170,
-                child: GradientButton(
-                  onTap: () => PlayerAddSession(
-                    logic: logic,
-                    state: state,
-                  ).createNewSession(),
-                  widget: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/play.svg',
-                        width: 16,
-                        height: 16,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Create a session',
-                        style: whiteTextStyle.copyWith(fontWeight: medium),
-                      ),
-                    ],
+              Obx(
+                () => SizedBox(
+                  child: GradientButton(
+                    onTap: () => PlayerAddSession(
+                      logic: logic,
+                      state: state,
+                    ).createNewSession(),
+                    widget: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/play.svg',
+                          width: 16,
+                          height: 16,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Create a session',
+                          style: whiteTextStyle.copyWith(fontWeight: medium),
+                        ),
+                        if (state.selectedFriends.isNotEmpty)
+                          const SizedBox(width: 4),
+                        Visibility(
+                          visible: state.selectedFriends.isNotEmpty,
+                          child: TextBorder(
+                            textTitle: '+${state.selectedFriends.length}',
+                            fontSize: 11,
+                            paddingVertical: 2,
+                            paddingHorizontal: 8,
+                            textColor: const Color(0xFF44D8BE),
+                            backgroundColor: kWhiteColor,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -93,53 +108,6 @@ class PlayerMainUi extends StatelessWidget {
             ),
           ),
         ],
-      );
-    }
-
-    Widget friendCard(String name) {
-      return Container(
-        width: 240,
-        margin: const EdgeInsets.only(right: 8),
-        padding: EdgeInsets.symmetric(horizontal: defaultMargin, vertical: 14),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(32),
-          border: Border.all(width: 1, color: kGreyColor),
-        ),
-        child: Row(
-          children: [
-            Image.asset(
-              'assets/icons/image_person.png',
-              width: 32,
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: blackTextStyle.copyWith(
-                        fontSize: 12, fontWeight: medium),
-                  ),
-                  TextBorder(
-                    textTitle: "Novice",
-                    backgroundColor: kWhiteColor,
-                    borderColor: kGreyColor,
-                  ),
-                ],
-              ),
-            ),
-            CircleButtonTransparentWidget(
-              onTap: () {},
-              size: 36,
-              widget: Icon(
-                Icons.add,
-                color: kDarkgreyColor,
-              ),
-              borderColor: kGreyColor,
-            ),
-          ],
-        ),
       );
     }
 
@@ -220,7 +188,6 @@ class PlayerMainUi extends StatelessWidget {
     }
 
     return Scaffold(
-      // backgroundColor: kBackgroundColor,
       resizeToAvoidBottomInset: false,
       body: Container(
         width: Get.width,
@@ -232,6 +199,7 @@ class PlayerMainUi extends StatelessWidget {
           children: [
             Column(
               children: [
+                // appbar
                 SizedBox(height: MediaQuery.paddingOf(context).top),
                 CustomAppbar(
                   onTap: () => Get.offAndToNamed(AdminMainUi.namePath),
@@ -241,6 +209,7 @@ class PlayerMainUi extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: defaultMargin),
                   child: Column(
                     children: [
+                      // tabbar
                       TabbarWidget(
                         tabBarTitle: state.tabBarTitle,
                         tabActive: state.tabActive,
@@ -251,43 +220,72 @@ class PlayerMainUi extends StatelessWidget {
                         alignment: state.activeAlignment,
                       ),
                       SizedBox(height: defaultMargin),
-                      Visibility(
-                        visible: state.friendList.isNotEmpty,
-                        replacement: Row(
-                          children: [
-                            CustomButton(
-                              isBlack: false,
-                              onTap: () {},
-                              borderColor: kGreyColor,
-                              widget: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/icons/add_user.svg',
-                                    color: kDarkgreyColor,
-                                    width: 16,
-                                    height: 16,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    'Find Friends',
-                                    style: blackTextStyle.copyWith(
-                                        fontWeight: medium),
-                                  ),
-                                ],
+
+                      // friends list
+                      Obx(
+                        () => Visibility(
+                          visible: state.listFriends.isNotEmpty,
+                          replacement: Row(
+                            children: [
+                              CustomButton(
+                                isBlack: false,
+                                onTap: () {},
+                                borderColor: kGreyColor,
+                                widget: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/add_user.svg',
+                                      color: kDarkgreyColor,
+                                      width: 16,
+                                      height: 16,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      'Find Friends',
+                                      style: blackTextStyle.copyWith(
+                                          fontWeight: medium),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              padding: EdgeInsets.zero,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: state.listFriends
+                                    .map(
+                                      (data) => SelectFriendItem(
+                                        name: data.name,
+                                        asset: data.asset,
+                                        suffixWidget:
+                                            CircleButtonTransparentWidget(
+                                          onTap: () {
+                                            state.selectedFriends.add(data);
+                                            state.listFriends.remove(data);
+                                          },
+                                          size: 36,
+                                          widget: Icon(
+                                            Icons.add,
+                                            color: kDarkgreyColor,
+                                          ),
+                                          borderColor: kGreyColor,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
                               ),
                             ),
-                          ],
-                        ),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: state.friendList
-                                .map((data) => friendCard(data))
-                                .toList(),
                           ),
                         ),
                       ),
+
+                      // available session
                       SizedBox(height: defaultMargin),
                       Row(
                         children: [
@@ -313,11 +311,9 @@ class PlayerMainUi extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: defaultMargin,
-                  width: double.infinity,
-                ),
-                // empty content
+                SizedBox(height: defaultMargin),
+
+                // session content
                 Expanded(
                   child: ListView.builder(
                     itemCount: 3,
@@ -398,6 +394,8 @@ class PlayerMainUi extends StatelessWidget {
                 ),
               ],
             ),
+
+            // buttons
             Align(
               alignment: Alignment.bottomCenter,
               child: customNavbar(),

@@ -11,13 +11,6 @@ class PlayerMainState {
     'Private',
   ];
 
-  List<String> friendList = [
-    'Saiful Bukhari',
-    'Shahirah Liyana',
-    'Tere Liye',
-    'Upin Ipin'
-  ];
-
   // add new session
   PageController pageController = PageController();
   var selectedIndex = 1.obs;
@@ -67,6 +60,16 @@ class PlayerMainState {
   ].obs;
 
   var selectedFriends = <AvatarModel>[].obs;
+
+  // age range
+  var enableAge = true.obs;
+  var ageStart = 25.obs;
+  var ageEnd = 35.obs;
+
+  // age range
+  var enableSlot = true.obs;
+  var slotStart = 22.obs;
+  var slotEnd = 23.obs;
 }
 
 class AvatarModel {

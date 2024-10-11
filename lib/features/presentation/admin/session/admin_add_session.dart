@@ -13,7 +13,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/widgets/calendar_picker_widget.dart';
-import '../../../../utility/shared/widgets/choose_time_widget.dart';
+import '../../../../utility/shared/widgets/wheel_picker/choose_time_widget.dart';
 import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../utility/shared/widgets/custom_text_form_fields.dart';
 import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
