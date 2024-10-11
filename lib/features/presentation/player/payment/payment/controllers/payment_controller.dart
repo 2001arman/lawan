@@ -2,8 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/domain/session/session_model.dart';
+import 'package:lawan/features/presentation/admin/session/admin_session_bottom_sheet.dart';
+import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
 import 'package:lawan/features/presentation/player/payment/payment/models/bank_model.dart';
 import 'package:lawan/features/presentation/player/payment/payment/models/card_model.dart';
+import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
 
 class PaymentController extends GetxController {
   TextEditingController cardNumberCtrl = TextEditingController();
@@ -92,6 +96,38 @@ class PaymentController extends GetxController {
     cvvCtrl.clear();
     addressCtrl.clear();
     postCodeCtrl.clear();
+  }
+
+  void clearState() {
+    PlayerMainState playerMainState = Get.arguments[1];
+
+    playerMainState.listFriends.addAll(playerMainState.selectedFriends);
+    playerMainState.selectedFriends.clear();
+    playerMainState.selectedIndex.value = 1;
+
+    playerMainState.selectedArenaIndex = 0.obs;
+    playerMainState.selectedCourtIndex = 0.obs;
+
+    playerMainState.selectedDate = DateTime.now();
+    playerMainState.openTime = const TimeOfDay(hour: 9, minute: 00).obs;
+    playerMainState.closeTime = const TimeOfDay(hour: 10, minute: 00).obs;
+  }
+
+  void successPayment() {
+    SessionModel sessionModel = Get.arguments[0];
+    PlayerMainState playerMainState = Get.arguments[1];
+
+    playerMainState.sessionList.add(sessionModel);
+
+    clearState();
+    Get.offNamedUntil(PlayerMainUi.namePath, (_) => true);
+    AdminSessionBottomSheet().successCreateSesssionSheet(
+      arenaModel: sessionModel.arena,
+      selectedCourt: sessionModel.selectedCourt,
+      session: sessionModel,
+      showPill: true,
+      successCreate: true,
+    );
   }
 
   @override

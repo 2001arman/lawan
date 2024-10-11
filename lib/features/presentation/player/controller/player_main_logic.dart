@@ -40,7 +40,10 @@ class PlayerMainLogic {
         identificationNumber: '',
         price: 20,
       );
-      Get.toNamed(CheckoutUi.namePath, arguments: [sessionModel]);
+      Get.toNamed(
+        CheckoutUi.namePath,
+        arguments: [sessionModel, state],
+      );
       return;
     }
     state.selectedIndex.value++;

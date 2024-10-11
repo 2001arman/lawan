@@ -1,15 +1,22 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lawan/features/domain/arena/arena_model.dart';
 
 import '../../constants/constants_ui.dart';
+import '../text/text_border.dart';
 
 class FieldImageWidget extends StatelessWidget {
   final ArenaModel arenaModel;
   final int selectedCourt;
-  const FieldImageWidget(
-      {super.key, required this.arenaModel, required this.selectedCourt});
+  final bool showInformation;
+  const FieldImageWidget({
+    super.key,
+    required this.arenaModel,
+    required this.selectedCourt,
+    this.showInformation = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +36,72 @@ class FieldImageWidget extends StatelessWidget {
                   File(arenaModel.courtData[selectedCourt].pictures.first.path),
                 ),
           fit: BoxFit.cover,
+        ),
+      ),
+      child: Visibility(
+        visible: showInformation,
+        child: Column(
+          children: [
+            Container(
+              width: Get.width * 0.5,
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              decoration: BoxDecoration(
+                color: kBlackColor,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(80),
+                  bottomRight: Radius.circular(80),
+                ),
+              ),
+              child: Text(
+                arenaModel.name,
+                style: whiteTextStyle.copyWith(
+                  fontSize: 12,
+                  fontWeight: medium,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              child: Row(
+                children: [
+                  TextBorder(
+                    textTitle: '5.2km',
+                    backgroundColor: kWhiteColor,
+                    paddingVertical: 0,
+                    paddingHorizontal: 8,
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.location_on_outlined,
+                          color: kWhiteColor,
+                          size: 20,
+                        ),
+                        Flexible(
+                          child: Text(
+                            arenaModel.location,
+                            style: whiteTextStyle.copyWith(
+                                fontSize: 12, fontWeight: medium),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  TextBorder(
+                    textTitle: arenaModel.courtData[selectedCourt].flooringType,
+                    backgroundColor: kWhiteColor,
+                    paddingVertical: 0,
+                    paddingHorizontal: 8,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

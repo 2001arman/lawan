@@ -13,23 +13,29 @@ class FieldNumberWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SvgPicture.asset(
-          'assets/icons/arena.svg',
-          color: iconColor ?? kMidgreyColor,
-          width: 16,
-          height: 16,
-        ),
-        const SizedBox(width: 8),
-        Text(
-          court,
-          style: blackTextStyle.copyWith(
-            fontSize: fontSize,
-            fontWeight: medium,
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/icons/arena.svg',
+            color: iconColor ?? kMidgreyColor,
+            width: 16,
+            height: 16,
           ),
-        ),
-      ],
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              court,
+              style: blackTextStyle.copyWith(
+                fontSize: fontSize,
+                fontWeight: medium,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

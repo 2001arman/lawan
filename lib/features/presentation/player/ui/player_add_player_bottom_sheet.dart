@@ -306,7 +306,7 @@ class PlayerAddPlayerBottomSheet {
                     SizedBox(width: defaultMargin),
                     CustomButton(
                       isBlack: true,
-                      onTap: () {},
+                      onTap: Get.back,
                       widget: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

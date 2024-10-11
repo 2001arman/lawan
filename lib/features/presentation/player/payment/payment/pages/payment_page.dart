@@ -68,7 +68,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     'Confirm',
                     style: whiteTextStyle.copyWith(fontWeight: medium),
                   ),
-                  onTap: () {},
+                  onTap: widget.ctrl.successPayment,
                 ),
               ),
             ),

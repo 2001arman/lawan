@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
-import 'package:lawan/features/infrastructure/arena/arena_data_source.dart';
 
-class CheckoutLogic {
-  final arenaDataSource = Get.find<ArenaDataSource>();
+import '../../../../../domain/session/session_model.dart';
+
+class CheckoutLogic extends GetxController {
+  SessionModel sessionModel = Get.arguments[0];
 }

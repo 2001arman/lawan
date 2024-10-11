@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/domain/session/session_model.dart';
 
 class PlayerMainState {
   var selectedNavbarIndex = 0.obs;
@@ -70,6 +71,8 @@ class PlayerMainState {
   var enableSlot = true.obs;
   var slotStart = 22.obs;
   var slotEnd = 23.obs;
+
+  var sessionList = <SessionModel>[].obs;
 }
 
 class AvatarModel {

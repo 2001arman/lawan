@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../shared/constants/constants_ui.dart';
@@ -21,6 +23,18 @@ class Helper {
     'Saturday',
   ];
 
+  static void showToast({required bool isSuccess, required message}) {
+    FToast().init(Get.context!).showToast(
+          child: isSuccess
+              ? successToast(message: message)
+              : Helper.toast(
+                  message: message,
+                ),
+          gravity: ToastGravity.BOTTOM,
+          toastDuration: const Duration(seconds: 2),
+        );
+  }
+
   static Widget toast({required String message}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -31,6 +45,21 @@ class Helper {
       child: Text(
         message,
         style: whiteTextStyle,
+      ),
+    );
+  }
+
+  static Widget successToast({required String message}) {
+    Get.log('kesini kah');
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: kWhiteColor,
+      ),
+      child: Text(
+        message,
+        style: darkGreyTextStyle,
       ),
     );
   }
@@ -74,6 +103,12 @@ class Helper {
     return index <= 1 ? '$dayName, ${getDayLabel(index)}' : dayName;
   }
 
+  static String formatDayAndDate(int index) {
+    DateTime now = DateTime.now().add(Duration(days: index));
+    String dayName = DateFormat('EEE, dd MMM').format(now); // e.g., "Mon"
+    return index <= 1 ? ' ${getDayLabel(index)}, $dayName}' : dayName;
+  }
+
   static String formatFullDate(DateTime date) {
     return DateFormat('EEE, dd MMM yyyy').format(date);
   }
@@ -90,6 +125,7 @@ class Helper {
   }
 
   static bool isUpcoming(DateTime sessionDateTime) {
+    Get.log('cek session date ${sessionDateTime}');
     return sessionDateTime.isAfter(DateTime.now());
   }
 }

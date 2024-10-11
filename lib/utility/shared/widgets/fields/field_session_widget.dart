@@ -2,25 +2,23 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/domain/session/session_model.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 import 'package:lawan/utility/shared/widgets/text/text_icon.dart';
 
 import '../../../../features/domain/arena/arena_model.dart';
+import '../../../util/helper.dart';
 import '../../constants/constants_ui.dart';
 
 class FieldSessionWidget extends StatelessWidget {
-  final ArenaModel arenaModel;
-  final bool isSelected;
-  final int selectedCourt;
-  const FieldSessionWidget(
-      {super.key,
-      required this.arenaModel,
-      required this.isSelected,
-      required this.selectedCourt});
+  final SessionModel sessionModel;
+  const FieldSessionWidget({super.key, required this.sessionModel});
 
   @override
   Widget build(BuildContext context) {
+    ArenaModel arenaModel = sessionModel.arena;
+    int selectedCourt = sessionModel.selectedCourt;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -144,7 +142,7 @@ class FieldSessionWidget extends StatelessWidget {
                             text: 'Date',
                           ),
                           Text(
-                            '(Tomorrow) Tue,  25 Sep',
+                            Helper.formatDayAndDate(sessionModel.dateTime.day),
                             style: blackTextStyle.copyWith(
                                 fontSize: 12, fontWeight: medium),
                           ),
@@ -163,7 +161,7 @@ class FieldSessionWidget extends StatelessWidget {
                             text: 'Time',
                           ),
                           Text(
-                            '9:00 AM - 11:00 AM',
+                            '${Helper.formatTime12Hour(sessionModel.startHour)} - ${Helper.formatTime12Hour(sessionModel.endHour)}',
                             style: blackTextStyle.copyWith(
                                 fontSize: 12, fontWeight: medium),
                           ),
@@ -181,8 +179,10 @@ class FieldSessionWidget extends StatelessWidget {
                             ),
                             text: 'Location',
                           ),
+                          const SizedBox(width: 8),
                           FieldNumberWidget(
-                            court: '1, Petaling Jaya',
+                            court:
+                                '${arenaModel.courtData[selectedCourt].courtName}, ${arenaModel.location}',
                             iconColor: kMidgreyColor,
                             fontSize: 12,
                           ),

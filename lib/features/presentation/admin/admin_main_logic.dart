@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lawan/features/presentation/admin/admin_add_arena.dart';
@@ -106,13 +105,8 @@ class AdminMainLogic extends GetxController {
       final validationCourt =
           Helper.regularValidator(state.courtController.text);
       if (validationName != null && validationCourt != null) {
-        FToast().init(Get.context!).showToast(
-              child: Helper.toast(
-                message: 'Please fill Arena and Court name',
-              ),
-              gravity: ToastGravity.BOTTOM,
-              toastDuration: const Duration(seconds: 2),
-            );
+        Helper.showToast(
+            isSuccess: false, message: 'Please fill Arena and Court name');
         return;
       }
       if (arenaData != null) {

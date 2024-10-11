@@ -7,6 +7,7 @@ import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_image_widget.dart';
+import 'package:lawan/utility/util/helper.dart';
 
 import '../../../../../../utility/shared/widgets/buttons/custom_button.dart';
 import '../../../../../../utility/shared/widgets/card_detail_session.dart';
@@ -57,11 +58,11 @@ class CheckoutUi extends StatelessWidget {
                   ],
                 ),
 
-                // button session starting
+                // image arena
                 SizedBox(height: defaultMargin),
                 FieldImageWidget(
-                  arenaModel: logic.arenaDataSource.listArena.first,
-                  selectedCourt: 0,
+                  arenaModel: logic.sessionModel.arena,
+                  selectedCourt: logic.sessionModel.selectedCourt,
                 ),
 
                 // button session
@@ -79,7 +80,8 @@ class CheckoutUi extends StatelessWidget {
                             style: midGreyTextStyle.copyWith(fontSize: 12),
                           ),
                           Text(
-                            '2 days 2 hours 6 mins 3 sec',
+                            Helper.timeBetweenNowAndSession(
+                                logic.sessionModel.dateTime),
                             style: whiteTextStyle.copyWith(
                               fontSize: 16,
                               fontWeight: semiBold,
@@ -106,36 +108,38 @@ class CheckoutUi extends StatelessWidget {
 
                 // detail card session
                 SizedBox(height: defaultMargin),
-                const Row(
+                Row(
                   children: [
                     CardDetailSession(
-                      contentText: 'Tue,  25 Sep 2024',
+                      contentText:
+                          Helper.formatFullDate(logic.sessionModel.dateTime),
                       title: 'Date',
                       icon: Icons.date_range_outlined,
                       fontSize: 14,
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     CardDetailSession(
-                      contentText: '9:00 AM - 11:00 AM',
+                      contentText:
+                          '${Helper.formatTime12Hour(logic.sessionModel.startHour)} - ${Helper.formatTime12Hour(logic.sessionModel.endHour)}',
                       title: 'Time',
                       icon: Icons.access_time_outlined,
                       fontSize: 14,
-                      description: '2 hr',
+                      description: '${logic.sessionModel.totalHour} hr',
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
-                const Row(
+                Row(
                   children: [
                     CardDetailSession(
-                      contentText: 'Petaling Jaya, Selangor',
+                      contentText: logic.sessionModel.arena.location,
                       title: 'Location',
                       icon: Icons.location_on_outlined,
                       fontSize: 14,
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     CardDetailSession(
-                      contentText: 'RM20/pax',
+                      contentText: 'RM${logic.sessionModel.price}/pax',
                       title: 'Price',
                       icon: Icons.monetization_on_outlined,
                       fontSize: 20,
@@ -248,7 +252,10 @@ class CheckoutUi extends StatelessWidget {
                         ),
                         const Spacer(),
                         GradientButton(
-                          onTap: () => Get.toNamed(PaymentPage.namePath),
+                          onTap: () => Get.toNamed(
+                            PaymentPage.namePath,
+                            arguments: Get.arguments,
+                          ),
                           widget: Text(
                             'Pay Now',
                             style: whiteTextStyle.copyWith(fontWeight: medium),

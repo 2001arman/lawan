@@ -6,7 +6,7 @@ import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/card_detail_session.dart';
-import 'package:lawan/utility/shared/widgets/fields/select_field_image_widget.dart';
+import 'package:lawan/utility/shared/widgets/fields/field_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
 import 'package:lawan/utility/shared/widgets/host_avatar_widget.dart';
 import 'package:lawan/utility/shared/widgets/text/text_pill_widget.dart';
@@ -266,7 +266,13 @@ class AdminSessionBottomSheet {
     required ArenaModel arenaModel,
     required int selectedCourt,
     required SessionModel session,
+    bool successCreate = true,
+    bool showPill = false,
   }) {
+    if (successCreate) {
+      Helper.showToast(isSuccess: true, message: 'Success created session');
+    }
+
     return sessionContainerSheet(
       onDelete: () {},
       widgetContent: SizedBox(
@@ -274,34 +280,52 @@ class AdminSessionBottomSheet {
         child: Column(
           children: [
             SizedBox(height: defaultMargin),
-            Container(
-              width: 40,
-              height: 40,
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: kGreenColor),
-              child: Icon(
-                Icons.check,
-                color: kWhiteColor,
-                size: 20,
+            Visibility(
+              visible: successCreate,
+              replacement: Row(
+                children: [
+                  Image.asset(
+                    'assets/icons/ball.png',
+                    width: 30,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Friendly',
+                    style: blackTextStyle.copyWith(
+                        fontSize: 20, fontWeight: medium),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: kGreenColor),
+                    child: Icon(
+                      Icons.check,
+                      color: kWhiteColor,
+                      size: 20,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Session Succesfully Created',
+                    style: darkGreyTextStyle.copyWith(fontWeight: medium),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Session Succesfully Created',
-              style: darkGreyTextStyle.copyWith(fontWeight: medium),
-            ),
             SizedBox(height: defaultMargin),
-            SelectFieldImageWidget(
+            FieldImageWidget(
               arenaModel: arenaModel,
-              isSelected: false,
-              onChangeCourt: (_) {},
               selectedCourt: selectedCourt,
+              showInformation: true,
             ),
             const SizedBox(height: 12),
             Visibility(
-              visible: Helper.isUpcoming(
-                session.getStartDateTime(),
-              ),
+              visible: Helper.isUpcoming(session.dateTime),
               replacement: const TextPillWidget(title: 'Complete'),
               child: Row(
                 children: [
@@ -331,16 +355,20 @@ class AdminSessionBottomSheet {
               ),
             ),
             const HostAvatarWidget(),
-            // const Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     TextPillWidget(data: '25 - 35 years'),
-            //     SizedBox(width: 8),
-            //     TextPillWidget(data: 'Male & Female'),
-            //     SizedBox(width: 8),
-            //     TextPillWidget(data: 'English & Malay'),
-            //   ],
-            // ),
+            Visibility(
+              visible: showPill,
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextPillWidget(title: '25 - 35 years'),
+                  SizedBox(width: 8),
+                  TextPillWidget(title: 'Male & Female'),
+                  SizedBox(width: 8),
+                  TextPillWidget(title: 'English & Malay'),
+                ],
+              ),
+            ),
+            if (showPill) const SizedBox(height: 16),
             Row(
               children: [
                 CardDetailSession(

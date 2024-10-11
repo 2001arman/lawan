@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
+import 'package:lawan/features/presentation/admin/session/admin_session_bottom_sheet.dart';
 import 'package:lawan/features/presentation/player/ui/player_add_session.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
@@ -20,8 +20,6 @@ import '../../../../utility/shared/widgets/navigations/custom_appbar.dart';
 import '../../../../utility/shared/widgets/navigations/custom_bottom_navbar.dart';
 import '../../../../utility/shared/widgets/buttons/filter_button.dart';
 import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
-import '../../../../utility/util/helper.dart';
-import '../../../domain/arena/arena_model.dart';
 
 class PlayerMainUi extends StatelessWidget {
   static const String namePath = '/player_main_page';
@@ -35,49 +33,53 @@ class PlayerMainUi extends StatelessWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FilterButton(backgroundColor: kGreyColor, paddingVertical: 12),
-              SizedBox(width: defaultMargin),
-              Obx(
-                () => SizedBox(
-                  child: GradientButton(
-                    onTap: () => PlayerAddSession(
-                      logic: logic,
-                      state: state,
-                    ).createNewSession(),
-                    widget: Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/play.svg',
-                          width: 16,
-                          height: 16,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          'Create a session',
-                          style: whiteTextStyle.copyWith(fontWeight: medium),
-                        ),
-                        if (state.selectedFriends.isNotEmpty)
-                          const SizedBox(width: 4),
-                        Visibility(
-                          visible: state.selectedFriends.isNotEmpty,
-                          child: TextBorder(
-                            textTitle: '+${state.selectedFriends.length}',
-                            fontSize: 11,
-                            paddingVertical: 2,
-                            paddingHorizontal: 8,
-                            textColor: const Color(0xFF44D8BE),
-                            backgroundColor: kWhiteColor,
+          Obx(
+            () => Visibility(
+              visible: state.sessionList.isNotEmpty,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FilterButton(
+                      backgroundColor: kGreyColor, paddingVertical: 12),
+                  SizedBox(width: defaultMargin),
+                  SizedBox(
+                    child: GradientButton(
+                      onTap: () => PlayerAddSession(
+                        logic: logic,
+                        state: state,
+                      ).createNewSession(),
+                      widget: Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/play.svg',
+                            width: 16,
+                            height: 16,
                           ),
-                        )
-                      ],
+                          const SizedBox(width: 4),
+                          Text(
+                            'Create a session',
+                            style: whiteTextStyle.copyWith(fontWeight: medium),
+                          ),
+                          if (state.selectedFriends.isNotEmpty)
+                            const SizedBox(width: 4),
+                          Visibility(
+                            visible: state.selectedFriends.isNotEmpty,
+                            child: TextBorder(
+                              textTitle: '+${state.selectedFriends.length}',
+                              fontSize: 11,
+                              paddingVertical: 2,
+                              paddingHorizontal: 8,
+                              textColor: const Color(0xFF44D8BE),
+                              backgroundColor: kWhiteColor,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
           CustomBottomNavbar(
             navbarItemWidget: Obx(
@@ -153,25 +155,46 @@ class PlayerMainUi extends StatelessWidget {
                   style: greyTextStyle.copyWith(fontSize: 12),
                 ),
                 const SizedBox(height: 24),
-                SizedBox(
-                  width: 170,
-                  child: GradientButton(
-                    onTap: () {},
-                    widget: Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/play.svg',
-                          width: 16,
-                          height: 16,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GradientButton(
+                      onTap: () => PlayerAddSession(
+                        logic: logic,
+                        state: state,
+                      ).createNewSession(),
+                      widget: Obx(
+                        () => Row(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/icons/play.svg',
+                              width: 16,
+                              height: 16,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              'Create a session',
+                              style:
+                                  whiteTextStyle.copyWith(fontWeight: medium),
+                            ),
+                            if (state.selectedFriends.isNotEmpty)
+                              const SizedBox(width: 4),
+                            Visibility(
+                              visible: state.selectedFriends.isNotEmpty,
+                              child: TextBorder(
+                                textTitle: '+${state.selectedFriends.length}',
+                                fontSize: 11,
+                                paddingVertical: 2,
+                                paddingHorizontal: 8,
+                                textColor: const Color(0xFF44D8BE),
+                                backgroundColor: kWhiteColor,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 4),
-                        Text(
-                          'Create a session',
-                          style: whiteTextStyle.copyWith(fontWeight: medium),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 )
               ],
             ),
@@ -296,7 +319,7 @@ class PlayerMainUi extends StatelessWidget {
                               color: kWhiteColor,
                             ),
                             child: Text(
-                              '0',
+                              '${state.sessionList.length}',
                               style: blackTextStyle.copyWith(
                                   fontSize: 11, fontWeight: medium),
                             ),
@@ -315,80 +338,30 @@ class PlayerMainUi extends StatelessWidget {
 
                 // session content
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: 3,
-                    padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-                    itemBuilder: (context, index) => FieldSessionWidget(
-                      arenaModel: ArenaModel(
-                        location: 'Petaling Jaya, Selangor',
-                        name: 'MBPJ Sports Complex',
-                        courtData: [
-                          CourtModel(
-                            pictures: [
-                              XFile('assets/images/field1.png'),
-                            ],
-                            pictureType: PictureType.asset,
-                            courtName: '1',
-                            arenaType: 'Indoor',
-                            flooringType: 'Court Turf',
-                            operationalHours: List.generate(
-                              7,
-                              (index) => OperationalHour(
-                                isActive: true.obs,
-                                dayName: Helper.dayName[index],
-                                openTime:
-                                    const TimeOfDay(hour: 9, minute: 00).obs,
-                                closeTIme:
-                                    const TimeOfDay(hour: 18, minute: 00).obs,
-                                chooseTime: true.obs,
+                  child: Obx(
+                    () => Visibility(
+                      visible: state.sessionList.isNotEmpty,
+                      replacement: emptySession(),
+                      child: ListView(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: defaultMargin),
+                        children: [
+                          ...state.sessionList.map(
+                            (data) => GestureDetector(
+                              onTap: () => AdminSessionBottomSheet()
+                                  .successCreateSesssionSheet(
+                                arenaModel: data.arena,
+                                selectedCourt: data.selectedCourt,
+                                session: data,
+                                successCreate: false,
+                                showPill: true,
                               ),
+                              child: FieldSessionWidget(sessionModel: data),
                             ),
-                            rateArena: [
-                              RateModel(
-                                  name: 'Weekend Rate',
-                                  price: 10.obs,
-                                  hour: 1.0.obs),
-                              RateModel(
-                                  name: 'Weekdays Rate',
-                                  price: 10.obs,
-                                  hour: 1.0.obs),
-                            ],
                           ),
-                          CourtModel(
-                            pictures: [
-                              XFile('assets/images/field2.png'),
-                            ],
-                            pictureType: PictureType.asset,
-                            courtName: '2',
-                            arenaType: 'Outdoor',
-                            flooringType: 'Grass',
-                            operationalHours: List.generate(
-                              7,
-                              (index) => OperationalHour(
-                                isActive: true.obs,
-                                dayName: Helper.dayName[index],
-                                openTime:
-                                    const TimeOfDay(hour: 9, minute: 00).obs,
-                                closeTIme:
-                                    const TimeOfDay(hour: 18, minute: 00).obs,
-                                chooseTime: true.obs,
-                              ),
-                            ),
-                            rateArena: [
-                              RateModel(
-                                  name: 'Weekend Rate',
-                                  price: 10.obs,
-                                  hour: 1.0.obs),
-                              RateModel(
-                                  name: 'Weekdays Rate',
-                                  price: 10.obs,
-                                  hour: 1.0.obs),
-                            ],
-                          ),
+                          const SizedBox(height: 150),
                         ],
                       ),
-                      isSelected: false,
-                      selectedCourt: 0,
                     ),
                   ),
                 ),
