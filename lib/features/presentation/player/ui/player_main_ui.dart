@@ -84,28 +84,26 @@ class PlayerMainUi extends StatelessWidget {
           CustomBottomNavbar(
             navbarItemWidget: Obx(
               () => Row(
-                children: [
-                  BottomNavbarItem(
-                    title: 'Session',
-                    isActive: state.selectedNavbarIndex.value == 0,
-                    icon: 'assets/icons/session.svg',
-                    onTap: () => state.selectedNavbarIndex.value = 0,
-                  ),
-                  const SizedBox(width: 4),
-                  BottomNavbarItem(
-                    title: 'Arena',
-                    isActive: state.selectedNavbarIndex.value == 1,
-                    icon: 'assets/icons/arena.svg',
-                    onTap: () => state.selectedNavbarIndex.value = 1,
-                  ),
-                  const SizedBox(width: 4),
-                  BottomNavbarItem(
-                    title: 'Sales',
-                    isActive: state.selectedNavbarIndex.value == 2,
-                    icon: 'assets/icons/sales.svg',
-                    onTap: () => state.selectedNavbarIndex.value = 2,
-                  ),
-                ],
+                children: state.listNavbarItem
+                    .asMap()
+                    .entries
+                    .map(
+                      (data) => Padding(
+                        padding: EdgeInsets.only(
+                          right: data.key != state.listNavbarItem.length - 1
+                              ? 4
+                              : 0,
+                        ),
+                        child: BottomNavbarItem(
+                          title: data.value.name,
+                          isActive: state.selectedNavbarIndex.value == data.key,
+                          icon: data.value.icon,
+                          onTap: () =>
+                              state.selectedNavbarIndex.value = data.key,
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
             ),
           ),
