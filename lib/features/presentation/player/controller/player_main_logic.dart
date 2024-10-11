@@ -40,6 +40,7 @@ class PlayerMainLogic {
         identificationNumber: '',
         price: 20,
       );
+      Get.log('cek session model ${sessionModel.dateTime}');
       Get.toNamed(
         CheckoutUi.namePath,
         arguments: [sessionModel, state],

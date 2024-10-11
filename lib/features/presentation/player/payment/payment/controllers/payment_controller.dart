@@ -7,7 +7,6 @@ import 'package:lawan/features/presentation/admin/session/admin_session_bottom_s
 import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
 import 'package:lawan/features/presentation/player/payment/payment/models/bank_model.dart';
 import 'package:lawan/features/presentation/player/payment/payment/models/card_model.dart';
-import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
 
 class PaymentController extends GetxController {
   TextEditingController cardNumberCtrl = TextEditingController();
@@ -120,7 +119,7 @@ class PaymentController extends GetxController {
     playerMainState.sessionList.add(sessionModel);
 
     clearState();
-    Get.offNamedUntil(PlayerMainUi.namePath, (_) => true);
+    Get.close(3);
     AdminSessionBottomSheet().successCreateSesssionSheet(
       arenaModel: sessionModel.arena,
       selectedCourt: sessionModel.selectedCourt,

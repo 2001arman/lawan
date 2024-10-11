@@ -125,7 +125,6 @@ class Helper {
   }
 
   static bool isUpcoming(DateTime sessionDateTime) {
-    Get.log('cek session date ${sessionDateTime}');
     return sessionDateTime.isAfter(DateTime.now());
   }
 }
