@@ -50,9 +50,11 @@ class PaymentController extends GetxController {
   var listBank = <BankModel>[].obs;
   var idx = 0.obs;
 
-  void initPage() {
+  @override
+  void onInit() {
     listBank.addAll(bank);
     listBank.refresh();
+    super.onInit();
   }
 
   bool _doValidate() {
@@ -90,5 +92,11 @@ class PaymentController extends GetxController {
     cvvCtrl.clear();
     addressCtrl.clear();
     postCodeCtrl.clear();
+  }
+
+  @override
+  void dispose() {
+    clearData();
+    super.dispose();
   }
 }

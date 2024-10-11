@@ -248,12 +248,7 @@ class CheckoutUi extends StatelessWidget {
                         ),
                         const Spacer(),
                         GradientButton(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PaymentPage(),
-                            ),
-                          ),
+                          onTap: () => Get.toNamed(PaymentPage.namePath),
                           widget: Text(
                             'Pay Now',
                             style: whiteTextStyle.copyWith(fontWeight: medium),

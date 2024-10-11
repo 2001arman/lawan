@@ -9,8 +9,9 @@ import '../../../../../../utility/shared/widgets/payment/card_widget.dart';
 import '../controllers/payment_controller.dart';
 
 class PaymentAddCardPage extends StatelessWidget {
-  final PaymentController ctrl;
-  const PaymentAddCardPage({super.key, required this.ctrl});
+  static const String namePath = '/payment_add_card_page';
+  final ctrl = Get.find<PaymentController>();
+  PaymentAddCardPage({super.key});
 
   @override
   Widget build(BuildContext context) {

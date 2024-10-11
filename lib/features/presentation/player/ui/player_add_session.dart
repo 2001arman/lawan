@@ -656,6 +656,7 @@ class PlayerAddSession {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
+                flex: 2,
                 child: CustomTextFormField(
                   margin: 0,
                   hintText: '',
@@ -673,26 +674,23 @@ class PlayerAddSession {
                 ),
               ),
               SizedBox(width: defaultMargin),
-              SizedBox(
-                width: 90,
-                child: CustomButton(
-                  isBlack: false,
-                  onTap: () {},
-                  widget: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/filter.svg',
-                        width: 20,
-                        height: 20,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Filter',
-                        style: blackTextStyle.copyWith(fontWeight: medium),
-                      ),
-                    ],
-                  ),
+              CustomButton(
+                isBlack: false,
+                onTap: () {},
+                widget: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/filter.svg',
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Filter',
+                      style: blackTextStyle.copyWith(fontWeight: medium),
+                    ),
+                  ],
                 ),
               ),
             ],

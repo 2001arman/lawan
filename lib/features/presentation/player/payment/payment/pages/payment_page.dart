@@ -9,32 +9,19 @@ import '../controllers/payment_controller.dart';
 import 'payment_add_card_page.dart';
 
 class PaymentPage extends StatefulWidget {
-  const PaymentPage({super.key});
+  static const String namePath = '/payment_page';
+  final ctrl = Get.find<PaymentController>();
+  PaymentPage({super.key});
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  final ctrl = Get.put(PaymentController());
   int _selectedBankIndex = -1;
   int _selectedBankIndex2 = -1;
   bool _isSelected = false;
   bool _isSelected2 = false;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ctrl.initPage();
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    Get.delete<PaymentController>;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +37,7 @@ class _PaymentPageState extends State<PaymentPage> {
         leading: CircleButtonTransparentWidget(
           borderColor: kGreyColor,
           margin: EdgeInsets.only(left: defaultMargin),
-          onTap: () {
-            Get.back();
-            ctrl.clearData();
-          },
+          onTap: () => Get.back(),
           size: 48,
           widget: Icon(
             Icons.arrow_back_ios,
@@ -100,14 +84,7 @@ class _PaymentPageState extends State<PaymentPage> {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PaymentAddCardPage(ctrl: ctrl),
-                ),
-              );
-            },
+            onTap: () => Get.toNamed(PaymentAddCardPage.namePath),
             child: Container(
               height: 150,
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -129,7 +106,7 @@ class _PaymentPageState extends State<PaymentPage> {
           const SizedBox(width: 10),
           Expanded(
             child: Obx(() {
-              if (ctrl.listCard.isEmpty) {
+              if (widget.ctrl.listCard.isEmpty) {
                 return Container(
                   height: 140,
                   // width: 250,
@@ -163,9 +140,9 @@ class _PaymentPageState extends State<PaymentPage> {
               return ListView.builder(
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
-                itemCount: ctrl.listCard.length,
+                itemCount: widget.ctrl.listCard.length,
                 itemBuilder: (context, index) {
-                  final item = ctrl.listCard[index];
+                  final item = widget.ctrl.listCard[index];
                   _isSelected2 = _selectedBankIndex2 == index;
 
                   return GestureDetector(
@@ -189,7 +166,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           alignment: Alignment.center,
                           margin: const EdgeInsets.only(top: 10),
                           child: CardWidget(
-                            icon: "assets/images/mastercard.png",
+                            icon: "assets/icons/mastercard.svg",
                             expDate: item.expDate,
                             cardNumber: item.cardNumber,
                             cardOwner: item.ownerName,
@@ -246,9 +223,9 @@ class _PaymentPageState extends State<PaymentPage> {
                   childAspectRatio: 2.8,
                   crossAxisSpacing: 16,
                 ),
-                itemCount: ctrl.listBank.length,
+                itemCount: widget.ctrl.listBank.length,
                 itemBuilder: (context, index) {
-                  final item = ctrl.listBank[index];
+                  final item = widget.ctrl.listBank[index];
                   _isSelected = _selectedBankIndex == index;
                   return GestureDetector(
                     onTap: () {
