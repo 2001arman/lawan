@@ -64,7 +64,7 @@ class PlayerAddPlayerBottomSheet {
                     ),
                     const Spacer(),
                     CircleButtonTransparentWidget(
-                      onTap: () {},
+                      onTap: Get.back,
                       widget: Icon(
                         Icons.close,
                         size: 20,
@@ -296,7 +296,7 @@ class PlayerAddPlayerBottomSheet {
                 Row(
                   children: [
                     CircleButtonTransparentWidget(
-                      onTap: () {},
+                      onTap: Get.back,
                       widget: Icon(
                         Icons.arrow_back_ios_sharp,
                         size: 18,
@@ -357,7 +357,7 @@ class PlayerAddPlayerBottomSheet {
                                     radius: 40,
                                     backgroundColor: Colors.black,
                                     child: Text(
-                                      '+${state.listFriends.length - 3}',
+                                      '+${state.selectedFriends.length - 3}',
                                       style: whiteTextStyle.copyWith(
                                         fontSize: 16,
                                         fontWeight: medium,
