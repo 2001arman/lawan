@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:blur/blur.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/bottom_navbar_item.dart';
+import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/navigations/custom_appbar.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/navigations/custom_bottom_navbar.dart';
@@ -32,31 +34,73 @@ class AdminMainUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget customNavbar() {
-      return CustomBottomNavbar(
-        navbarItemWidget: Obx(
-          () => Row(
-            children: [
-              BottomNavbarItem(
-                title: 'Session',
-                isActive: state.selectedNavbarIndex.value == 0,
-                icon: 'assets/icons/session.svg',
-                onTap: () => state.selectedNavbarIndex.value = 0,
-              ),
-              const SizedBox(width: 4),
-              BottomNavbarItem(
-                title: 'Arena',
-                isActive: state.selectedNavbarIndex.value == 1,
-                icon: 'assets/icons/arena.svg',
-                onTap: () => state.selectedNavbarIndex.value = 1,
-              ),
-              const SizedBox(width: 4),
-              BottomNavbarItem(
-                title: 'Sales',
-                isActive: state.selectedNavbarIndex.value == 2,
-                icon: 'assets/icons/sales.svg',
-                onTap: () => state.selectedNavbarIndex.value = 2,
-              ),
-            ],
+      return Visibility(
+        visible: false,
+        replacement: Container(
+          width: double.infinity,
+          height: 80,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                kBlackColor.withOpacity(0),
+                kBlackColor.withOpacity(0.3),
+              ],
+            ),
+          ),
+        ).blurred(
+          blur: 2,
+          blurColor: kModalColor,
+          colorOpacity: 0,
+          overlay: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            height: 50,
+            child: Row(
+              children: [
+                CustomButton(
+                  isBlack: false,
+                  onTap: () {},
+                  title: 'Cancel',
+                  backgroundColor: Colors.transparent,
+                  textColor: kBlackColor,
+                ),
+                SizedBox(width: defaultMargin),
+                CustomButton(
+                  isBlack: true,
+                  onTap: () {},
+                  title: 'Save and Update',
+                ),
+              ],
+            ),
+          ),
+        ),
+        child: CustomBottomNavbar(
+          navbarItemWidget: Obx(
+            () => Row(
+              children: [
+                BottomNavbarItem(
+                  title: 'Session',
+                  isActive: state.selectedNavbarIndex.value == 0,
+                  icon: 'assets/icons/session.svg',
+                  onTap: () => state.selectedNavbarIndex.value = 0,
+                ),
+                const SizedBox(width: 4),
+                BottomNavbarItem(
+                  title: 'Arena',
+                  isActive: state.selectedNavbarIndex.value == 1,
+                  icon: 'assets/icons/arena.svg',
+                  onTap: () => state.selectedNavbarIndex.value = 1,
+                ),
+                const SizedBox(width: 4),
+                BottomNavbarItem(
+                  title: 'Sales',
+                  isActive: state.selectedNavbarIndex.value == 2,
+                  icon: 'assets/icons/sales.svg',
+                  onTap: () => state.selectedNavbarIndex.value = 2,
+                ),
+              ],
+            ),
           ),
         ),
       );
