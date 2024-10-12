@@ -9,7 +9,7 @@ class ArenaDataSource {
   var listArena = <ArenaModel>[].obs;
 
   ArenaDataSource() {
-    listArena.addAll(dummyArenaData);
+    // listArena.addAll(dummyArenaData);
   }
 
   ArenaModel getArena({required int index}) {

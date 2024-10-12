@@ -18,10 +18,12 @@ class AdminArenaLogic extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    state.selectedArena =
-        arenaDataSource.listArena[state.selectedListArena.value];
-    state.selectedCourt =
-        state.selectedArena.courtData[state.selectedListCourt.value];
+    if (arenaDataSource.listArena.isNotEmpty) {
+      state.selectedArena.value =
+          arenaDataSource.listArena[state.selectedListArena.value];
+      state.selectedCourt.value =
+          state.selectedArena.value.courtData[state.selectedListCourt.value];
+    }
   }
 
   void alignmentTabbar(String title) {
@@ -59,8 +61,8 @@ class AdminArenaLogic extends GetxController {
       onSelected: (index) {
         Get.back();
         state.selectedListArena.value = index;
-        state.selectedArena = arenaDataSource.listArena[index];
-        state.selectedCourt = state.selectedArena.courtData.first;
+        state.selectedArena.value = arenaDataSource.listArena[index];
+        state.selectedCourt.value = state.selectedArena.value.courtData.first;
       },
       onSearch: (name) {},
     );
@@ -143,21 +145,24 @@ class AdminArenaLogic extends GetxController {
     List<XFile> uploaded = [];
     uploaded.addAll(state.uploadedPictures);
 
+    CourtModel courtModel = CourtModel(
+      courtName: state.courtController.text,
+      pictures: uploaded,
+      arenaType: state.selectedArenaType.value,
+      flooringType: state.selectedFlooringType.value,
+      operationalHours: state.listOperationalHour,
+      rateArena: state.rateList,
+    );
+
     ArenaModel arena = ArenaModel(
       location: 'Selangor',
       name: state.nameController.text,
-      courtData: [
-        CourtModel(
-          courtName: state.courtController.text,
-          pictures: uploaded,
-          arenaType: state.selectedArenaType.value,
-          flooringType: state.selectedFlooringType.value,
-          operationalHours: state.listOperationalHour,
-          rateArena: state.rateList,
-        )
-      ],
+      courtData: [courtModel],
     );
     arenaDataSource.addArena(arena: arena);
+    state.selectedArena = arena.obs;
+    state.selectedCourt = courtModel.obs;
+    if (state.selectedListArena.value != 0) state.selectedListArena++;
     clearState();
   }
 
@@ -165,18 +170,20 @@ class AdminArenaLogic extends GetxController {
     List<XFile> uploaded = [];
     uploaded.addAll(state.uploadedPictures);
 
-    arenaDataSource.addCourt(
-      arenaIndex: state.selectedListArena.value,
-      court: CourtModel(
-        courtName: state.courtController.text,
-        pictures: uploaded,
-        arenaType: state.selectedArenaType.value,
-        flooringType: state.selectedFlooringType.value,
-        operationalHours: state.listOperationalHour,
-        rateArena: state.rateList,
-      ),
+    CourtModel courtModel = CourtModel(
+      courtName: state.courtController.text,
+      pictures: uploaded,
+      arenaType: state.selectedArenaType.value,
+      flooringType: state.selectedFlooringType.value,
+      operationalHours: state.listOperationalHour,
+      rateArena: state.rateList,
     );
+
+    arenaDataSource.addCourt(
+        arenaIndex: state.selectedListArena.value, court: courtModel);
     arenaDataSource.listArena.refresh();
+    state.selectedCourt.value = courtModel;
+    state.selectedListCourt++;
     clearState();
   }
 

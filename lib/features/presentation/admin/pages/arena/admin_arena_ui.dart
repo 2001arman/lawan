@@ -38,7 +38,7 @@ class AdminArenaUi extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Column(
-              children: state.selectedCourt.operationalHours
+              children: state.selectedCourt.value.operationalHours
                   .map(
                     (data) => Column(
                       children: [
@@ -170,7 +170,7 @@ class AdminArenaUi extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Column(
-            children: state.selectedCourt.rateArena
+            children: state.selectedCourt.value.rateArena
                 .map(
                   (data) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -285,7 +285,8 @@ class AdminArenaUi extends StatelessWidget {
               enlargeCenterPage: false,
               enableInfiniteScroll: false,
             ),
-            items: state.selectedCourt.pictures.asMap().entries.map((data) {
+            items:
+                state.selectedCourt.value.pictures.asMap().entries.map((data) {
               return Builder(
                 builder: (BuildContext context) {
                   if (data.value.path == 'empty') {
@@ -295,7 +296,7 @@ class AdminArenaUi extends StatelessWidget {
                   }
                   return CustomImageWidget(
                     path: data.value.path,
-                    pictureType: state.selectedCourt.pictureType,
+                    pictureType: state.selectedCourt.value.pictureType,
                     changeImage: () {},
                     deleteImage: () {},
                   );
@@ -333,7 +334,7 @@ class AdminArenaUi extends StatelessWidget {
                   .map(
                     (data) => SelectedContainerWidget(
                       title: data,
-                      isSelected: state.selectedCourt.arenaType == data,
+                      isSelected: state.selectedCourt.value.arenaType == data,
                       onTap: () {},
                     ),
                   )
@@ -353,7 +354,8 @@ class AdminArenaUi extends StatelessWidget {
                   .map(
                     (data) => SelectedContainerWidget(
                       title: data,
-                      isSelected: data == state.selectedCourt.flooringType,
+                      isSelected:
+                          data == state.selectedCourt.value.flooringType,
                       onTap: () {},
                     ),
                   )
@@ -397,7 +399,7 @@ class AdminArenaUi extends StatelessWidget {
                   widget: Row(
                     children: [
                       Text(
-                        state.selectedArena.name,
+                        state.selectedArena.value.name,
                         style: whiteTextStyle.copyWith(fontWeight: medium),
                       ),
                       const SizedBox(width: 4),
@@ -433,7 +435,7 @@ class AdminArenaUi extends StatelessWidget {
                 ),
                 Obx(
                   () => Row(
-                    children: state.selectedArena.courtData
+                    children: state.selectedArena.value.courtData
                         .asMap()
                         .entries
                         .map(
@@ -452,7 +454,7 @@ class AdminArenaUi extends StatelessWidget {
                             margin: const EdgeInsets.only(right: 12),
                             onTap: () {
                               state.selectedListCourt.value = court.key;
-                              state.selectedCourt = court.value;
+                              state.selectedCourt.value = court.value;
                             },
                             isActive:
                                 court.key == state.selectedListCourt.value,
@@ -494,11 +496,9 @@ class AdminArenaUi extends StatelessWidget {
     }
 
     return Obx(
-      () => Visibility(
-        visible: logic.arenaDataSource.listArena.isNotEmpty,
-        replacement: AdminEmptyArena(),
-        child: detailArenaSection(),
-      ),
+      () => logic.arenaDataSource.listArena.isNotEmpty
+          ? detailArenaSection()
+          : AdminEmptyArena(),
     );
   }
 }

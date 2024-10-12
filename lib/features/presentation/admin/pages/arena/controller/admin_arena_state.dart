@@ -17,8 +17,8 @@ class AdminArenaState {
     'Rate',
   ];
 
-  late ArenaModel selectedArena;
-  late CourtModel selectedCourt;
+  late Rx<ArenaModel> selectedArena;
+  late Rx<CourtModel> selectedCourt;
   var selectedListArena = 0.obs;
   var selectedListCourt = 0.obs;
 
