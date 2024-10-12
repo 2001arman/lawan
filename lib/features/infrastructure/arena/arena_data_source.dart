@@ -117,7 +117,7 @@ class ArenaDataSource {
           pictureType: PictureType.asset,
           courtName: '2',
           arenaType: 'Outdoor',
-          flooringType: 'Grass',
+          flooringType: 'Court Grass',
           operationalHours: List.generate(
             7,
             (index) => OperationalHour(

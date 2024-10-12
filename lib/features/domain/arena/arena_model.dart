@@ -35,7 +35,7 @@ class CourtModel {
   final List<XFile> pictures;
   PictureType pictureType;
   String arenaType;
-  final String flooringType;
+  String flooringType;
   final List<OperationalHour> operationalHours;
   final List<RateModel> rateArena;
 

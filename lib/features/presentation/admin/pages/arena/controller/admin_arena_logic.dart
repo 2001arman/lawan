@@ -284,6 +284,18 @@ class AdminArenaLogic extends GetxController {
     }
   }
 
+  void updateArenaType({required String arenaType}) {
+    state.selectedCourt.value.arenaType = arenaType;
+    state.selectedCourt.refresh();
+    state.isEditing.value = true;
+  }
+
+  void updateFlooringType({required String flooringType}) {
+    state.selectedCourt.value.flooringType = flooringType;
+    state.selectedCourt.refresh();
+    state.isEditing.value = true;
+  }
+
   void saveUpdate() {
     arenaDataSource.listArena[state.selectedListArena.value]
             .courtData[state.selectedListCourt.value] =

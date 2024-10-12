@@ -345,7 +345,7 @@ class AdminArenaUi extends StatelessWidget {
                     (data) => SelectedContainerWidget(
                       title: data,
                       isSelected: state.selectedCourt.value.arenaType == data,
-                      onTap: () {},
+                      onTap: () => logic.updateArenaType(arenaType: data),
                     ),
                   )
                   .toList(),
@@ -366,7 +366,7 @@ class AdminArenaUi extends StatelessWidget {
                       title: data,
                       isSelected:
                           data == state.selectedCourt.value.flooringType,
-                      onTap: () {},
+                      onTap: () => logic.updateFlooringType(flooringType: data),
                     ),
                   )
                   .toList(),
