@@ -11,9 +11,18 @@ import '../../../../../domain/arena/arena_model.dart';
 import '../../../../../infrastructure/arena/arena_data_source.dart';
 import '../admin_add_arena.dart';
 
-class AdminArenaLogic {
+class AdminArenaLogic extends GetxController {
   ArenaDataSource arenaDataSource = Get.find<ArenaDataSource>();
   AdminArenaState state = AdminArenaState();
+
+  @override
+  void onInit() {
+    super.onInit();
+    state.selectedArena =
+        arenaDataSource.listArena[state.selectedListArena.value];
+    state.selectedCourt =
+        state.selectedArena.courtData[state.selectedListCourt.value];
+  }
 
   void alignmentTabbar(String title) {
     switch (title) {
@@ -50,8 +59,10 @@ class AdminArenaLogic {
       onSelected: (index) {
         Get.back();
         state.selectedListArena.value = index;
+        state.selectedArena = arenaDataSource.listArena[index];
+        state.selectedCourt = state.selectedArena.courtData.first;
       },
-      onSearch: (name) => Get.log('cek search'),
+      onSearch: (name) {},
     );
   }
 
