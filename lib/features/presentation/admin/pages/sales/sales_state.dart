@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../utility/util/helper.dart';
+import '../../../../../utility/util/helper.dart';
 
 class SalesState {
   var activeAlignment = Alignment.centerLeft.obs;

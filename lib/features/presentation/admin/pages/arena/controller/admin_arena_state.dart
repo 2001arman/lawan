@@ -1,14 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lawan/utility/util/helper.dart';
 
-import '../../domain/arena/arena_model.dart';
+import '../../../../../../utility/util/helper.dart';
+import '../../../../../domain/arena/arena_model.dart';
 
-class AdminMainState {
-  var selectedNavbarIndex = 1.obs;
-
+class AdminArenaState {
   final textFormKey = GlobalKey<FormState>();
   var selectedIndex = 1.obs;
 
@@ -51,21 +48,3 @@ class AdminMainState {
     ),
   );
 }
-
-enum ArenaType {
-  arena,
-  court;
-
-  String get title {
-    switch (this) {
-      case ArenaType.arena:
-        return 'Arena';
-      case ArenaType.court:
-        return 'Court';
-      default:
-        return '';
-    }
-  }
-}
-
-

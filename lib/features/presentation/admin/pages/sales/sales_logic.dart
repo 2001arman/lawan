@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lawan/features/presentation/admin/sales/sales_state.dart';
+import 'package:lawan/features/presentation/admin/pages/sales/sales_state.dart';
 
 class SalesLogic {
   SalesState state = SalesState();

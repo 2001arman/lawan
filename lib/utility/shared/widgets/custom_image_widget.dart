@@ -10,12 +10,13 @@ class CustomImageWidget extends StatelessWidget {
   final VoidCallback changeImage;
   final VoidCallback deleteImage;
   final PictureType pictureType;
-  const CustomImageWidget(
-      {super.key,
-      required this.path,
-      required this.changeImage,
-      required this.deleteImage,
-      required this.pictureType});
+  const CustomImageWidget({
+    super.key,
+    required this.path,
+    required this.changeImage,
+    required this.deleteImage,
+    required this.pictureType,
+  });
 
   @override
   Widget build(BuildContext context) {

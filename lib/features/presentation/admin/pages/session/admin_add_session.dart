@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:lawan/features/presentation/admin/session/session_logic.dart';
-import 'package:lawan/features/presentation/admin/session/session_state.dart';
+import 'package:lawan/features/presentation/admin/pages/session/session_logic.dart';
+import 'package:lawan/features/presentation/admin/pages/session/session_state.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/fields/select_field_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/filter_button.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../../../utility/shared/constants/constants_ui.dart';
-import '../../../../utility/shared/widgets/calendar_picker_widget.dart';
-import '../../../../utility/shared/widgets/wheel_picker/choose_time_widget.dart';
-import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
-import '../../../../utility/shared/widgets/custom_text_form_fields.dart';
-import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
+import '../../../../../utility/shared/constants/constants_ui.dart';
+import '../../../../../utility/shared/widgets/calendar_picker_widget.dart';
+import '../../../../../utility/shared/widgets/wheel_picker/choose_time_widget.dart';
+import '../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
+import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
+import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 
 class AdminAddSession {
   final SessionState state;

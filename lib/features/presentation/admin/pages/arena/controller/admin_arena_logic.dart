@@ -1,30 +1,36 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lawan/features/presentation/admin/admin_add_arena.dart';
-import 'package:lawan/features/presentation/admin/admin_main_state.dart';
-import 'package:lawan/features/infrastructure/arena/arena_data_source.dart';
-import 'package:lawan/utility/util/custom_dialog.dart';
-import 'package:lawan/utility/util/custom_dialog_success.dart';
-import 'package:lawan/utility/util/helper.dart';
+import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_state.dart';
 
-import '../../domain/arena/arena_model.dart';
+import '../../../../../../utility/shared/constants/arena_type.dart';
+import '../../../../../../utility/util/custom_dialog.dart';
+import '../../../../../../utility/util/custom_dialog_success.dart';
+import '../../../../../../utility/util/helper.dart';
+import '../../../../../domain/arena/arena_model.dart';
+import '../../../../../infrastructure/arena/arena_data_source.dart';
+import '../admin_add_arena.dart';
 
-class AdminMainLogic extends GetxController {
-  AdminMainState state = AdminMainState();
+class AdminArenaLogic {
   ArenaDataSource arenaDataSource = Get.find<ArenaDataSource>();
-  Timer? _debounce;
+  AdminArenaState state = AdminArenaState();
 
-  @override
-  void dispose() {
-    _debounce?.cancel();
-    super.dispose();
-  }
-
-  bool checkValidator() {
-    return state.textFormKey.currentState!.validate();
+  void alignmentTabbar(String title) {
+    switch (title) {
+      case 'Details':
+        state.activeAlignment.value = Alignment.centerLeft;
+        break;
+      case 'Hour':
+        state.activeAlignment.value = Alignment.center;
+        break;
+      case 'Rate':
+        state.activeAlignment.value = Alignment.centerRight;
+        break;
+      default:
+        state.activeAlignment.value = Alignment.centerLeft;
+        break;
+    }
+    return;
   }
 
   void showEditAddDialog() {
@@ -211,23 +217,5 @@ class AdminMainLogic extends GetxController {
 
   void deleteImage({required int index}) {
     state.uploadedPictures.removeAt(index);
-  }
-
-  void alignmentTabbar(String title) {
-    switch (title) {
-      case 'Details':
-        state.activeAlignment.value = Alignment.centerLeft;
-        break;
-      case 'Hour':
-        state.activeAlignment.value = Alignment.center;
-        break;
-      case 'Rate':
-        state.activeAlignment.value = Alignment.centerRight;
-        break;
-      default:
-        state.activeAlignment.value = Alignment.centerLeft;
-        break;
-    }
-    return;
   }
 }

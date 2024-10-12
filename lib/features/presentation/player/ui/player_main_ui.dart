@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
-import 'package:lawan/features/presentation/admin/session/admin_session_bottom_sheet.dart';
+import 'package:lawan/features/presentation/admin/pages/session/admin_session_bottom_sheet.dart';
 import 'package:lawan/features/presentation/player/ui/player_add_session.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';

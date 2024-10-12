@@ -2,11 +2,11 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/admin/admin_main_state.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 
 import '../shared/constants/action_type.dart';
+import '../shared/constants/arena_type.dart';
 import '../shared/constants/constants_ui.dart';
 import '../shared/widgets/buttons/custom_button.dart';
 

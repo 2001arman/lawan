@@ -2,9 +2,9 @@ import 'package:blur/blur.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/admin/admin_main_logic.dart';
-import 'package:lawan/features/presentation/admin/admin_main_state.dart';
 import 'package:lawan/features/domain/arena/arena_model.dart';
+import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_logic.dart';
+import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_state.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_time_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
@@ -13,12 +13,12 @@ import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:lawan/utility/util/dialog_wheel_picker.dart';
 
-import '../../../utility/shared/constants/constants_ui.dart';
-import '../../../utility/util/helper.dart';
+import '../../../../../utility/shared/constants/constants_ui.dart';
+import '../../../../../utility/util/helper.dart';
 
 class AdminAddArena {
-  final AdminMainState state;
-  final AdminMainLogic logic;
+  final AdminArenaLogic logic;
+  final AdminArenaState state;
 
   AdminAddArena({required this.state, required this.logic});
 
@@ -371,9 +371,7 @@ class AdminAddArena {
                       }
                       return CustomImageWidget(
                         path: data.value.path,
-                        pictureType: logic.arenaDataSource.getPicturesType(
-                            indexArena: state.selectedListArena.value,
-                            indexCourt: state.selectedListCourt.value),
+                        pictureType: PictureType.file,
                         changeImage: () => logic.changeImage(index: data.key),
                         deleteImage: () => logic.deleteImage(index: data.key),
                       );
