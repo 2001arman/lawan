@@ -1,6 +1,8 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:lawan/features/presentation/admin/admin_main_binding.dart';
 import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
+import 'package:lawan/features/presentation/lobby/controller/lobby_binding.dart';
+import 'package:lawan/features/presentation/lobby/pages/lobby_ui.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/controller/checkout_binding.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/ui/checkout_ui.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_binding.dart';
@@ -36,6 +38,11 @@ class AppRoute {
       name: PaymentAddCardPage.namePath,
       page: () => PaymentAddCardPage(),
       binding: PaymentBinding(),
+    ),
+    GetPage(
+      name: LobbyUi.namePath,
+      page: () => LobbyUi(),
+      binding: LobbyBinding(),
     ),
   ];
 }

@@ -1,4 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../constants/constants_ui.dart';
@@ -14,8 +17,11 @@ class TabbarWidget extends StatelessWidget {
     this.activeColor,
     this.textActiveColor,
     this.textInActiveColor,
+    this.tabBarIcon,
   });
+
   final List<String> tabBarTitle;
+  final List<String>? tabBarIcon;
   final RxString tabActive;
   final Rx<AlignmentGeometry> alignment;
   final Color? backgroundColor, activeColor, textActiveColor, textInActiveColor;
@@ -69,13 +75,15 @@ class TabbarWidget extends StatelessWidget {
           Obx(
             () => Row(
               children: tabBarTitle
+                  .asMap()
+                  .entries
                   .map(
                     (title) => Expanded(
                       child: Row(
                         children: [
                           Expanded(
                             child: GestureDetector(
-                              onTap: () => onTap(title),
+                              onTap: () => onTap(title.value),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 10,
@@ -84,16 +92,35 @@ class TabbarWidget extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
-                                child: Text(
-                                  title,
-                                  style: greyTextStyle.copyWith(
-                                    color: tabActive.value == title
-                                        ? textActiveColor ?? kBlackColor
-                                        : textInActiveColor ?? kDarkgreyColor,
-                                    fontWeight: tabActive.value == title
-                                        ? medium
-                                        : reguler,
-                                  ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    if (tabBarIcon != null)
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 2),
+                                        child: SvgPicture.asset(
+                                          tabBarIcon![title.key],
+                                          color: tabActive.value == title.value
+                                              ? textActiveColor ?? kBlackColor
+                                              : textInActiveColor ??
+                                                  kDarkgreyColor,
+                                        ),
+                                      ),
+                                    Text(
+                                      title.value,
+                                      style: greyTextStyle.copyWith(
+                                        color: tabActive.value == title.value
+                                            ? textActiveColor ?? kBlackColor
+                                            : textInActiveColor ??
+                                                kDarkgreyColor,
+                                        fontWeight:
+                                            tabActive.value == title.value
+                                                ? medium
+                                                : reguler,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

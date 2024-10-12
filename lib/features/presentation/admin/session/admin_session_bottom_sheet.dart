@@ -2,6 +2,7 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/lobby/pages/lobby_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
@@ -108,7 +109,7 @@ class AdminSessionBottomSheet {
                         const SizedBox(width: 16),
                         CustomButton(
                           isBlack: true,
-                          onTap: () {},
+                          onTap: () => Get.toNamed(LobbyUi.namePath),
                           widget: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,

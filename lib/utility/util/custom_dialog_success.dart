@@ -6,6 +6,7 @@ import 'package:lawan/features/presentation/admin/admin_main_state.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 
+import '../shared/constants/action_type.dart';
 import '../shared/constants/constants_ui.dart';
 import '../shared/widgets/buttons/custom_button.dart';
 
@@ -212,7 +213,7 @@ class CustomDialogSuccess {
         insetPadding: const EdgeInsets.symmetric(horizontal: 16),
         child: SizedBox(
           width: Get.width,
-          height: 228,
+          height: 245,
         ).blurred(
           blur: 7,
           blurColor: Colors.white,
@@ -220,7 +221,7 @@ class CustomDialogSuccess {
           borderRadius: BorderRadius.circular(32),
           overlay: Container(
             width: Get.width,
-            height: 228,
+            height: 245,
             padding: EdgeInsets.only(
               top: 24,
               left: defaultMargin,
@@ -244,7 +245,7 @@ class CustomDialogSuccess {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Confirm ${actionType.title}',
+                  actionType.title,
                   style:
                       blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
                 ),
@@ -255,8 +256,9 @@ class CustomDialogSuccess {
                     fontSize: 12,
                     fontWeight: reguler,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 24),
+                const Spacer(),
                 Row(
                   children: [
                     CustomButton(

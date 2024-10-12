@@ -68,34 +68,4 @@ enum ArenaType {
   }
 }
 
-enum ActionType {
-  delete,
-  booking,
-  edit;
 
-  String get title {
-    switch (this) {
-      case ActionType.delete:
-        return 'Delete?';
-      case ActionType.edit:
-        return 'Update?';
-      case ActionType.booking:
-        return 'Booking';
-      default:
-        return '';
-    }
-  }
-
-  String get description {
-    switch (this) {
-      case ActionType.delete:
-        return 'Proceed with applying the changes.';
-      case ActionType.edit:
-        return 'Proceed with applying the changes.';
-      case ActionType.booking:
-        return 'Are you sure you want to add this booking?';
-      default:
-        return '';
-    }
-  }
-}
