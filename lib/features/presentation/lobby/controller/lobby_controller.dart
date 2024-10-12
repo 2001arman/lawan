@@ -4,18 +4,18 @@ import 'package:get/get.dart';
 import 'lobby_state.dart';
 
 class LobbyController extends GetxController {
-  LobbyState state = LobbyState();
+  LobbyState state = Get.find<LobbyState>();
 
   void alignmentTabbar(String title) {
     switch (title) {
       case 'Hour':
-        state.activeAlignment.value = Alignment.center;
+        state.lineUpActiveAlignment.value = Alignment.center;
         break;
       case 'Rate':
-        state.activeAlignment.value = Alignment.centerRight;
+        state.lineUpActiveAlignment.value = Alignment.centerRight;
         break;
       default:
-        state.activeAlignment.value = Alignment.centerLeft;
+        state.lineUpActiveAlignment.value = Alignment.centerLeft;
         break;
     }
     return;

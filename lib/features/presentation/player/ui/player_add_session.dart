@@ -20,6 +20,7 @@ import '../../../../utility/shared/widgets/wheel_picker/choose_time_widget.dart'
 import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
 import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
+import '../../../domain/session/avatar_model.dart';
 
 class PlayerAddSession {
   final PlayerMainState state;

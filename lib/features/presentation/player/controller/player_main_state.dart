@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/domain/session/session_model.dart';
 
+import '../../../domain/session/avatar_model.dart';
+
 class PlayerMainState {
   var selectedNavbarIndex = 0.obs;
 
@@ -87,13 +89,4 @@ class NavbarItem {
   final String name, icon;
 
   NavbarItem({required this.name, required this.icon});
-}
-
-class AvatarModel {
-  final String name;
-  final String asset;
-  final String position;
-
-  AvatarModel(
-      {required this.name, required this.asset, required this.position});
 }

@@ -13,11 +13,11 @@ class LobbyState {
     'assets/icons/chat.svg',
   ];
 
-  var activeAlignment = Alignment.centerLeft.obs;
-  var tabActive = 'Details'.obs;
-  List<String> tabBarTitle = [
-    'Details',
-    'Hour',
-    'Rate',
+  var lineUpActiveAlignment = Alignment.centerLeft.obs;
+  var lineUpTabActive = 'Home'.obs;
+  List<String> lineUpTabBarTitle = [
+    'Home',
+    '',
+    'Away',
   ];
 }

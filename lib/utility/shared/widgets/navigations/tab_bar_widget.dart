@@ -18,10 +18,13 @@ class TabbarWidget extends StatelessWidget {
     this.textActiveColor,
     this.textInActiveColor,
     this.tabBarIcon,
+    this.selectedWidth,
+    this.iconSize,
   });
 
+  final double? selectedWidth, iconSize;
   final List<String> tabBarTitle;
-  final List<String>? tabBarIcon;
+  final List<String?>? tabBarIcon;
   final RxString tabActive;
   final Rx<AlignmentGeometry> alignment;
   final Color? backgroundColor, activeColor, textActiveColor, textInActiveColor;
@@ -35,10 +38,6 @@ class TabbarWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
         color: backgroundColor ?? kGreyColor,
-        border: Border.all(
-          width: 1,
-          color: Colors.transparent,
-        ),
       ),
       child: Stack(
         children: [
@@ -55,7 +54,8 @@ class TabbarWidget extends StatelessWidget {
                       builder:
                           (BuildContext context, BoxConstraints constraints) {
                         return Container(
-                          width: constraints.maxWidth / tabBarTitle.length,
+                          width: selectedWidth ??
+                              constraints.maxWidth / tabBarTitle.length,
                           decoration: BoxDecoration(
                             color: activeColor ?? kWhiteColor,
                             borderRadius: BorderRadius.circular(100),
@@ -95,16 +95,19 @@ class TabbarWidget extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    if (tabBarIcon != null)
+                                    if (tabBarIcon != null &&
+                                        tabBarIcon?[title.key] != null)
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(right: 2),
                                         child: SvgPicture.asset(
-                                          tabBarIcon![title.key],
+                                          tabBarIcon![title.key]!,
                                           color: tabActive.value == title.value
                                               ? textActiveColor ?? kBlackColor
                                               : textInActiveColor ??
                                                   kDarkgreyColor,
+                                          width: iconSize,
+                                          height: iconSize,
                                         ),
                                       ),
                                     Text(
