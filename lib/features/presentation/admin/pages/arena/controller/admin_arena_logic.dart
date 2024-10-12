@@ -246,8 +246,6 @@ class AdminArenaLogic extends GetxController {
         .listArena[state.selectedListArena.value]
         .courtData[state.selectedListCourt.value]
         .copy();
-    state.selectedArena.value =
-        arenaDataSource.listArena[state.selectedListArena.value].copy();
 
     state.selectedCourt.refresh();
   }
