@@ -4,6 +4,7 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/pages/arena/admin_arena_ui.dart';
+import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_logic.dart';
 import 'package:lawan/features/presentation/admin/pages/sales/sales_ui.dart';
 import 'package:lawan/features/presentation/admin/pages/session/session_ui.dart';
 import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
@@ -18,78 +19,82 @@ import 'controller/admin_main_logic.dart';
 class AdminMainUi extends StatelessWidget {
   static const namePath = '/main_page';
   final logic = Get.find<AdminMainLogic>();
+  final arenaLogic = Get.find<AdminArenaLogic>();
+  final arenaState = Get.find<AdminArenaLogic>().state;
 
   AdminMainUi({super.key});
 
   @override
   Widget build(BuildContext context) {
     Widget customNavbar() {
-      return Visibility(
-        visible: true,
-        replacement: Container(
-          width: double.infinity,
-          height: 80,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                kBlackColor.withOpacity(0),
-                kBlackColor.withOpacity(0.3),
-              ],
+      return Obx(
+        () => Visibility(
+          visible: arenaState.isEditing.value,
+          replacement: CustomBottomNavbar(
+            navbarItemWidget: Obx(
+              () => Row(
+                children: [
+                  BottomNavbarItem(
+                    title: 'Session',
+                    isActive: logic.selectedNavbarIndex.value == 0,
+                    icon: 'assets/icons/session.svg',
+                    onTap: () => logic.selectedNavbarIndex.value = 0,
+                  ),
+                  const SizedBox(width: 4),
+                  BottomNavbarItem(
+                    title: 'Arena',
+                    isActive: logic.selectedNavbarIndex.value == 1,
+                    icon: 'assets/icons/arena.svg',
+                    onTap: () => logic.selectedNavbarIndex.value = 1,
+                  ),
+                  const SizedBox(width: 4),
+                  BottomNavbarItem(
+                    title: 'Sales',
+                    isActive: logic.selectedNavbarIndex.value == 2,
+                    icon: 'assets/icons/sales.svg',
+                    onTap: () => logic.selectedNavbarIndex.value = 2,
+                  ),
+                ],
+              ),
             ),
           ),
-        ).blurred(
-          blur: 2,
-          blurColor: kModalColor,
-          colorOpacity: 0,
-          overlay: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            height: 50,
-            child: Row(
-              children: [
-                CustomButton(
-                  isBlack: false,
-                  onTap: () {},
-                  title: 'Cancel',
-                  backgroundColor: Colors.transparent,
-                  textColor: kBlackColor,
-                ),
-                SizedBox(width: defaultMargin),
-                CustomButton(
-                  isBlack: true,
-                  onTap: () {},
-                  title: 'Save and Update',
-                ),
-              ],
+          child: Container(
+            width: double.infinity,
+            height: 80,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  kBlackColor.withOpacity(0),
+                  kBlackColor.withOpacity(0.3),
+                ],
+              ),
             ),
-          ),
-        ),
-        child: CustomBottomNavbar(
-          navbarItemWidget: Obx(
-            () => Row(
-              children: [
-                BottomNavbarItem(
-                  title: 'Session',
-                  isActive: logic.selectedNavbarIndex.value == 0,
-                  icon: 'assets/icons/session.svg',
-                  onTap: () => logic.selectedNavbarIndex.value = 0,
-                ),
-                const SizedBox(width: 4),
-                BottomNavbarItem(
-                  title: 'Arena',
-                  isActive: logic.selectedNavbarIndex.value == 1,
-                  icon: 'assets/icons/arena.svg',
-                  onTap: () => logic.selectedNavbarIndex.value = 1,
-                ),
-                const SizedBox(width: 4),
-                BottomNavbarItem(
-                  title: 'Sales',
-                  isActive: logic.selectedNavbarIndex.value == 2,
-                  icon: 'assets/icons/sales.svg',
-                  onTap: () => logic.selectedNavbarIndex.value = 2,
-                ),
-              ],
+          ).blurred(
+            blur: 2,
+            blurColor: kModalColor,
+            colorOpacity: 0,
+            overlay: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              height: 50,
+              child: Row(
+                children: [
+                  CustomButton(
+                    isBlack: false,
+                    onTap: arenaLogic.updateCancel,
+                    title: 'Cancel',
+                    backgroundColor: Colors.transparent,
+                    textColor: kBlackColor,
+                  ),
+                  SizedBox(width: defaultMargin),
+                  CustomButton(
+                    isBlack: true,
+                    onTap: arenaLogic.saveUpdate,
+                    title: 'Save and Update',
+                  ),
+                ],
+              ),
             ),
           ),
         ),

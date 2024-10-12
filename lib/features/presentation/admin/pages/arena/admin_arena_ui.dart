@@ -278,31 +278,41 @@ class AdminArenaUi extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CarouselSlider(
-            options: CarouselOptions(
-              height: 126,
-              viewportFraction: 1.0,
-              enlargeCenterPage: false,
-              enableInfiniteScroll: false,
+          Visibility(
+            visible: state.selectedCourt.value.pictures.isNotEmpty,
+            replacement: AddPictureButtonWidget(
+              onTap: logic.updateAddimage,
             ),
-            items:
-                state.selectedCourt.value.pictures.asMap().entries.map((data) {
-              return Builder(
-                builder: (BuildContext context) {
-                  if (data.value.path == 'empty') {
-                    return AddPictureButtonWidget(
-                      onTap: logic.image,
+            child: CarouselSlider(
+              options: CarouselOptions(
+                height: 126,
+                viewportFraction: 1.0,
+                enlargeCenterPage: false,
+                enableInfiniteScroll: false,
+              ),
+              items: state.selectedCourt.value.pictures
+                  .asMap()
+                  .entries
+                  .map((data) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    if (data.value.path == 'empty') {
+                      return AddPictureButtonWidget(
+                        onTap: logic.image,
+                      );
+                    }
+                    return CustomImageWidget(
+                      path: data.value.path,
+                      pictureType: state.selectedCourt.value.pictureType,
+                      changeImage: () =>
+                          logic.updateChangeImage(index: data.key),
+                      deleteImage: () =>
+                          logic.updateDeleteImage(index: data.key),
                     );
-                  }
-                  return CustomImageWidget(
-                    path: data.value.path,
-                    pictureType: state.selectedCourt.value.pictureType,
-                    changeImage: () {},
-                    deleteImage: () {},
-                  );
-                },
-              );
-            }).toList(),
+                  },
+                );
+              }).toList(),
+            ),
           ),
           SizedBox(height: defaultMargin),
           CustomTextFormField(

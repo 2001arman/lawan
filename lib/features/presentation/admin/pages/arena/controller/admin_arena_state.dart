@@ -49,4 +49,7 @@ class AdminArenaState {
       chooseTime: false.obs,
     ),
   );
+
+  // edit arena
+  var isEditing = false.obs;
 }

@@ -14,6 +14,15 @@ class ArenaModel {
     required this.name,
     required this.courtData,
   });
+
+  // Copy method
+  ArenaModel copy() {
+    return ArenaModel(
+      location: location,
+      name: name,
+      courtData: courtData.map((court) => court.copy()).toList(),
+    );
+  }
 }
 
 enum PictureType {
@@ -24,7 +33,7 @@ enum PictureType {
 class CourtModel {
   String courtName;
   final List<XFile> pictures;
-  final PictureType pictureType;
+  PictureType pictureType;
   String arenaType;
   final String flooringType;
   final List<OperationalHour> operationalHours;
@@ -39,6 +48,19 @@ class CourtModel {
     required this.operationalHours,
     required this.rateArena,
   });
+
+  // Copy method
+  CourtModel copy() {
+    return CourtModel(
+      pictures: List<XFile>.from(pictures), // Create a copy of the list
+      pictureType: pictureType,
+      courtName: courtName,
+      arenaType: arenaType,
+      flooringType: flooringType,
+      operationalHours: operationalHours.map((hour) => hour.copy()).toList(),
+      rateArena: rateArena.map((rate) => rate.copy()).toList(),
+    );
+  }
 }
 
 class OperationalHour {
@@ -55,6 +77,17 @@ class OperationalHour {
     required this.closeTIme,
     required this.chooseTime,
   });
+
+  // Copy method
+  OperationalHour copy() {
+    return OperationalHour(
+      isActive: isActive.value.obs,
+      dayName: dayName,
+      openTime: openTime.value.obs,
+      closeTIme: closeTIme.value.obs,
+      chooseTime: chooseTime.value.obs,
+    );
+  }
 }
 
 class RateModel {
@@ -68,4 +101,13 @@ class RateModel {
     required this.price,
     required this.hour,
   }) : finalPrice = (price.value + (price * 0.2).toInt()).obs;
+
+  // Copy method
+  RateModel copy() {
+    return RateModel(
+      name: name,
+      price: price.value.obs,
+      hour: hour.value.obs,
+    );
+  }
 }

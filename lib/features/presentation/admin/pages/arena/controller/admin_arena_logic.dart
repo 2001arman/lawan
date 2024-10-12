@@ -19,10 +19,13 @@ class AdminArenaLogic extends GetxController {
   void onInit() {
     super.onInit();
     if (arenaDataSource.listArena.isNotEmpty) {
-      state.selectedArena.value =
-          arenaDataSource.listArena[state.selectedListArena.value];
-      state.selectedCourt.value =
-          state.selectedArena.value.courtData[state.selectedListCourt.value];
+      // Use the copy method to avoid referencing the original object
+      ArenaModel arenaModel =
+          arenaDataSource.listArena[state.selectedListArena.value].copy();
+      CourtModel courtModel =
+          arenaModel.courtData[state.selectedListCourt.value];
+      state.selectedArena = arenaModel.obs;
+      state.selectedCourt = courtModel.obs;
     }
   }
 
@@ -235,5 +238,56 @@ class AdminArenaLogic extends GetxController {
 
   void deleteImage({required int index}) {
     state.uploadedPictures.removeAt(index);
+  }
+
+  void updateCancel() {
+    state.isEditing.value = false;
+    state.selectedCourt.value = arenaDataSource
+        .listArena[state.selectedListArena.value]
+        .courtData[state.selectedListCourt.value]
+        .copy();
+    state.selectedArena.value =
+        arenaDataSource.listArena[state.selectedListArena.value].copy();
+
+    state.selectedCourt.refresh();
+  }
+
+  void updateAddimage() async {
+    final ImagePicker picker = ImagePicker();
+    final List<XFile> image = await picker.pickMultiImage(
+      imageQuality: 10,
+      limit: 5,
+    );
+    if (image.isNotEmpty) {
+      state.selectedCourt.value.pictures.insertAll(0, image);
+      state.selectedCourt.value.pictureType = PictureType.file;
+      state.selectedCourt.refresh();
+    }
+  }
+
+  void updateDeleteImage({required int index}) {
+    state.selectedCourt.value.pictures.removeAt(index);
+    state.selectedCourt.refresh();
+    state.isEditing.value = true;
+  }
+
+  void updateChangeImage({required int index}) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 10);
+    if (image != null) {
+      state.selectedCourt.value.pictures.removeAt(index);
+      state.selectedCourt.value.pictures.insert(index, image);
+      state.selectedCourt.value.pictureType = PictureType.file;
+      state.selectedCourt.refresh();
+      state.isEditing.value = true;
+    }
+  }
+
+  void saveUpdate() {
+    arenaDataSource.listArena[state.selectedListArena.value]
+            .courtData[state.selectedListCourt.value] =
+        state.selectedCourt.value.copy();
+    state.isEditing.value = false;
   }
 }
