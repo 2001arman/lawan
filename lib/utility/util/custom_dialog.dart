@@ -125,6 +125,7 @@ class CustomDialog {
     required Function(String name) onSearch,
   }) {
     var tempArena = <ArenaModel>[].obs;
+    var textInput = ''.obs;
     tempArena.addAll(listArena);
     TextStyle textStyle =
         blackTextStyle.copyWith(fontSize: 14, height: 1.5, fontFamily: 'Lufga');
@@ -151,6 +152,7 @@ class CustomDialog {
                 hintText: '',
                 controller: nameController,
                 onChanged: (data) {
+                  textInput.value = data;
                   tempArena.assignAll(listArena.where((arena) =>
                       arena.name.toLowerCase().contains(data.toLowerCase())));
                   tempArena.refresh();
@@ -163,9 +165,13 @@ class CustomDialog {
                   Icons.search,
                   color: kDarkgreyColor,
                 ),
-                suffix: Icon(
-                  Icons.highlight_remove_outlined,
-                  color: kDarkgreyColor,
+                suffix: Obx(
+                  () => textInput.value != ''
+                      ? Icon(
+                          Icons.highlight_remove_outlined,
+                          color: kDarkgreyColor,
+                        )
+                      : const SizedBox(),
                 ),
               ),
               SizedBox(

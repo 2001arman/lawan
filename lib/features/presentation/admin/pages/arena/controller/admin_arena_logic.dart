@@ -103,6 +103,7 @@ class AdminArenaLogic extends GetxController {
         arenaDataSource.deleteArena(index: state.selectedListArena.value);
         Get.back();
         arenaDataSource.listArena.refresh();
+        Helper.showToast(isSuccess: true, message: 'Delete arena successful');
       },
     );
   }
@@ -299,5 +300,7 @@ class AdminArenaLogic extends GetxController {
             .courtData[state.selectedListCourt.value] =
         state.selectedCourt.value.copy();
     state.isEditing.value = false;
+
+    Helper.showToast(isSuccess: true, message: 'Update arena successful');
   }
 }

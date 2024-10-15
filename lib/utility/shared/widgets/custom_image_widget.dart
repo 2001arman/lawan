@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lawan/features/domain/arena/arena_model.dart';
-import 'package:lawan/utility/shared/constants/constants_ui.dart';
 
 class CustomImageWidget extends StatelessWidget {
   final String path;
@@ -23,11 +22,6 @@ class CustomImageWidget extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 2.88 / 1,
       child: Container(
-        margin: EdgeInsets.only(
-          top: defaultMargin,
-          bottom: defaultMargin,
-          right: 8,
-        ),
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),

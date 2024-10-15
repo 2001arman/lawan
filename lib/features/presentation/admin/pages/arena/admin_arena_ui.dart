@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/pages/arena/admin_empty_arena.dart';
 import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_logic.dart';
@@ -218,7 +219,7 @@ class AdminArenaUi extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Text(
-                                    '${data.hour}',
+                                    data.hour.toStringAsPrecision(1),
                                     style: blackTextStyle.copyWith(
                                         fontWeight: medium),
                                   ),
@@ -283,42 +284,52 @@ class AdminArenaUi extends StatelessWidget {
             replacement: AddPictureButtonWidget(
               onTap: logic.updateAddimage,
             ),
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: 126,
-                viewportFraction: 1.0,
-                enlargeCenterPage: false,
-                enableInfiniteScroll: false,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: defaultMargin,
+                bottom: 12,
+                right: 8,
               ),
-              items: state.selectedCourt.value.pictures
-                  .asMap()
-                  .entries
-                  .map((data) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    if (data.value.path == 'empty') {
-                      return AddPictureButtonWidget(
-                        onTap: logic.image,
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: 126,
+                  viewportFraction: 1.0,
+                  enlargeCenterPage: false,
+                  enableInfiniteScroll: false,
+                ),
+                items: state.selectedCourt.value.pictures
+                    .asMap()
+                    .entries
+                    .map((data) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      if (data.value.path == 'empty') {
+                        return AddPictureButtonWidget(
+                          onTap: logic.image,
+                        );
+                      }
+                      return CustomImageWidget(
+                        path: data.value.path,
+                        pictureType: state.selectedCourt.value.pictureType,
+                        changeImage: () =>
+                            logic.updateChangeImage(index: data.key),
+                        deleteImage: () =>
+                            logic.updateDeleteImage(index: data.key),
                       );
-                    }
-                    return CustomImageWidget(
-                      path: data.value.path,
-                      pictureType: state.selectedCourt.value.pictureType,
-                      changeImage: () =>
-                          logic.updateChangeImage(index: data.key),
-                      deleteImage: () =>
-                          logic.updateDeleteImage(index: data.key),
-                    );
-                  },
-                );
-              }).toList(),
+                    },
+                  );
+                }).toList(),
+              ),
             ),
           ),
-          SizedBox(height: defaultMargin),
           CustomTextFormField(
             hintText: '',
             isReadOnly: true,
             controller: TextEditingController(text: 'Petaling Jaya, Selangor'),
+            prefix: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
+              child: SvgPicture.asset('assets/icons/target.svg'),
+            ),
             suffix: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -334,7 +345,7 @@ class AdminArenaUi extends StatelessWidget {
           ),
           Text(
             'Arena Type',
-            style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+            style: darkGreyTextStyle.copyWith(fontSize: 16, fontWeight: medium),
           ),
           const SizedBox(height: 4),
           SingleChildScrollView(
@@ -354,7 +365,7 @@ class AdminArenaUi extends StatelessWidget {
           SizedBox(height: defaultMargin),
           Text(
             'Flooring',
-            style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+            style: darkGreyTextStyle.copyWith(fontSize: 16, fontWeight: medium),
           ),
           const SizedBox(height: 4),
           SingleChildScrollView(
@@ -489,7 +500,11 @@ class AdminArenaUi extends StatelessWidget {
             },
             alignment: state.activeAlignment,
           ),
-          SizedBox(height: defaultMargin),
+          Obx(
+            () => state.tabActive.value != 'Details'
+                ? SizedBox(height: defaultMargin)
+                : const SizedBox(),
+          ),
           Obx(() {
             switch (state.tabActive.value) {
               case 'Hour':

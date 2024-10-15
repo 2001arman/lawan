@@ -413,7 +413,7 @@ class AdminAddArena {
                     children: [
                       Text(
                         'Optional',
-                        style: blackTextStyle.copyWith(fontSize: 12),
+                        style: darkGreyTextStyle.copyWith(fontSize: 12),
                       ),
                     ],
                   ),
@@ -495,19 +495,24 @@ class AdminAddArena {
                               Text(data.isActive.value ? 'Open' : 'Closed',
                                   style: darkGreyTextStyle),
                               SizedBox(
-                                height: 30,
-                                width: 50,
+                                height: 24,
+                                width: 40,
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
-                                  child: Switch(
-                                    value: data.isActive.value,
-                                    onChanged: (active) {
-                                      data.isActive.value = active;
-                                    },
-                                    activeColor: kWhiteColor,
-                                    activeTrackColor: kGreenColor,
-                                    inactiveThumbColor: kDarkgreyColor,
-                                    inactiveTrackColor: Colors.transparent,
+                                  child: Transform.scale(
+                                    scale: 0.9,
+                                    child: Switch(
+                                      value: data.isActive.value,
+                                      onChanged: (active) {
+                                        data.isActive.value = active;
+                                      },
+                                      activeColor: kWhiteColor,
+                                      activeTrackColor: kGreenColor,
+                                      inactiveThumbColor: kDarkgreyColor,
+                                      inactiveTrackColor: Colors.transparent,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                    ),
                                   ),
                                 ),
                               ),

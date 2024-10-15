@@ -67,12 +67,9 @@ class DialogWheelPicker {
                         ),
                       ),
                     ),
-                    const Text(
+                    Text(
                       'to',
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black),
+                      style: darkGreyTextStyle.copyWith(fontSize: 12),
                     ),
                     Expanded(
                       child: WheelPicker(
@@ -163,7 +160,7 @@ class DialogWheelPicker {
                   children: [
                     Text(
                       'RM',
-                      style: blackTextStyle.copyWith(fontSize: 12),
+                      style: darkGreyTextStyle.copyWith(fontSize: 12),
                     ),
                     Expanded(
                       child: WheelPicker(
@@ -210,7 +207,7 @@ class DialogWheelPicker {
                     ),
                     Text(
                       'Hour',
-                      style: blackTextStyle.copyWith(fontSize: 12),
+                      style: darkGreyTextStyle.copyWith(fontSize: 12),
                     ),
                   ],
                 ),
@@ -300,7 +297,7 @@ class DialogWheelPicker {
                     const Text(
                       'to',
                       style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 12,
                           fontWeight: FontWeight.w500,
                           color: Colors.black),
                     ),
