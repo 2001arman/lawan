@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../constants/constants_ui.dart';
 import 'text/text_border.dart';
 
 class CardDetailSession extends StatelessWidget {
   final String title;
-  final IconData icon;
+  final String icon;
   final String contentText;
   final double fontSize;
   final String? description;
@@ -32,10 +33,10 @@ class CardDetailSession extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(
+                SvgPicture.asset(
                   icon,
+                  // ignore: deprecated_member_use
                   color: kDarkgreyColor,
-                  size: 18,
                 ),
                 const SizedBox(width: 4),
                 Text(

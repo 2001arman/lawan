@@ -39,6 +39,7 @@ class CustomTextFormField extends StatefulWidget {
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
   bool obscure = true;
+  bool showIcon = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           if (widget.title != null)
             Text(
               widget.title!,
-              style: blackTextStyle.copyWith(
+              style: darkGreyTextStyle.copyWith(
                 fontSize: 14,
               ),
             ),
@@ -99,13 +100,25 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   controller: widget.controller,
                   obscureText: widget.isPassword,
                   readOnly: widget.isReadOnly,
-                  onChanged: widget.onChanged,
+                  onChanged: (value) {
+                    if (widget.onChanged != null) {
+                      widget.onChanged!(value);
+                    }
+                    if (value == '') {
+                      showIcon = false;
+                    } else {
+                      showIcon = true;
+                    }
+                    setState(() {});
+                  },
                   validator: widget.validator,
                   style:
                       blackTextStyle.copyWith(fontWeight: medium, fontSize: 14),
                   decoration: InputDecoration(
                     prefixIcon: widget.prefix,
-                    suffixIcon: widget.suffix,
+                    suffixIcon: Visibility(
+                        visible: showIcon,
+                        child: widget.suffix ?? const SizedBox()),
                     hintText: widget.hintText,
                     hintStyle: midGreyTextStyle.copyWith(
                         fontSize: 14, fontWeight: FontWeight.normal),

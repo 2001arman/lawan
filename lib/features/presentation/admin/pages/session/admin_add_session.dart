@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -89,7 +91,6 @@ class AdminAddSession {
           colorOpacity: 0,
           borderRadius: BorderRadius.circular(32),
           overlay: Container(
-            padding: EdgeInsets.all(defaultMargin),
             decoration: BoxDecoration(
               color: kModalColor,
               borderRadius: BorderRadius.circular(32),
@@ -107,58 +108,62 @@ class AdminAddSession {
               () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      topItemBottomSheet(
-                        number: 1,
-                        title: 'Slot',
-                        isActive: state.selectedIndex.value == 1,
-                      ),
-                      Container(
-                        width: 24,
-                        height: 1,
-                        color: kWhiteColor,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: defaultMargin, vertical: 20),
-                      ),
-                      topItemBottomSheet(
-                        number: 2,
-                        title: 'Arena',
-                        isActive: state.selectedIndex.value == 2,
-                      ),
-                      Container(
-                        width: 24,
-                        height: 1,
-                        color: kWhiteColor,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: defaultMargin, vertical: 20),
-                      ),
-                      topItemBottomSheet(
-                        number: 3,
-                        title: 'Details',
-                        isActive: state.selectedIndex.value == 3,
-                      ),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.all(defaultMargin),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        topItemBottomSheet(
+                          number: 1,
+                          title: 'Slot',
+                          isActive: state.selectedIndex.value == 1,
+                        ),
+                        Container(
+                          width: 24,
+                          height: 1,
+                          color: kWhiteColor,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: defaultMargin, vertical: 20),
+                        ),
+                        topItemBottomSheet(
+                          number: 2,
+                          title: 'Arena',
+                          isActive: state.selectedIndex.value == 2,
+                        ),
+                        Container(
+                          width: 24,
+                          height: 1,
+                          color: kWhiteColor,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: defaultMargin, vertical: 20),
+                        ),
+                        topItemBottomSheet(
+                          number: 3,
+                          title: 'Details',
+                          isActive: state.selectedIndex.value == 3,
+                        ),
+                      ],
+                    ),
                   ),
                   contentSection(),
-                  Row(
-                    children: [
-                      CustomButton(
-                        title: 'Cancel',
-                        isBlack: false,
-                        onTap: () => Get.back(),
-                      ),
-                      const SizedBox(width: 16),
-                      CustomButton(
-                        title: state.selectedIndex.value == 3
-                            ? 'Add Arena'
-                            : 'Next',
-                        isBlack: true,
-                        onTap: logic.handleNextButton,
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    child: Row(
+                      children: [
+                        CustomButton(
+                          title: 'Cancel',
+                          isBlack: false,
+                          onTap: () => Get.back(),
+                        ),
+                        const SizedBox(width: 16),
+                        CustomButton(
+                          title: 'Next',
+                          isBlack: true,
+                          onTap: logic.handleNextButton,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -174,6 +179,7 @@ class AdminAddSession {
   Widget detailSection() {
     return Expanded(
       child: ListView(
+        padding: EdgeInsets.symmetric(horizontal: defaultMargin),
         children: [
           SizedBox(height: defaultMargin),
           Text(
@@ -198,7 +204,7 @@ class AdminAddSession {
           ),
           Text(
             'Contact Number',
-            style: blackTextStyle.copyWith(
+            style: darkGreyTextStyle.copyWith(
               fontSize: 14,
             ),
           ),
@@ -214,8 +220,8 @@ class AdminAddSession {
                     padding: const EdgeInsets.only(
                       top: 10,
                       bottom: 10,
-                      left: 16,
-                      right: 8,
+                      left: 0,
+                      right: 0,
                     ),
                     child: Image.asset(
                       'assets/images/malaysia.png',
@@ -277,133 +283,148 @@ class AdminAddSession {
 
   Widget slotSection() {
     return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: [
-          SizedBox(height: defaultMargin),
-          Text(
-            'Select Date',
-            style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Text(
+              'Select Date',
+              style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
+            ),
           ),
           const SizedBox(height: 2),
-          Text(
-            'Choose the time and slot',
-            style: darkGreyTextStyle.copyWith(fontSize: 12),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Text(
+              'Choose the time and slot',
+              style: darkGreyTextStyle.copyWith(fontSize: 12),
+            ),
           ),
           const SizedBox(height: 8),
           // calendar
-          Row(
-            children: [
-              CustomButton(
-                isBlack: true,
-                onTap: () {},
-                widget: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.date_range,
-                        color: kMidgreyColor,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 8),
-                      ValueListenableBuilder<DateTime>(
-                        valueListenable: focusedDayData,
-                        builder: (context, value, _) => Text(
-                          DateFormat.MMMM().format(value),
-                          style: whiteTextStyle.copyWith(fontWeight: medium),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Row(
+              children: [
+                CustomButton(
+                  isBlack: true,
+                  onTap: () {},
+                  widget: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/calendar.svg',
+                          color: kMidgreyColor,
                         ),
-                      ),
-                      const Spacer(),
-                      Image.asset(
-                        'assets/icons/arrow_up_down.png',
-                        width: 20,
-                        height: 20,
-                        color: kWhiteColor,
-                      ),
-                    ],
+                        const SizedBox(width: 8),
+                        ValueListenableBuilder<DateTime>(
+                          valueListenable: focusedDayData,
+                          builder: (context, value, _) => Text(
+                            DateFormat.MMMM().format(value),
+                            style: whiteTextStyle.copyWith(fontWeight: medium),
+                          ),
+                        ),
+                        const Spacer(),
+                        Image.asset(
+                          'assets/icons/arrow_up_down.png',
+                          width: 20,
+                          height: 20,
+                          color: kWhiteColor,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: defaultMargin),
-              CircleButtonTransparentWidget(
-                onTap: () => state.pageController.previousPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut,
-                ),
-                widget: const Center(
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    size: 20,
+                SizedBox(width: defaultMargin),
+                CircleButtonTransparentWidget(
+                  onTap: () => state.pageController.previousPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
                   ),
-                ),
-                borderColor: kGreyColor,
-              ),
-              const SizedBox(width: 4),
-              CircleButtonTransparentWidget(
-                onTap: () => state.pageController.nextPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut,
-                ),
-                widget: const Center(
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 20,
+                  widget: Center(
+                    child: SvgPicture.asset(
+                      'assets/icons/back.svg',
+                      color: kDarkgreyColor,
+                    ),
                   ),
+                  borderColor: kGreyColor,
                 ),
-                borderColor: kGreyColor,
-              ),
-            ],
+                const SizedBox(width: 4),
+                CircleButtonTransparentWidget(
+                  onTap: () => state.pageController.nextPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  ),
+                  widget: Center(
+                    child: SvgPicture.asset(
+                      'assets/icons/forward.svg',
+                      color: kDarkgreyColor,
+                    ),
+                  ),
+                  borderColor: kGreyColor,
+                ),
+              ],
+            ),
           ),
           SizedBox(height: defaultMargin),
-          CalendarPickerWidget(
-            pageController: logic.setController,
-            calendarMode: CalendarFormat.month,
-            cellColor: kWhiteColor,
-            cellMargin: 3,
-            onDaySelected: (data) => state.selectedDate = data,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: CalendarPickerWidget(
+              pageController: logic.setController,
+              calendarMode: CalendarFormat.month,
+              cellColor: kWhiteColor,
+              cellMargin: 3,
+              onDaySelected: (data) => state.selectedDate = data,
+            ),
           ),
+          const SizedBox(height: 6),
           // option hour
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Obx(
               () => Row(
-                children: state.optionHour
-                    .map(
-                      (data) => SelectedContainerWidget(
-                        title: '$data hr',
-                        isSelected: data == state.selectedHour.value,
-                        onTap: () {
-                          state.selectedHour.value = data;
-                          state.closeTime.value = TimeOfDay(
-                            hour: state.openTime.value.hour + data,
-                            minute: 0,
-                          );
-                        },
-                        isTransparent: true,
-                      ),
-                    )
-                    .toList(),
+                children: [
+                  SizedBox(width: defaultMargin),
+                  ...state.optionHour.map(
+                    (data) => SelectedContainerWidget(
+                      title: '$data hr',
+                      isSelected: data == state.selectedHour.value,
+                      onTap: () {
+                        state.selectedHour.value = data;
+                        state.closeTime.value = TimeOfDay(
+                          hour: state.openTime.value.hour + data,
+                          minute: 0,
+                        );
+                      },
+                      isTransparent: true,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
           SizedBox(height: defaultMargin),
-          ChooseTimeWidget(
-            openTime: state.openTime,
-            closeTime: state.closeTime,
-            totalHour: state.selectedHour.value,
-            onSave: (startTime, endTime) {
-              Get.back();
-              state.openTime.value = TimeOfDay(
-                hour: startTime,
-                minute: 0,
-              );
-              state.closeTime.value = TimeOfDay(
-                hour: endTime,
-                minute: 0,
-              );
-            },
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: ChooseTimeWidget(
+              openTime: state.openTime,
+              closeTime: state.closeTime,
+              totalHour: state.selectedHour.value,
+              onSave: (startTime, endTime) {
+                Get.back();
+                state.openTime.value = TimeOfDay(
+                  hour: startTime,
+                  minute: 0,
+                );
+                state.closeTime.value = TimeOfDay(
+                  hour: endTime,
+                  minute: 0,
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -413,8 +434,8 @@ class AdminAddSession {
   Widget arenaSection() {
     return Expanded(
       child: ListView(
+        padding: EdgeInsets.symmetric(horizontal: defaultMargin),
         children: [
-          SizedBox(height: defaultMargin),
           Text(
             'Choose arena',
             style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lawan/features/domain/session/session_model.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
@@ -43,7 +44,7 @@ class SessionItemCard extends StatelessWidget {
             width: 1,
             height: 90,
             margin: const EdgeInsets.symmetric(horizontal: 12),
-            color: kBlackColor,
+            color: kGreyColor,
           ),
           Expanded(
             child: Column(
@@ -58,9 +59,10 @@ class SessionItemCard extends StatelessWidget {
                       height: 24,
                     ),
                     const SizedBox(width: 14),
-                    Icon(
-                      Icons.group_outlined,
-                      color: kMidgreyColor,
+                    SvgPicture.asset(
+                      'assets/icons/users.svg',
+                      width: 16,
+                      height: 16,
                     ),
                     const SizedBox(width: 6),
                     Text(
@@ -85,13 +87,15 @@ class SessionItemCard extends StatelessWidget {
           Container(
             width: 44,
             height: 100,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               border: Border.all(width: 1, color: kGreyColor),
             ),
-            child: Icon(
-              Icons.remove_red_eye_outlined,
-              color: kDarkgreyColor,
+            child: SvgPicture.asset(
+              'assets/icons/eye.svg',
+              width: 20,
+              height: 20,
             ),
           )
         ],

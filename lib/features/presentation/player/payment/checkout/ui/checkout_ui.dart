@@ -108,13 +108,14 @@ class CheckoutUi extends StatelessWidget {
 
                 // detail card session
                 SizedBox(height: defaultMargin),
+
                 Row(
                   children: [
                     CardDetailSession(
                       contentText:
                           Helper.formatFullDate(logic.sessionModel.dateTime),
                       title: 'Date',
-                      icon: Icons.date_range_outlined,
+                      icon: 'assets/icons/calendar.svg',
                       fontSize: 14,
                     ),
                     const SizedBox(width: 8),
@@ -122,9 +123,9 @@ class CheckoutUi extends StatelessWidget {
                       contentText:
                           '${Helper.formatTime12Hour(logic.sessionModel.startHour)} - ${Helper.formatTime12Hour(logic.sessionModel.endHour)}',
                       title: 'Time',
-                      icon: Icons.access_time_outlined,
+                      icon: 'assets/icons/clock.svg',
                       fontSize: 14,
-                      description: '${logic.sessionModel.totalHour} hr',
+                      description: '${logic.sessionModel.totalHour}hr',
                     ),
                   ],
                 ),
@@ -134,14 +135,14 @@ class CheckoutUi extends StatelessWidget {
                     CardDetailSession(
                       contentText: logic.sessionModel.arena.location,
                       title: 'Location',
-                      icon: Icons.location_on_outlined,
+                      icon: 'assets/icons/location.svg',
                       fontSize: 14,
                     ),
                     const SizedBox(width: 8),
                     CardDetailSession(
-                      contentText: 'RM${logic.sessionModel.price}/pax',
+                      contentText: 'RM${logic.sessionModel.price}',
                       title: 'Price',
-                      icon: Icons.monetization_on_outlined,
+                      icon: 'assets/icons/currency.svg',
                       fontSize: 20,
                     ),
                   ],

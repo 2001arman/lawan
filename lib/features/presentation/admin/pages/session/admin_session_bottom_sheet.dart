@@ -61,11 +61,7 @@ class AdminSessionBottomSheet {
                       size: 40,
                       onTap: Get.back,
                       borderColor: kGreyColor,
-                      widget: Icon(
-                        Icons.close,
-                        color: kDarkgreyColor,
-                        size: 20,
-                      ),
+                      widget: SvgPicture.asset('assets/icons/x.svg'),
                     ),
                   ),
                 ),
@@ -89,22 +85,13 @@ class AdminSessionBottomSheet {
                         CircleButtonTransparentWidget(
                           onTap: () {},
                           borderColor: kGreyColor,
-                          widget: const Icon(
-                            Icons.file_upload_outlined,
-                            size: 20,
-                          ),
+                          widget: SvgPicture.asset('assets/icons/upload.svg'),
                         ),
                         const SizedBox(width: 16),
                         CircleButtonTransparentWidget(
                           onTap: () {},
                           borderColor: kGreyColor,
-                          widget: Padding(
-                            padding: const EdgeInsets.all(14),
-                            child: Image.asset(
-                              'assets/icons/pencil.png',
-                              color: kDarkgreyColor,
-                            ),
-                          ),
+                          widget: SvgPicture.asset('assets/icons/pencil.svg'),
                         ),
                         const SizedBox(width: 16),
                         CustomButton(
@@ -114,10 +101,10 @@ class AdminSessionBottomSheet {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.groups_outlined,
-                                color: kMidgreyColor,
-                                size: 18,
+                              SvgPicture.asset(
+                                'assets/icons/users_group.svg',
+                                width: 16,
+                                height: 16,
                               ),
                               const SizedBox(width: 8),
                               Text(
@@ -177,10 +164,10 @@ class AdminSessionBottomSheet {
           ),
           const SizedBox(height: 12),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FieldNumberWidget(
                 iconColor: kDarkgreyColor,
+                mainAxisAlignment: MainAxisAlignment.center,
                 court: sessionData
                     .arena.courtData[sessionData.selectedCourt].courtName,
               ),
@@ -191,30 +178,22 @@ class AdminSessionBottomSheet {
             visible: Helper.isUpcoming(
               sessionData.getStartDateTime(),
             ),
-            replacement: const TextPillWidget(title: 'Complete'),
-            child: Row(
+            replacement: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomButton(
-                  isBlack: true,
-                  onTap: () {},
-                  paddingVertical: 8,
-                  widget: Column(
-                    children: [
-                      Text(
-                        'Sesssion starting in',
-                        style: midGreyTextStyle.copyWith(fontSize: 12),
-                      ),
-                      Text(
-                        Helper.timeBetweenNowAndSession(
-                          sessionData.getStartDateTime(),
-                        ),
-                        style: whiteTextStyle.copyWith(
-                          fontSize: 16,
-                          fontWeight: semiBold,
-                        ),
-                      ),
-                    ],
-                  ),
+                TextPillWidget(
+                  title: 'Complete',
+                  verticalPadding: 2,
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextPillWidget(
+                  title: 'Ongoing',
+                  backgroundColor: kOrangeColor,
+                  verticalPadding: 4,
                 ),
               ],
             ),
@@ -225,7 +204,7 @@ class AdminSessionBottomSheet {
               CardDetailSession(
                 contentText: Helper.formatFullDate(sessionData.dateTime),
                 title: 'Date',
-                icon: Icons.date_range_outlined,
+                icon: 'assets/icons/calendar.svg',
                 fontSize: 14,
               ),
               const SizedBox(width: 8),
@@ -233,7 +212,7 @@ class AdminSessionBottomSheet {
                 contentText:
                     '${Helper.formatTime12Hour(sessionData.startHour)} - ${Helper.formatTime12Hour(sessionData.endHour)}',
                 title: 'Time',
-                icon: Icons.access_time_outlined,
+                icon: 'assets/icons/clock.svg',
                 fontSize: 14,
                 description: '${sessionData.totalHour}hr',
               ),
@@ -245,14 +224,14 @@ class AdminSessionBottomSheet {
               CardDetailSession(
                 contentText: sessionData.arena.location,
                 title: 'Location',
-                icon: Icons.location_on_outlined,
+                icon: 'assets/icons/location.svg',
                 fontSize: 14,
               ),
               const SizedBox(width: 8),
               CardDetailSession(
                 contentText: 'RM${sessionData.price}',
                 title: 'Price',
-                icon: Icons.monetization_on_outlined,
+                icon: 'assets/icons/currency.svg',
                 fontSize: 20,
               ),
             ],
@@ -323,6 +302,7 @@ class AdminSessionBottomSheet {
               arenaModel: arenaModel,
               selectedCourt: selectedCourt,
               showInformation: true,
+              showLocation: false,
             ),
             const SizedBox(height: 12),
             Visibility(
@@ -375,7 +355,7 @@ class AdminSessionBottomSheet {
                 CardDetailSession(
                   contentText: Helper.formatFullDate(session.dateTime),
                   title: 'Date',
-                  icon: Icons.date_range_outlined,
+                  icon: 'assets/icons/calendar.svg',
                   fontSize: 14,
                 ),
                 const SizedBox(width: 8),
@@ -383,7 +363,7 @@ class AdminSessionBottomSheet {
                   contentText:
                       '${Helper.formatTime12Hour(session.startHour)} - ${Helper.formatTime12Hour(session.endHour)}',
                   title: 'Time',
-                  icon: Icons.access_time_outlined,
+                  icon: 'assets/icons/clock.svg',
                   fontSize: 14,
                   description: '${session.totalHour}hr',
                 ),
@@ -395,14 +375,14 @@ class AdminSessionBottomSheet {
                 CardDetailSession(
                   contentText: session.arena.location,
                   title: 'Location',
-                  icon: Icons.location_on_outlined,
+                  icon: 'assets/icons/location.svg',
                   fontSize: 14,
                 ),
                 const SizedBox(width: 8),
                 CardDetailSession(
-                  contentText: session.price.toString(),
+                  contentText: 'RM${session.price}',
                   title: 'Price',
-                  icon: Icons.monetization_on_outlined,
+                  icon: 'assets/icons/currency.svg',
                   fontSize: 20,
                 ),
               ],

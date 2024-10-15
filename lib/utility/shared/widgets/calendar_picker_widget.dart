@@ -74,22 +74,27 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
         cellMargin: EdgeInsets.all(widget.cellMargin),
         todayDecoration: BoxDecoration(
           color: kBlackColor.withOpacity(0.4),
-          shape: BoxShape.circle,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(16),
         ),
-        outsideDecoration: const BoxDecoration(
-          shape: BoxShape.circle,
+        outsideDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          shape: BoxShape.rectangle,
         ),
         defaultDecoration: BoxDecoration(
-          shape: BoxShape.circle,
+          borderRadius: BorderRadius.circular(16),
+          shape: BoxShape.rectangle,
           color: widget.cellColor,
         ),
         weekendDecoration: BoxDecoration(
-          shape: BoxShape.circle,
+          borderRadius: BorderRadius.circular(16),
+          shape: BoxShape.rectangle,
           color: widget.cellColor,
         ),
         selectedDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
           color: kBlackColor,
-          shape: BoxShape.circle,
+          shape: BoxShape.rectangle,
         ),
       ),
       onDaySelected: _onDaySelected,

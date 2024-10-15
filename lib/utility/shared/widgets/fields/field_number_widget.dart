@@ -8,14 +8,22 @@ class FieldNumberWidget extends StatelessWidget {
   final Color? iconColor;
   final String court;
   final double fontSize;
-  const FieldNumberWidget(
-      {super.key, this.iconColor, required this.court, this.fontSize = 16});
+  final MainAxisAlignment mainAxisAlignment;
+  final Color? textColor;
+  const FieldNumberWidget({
+    super.key,
+    this.iconColor,
+    required this.court,
+    this.fontSize = 16,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    this.textColor ,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: mainAxisAlignment,
         children: [
           SvgPicture.asset(
             'assets/icons/arena.svg',
@@ -30,6 +38,7 @@ class FieldNumberWidget extends StatelessWidget {
               style: blackTextStyle.copyWith(
                 fontSize: fontSize,
                 fontWeight: medium,
+                color: textColor ?? kBlackColor
               ),
               overflow: TextOverflow.ellipsis,
             ),

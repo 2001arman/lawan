@@ -12,7 +12,7 @@ Color kGreyColor = const Color(0xFFDEE1E3);
 Color kModalColor = const Color(0xFFF2F3F2).withOpacity(0.7);
 
 Color kRedColor = const Color(0xFFF05B5B);
-Color kOrangeColor = const Color(0xFFE29726);
+Color kOrangeColor = const Color(0xFFE28026);
 
 TextStyle blackTextStyle = TextStyle(
   fontFamily: 'Lufga',

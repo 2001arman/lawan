@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/domain/arena/arena_model.dart';
+import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
 
 import '../../constants/constants_ui.dart';
 import '../text/text_border.dart';
@@ -11,11 +12,13 @@ class FieldImageWidget extends StatelessWidget {
   final ArenaModel arenaModel;
   final int selectedCourt;
   final bool showInformation;
+  final bool showLocation;
   const FieldImageWidget({
     super.key,
     required this.arenaModel,
     required this.selectedCourt,
     this.showInformation = false,
+    this.showLocation = true,
   });
 
   @override
@@ -73,30 +76,44 @@ class FieldImageWidget extends StatelessWidget {
                     paddingHorizontal: 8,
                   ),
                   Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.location_on_outlined,
-                          color: kWhiteColor,
-                          size: 20,
-                        ),
-                        Flexible(
-                          child: Text(
-                            arenaModel.location,
-                            style: whiteTextStyle.copyWith(
-                                fontSize: 12, fontWeight: medium),
-                            overflow: TextOverflow.ellipsis,
+                    child: Visibility(
+                      visible: showLocation,
+                      replacement: FieldNumberWidget(
+                        court: selectedCourt.toString(),
+                        iconColor: kWhiteColor,
+                        textColor: kWhiteColor,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.location_on_outlined,
+                            color: kWhiteColor,
+                            size: 20,
                           ),
-                        ),
-                      ],
+                          Flexible(
+                            child: Text(
+                              arenaModel.location,
+                              style: whiteTextStyle.copyWith(
+                                  fontSize: 12, fontWeight: medium),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  TextBorder(
-                    textTitle: arenaModel.courtData[selectedCourt].flooringType,
-                    backgroundColor: kWhiteColor,
-                    paddingVertical: 0,
-                    paddingHorizontal: 8,
+                  Row(
+                    children: [
+                      TextBorder(
+                        textTitle:
+                            arenaModel.courtData[selectedCourt].flooringType,
+                        backgroundColor: kWhiteColor,
+                        paddingVertical: 0,
+                        paddingHorizontal: 8,
+                      ),
+                    ],
                   ),
                 ],
               ),

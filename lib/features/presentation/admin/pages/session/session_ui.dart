@@ -1,4 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lawan/features/presentation/admin/pages/session/session_logic.dart';
@@ -34,7 +37,14 @@ class SessionUi extends StatelessWidget {
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeOut,
                 ),
-                widget: const Center(child: Icon(Icons.arrow_back_ios)),
+                widget: Center(
+                  child: SvgPicture.asset(
+                    'assets/icons/back.svg',
+                    color: kDarkgreyColor,
+                    width: 16,
+                    height: 16,
+                  ),
+                ),
                 borderColor: kGreyColor,
               ),
               const SizedBox(width: 4),
@@ -43,7 +53,14 @@ class SessionUi extends StatelessWidget {
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeOut,
                 ),
-                widget: const Center(child: Icon(Icons.arrow_forward_ios)),
+                widget: Center(
+                  child: SvgPicture.asset(
+                    'assets/icons/forward.svg',
+                    color: kDarkgreyColor,
+                    width: 16,
+                    height: 16,
+                  ),
+                ),
                 borderColor: kGreyColor,
               ),
               SizedBox(width: defaultMargin),
@@ -51,7 +68,7 @@ class SessionUi extends StatelessWidget {
                 isBlack: true,
                 onTap: () {},
                 widget: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -91,6 +108,14 @@ class SessionUi extends StatelessWidget {
           calendarMode: CalendarFormat.week,
           onDaySelected: (_) {},
         ),
+        Container(
+          width: 40,
+          height: 4,
+          decoration: BoxDecoration(
+            color: kBlackColor,
+            borderRadius: BorderRadius.circular(100),
+          ),
+        ),
         const SizedBox(height: 8),
         Expanded(
           child: ListView(
@@ -114,7 +139,7 @@ class SessionUi extends StatelessWidget {
                                   fontWeight: medium,
                                 ),
                               ),
-                              SizedBox(width: defaultMargin),
+                              const SizedBox(width: 25),
                               Text(
                                 data.value.dayName,
                                 style: darkGreyTextStyle,
