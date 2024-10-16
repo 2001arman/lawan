@@ -13,6 +13,7 @@ import 'package:lawan/utility/shared/widgets/container/select_friend_item.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_session_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
+import 'package:lawan/utility/shared/widgets/video/video_widget.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/widgets/bottom_navbar_item.dart';
@@ -119,81 +120,97 @@ class PlayerMainUi extends StatelessWidget {
             decoration: BoxDecoration(
               color: kBlackColor,
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Stack(
               children: [
-                Row(
+                SizedBox(
+                  width: double.infinity,
+                  height: Get.height,
+                  child:
+                      const VideoWidget(url: 'assets/video/empty_session.mp4'),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: Get.height,
+                  color: kBlackColor.withOpacity(0.6),
+                ),
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      'assets/icons/add_avatars.png',
-                      width: 60,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'VS',
-                      style: whiteTextStyle.copyWith(
-                          fontSize: 10, fontWeight: bold),
-                    ),
-                    const SizedBox(width: 8),
-                    Image.asset(
-                      'assets/icons/add_avatars.png',
-                      width: 60,
-                    ),
-                  ],
-                ),
-                SizedBox(height: defaultMargin),
-                Text(
-                  'No session available',
-                  style:
-                      whiteTextStyle.copyWith(fontSize: 16, fontWeight: medium),
-                ),
-                Text(
-                  'Create a session to start playing',
-                  style: greyTextStyle.copyWith(fontSize: 12),
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GradientButton(
-                      onTap: () => PlayerAddSession(
-                        logic: logic,
-                        state: state,
-                      ).createNewSession(),
-                      widget: Obx(
-                        () => Row(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/play.svg',
-                              width: 16,
-                              height: 16,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              'Create a session',
-                              style:
-                                  whiteTextStyle.copyWith(fontWeight: medium),
-                            ),
-                            if (state.selectedFriends.isNotEmpty)
-                              const SizedBox(width: 4),
-                            Visibility(
-                              visible: state.selectedFriends.isNotEmpty,
-                              child: TextBorder(
-                                textTitle: '+${state.selectedFriends.length}',
-                                fontSize: 11,
-                                paddingVertical: 2,
-                                paddingHorizontal: 8,
-                                textColor: const Color(0xFF44D8BE),
-                                backgroundColor: kWhiteColor,
-                              ),
-                            ),
-                          ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/icons/add_avatars.png',
+                          width: 60,
                         ),
-                      ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'VS',
+                          style: whiteTextStyle.copyWith(
+                              fontSize: 10, fontWeight: bold),
+                        ),
+                        const SizedBox(width: 8),
+                        Image.asset(
+                          'assets/icons/add_avatars.png',
+                          width: 60,
+                        ),
+                      ],
                     ),
+                    SizedBox(height: defaultMargin),
+                    Text(
+                      'No session available',
+                      style: whiteTextStyle.copyWith(
+                          fontSize: 16, fontWeight: medium),
+                    ),
+                    Text(
+                      'Create a session to start playing',
+                      style: greyTextStyle.copyWith(fontSize: 12),
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GradientButton(
+                          onTap: () => PlayerAddSession(
+                            logic: logic,
+                            state: state,
+                          ).createNewSession(),
+                          widget: Obx(
+                            () => Row(
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/play.svg',
+                                  width: 16,
+                                  height: 16,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  'Create a session',
+                                  style: whiteTextStyle.copyWith(
+                                      fontWeight: medium),
+                                ),
+                                if (state.selectedFriends.isNotEmpty)
+                                  const SizedBox(width: 4),
+                                Visibility(
+                                  visible: state.selectedFriends.isNotEmpty,
+                                  child: TextBorder(
+                                    textTitle:
+                                        '+${state.selectedFriends.length}',
+                                    fontSize: 11,
+                                    paddingVertical: 2,
+                                    paddingHorizontal: 8,
+                                    textColor: const Color(0xFF44D8BE),
+                                    backgroundColor: kWhiteColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
-                )
+                ),
               ],
             ),
           ),
