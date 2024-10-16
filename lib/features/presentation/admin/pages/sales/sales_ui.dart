@@ -1,4 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/pages/sales/sales_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
@@ -118,9 +121,14 @@ class SalesUi extends StatelessWidget {
               SizedBox(width: defaultMargin),
               CircleButtonWidget(
                 onTap: () {},
-                widget: Icon(
-                  Icons.file_upload_outlined,
-                  color: kWhiteColor,
+                widget: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SvgPicture.asset(
+                    'assets/icons/upload.svg',
+                    width: 16,
+                    height: 16,
+                    color: kGreyColor,
+                  ),
                 ),
               ),
             ],
@@ -143,7 +151,7 @@ class SalesUi extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(32),
                     color: kModalColor,
-                    border: Border.all(width: 1, color: kWhiteColor),
+                    border: Border.all(width: 1, color: kModalColor),
                   ),
                   child: Column(
                     children: [
@@ -168,21 +176,23 @@ class SalesUi extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: defaultMargin),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          circularInfoButton(title: 'Week 3'),
-                          SizedBox(width: defaultMargin),
-                          circularInfoButton(
-                            title: 'Week 2',
-                            color: kGreyColor,
-                          ),
-                          SizedBox(width: defaultMargin),
-                          circularInfoButton(
-                            title: 'Selected',
-                            color: kBlackColor,
-                          ),
-                        ],
+                      Obx(
+                        () => Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            circularInfoButton(title: logic.titleBar()[0]),
+                            SizedBox(width: defaultMargin),
+                            circularInfoButton(
+                              title: logic.titleBar()[1],
+                              color: kGreyColor,
+                            ),
+                            SizedBox(width: defaultMargin),
+                            circularInfoButton(
+                              title: logic.titleBar()[2],
+                              color: kBlackColor,
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(height: defaultMargin),
                       Obx(
@@ -325,6 +335,7 @@ class SalesUi extends StatelessWidget {
                 TabbarWidget(
                   tabBarTitle: state.salesTitle,
                   tabActive: state.salesTabActive,
+                  listNumber: const [null, 257, null],
                   onTap: (title) {
                     state.salesTabActive.value = title;
                     logic.salesAlignmentTabbar(title);
@@ -350,7 +361,7 @@ class SalesUi extends StatelessWidget {
                                     fontWeight: medium,
                                   ),
                                 ),
-                                SizedBox(width: defaultMargin),
+                                const SizedBox(width: 55),
                                 Text(
                                   data.value.dayName,
                                   style: darkGreyTextStyle,

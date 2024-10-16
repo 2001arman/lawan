@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
@@ -11,7 +13,7 @@ class ShareSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget shareItem(
-        {String assetIcon = '', IconData? icon, required String title}) {
+        {String assetIcon = '', String? iconSvg, required String title}) {
       return Expanded(
         child: Column(
           children: [
@@ -21,9 +23,9 @@ class ShareSection extends StatelessWidget {
                 width: 48,
                 height: 48,
               ),
-            if (icon != null)
+            if (iconSvg != null)
               CircleButtonTransparentWidget(
-                widget: Icon(icon),
+                widget: SvgPicture.asset(iconSvg),
                 onTap: () {},
                 borderColor: kGreyColor,
               ),
@@ -42,10 +44,13 @@ class ShareSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            shareItem(title: 'Copy Link', icon: Icons.link),
+            shareItem(
+              title: 'Copy Link',
+              iconSvg: 'assets/icons/copy.svg',
+            ),
             shareItem(
               title: 'Share via...',
-              icon: Icons.file_upload_outlined,
+              iconSvg: 'assets/icons/upload.svg',
             ),
             shareItem(
               title: 'Whatsapp',
@@ -67,13 +72,9 @@ class ShareSection extends StatelessWidget {
             CircleButtonTransparentWidget(
               onTap: () {},
               borderColor: kGreyColor,
-              widget: Padding(
-                padding: const EdgeInsets.only(left: 7),
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: kDarkgreyColor,
-                  size: 20,
-                ),
+              widget: SvgPicture.asset(
+                'assets/icons/back.svg',
+                color: kDarkgreyColor,
               ),
             ),
             const SizedBox(width: 16),
@@ -86,7 +87,6 @@ class ShareSection extends StatelessWidget {
                 children: [
                   SvgPicture.asset(
                     'assets/icons/chat.svg',
-                    // ignore: deprecated_member_use
                     color: kMidgreyColor,
                     width: 16,
                     height: 16,

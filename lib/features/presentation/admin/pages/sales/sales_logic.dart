@@ -6,9 +6,6 @@ class SalesLogic {
 
   void alignmentTabbar(String title) {
     switch (title) {
-      case 'Weekly':
-        state.activeAlignment.value = Alignment.centerLeft;
-        break;
       case 'Monthly':
         state.activeAlignment.value = Alignment.center;
         break;
@@ -20,6 +17,17 @@ class SalesLogic {
         break;
     }
     return;
+  }
+
+  List<String> titleBar() {
+    switch (state.tabActive.value) {
+      case 'Monthly':
+        return ['Sep ', 'Aug', 'Selected'];
+      case 'Yearly':
+        return ['2024', '2023', 'Selected'];
+      default:
+        return ['Week 3', 'Week 2', 'Selected'];
+    }
   }
 
   void salesAlignmentTabbar(String title) {

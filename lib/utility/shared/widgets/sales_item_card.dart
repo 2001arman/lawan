@@ -1,4 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 
@@ -154,12 +157,13 @@ class SalesItemCard extends StatelessWidget {
             Container(
               width: 44,
               height: 180,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(width: 1, color: kGreyColor),
               ),
-              child: Icon(
-                Icons.remove_red_eye_outlined,
+              child: SvgPicture.asset(
+                'assets/icons/eye.svg',
                 color: kDarkgreyColor,
               ),
             )

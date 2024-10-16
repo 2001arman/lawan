@@ -6,9 +6,9 @@ import '../../../../../utility/util/helper.dart';
 
 class SalesState {
   var activeAlignment = Alignment.centerLeft.obs;
-  var tabActive = 'Weekly'.obs;
+  var tabActive = 'Daily'.obs;
   List<String> tabBarTitle = [
-    'Weekly',
+    'Daily',
     'Monthly',
     'Yearly',
   ];

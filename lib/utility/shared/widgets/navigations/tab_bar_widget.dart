@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 
 import '../../constants/constants_ui.dart';
 
@@ -20,9 +21,11 @@ class TabbarWidget extends StatelessWidget {
     this.tabBarIcon,
     this.selectedWidth,
     this.iconSize,
+    this.listNumber,
   });
 
   final double? selectedWidth, iconSize;
+  final List<int?>? listNumber;
   final List<String> tabBarTitle;
   final List<String?>? tabBarIcon;
   final RxString tabActive;
@@ -123,6 +126,19 @@ class TabbarWidget extends StatelessWidget {
                                                 : reguler,
                                       ),
                                     ),
+                                    if (listNumber != null &&
+                                        listNumber?[title.key] != null)
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 4),
+                                        child: TextBorder(
+                                          textTitle: listNumber![title.key]!
+                                              .toString(),
+                                          paddingHorizontal: 6,
+                                          paddingVertical: 0,
+                                          borderColor: kWhiteColor,
+                                          textColor: kDarkgreyColor,
+                                        ),
+                                      ),
                                   ],
                                 ),
                               ),
