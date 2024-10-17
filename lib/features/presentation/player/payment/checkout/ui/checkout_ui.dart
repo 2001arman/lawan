@@ -43,10 +43,8 @@ class CheckoutUi extends StatelessWidget {
                   children: [
                     CircleButtonTransparentWidget(
                       onTap: () => Get.back(),
-                      widget: Icon(
-                        Icons.arrow_back_ios,
-                        size: 18,
-                        color: kWhiteColor,
+                      widget: SvgPicture.asset(
+                        'assets/icons/back.svg',
                       ),
                     ),
                     SizedBox(width: defaultMargin),
@@ -63,6 +61,8 @@ class CheckoutUi extends StatelessWidget {
                 FieldImageWidget(
                   arenaModel: logic.sessionModel.arena,
                   selectedCourt: logic.sessionModel.selectedCourt,
+                  showInformation: true,
+                  showLocation: false,
                 ),
 
                 // button session

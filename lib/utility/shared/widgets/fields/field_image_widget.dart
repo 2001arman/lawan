@@ -78,11 +78,15 @@ class FieldImageWidget extends StatelessWidget {
                   Expanded(
                     child: Visibility(
                       visible: showLocation,
-                      replacement: FieldNumberWidget(
-                        court: selectedCourt.toString(),
-                        iconColor: kWhiteColor,
-                        textColor: kWhiteColor,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      replacement: Row(
+                        children: [
+                          FieldNumberWidget(
+                            court: '${selectedCourt + 1}',
+                            iconColor: kWhiteColor,
+                            textColor: kWhiteColor,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                          ),
+                        ],
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

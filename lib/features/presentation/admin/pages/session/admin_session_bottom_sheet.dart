@@ -306,8 +306,13 @@ class AdminSessionBottomSheet {
             ),
             const SizedBox(height: 12),
             Visibility(
-              visible: Helper.isUpcoming(session.dateTime),
-              replacement: const TextPillWidget(title: 'Complete'),
+              visible: Helper.isUpcoming(session.getStartDateTime()),
+              replacement: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextPillWidget(title: 'Complete'),
+                ],
+              ),
               child: Row(
                 children: [
                   CustomButton(

@@ -103,59 +103,60 @@ class LobbyUi extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Obx(
-              () => Container(
-                width: Get.width,
-                height: Get.height *
-                    (state.lobbyTabActive.value == 'Chat' ? 0.7 : 0.3),
-                decoration: BoxDecoration(
-                  gradient: backgroundGradient,
-                ),
+      body: Stack(
+        children: [
+          Obx(
+            () => Container(
+              width: Get.width,
+              height: Get.height *
+                  (state.lobbyTabActive.value == 'Chat' ? 0.7 : 0.3),
+              decoration: BoxDecoration(
+                gradient: backgroundGradient,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(defaultMargin),
-              child: Column(
-                children: [
-                  // appbar
-                  Row(
-                    children: [
-                      CircleButtonTransparentWidget(
-                        onTap: Get.back,
-                        widget: SvgPicture.asset('assets/icons/back.svg'),
-                        margin: const EdgeInsets.only(right: 8),
-                      ),
-                      Expanded(
-                        child: TabbarWidget(
-                          tabBarTitle: state.lobbyTabBarTitle,
-                          tabBarIcon: state.lobbyTabBarIcon,
-                          tabActive: state.lobbyTabActive,
-                          backgroundColor: kBlackColor,
-                          onTap: (title) {
-                            state.lobbyTabActive.value = title;
-                            logic.lobbyAlignmentTabbar(title);
-                          },
-                          alignment: state.lobbyActiveAlignment,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  // content body
-                  Expanded(
-                    child: Obx(
-                      () => body(),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: defaultMargin,
+              vertical: MediaQuery.of(context).padding.top + defaultMargin,
+            ),
+            child: Column(
+              children: [
+                // appbar
+                Row(
+                  children: [
+                    CircleButtonTransparentWidget(
+                      onTap: Get.back,
+                      widget: SvgPicture.asset('assets/icons/back.svg'),
+                      margin: const EdgeInsets.only(right: 8),
                     ),
+                    Expanded(
+                      child: TabbarWidget(
+                        tabBarTitle: state.lobbyTabBarTitle,
+                        tabBarIcon: state.lobbyTabBarIcon,
+                        tabActive: state.lobbyTabActive,
+                        backgroundColor: kBlackColor,
+                        onTap: (title) {
+                          state.lobbyTabActive.value = title;
+                          logic.lobbyAlignmentTabbar(title);
+                        },
+                        alignment: state.lobbyActiveAlignment,
+                      ),
+                    ),
+                  ],
+                ),
+
+                // content body
+                Expanded(
+                  child: Obx(
+                    () => body(),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            bottomSlideableBar(),
-          ],
-        ),
+          ),
+          bottomSlideableBar(),
+        ],
       ),
     );
   }

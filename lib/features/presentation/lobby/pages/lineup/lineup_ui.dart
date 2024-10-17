@@ -128,6 +128,7 @@ class LineupUi extends StatelessWidget {
             Obx(
               () => Expanded(
                 child: ListView(
+                  padding: EdgeInsets.zero,
                   children: state.selectedFriends
                       .map(
                         (data) => Container(
@@ -159,16 +160,13 @@ class LineupUi extends StatelessWidget {
                                     Row(
                                       children: [
                                         TextPillWidget(
-                                          verticalPadding: 0,
+                                          verticalPadding: 2,
                                           backgroundColor: kBackgroundColor,
                                           prefix: Padding(
                                             padding:
-                                                const EdgeInsets.only(right: 2),
-                                            child: Icon(
-                                              Icons.person_2_outlined,
-                                              size: 18,
-                                              color: kMidgreyColor,
-                                            ),
+                                                const EdgeInsets.only(right: 3),
+                                            child: SvgPicture.asset(
+                                                'assets/icons/user.svg'),
                                           ),
                                           title: data.position,
                                           titleColor: kBlackColor,
