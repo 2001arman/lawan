@@ -18,6 +18,7 @@ class CustomTextFormField extends StatefulWidget {
     this.margin = 12,
     this.borderColor,
     this.prefix,
+    this.showSuffix = false,
   });
 
   final String hintText;
@@ -31,6 +32,7 @@ class CustomTextFormField extends StatefulWidget {
   final Widget? suffix, prefix;
   final double margin;
   final Color? borderColor;
+  final bool showSuffix;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -117,7 +119,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   decoration: InputDecoration(
                     prefixIcon: widget.prefix,
                     suffixIcon: Visibility(
-                        visible: showIcon,
+                        visible: true,
                         child: widget.suffix ?? const SizedBox()),
                     hintText: widget.hintText,
                     hintStyle: midGreyTextStyle.copyWith(

@@ -279,109 +279,127 @@ class AdminArenaUi extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Visibility(
-            visible: state.selectedCourt.value.pictures.isNotEmpty,
-            replacement: AddPictureButtonWidget(
-              onTap: logic.updateAddimage,
-            ),
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: defaultMargin,
-                bottom: 12,
-                right: 8,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Visibility(
+              visible: state.selectedCourt.value.pictures.isNotEmpty,
+              replacement: AddPictureButtonWidget(
+                onTap: logic.updateAddimage,
               ),
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: 126,
-                  viewportFraction: 1.0,
-                  enlargeCenterPage: false,
-                  enableInfiniteScroll: false,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: defaultMargin,
+                  bottom: 12,
+                  right: 8,
                 ),
-                items: state.selectedCourt.value.pictures
-                    .asMap()
-                    .entries
-                    .map((data) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      if (data.value.path == 'empty') {
-                        return AddPictureButtonWidget(
-                          onTap: logic.image,
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                    height: 126,
+                    viewportFraction: 1.0,
+                    enlargeCenterPage: false,
+                    enableInfiniteScroll: false,
+                  ),
+                  items: state.selectedCourt.value.pictures
+                      .asMap()
+                      .entries
+                      .map((data) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        if (data.value.path == 'empty') {
+                          return AddPictureButtonWidget(
+                            onTap: logic.image,
+                          );
+                        }
+                        return CustomImageWidget(
+                          path: data.value.path,
+                          pictureType: state.selectedCourt.value.pictureType,
+                          changeImage: () =>
+                              logic.updateChangeImage(index: data.key),
+                          deleteImage: () =>
+                              logic.updateDeleteImage(index: data.key),
                         );
-                      }
-                      return CustomImageWidget(
-                        path: data.value.path,
-                        pictureType: state.selectedCourt.value.pictureType,
-                        changeImage: () =>
-                            logic.updateChangeImage(index: data.key),
-                        deleteImage: () =>
-                            logic.updateDeleteImage(index: data.key),
-                      );
-                    },
-                  );
-                }).toList(),
+                      },
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ),
-          CustomTextFormField(
-            hintText: '',
-            isReadOnly: true,
-            controller: TextEditingController(text: 'Petaling Jaya, Selangor'),
-            prefix: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
-              child: SvgPicture.asset('assets/icons/target.svg'),
-            ),
-            suffix: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/icons/location.png',
-                  width: 20,
-                  height: 20,
-                  fit: BoxFit.cover,
-                  color: kMidgreyColor,
-                ),
-              ],
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: CustomTextFormField(
+              hintText: '',
+              isReadOnly: true,
+              controller:
+                  TextEditingController(text: 'Petaling Jaya, Selangor'),
+              prefix: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
+                child: SvgPicture.asset('assets/icons/target.svg'),
+              ),
+              suffix: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/icons/location.png',
+                    width: 20,
+                    height: 20,
+                    fit: BoxFit.cover,
+                    color: kMidgreyColor,
+                  ),
+                ],
+              ),
             ),
           ),
-          Text(
-            'Arena Type',
-            style: darkGreyTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Text(
+              'Arena Type',
+              style: darkGreyTextStyle.copyWith(fontSize: 16),
+            ),
           ),
           const SizedBox(height: 4),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: state.arenaType
-                  .map(
-                    (data) => SelectedContainerWidget(
-                      title: data,
-                      isSelected: state.selectedCourt.value.arenaType == data,
-                      onTap: () => logic.updateArenaType(arenaType: data),
-                    ),
-                  )
-                  .toList(),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: state.arenaType
+                    .map(
+                      (data) => SelectedContainerWidget(
+                        title: data,
+                        isSelected: state.selectedCourt.value.arenaType == data,
+                        onTap: () => logic.updateArenaType(arenaType: data),
+                        isTransparent: true,
+                        borderColor: kGreyColor,
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
           ),
           SizedBox(height: defaultMargin),
-          Text(
-            'Flooring',
-            style: darkGreyTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Text(
+              'Flooring',
+              style: darkGreyTextStyle.copyWith(fontSize: 16),
+            ),
           ),
           const SizedBox(height: 4),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: state.flooringType
-                  .map(
-                    (data) => SelectedContainerWidget(
-                      title: data,
-                      isSelected:
-                          data == state.selectedCourt.value.flooringType,
-                      onTap: () => logic.updateFlooringType(flooringType: data),
-                    ),
-                  )
-                  .toList(),
-            ),
+            child: Row(children: [
+              SizedBox(width: defaultMargin),
+              ...state.flooringType.map(
+                (data) => SelectedContainerWidget(
+                  title: data,
+                  isSelected: data == state.selectedCourt.value.flooringType,
+                  onTap: () => logic.updateFlooringType(flooringType: data),
+                  isTransparent: true,
+                  borderColor: kGreyColor,
+                ),
+              ),
+            ]),
           ),
         ],
       );
@@ -390,115 +408,128 @@ class AdminArenaUi extends StatelessWidget {
     Widget detailArenaSection() {
       return ListView(
         padding: EdgeInsets.only(
-          left: defaultMargin,
-          right: defaultMargin,
           bottom: defaultMargin,
           top: defaultMargin / 2,
         ),
         children: [
-          Text(
-            'Arena',
-            style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Text(
+              'Arena',
+              style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+            ),
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                GestureDetector(
-                  // onTap: () => logic.editArena(arenaType: ArenaType.arena),
-                  onTap: logic.showEditAddDialog,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Image.asset(
-                      'assets/icons/pencil.png',
-                      width: 20,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  GestureDetector(
+                    // onTap: () => logic.editArena(arenaType: ArenaType.arena),
+                    onTap: logic.showEditAddDialog,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Image.asset(
+                        'assets/icons/pencil.png',
+                        width: 20,
+                      ),
                     ),
                   ),
-                ),
-                GradientButton(
-                  onTap: logic.chooseArenaDialog,
-                  widget: Row(
-                    children: [
-                      Text(
-                        state.selectedArena.value.name,
-                        style: whiteTextStyle.copyWith(fontWeight: medium),
-                      ),
-                      const SizedBox(width: 4),
-                      Icon(
-                        Icons.keyboard_arrow_down,
-                        color: kWhiteColor,
-                        size: 18,
-                      )
-                    ],
+                  GradientButton(
+                    onTap: logic.chooseArenaDialog,
+                    widget: Row(
+                      children: [
+                        Text(
+                          state.selectedArena.value.name,
+                          style: whiteTextStyle.copyWith(fontWeight: medium),
+                        ),
+                        const SizedBox(width: 4),
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          color: kWhiteColor,
+                          size: 18,
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           SizedBox(height: defaultMargin),
-          Text(
-            'Court',
-            style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Text(
+              'Court',
+              style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+            ),
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () => logic.editArena(arenaType: ArenaType.court),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Image.asset(
-                      'assets/icons/pencil.png',
-                      width: 20,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => logic.editArena(arenaType: ArenaType.court),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Image.asset(
+                        'assets/icons/pencil.png',
+                        width: 20,
+                      ),
                     ),
                   ),
-                ),
-                Obx(
-                  () => Row(
-                    children: state.selectedArena.value.courtData
-                        .asMap()
-                        .entries
-                        .map(
-                          (court) => CircleButtonWidget(
-                            widget: Center(
-                              child: Text(
-                                court.value.courtName,
-                                style: whiteTextStyle.copyWith(
-                                  color:
-                                      court.key == state.selectedListCourt.value
-                                          ? kWhiteColor
-                                          : kBlackColor,
+                  Obx(
+                    () => Row(
+                      children: state.selectedArena.value.courtData
+                          .asMap()
+                          .entries
+                          .map(
+                            (court) => CircleButtonWidget(
+                              widget: Center(
+                                child: Text(
+                                  court.value.courtName,
+                                  style: whiteTextStyle.copyWith(
+                                    color: court.key ==
+                                            state.selectedListCourt.value
+                                        ? kWhiteColor
+                                        : kDarkgreyColor,
+                                  ),
                                 ),
                               ),
+                              margin: const EdgeInsets.only(right: 12),
+                              onTap: () {
+                                state.selectedListCourt.value = court.key;
+                                state.selectedCourt.value = court.value;
+                              },
+                              isActive:
+                                  court.key == state.selectedListCourt.value,
                             ),
-                            margin: const EdgeInsets.only(right: 12),
-                            onTap: () {
-                              state.selectedListCourt.value = court.key;
-                              state.selectedCourt.value = court.value;
-                            },
-                            isActive:
-                                court.key == state.selectedListCourt.value,
-                          ),
-                        )
-                        .toList(),
+                          )
+                          .toList(),
+                    ),
                   ),
-                ),
-                CircleButtonWidget(
-                  onTap: logic.createNewCourt,
-                ),
-              ],
+                  CircleButtonWidget(
+                    onTap: logic.createNewCourt,
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 24),
-          TabbarWidget(
-            tabBarTitle: state.tabBarTitle,
-            tabActive: state.tabActive,
-            onTap: (title) {
-              state.tabActive.value = title;
-              logic.alignmentTabbar(title);
-            },
-            alignment: state.activeAlignment,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: TabbarWidget(
+              tabBarTitle: state.tabBarTitle,
+              tabActive: state.tabActive,
+              onTap: (title) {
+                state.tabActive.value = title;
+                logic.alignmentTabbar(title);
+              },
+              alignment: state.activeAlignment,
+            ),
           ),
           Obx(
             () => state.tabActive.value != 'Details'

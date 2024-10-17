@@ -71,7 +71,7 @@ class _SelectFieldImageWidgetState extends State<SelectFieldImageWidget> {
                 children: [
                   Container(
                     width: Get.width * 0.5,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    padding: const EdgeInsets.symmetric(vertical: 2),
                     decoration: BoxDecoration(
                       color: kBlackColor,
                       borderRadius: const BorderRadius.only(
@@ -93,9 +93,11 @@ class _SelectFieldImageWidgetState extends State<SelectFieldImageWidget> {
                       visible: widget.isSelected,
                       child: CircleButtonWidget(
                         onTap: () {},
-                        widget: Icon(
-                          Icons.check,
-                          color: kWhiteColor,
+                        widget: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: SvgPicture.asset(
+                            'assets/icons/check.svg',
+                          ),
                         ),
                       ),
                     ),
@@ -110,25 +112,28 @@ class _SelectFieldImageWidgetState extends State<SelectFieldImageWidget> {
                           backgroundColor: kWhiteColor,
                           paddingVertical: 0,
                           paddingHorizontal: 8,
+                          borderColor: Colors.transparent,
                         ),
                         Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.location_on_outlined,
-                                color: kWhiteColor,
-                                size: 20,
-                              ),
-                              Flexible(
-                                child: Text(
-                                  widget.arenaModel.location,
-                                  style: whiteTextStyle.copyWith(
-                                      fontSize: 12, fontWeight: medium),
-                                  overflow: TextOverflow.ellipsis,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/location.svg',
+                                  color: kWhiteColor,
                                 ),
-                              ),
-                            ],
+                                Flexible(
+                                  child: Text(
+                                    widget.arenaModel.location,
+                                    style: whiteTextStyle.copyWith(
+                                        fontSize: 12, fontWeight: medium),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         TextBorder(
@@ -137,6 +142,7 @@ class _SelectFieldImageWidgetState extends State<SelectFieldImageWidget> {
                           backgroundColor: kWhiteColor,
                           paddingVertical: 0,
                           paddingHorizontal: 8,
+                          borderColor: Colors.transparent,
                         ),
                       ],
                     ),
@@ -184,7 +190,9 @@ class _SelectFieldImageWidgetState extends State<SelectFieldImageWidget> {
                               ),
                             ),
                             margin: const EdgeInsets.only(right: 12),
-                            borderColor: kGreyColor,
+                            borderColor: court.key != selectedCourtIndex
+                                ? kGreyColor
+                                : Colors.transparent,
                             onTap: () {
                               widget.onChangeCourt(court.key);
                               setState(() {

@@ -96,7 +96,6 @@ class SalesUi extends StatelessWidget {
       padding: EdgeInsets.only(
         left: defaultMargin,
         right: defaultMargin,
-        bottom: defaultMargin,
         top: defaultMargin / 2,
       ),
       child: Column(
@@ -122,7 +121,7 @@ class SalesUi extends StatelessWidget {
               CircleButtonWidget(
                 onTap: () {},
                 widget: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(12),
                   child: SvgPicture.asset(
                     'assets/icons/upload.svg',
                     width: 16,

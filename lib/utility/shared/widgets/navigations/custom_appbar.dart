@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../constants/constants_ui.dart';
 
@@ -29,7 +30,8 @@ class CustomAppbar extends StatelessWidget {
                   'Soccer',
                   style: blackTextStyle.copyWith(fontWeight: medium),
                 ),
-                Icon(Icons.keyboard_arrow_down, color: kBlackColor),
+                const SizedBox(width: 4),
+                SvgPicture.asset('assets/icons/chevron-down.svg'),
               ],
             ),
           ),
@@ -46,7 +48,8 @@ class CustomAppbar extends StatelessWidget {
                 children: [
                   Image.asset('assets/icons/image_person.png',
                       width: 32, fit: BoxFit.cover),
-                  Icon(Icons.keyboard_arrow_down, color: kBlackColor),
+                  const SizedBox(width: 4),
+                  SvgPicture.asset('assets/icons/chevron-down.svg'),
                 ],
               ),
             ),

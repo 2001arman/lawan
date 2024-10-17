@@ -139,11 +139,56 @@ class CheckoutUi extends StatelessWidget {
                       fontSize: 14,
                     ),
                     const SizedBox(width: 8),
-                    CardDetailSession(
-                      contentText: 'RM${logic.sessionModel.price}',
-                      title: 'Price',
-                      icon: 'assets/icons/currency.svg',
-                      fontSize: 20,
+                    Expanded(
+                      child: Container(
+                        height: 98,
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(width: 1, color: kGreyColor),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/currency.svg',
+                                  // ignore: deprecated_member_use
+                                  color: kDarkgreyColor,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  'Price',
+                                  style:
+                                      darkGreyTextStyle.copyWith(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Text(
+                                  'RM20',
+                                  style: blackTextStyle.copyWith(
+                                    fontWeight: medium,
+                                    fontSize: 20,
+                                  ),
+                                  overflow: TextOverflow.visible,
+                                ),
+                                Text(
+                                  '/pax',
+                                  style: blackTextStyle.copyWith(
+                                    fontWeight: medium,
+                                    fontSize: 12,
+                                  ),
+                                  overflow: TextOverflow.visible,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -177,7 +222,6 @@ class CheckoutUi extends StatelessWidget {
                     ),
                     margin: const EdgeInsets.only(bottom: 8),
                     decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: kGreyColor),
                       borderRadius: BorderRadius.circular(40),
                       color: kModalColor,
                     ),

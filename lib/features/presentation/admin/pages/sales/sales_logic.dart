@@ -6,10 +6,10 @@ class SalesLogic {
 
   void alignmentTabbar(String title) {
     switch (title) {
-      case 'Monthly':
+      case 'Weekly':
         state.activeAlignment.value = Alignment.center;
         break;
-      case 'Yearly':
+      case 'Monthly':
         state.activeAlignment.value = Alignment.centerRight;
         break;
       default:

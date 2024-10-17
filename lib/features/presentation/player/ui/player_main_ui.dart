@@ -7,16 +7,15 @@ import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
 import 'package:lawan/features/presentation/admin/pages/session/admin_session_bottom_sheet.dart';
 import 'package:lawan/features/presentation/player/ui/player_add_session.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
-import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/container/select_friend_item.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_session_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
-import 'package:lawan/utility/shared/widgets/video/video_widget.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/widgets/bottom_navbar_item.dart';
+import '../../../../utility/shared/widgets/buttons/circle_button_widget.dart';
 import '../../../../utility/shared/widgets/navigations/custom_appbar.dart';
 import '../../../../utility/shared/widgets/navigations/custom_bottom_navbar.dart';
 import '../../../../utility/shared/widgets/buttons/filter_button.dart';
@@ -122,12 +121,12 @@ class PlayerMainUi extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: Get.height,
-                  child:
-                      const VideoWidget(url: 'assets/video/empty_session.mp4'),
-                ),
+                // SizedBox(
+                //   width: double.infinity,
+                //   height: Get.height,
+                //   child:
+                //       const VideoWidget(url: 'assets/video/empty_session.mp4'),
+                // ),
                 Container(
                   width: double.infinity,
                   height: Get.height,
@@ -197,10 +196,12 @@ class PlayerMainUi extends StatelessWidget {
                                     textTitle:
                                         '+${state.selectedFriends.length}',
                                     fontSize: 11,
-                                    paddingVertical: 2,
+                                    paddingVertical: 0,
                                     paddingHorizontal: 8,
+                                    borderColor: Colors.transparent,
                                     textColor: const Color(0xFF44D8BE),
                                     backgroundColor: kWhiteColor,
+                                    gradient: mainGradient,
                                   ),
                                 ),
                               ],
@@ -242,13 +243,13 @@ class PlayerMainUi extends StatelessWidget {
                 CustomAppbar(
                   onTap: () => Get.offAndToNamed(AdminMainUi.namePath),
                 ),
-                SizedBox(height: defaultMargin),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-                  child: Column(
-                    children: [
-                      // tabbar
-                      TabbarWidget(
+                const SizedBox(height: 8),
+                Column(
+                  children: [
+                    // tabbar
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                      child: TabbarWidget(
                         tabBarTitle: state.tabBarTitle,
                         tabActive: state.tabActive,
                         onTap: (title) {
@@ -257,97 +258,113 @@ class PlayerMainUi extends StatelessWidget {
                         },
                         alignment: state.activeAlignment,
                       ),
-                      SizedBox(height: defaultMargin),
+                    ),
+                    SizedBox(height: defaultMargin),
 
-                      // friends list
-                      Obx(
-                        () => Visibility(
-                          visible: state.listFriends.isNotEmpty,
-                          replacement: Row(
-                            children: [
-                              CustomButton(
-                                isBlack: false,
-                                onTap: () {},
-                                borderColor: kGreyColor,
-                                widget: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/icons/add_user.svg',
-                                      color: kDarkgreyColor,
-                                      width: 16,
-                                      height: 16,
-                                    ),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      'Find Friends',
-                                      style: blackTextStyle.copyWith(
-                                          fontWeight: medium),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.zero,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: state.listFriends
-                                    .map(
-                                      (data) => SelectFriendItem(
-                                        name: data.name,
-                                        asset: data.asset,
-                                        suffixWidget:
-                                            CircleButtonTransparentWidget(
-                                          onTap: () {
-                                            state.selectedFriends.add(data);
-                                            state.listFriends.remove(data);
-                                          },
-                                          size: 36,
-                                          widget: Icon(
-                                            Icons.add,
-                                            color: kDarkgreyColor,
-                                          ),
-                                          borderColor: kGreyColor,
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
+                    // friends list
+                    Obx(
+                      () => Visibility(
+                        visible: state.listFriends.isNotEmpty,
+                        replacement: Row(
+                          children: [
+                            CustomButton(
+                              isBlack: false,
+                              onTap: () {},
+                              borderColor: kGreyColor,
+                              widget: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/icons/add_user.svg',
+                                    color: kDarkgreyColor,
+                                    width: 16,
+                                    height: 16,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'Find Friends',
+                                    style: blackTextStyle.copyWith(
+                                        fontWeight: medium),
+                                  ),
+                                ],
                               ),
                             ),
+                          ],
+                        ),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.zero,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(width: defaultMargin),
+                                  ...state.listFriends.map(
+                                    (data) => SelectFriendItem(
+                                      name: data.name,
+                                      asset: data.asset,
+                                      suffixWidget: CircleButtonWidget(
+                                        onTap: () {
+                                          state.listFriends.add(data);
+                                          state.selectedFriends.remove(data);
+                                        },
+                                        isActive: true,
+                                        widget: Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: SvgPicture.asset(
+                                            'assets/icons/check.svg',
+                                          ),
+                                        ),
+                                        size: 36,
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                                // CircleButtonTransparentWidget(
+                                //           onTap: () {
+                                //             state.selectedFriends.add(data);
+                                //             state.listFriends.remove(data);
+                                //           },
+                                //           size: 36,
+                                //           widget: Icon(
+                                //             Icons.clear,
+                                //             color: kDarkgreyColor,
+                                //           ),
+                                //           borderColor: kGreyColor,
+                                //         ),
+
+                                ),
                           ),
                         ),
                       ),
+                    ),
 
-                      // available session
-                      SizedBox(height: defaultMargin),
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: kWhiteColor,
-                            ),
-                            child: Text(
-                              '${state.sessionList.length}',
-                              style: blackTextStyle.copyWith(
-                                  fontSize: 11, fontWeight: medium),
-                            ),
+                    // available session
+                    SizedBox(height: defaultMargin),
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          margin: EdgeInsets.only(left: defaultMargin),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: kWhiteColor,
                           ),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Available Session',
-                            style: darkGreyTextStyle.copyWith(fontSize: 12),
+                          child: Text(
+                            '${state.sessionList.length}',
+                            style: blackTextStyle.copyWith(
+                                fontSize: 11, fontWeight: medium),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Available Session',
+                          style: darkGreyTextStyle.copyWith(fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 SizedBox(height: defaultMargin),
 

@@ -47,7 +47,7 @@ class FieldImageWidget extends StatelessWidget {
           children: [
             Container(
               width: Get.width * 0.5,
-              padding: const EdgeInsets.symmetric(vertical: 4),
+              padding: const EdgeInsets.symmetric(vertical: 2),
               decoration: BoxDecoration(
                 color: kBlackColor,
                 borderRadius: const BorderRadius.only(
@@ -74,6 +74,7 @@ class FieldImageWidget extends StatelessWidget {
                     backgroundColor: kWhiteColor,
                     paddingVertical: 0,
                     paddingHorizontal: 8,
+                    borderColor: Colors.transparent,
                   ),
                   Expanded(
                     child: Visibility(
@@ -116,6 +117,7 @@ class FieldImageWidget extends StatelessWidget {
                         backgroundColor: kWhiteColor,
                         paddingVertical: 0,
                         paddingHorizontal: 8,
+                        borderColor: Colors.transparent,
                       ),
                     ],
                   ),

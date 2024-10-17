@@ -79,7 +79,7 @@ class SalesItemCard extends StatelessWidget {
               width: 1,
               height: 180,
               margin: const EdgeInsets.symmetric(horizontal: 12),
-              color: kBlackColor,
+              color: kGreyColor,
             ),
             Expanded(
               child: Column(

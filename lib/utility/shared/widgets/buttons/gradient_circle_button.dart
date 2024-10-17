@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../constants/constants_ui.dart';
 
@@ -17,9 +18,11 @@ class GradientCircleButton extends StatelessWidget {
           shape: BoxShape.circle,
           gradient: mainGradient,
         ),
-        child: Icon(
-          Icons.add,
-          color: kWhiteColor,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: SvgPicture.asset(
+            'assets/icons/plus.svg',
+          ),
         ),
       ),
     );

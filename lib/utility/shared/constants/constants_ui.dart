@@ -58,6 +58,7 @@ LinearGradient mainGradient = const LinearGradient(
   ],
 );
 
+
 LinearGradient backgroundGradient = LinearGradient(
   begin: Alignment.topCenter,
   end: Alignment.bottomCenter,

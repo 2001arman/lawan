@@ -18,7 +18,7 @@ class PlayerMainState {
   PageController pageController = PageController();
   var selectedIndex = 1.obs;
   // create Arena
-  var selectedArenaIndex = 0.obs;
+  var selectedArenaIndex = 9.obs;
   var selectedCourtIndex = 0.obs;
 
   List<int> optionHour = [1, 2, 3, 4, 5];

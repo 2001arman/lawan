@@ -116,9 +116,11 @@ class LobbyUi extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: defaultMargin,
-              vertical: MediaQuery.of(context).padding.top + defaultMargin,
+            padding: EdgeInsets.fromLTRB(
+              defaultMargin,
+              MediaQuery.of(context).padding.top + defaultMargin,
+              defaultMargin,
+              defaultMargin,
             ),
             child: Column(
               children: [

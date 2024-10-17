@@ -157,12 +157,7 @@ class PlayerAddSession {
                   ),
                   contentSection(),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      defaultMargin,
-                      0,
-                      defaultMargin,
-                      defaultMargin,
-                    ),
+                    padding: EdgeInsets.all(defaultMargin),
                     child: Row(
                       children: [
                         CustomButton(
@@ -271,7 +266,7 @@ class PlayerAddSession {
                     borderColor: kGreyColor,
                     size: 44,
                     widget: SvgPicture.asset(
-                      'assets/icons/add_user.svg',
+                      'assets/icons/user-plus-arena.svg',
                       color: kDarkgreyColor,
                     ),
                   ),
@@ -295,11 +290,7 @@ class PlayerAddSession {
                 widget: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.male_outlined,
-                      color: kWhiteColor,
-                      size: 20,
-                    ),
+                    SvgPicture.asset('assets/icons/male.svg'),
                     const SizedBox(width: 4),
                     Text('Male', style: whiteTextStyle),
                   ],
@@ -312,10 +303,9 @@ class PlayerAddSession {
                 widget: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.female_outlined,
+                    SvgPicture.asset(
+                      'assets/icons/female.svg',
                       color: kBlackColor,
-                      size: 20,
                     ),
                     const SizedBox(width: 4),
                     Text('Female',
@@ -549,10 +539,9 @@ class PlayerAddSession {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.date_range,
-                          color: kMidgreyColor,
-                          size: 18,
+                        SvgPicture.asset(
+                          'assets/icons/calendar.svg',
+                          color: kWhiteColor,
                         ),
                         const SizedBox(width: 8),
                         ValueListenableBuilder<DateTime>(
@@ -579,11 +568,9 @@ class PlayerAddSession {
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeOut,
                   ),
-                  widget: const Center(
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      size: 20,
-                    ),
+                  widget: SvgPicture.asset(
+                    'assets/icons/back.svg',
+                    color: kBlackColor,
                   ),
                   borderColor: kGreyColor,
                 ),
@@ -593,11 +580,9 @@ class PlayerAddSession {
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeOut,
                   ),
-                  widget: const Center(
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                    ),
+                  widget: SvgPicture.asset(
+                    'assets/icons/forward.svg',
+                    color: kBlackColor,
                   ),
                   borderColor: kGreyColor,
                 ),
@@ -702,9 +687,9 @@ class PlayerAddSession {
                   controller: TextEditingController(),
                   onChanged: (data) {},
                   borderColor: kGreyColor,
-                  prefix: Icon(
-                    Icons.search,
-                    color: kDarkgreyColor,
+                  prefix: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: SvgPicture.asset('assets/icons/search.svg'),
                   ),
                   suffix: Icon(
                     Icons.highlight_remove_outlined,

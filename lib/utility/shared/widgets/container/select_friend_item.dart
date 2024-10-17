@@ -40,6 +40,8 @@ class SelectFriendItem extends StatelessWidget {
                 TextBorder(
                   textTitle: 'Novice',
                   backgroundColor: kWhiteColor,
+                  paddingVertical: 2,
+                  paddingHorizontal: 8,
                   fontSize: 10,
                 )
               ],

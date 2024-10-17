@@ -9,8 +9,8 @@ class SalesState {
   var tabActive = 'Daily'.obs;
   List<String> tabBarTitle = [
     'Daily',
+    'Weekly',
     'Monthly',
-    'Yearly',
   ];
 
   var activeSalesAlignment = Alignment.centerLeft.obs;

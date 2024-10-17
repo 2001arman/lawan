@@ -34,7 +34,11 @@ class HostAvatarWidget extends StatelessWidget {
                   'Jese Leos',
                   style: blackTextStyle.copyWith(fontWeight: medium),
                 ),
-                const TextBorder(textTitle: 'Host'),
+                const TextBorder(
+                  textTitle: 'Host',
+                  paddingVertical: 0,
+                  paddingHorizontal: 8,
+                ),
               ],
             ),
           ),
@@ -51,9 +55,8 @@ class HostAvatarWidget extends StatelessWidget {
             borderColor: kGreyColor,
             onTap: () {},
             size: 36,
-            widget: Icon(
-              Icons.more_vert,
-              color: kDarkgreyColor,
+            widget: SvgPicture.asset(
+              'assets/icons/dots-vertical.svg',
             ),
           ),
         ],
