@@ -190,8 +190,11 @@ class PlayerAddSession {
   Widget selectedFriendItem({required AvatarModel data}) {
     return GestureDetector(
       onTap: () {
+        state.listFriends
+            .firstWhere((friend) => friend == data)
+            .isSelected
+            .value = false;
         state.selectedFriends.remove(data);
-        state.listFriends.add(data);
       },
       child: Container(
         width: 46,

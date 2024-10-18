@@ -1,5 +1,8 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_widget.dart';
@@ -180,6 +183,8 @@ class PlayerAddPlayerBottomSheet {
                                       const SizedBox(width: 8),
                                       Expanded(
                                         child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               data.name,
@@ -193,6 +198,8 @@ class PlayerAddPlayerBottomSheet {
                                               textTitle: 'Novice',
                                               backgroundColor: kWhiteColor,
                                               fontSize: 10,
+                                              paddingVertical: 2,
+                                              paddingHorizontal: 8,
                                             )
                                           ],
                                         ),
@@ -249,7 +256,7 @@ class PlayerAddPlayerBottomSheet {
 
                 // recent people
                 Obx(
-                  () => state.selectedFriends.isNotEmpty
+                  () => state.listFriendsRecent.isNotEmpty
                       ? Column(
                           children: [
                             SizedBox(height: defaultMargin),
@@ -266,24 +273,37 @@ class PlayerAddPlayerBottomSheet {
                   scrollDirection: Axis.horizontal,
                   child: Obx(
                     () => Row(
-                      children: state.selectedFriends
+                      children: state.listFriendsRecent
                           .map(
                             (data) => SelectFriendItem(
                               name: data.name,
                               asset: data.asset,
-                              suffixWidget: CircleButtonWidget(
-                                onTap: () {
-                                  state.listFriends.add(data);
-                                  state.selectedFriends.remove(data);
-                                },
-                                isActive: true,
-                                widget: Icon(
-                                  Icons.done,
-                                  size: 20,
-                                  color: kWhiteColor,
-                                ),
-                                size: 36,
-                              ),
+                              suffixWidget: data.isSelected.value
+                                  ? CircleButtonWidget(
+                                      onTap: () {
+                                        data.isSelected.value = false;
+                                        state.selectedFriends.remove(data);
+                                      },
+                                      isActive: true,
+                                      widget: Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: kWhiteColor,
+                                      ),
+                                      size: 36,
+                                    )
+                                  : CircleButtonTransparentWidget(
+                                      onTap: () {
+                                        data.isSelected.value = true;
+                                        state.selectedFriends.add(data);
+                                      },
+                                      size: 36,
+                                      widget: SvgPicture.asset(
+                                        'assets/icons/plus.svg',
+                                        color: kDarkgreyColor,
+                                      ),
+                                      borderColor: kGreyColor,
+                                    ),
                             ),
                           )
                           .toList(),

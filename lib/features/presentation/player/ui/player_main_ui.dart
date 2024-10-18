@@ -15,6 +15,7 @@ import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/widgets/bottom_navbar_item.dart';
+import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../utility/shared/widgets/buttons/circle_button_widget.dart';
 import '../../../../utility/shared/widgets/navigations/custom_appbar.dart';
 import '../../../../utility/shared/widgets/navigations/custom_bottom_navbar.dart';
@@ -297,44 +298,45 @@ class PlayerMainUi extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             padding: EdgeInsets.zero,
                             child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(width: defaultMargin),
-                                  ...state.listFriends.map(
-                                    (data) => SelectFriendItem(
-                                      name: data.name,
-                                      asset: data.asset,
-                                      suffixWidget: CircleButtonWidget(
-                                        onTap: () {
-                                          state.listFriends.add(data);
-                                          state.selectedFriends.remove(data);
-                                        },
-                                        isActive: true,
-                                        widget: Padding(
-                                          padding: const EdgeInsets.all(8),
-                                          child: SvgPicture.asset(
-                                            'assets/icons/check.svg',
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(width: defaultMargin),
+                                ...state.listFriends.map(
+                                  (data) => SelectFriendItem(
+                                    name: data.name,
+                                    asset: data.asset,
+                                    suffixWidget: data.isSelected.value
+                                        ? CircleButtonWidget(
+                                            onTap: () {
+                                              data.isSelected.value = false;
+                                              state.selectedFriends
+                                                  .remove(data);
+                                            },
+                                            isActive: true,
+                                            widget: Padding(
+                                              padding: const EdgeInsets.all(8),
+                                              child: SvgPicture.asset(
+                                                'assets/icons/check.svg',
+                                              ),
+                                            ),
+                                            size: 36,
+                                          )
+                                        : CircleButtonTransparentWidget(
+                                            onTap: () {
+                                              data.isSelected.value = true;
+                                              state.selectedFriends.add(data);
+                                            },
+                                            size: 36,
+                                            widget: SvgPicture.asset(
+                                              'assets/icons/plus.svg',
+                                              color: kDarkgreyColor,
+                                            ),
+                                            borderColor: kGreyColor,
                                           ),
-                                        ),
-                                        size: 36,
-                                      ),
-                                    ),
                                   ),
-                                ]
-                                // CircleButtonTransparentWidget(
-                                //           onTap: () {
-                                //             state.selectedFriends.add(data);
-                                //             state.listFriends.remove(data);
-                                //           },
-                                //           size: 36,
-                                //           widget: Icon(
-                                //             Icons.clear,
-                                //             color: kDarkgreyColor,
-                                //           ),
-                                //           borderColor: kGreyColor,
-                                //         ),
-
                                 ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
