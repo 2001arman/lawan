@@ -7,6 +7,7 @@ import 'package:lawan/utility/util/custom_dialog_success.dart';
 
 import '../../../../../utility/shared/widgets/buttons/circle_button_widget.dart';
 import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
+import '../../../../../utility/shared/widgets/text/text_border.dart';
 import 'controller/chat_state.dart';
 
 class ChatUi extends StatelessWidget {
@@ -43,32 +44,117 @@ class ChatUi extends StatelessWidget {
       );
     }
 
+    Widget listChatSection() {
+      return ListView.builder(
+        padding: EdgeInsets.only(top: defaultMargin),
+        itemCount: state.listChat.length,
+        itemBuilder: (context, index) {
+          ChatModel chatModel = state.listChat[index];
+          return Column(
+            crossAxisAlignment: chatModel.isMe
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                visible: !chatModel.isMe,
+                child: Row(
+                  children: [
+                    Image.asset(
+                      chatModel.avatarImage,
+                      width: 32,
+                      height: 32,
+                    ),
+                    const SizedBox(width: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          chatModel.name,
+                          style: blackTextStyle.copyWith(
+                              fontSize: 12, fontWeight: medium),
+                        ),
+                        const SizedBox(height: 2),
+                        TextBorder(
+                          textTitle: 'Novice',
+                          backgroundColor: kWhiteColor,
+                          paddingVertical: 2,
+                          paddingHorizontal: 8,
+                          fontSize: 10,
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 8),
+              ...chatModel.listChatData.map(
+                (data) => Column(
+                  crossAxisAlignment: chatModel.isMe
+                      ? CrossAxisAlignment.end
+                      : CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(26),
+                        color: chatModel.isMe ? kBlackColor : kWhiteColor,
+                      ),
+                      child: Text(
+                        data.chatText,
+                        style: darkGreyTextStyle.copyWith(
+                            fontSize: 12,
+                            color:
+                                chatModel.isMe ? kWhiteColor : kDarkgreyColor),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      data.time,
+                      style: darkGreyTextStyle.copyWith(fontSize: 10),
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/chat.svg',
-                  color: kWhiteColor,
-                  width: 60,
-                  height: 60,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Welcome to the lobby!',
-                  style:
-                      blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Start the conversation or wait for others to join.',
-                  style: blackTextStyle.copyWith(fontSize: 12),
-                ),
-              ],
+            child: Visibility(
+              visible: state.listChat.isNotEmpty,
+              replacement: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/chat.svg',
+                    color: kWhiteColor,
+                    width: 60,
+                    height: 60,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Welcome to the lobby!',
+                    style: blackTextStyle.copyWith(
+                        fontSize: 16, fontWeight: medium),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Start the conversation or wait for others to join.',
+                    style: blackTextStyle.copyWith(fontSize: 12),
+                  ),
+                ],
+              ),
+              child: listChatSection(),
             ),
           ),
           SingleChildScrollView(
