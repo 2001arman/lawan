@@ -4,6 +4,7 @@ import 'package:lawan/features/domain/arena/arena_model.dart';
 import 'package:lawan/features/domain/session/session_model.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/ui/checkout_ui.dart';
+import 'package:lawan/utility/util/helper.dart';
 
 import '../../../infrastructure/arena/arena_data_source.dart';
 
@@ -25,6 +26,12 @@ class PlayerMainLogic {
 
   void handleNextButton() {
     if (state.selectedIndex.value == 3) {
+      if (state.selectedArenaIndex.value == -1) {
+        return Helper.showToast(
+          isSuccess: false,
+          message: "Please choose arena first!",
+        );
+      }
       ArenaModel arenaModel =
           arenaDataSource.listArena[state.selectedArenaIndex.value];
       SessionModel sessionModel = SessionModel(

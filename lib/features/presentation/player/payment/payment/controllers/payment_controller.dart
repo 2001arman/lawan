@@ -119,7 +119,7 @@ class PaymentController extends GetxController {
     playerMainState.sessionList.add(sessionModel);
 
     clearState();
-    Get.close(3);
+    Get.back();
     AdminSessionBottomSheet().successCreateSesssionSheet(
       arenaModel: sessionModel.arena,
       selectedCourt: sessionModel.selectedCourt,

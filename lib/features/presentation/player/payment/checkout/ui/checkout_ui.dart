@@ -12,6 +12,9 @@ import 'package:lawan/utility/util/helper.dart';
 import '../../../../../../utility/shared/widgets/buttons/custom_button.dart';
 import '../../../../../../utility/shared/widgets/card_detail_session.dart';
 import '../../../../../../utility/shared/widgets/text/text_pill_widget.dart';
+import '../../../../../domain/session/session_model.dart';
+import '../../../../admin/pages/session/admin_session_bottom_sheet.dart';
+import '../../../controller/player_main_state.dart';
 
 class CheckoutUi extends StatelessWidget {
   static const String namePath = '/checkout_page';
@@ -215,43 +218,49 @@ class CheckoutUi extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: defaultMargin,
-                      vertical: 8,
+                  GestureDetector(
+                    onTap: () => Get.toNamed(
+                      PaymentPage.namePath,
+                      arguments: Get.arguments,
                     ),
-                    margin: const EdgeInsets.only(bottom: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40),
-                      color: kModalColor,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SvgPicture.asset('assets/icons/voucher.svg'),
-                        const SizedBox(width: 4),
-                        Text(
-                          'Voucher',
-                          style: blackTextStyle.copyWith(fontWeight: medium),
-                        ),
-                        const SizedBox(width: 16),
-                        Text(
-                          'Change',
-                          style: blackTextStyle.copyWith(fontWeight: medium),
-                        ),
-                        const SizedBox(width: 4),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          weight: 5,
-                          color: kDarkgreyColor,
-                          size: 13,
-                        ),
-                        SvgPicture.asset('assets/icons/mastercard.svg'),
-                        Text(
-                          '7041',
-                          style: blackTextStyle.copyWith(fontWeight: medium),
-                        ),
-                      ],
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: defaultMargin,
+                        vertical: 8,
+                      ),
+                      margin: const EdgeInsets.only(bottom: 8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        color: kModalColor,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SvgPicture.asset('assets/icons/voucher.svg'),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Voucher',
+                            style: blackTextStyle.copyWith(fontWeight: medium),
+                          ),
+                          const SizedBox(width: 16),
+                          Text(
+                            'Change',
+                            style: blackTextStyle.copyWith(fontWeight: medium),
+                          ),
+                          const SizedBox(width: 4),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            weight: 5,
+                            color: kDarkgreyColor,
+                            size: 13,
+                          ),
+                          SvgPicture.asset('assets/icons/mastercard.svg'),
+                          Text(
+                            '7041',
+                            style: blackTextStyle.copyWith(fontWeight: medium),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -297,10 +306,23 @@ class CheckoutUi extends StatelessWidget {
                         ),
                         const Spacer(),
                         GradientButton(
-                          onTap: () => Get.toNamed(
-                            PaymentPage.namePath,
-                            arguments: Get.arguments,
-                          ),
+                          onTap: () async {
+                            SessionModel sessionModel = Get.arguments[0];
+                            PlayerMainState playerMainState = Get.arguments[1];
+
+                            playerMainState.sessionList.add(sessionModel);
+
+                            Get.close(2);
+                            await Future.delayed(const Duration(seconds: 1));
+                            AdminSessionBottomSheet()
+                                .successCreateSesssionSheet(
+                              arenaModel: sessionModel.arena,
+                              selectedCourt: sessionModel.selectedCourt,
+                              session: sessionModel,
+                              showPill: true,
+                              successCreate: true,
+                            );
+                          },
                           widget: Text(
                             'Pay Now',
                             style: whiteTextStyle.copyWith(fontWeight: medium),
