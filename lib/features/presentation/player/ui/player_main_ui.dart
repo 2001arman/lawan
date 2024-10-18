@@ -21,6 +21,7 @@ import '../../../../utility/shared/widgets/navigations/custom_appbar.dart';
 import '../../../../utility/shared/widgets/navigations/custom_bottom_navbar.dart';
 import '../../../../utility/shared/widgets/buttons/filter_button.dart';
 import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
+import '../../../../utility/shared/widgets/video/video_widget.dart';
 
 class PlayerMainUi extends StatelessWidget {
   static const String namePath = '/player_main_page';
@@ -122,12 +123,12 @@ class PlayerMainUi extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                // SizedBox(
-                //   width: double.infinity,
-                //   height: Get.height,
-                //   child:
-                //       const VideoWidget(url: 'assets/video/empty_session.mp4'),
-                // ),
+                SizedBox(
+                  width: double.infinity,
+                  height: Get.height,
+                  child:
+                      const VideoWidget(url: 'assets/video/empty_session.mp4'),
+                ),
                 Container(
                   width: double.infinity,
                   height: Get.height,
