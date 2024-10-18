@@ -287,33 +287,54 @@ class PlayerAddSession {
             children: [
               Text('Gender', style: darkGreyTextStyle),
               SizedBox(width: Get.width * 0.2),
-              CustomButton(
-                isBlack: true,
-                onTap: () {},
-                widget: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset('assets/icons/male.svg'),
-                    const SizedBox(width: 4),
-                    Text('Male', style: whiteTextStyle),
-                  ],
+              Obx(
+                () => CustomButton(
+                  isBlack: state.isMale.value,
+                  onTap: state.isMale.toggle,
+                  widget: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/male.svg',
+                        color:
+                            state.isMale.value ? kWhiteColor : kDarkgreyColor,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Male',
+                        style: whiteTextStyle.copyWith(
+                          color:
+                              state.isMale.value ? kWhiteColor : kDarkgreyColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
-              CustomButton(
-                isBlack: false,
-                onTap: () {},
-                widget: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/female.svg',
-                      color: kBlackColor,
-                    ),
-                    const SizedBox(width: 4),
-                    Text('Female',
-                        style: whiteTextStyle.copyWith(color: kBlackColor)),
-                  ],
+              Obx(
+                () => CustomButton(
+                  isBlack: state.isFemale.value,
+                  onTap: state.isFemale.toggle,
+                  widget: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/female.svg',
+                        color:
+                            state.isFemale.value ? kWhiteColor : kDarkgreyColor,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Female',
+                        style: whiteTextStyle.copyWith(
+                          color: state.isFemale.value
+                              ? kWhiteColor
+                              : kDarkgreyColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -326,28 +347,40 @@ class PlayerAddSession {
               Text('Language', style: darkGreyTextStyle),
               SizedBox(width: Get.width * 0.15),
               CustomButton(
-                isBlack: true,
-                onTap: () {},
+                isBlack: state.isEnglish.value,
+                onTap: state.isEnglish.toggle,
                 widget: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset('assets/images/uk.png', width: 16),
                     const SizedBox(width: 4),
-                    Text('English', style: whiteTextStyle),
+                    Text(
+                      'English',
+                      style: whiteTextStyle.copyWith(
+                        color: state.isEnglish.value
+                            ? kWhiteColor
+                            : kDarkgreyColor,
+                      ),
+                    ),
                   ],
                 ),
               ),
               const SizedBox(width: 12),
               CustomButton(
-                isBlack: false,
-                onTap: () {},
+                isBlack: state.isMalay.value,
+                onTap: state.isMalay.toggle,
                 widget: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset('assets/images/malaysia.png', width: 16),
                     const SizedBox(width: 4),
-                    Text('Malay',
-                        style: whiteTextStyle.copyWith(color: kBlackColor)),
+                    Text(
+                      'Malay',
+                      style: whiteTextStyle.copyWith(
+                        color:
+                            state.isMalay.value ? kWhiteColor : kDarkgreyColor,
+                      ),
+                    ),
                   ],
                 ),
               ),

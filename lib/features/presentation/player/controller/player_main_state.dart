@@ -18,7 +18,7 @@ class PlayerMainState {
   PageController pageController = PageController();
   var selectedIndex = 1.obs;
   // create Arena
-  var selectedArenaIndex = 9.obs;
+  var selectedArenaIndex = (-1).obs;
   var selectedCourtIndex = 0.obs;
 
   List<int> optionHour = [1, 2, 3, 4, 5];
@@ -89,10 +89,18 @@ class PlayerMainState {
   var ageStart = 25.obs;
   var ageEnd = 35.obs;
 
-  // age range
+  // slot range
   var enableSlot = true.obs;
   var slotStart = 22.obs;
   var slotEnd = 23.obs;
+
+  // gender
+  var isMale = true.obs;
+  var isFemale = false.obs;
+
+  //language
+  var isEnglish = true.obs;
+  var isMalay = false.obs;
 
   var sessionList = <SessionModel>[].obs;
 
