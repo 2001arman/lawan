@@ -6,6 +6,7 @@ enum ActionType {
   confirmReschedule,
   alertAdmin,
   badWeather,
+  assignReferee,
   ;
 
   String get title {
@@ -24,6 +25,8 @@ enum ActionType {
         return 'Confirm Alert to Admin?';
       case ActionType.badWeather:
         return 'Report for Bad Weather?';
+      case ActionType.assignReferee:
+        return 'Assign Sarah Yahya as the referee?';
       default:
         return '';
     }
@@ -45,6 +48,8 @@ enum ActionType {
         return 'This will add the Admin to the chat for confirmation.';
       case ActionType.badWeather:
         return 'This will add the Admin to the chat for confirmation.';
+      case ActionType.assignReferee:
+        return 'This will give him/her referee permissions for the match.';
       default:
         return '';
     }

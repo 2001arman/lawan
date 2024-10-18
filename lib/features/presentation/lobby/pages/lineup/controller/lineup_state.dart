@@ -38,4 +38,6 @@ class LineupState {
       isSelected: false.obs,
     ),
   ].obs;
+
+  var selectedRefereeIndex = 0.obs;
 }

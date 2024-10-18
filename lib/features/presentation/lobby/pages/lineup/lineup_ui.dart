@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/lobby/pages/lineup/controller/lineup_logic.dart';
+import 'package:lawan/utility/shared/constants/action_type.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
+import 'package:lawan/utility/util/custom_dialog_success.dart';
 import '../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../utility/shared/widgets/container/select_friend_item.dart';
 import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
@@ -130,6 +132,8 @@ class LineupUi extends StatelessWidget {
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: state.selectedFriends
+                      .asMap()
+                      .entries
                       .map(
                         (data) => Container(
                           width: double.infinity,
@@ -142,7 +146,7 @@ class LineupUi extends StatelessWidget {
                           child: Row(
                             children: [
                               Image.asset(
-                                data.asset,
+                                data.value.asset,
                                 width: 48,
                                 height: 48,
                               ),
@@ -152,7 +156,7 @@ class LineupUi extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      data.name,
+                                      data.value.name,
                                       style: blackTextStyle.copyWith(
                                           fontSize: 12, fontWeight: medium),
                                     ),
@@ -168,9 +172,20 @@ class LineupUi extends StatelessWidget {
                                             child: SvgPicture.asset(
                                                 'assets/icons/user.svg'),
                                           ),
-                                          title: data.position,
+                                          title: data.value.position,
                                           titleColor: kBlackColor,
                                         ),
+                                        const SizedBox(width: 8),
+                                        Visibility(
+                                          visible: data.key ==
+                                              state.selectedRefereeIndex.value,
+                                          child: SvgPicture.asset(
+                                            'assets/icons/whistle.svg',
+                                            color: kBlackColor,
+                                            width: 16,
+                                            height: 16,
+                                          ),
+                                        )
                                       ],
                                     )
                                   ],
@@ -183,10 +198,21 @@ class LineupUi extends StatelessWidget {
                               ),
                               Obx(
                                 () => Visibility(
-                                  visible:
-                                      lobbyState.lineUpTabActive.value == '',
+                                  visible: (lobbyState.lineUpTabActive.value ==
+                                          '') &&
+                                      (data.key !=
+                                          state.selectedRefereeIndex.value),
                                   child: CircleButtonTransparentWidget(
-                                    onTap: () {},
+                                    onTap: () {
+                                      CustomDialogSuccess.confirmDialog(
+                                        actionType: ActionType.alertAdmin,
+                                        onAction: () {
+                                          state.selectedRefereeIndex.value =
+                                              data.key;
+                                          Get.back();
+                                        },
+                                      );
+                                    },
                                     borderColor: kGreyColor,
                                     margin: const EdgeInsets.only(left: 12),
                                     widget: SvgPicture.asset(
