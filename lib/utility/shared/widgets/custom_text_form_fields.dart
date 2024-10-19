@@ -122,9 +122,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   decoration: InputDecoration(
                     counterText: "",
                     prefixIcon: widget.prefix,
-                    suffixIcon: Visibility(
-                        visible: true,
-                        child: widget.suffix ?? const SizedBox()),
+                    suffixIcon: widget.showSuffix
+                        ? widget.suffix
+                        : Visibility(
+                            visible: showIcon,
+                            child: widget.suffix ?? const SizedBox(),
+                          ),
                     hintText: widget.hintText,
                     hintStyle: midGreyTextStyle.copyWith(
                         fontSize: 14, fontWeight: FontWeight.normal),

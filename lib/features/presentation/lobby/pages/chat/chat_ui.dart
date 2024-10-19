@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,6 +20,8 @@ class ChatUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _controller = TextEditingController();
+    var showEmoji = false.obs;
     Widget containerItem(
         {required VoidCallback onTap,
         required String name,
@@ -128,6 +131,17 @@ class ChatUi extends StatelessWidget {
       );
     }
 
+    Widget buildSticker() {
+      return EmojiPicker(
+        textEditingController: _controller,
+        config: const Config(
+          bottomActionBarConfig: BottomActionBarConfig(
+            enabled: false,
+          ),
+        ),
+      );
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -205,11 +219,17 @@ class ChatUi extends StatelessWidget {
             Expanded(
               child: CustomTextFormField(
                 hintText: 'Write message',
-                controller: TextEditingController(),
+                controller: _controller,
                 margin: 0,
-                suffix: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: SvgPicture.asset('assets/icons/smile.svg'),
+                showSuffix: true,
+                suffix: GestureDetector(
+                  onTap: () {
+                    showEmoji.toggle();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: SvgPicture.asset('assets/icons/smile.svg'),
+                  ),
                 ),
               ),
             ),
@@ -227,7 +247,28 @@ class ChatUi extends StatelessWidget {
               ),
             ),
           ],
-        )
+        ),
+        Obx(
+          () => AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            height:
+                showEmoji.value ? 200 : 0, // Adjust height based on your design
+            child: SingleChildScrollView(
+              child: Visibility(
+                visible: showEmoji.value,
+                child: EmojiPicker(
+                  textEditingController: _controller,
+                  config: const Config(
+                    bottomActionBarConfig: BottomActionBarConfig(
+                      enabled: false,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
