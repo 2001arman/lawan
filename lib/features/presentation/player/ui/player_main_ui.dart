@@ -125,12 +125,12 @@ class PlayerMainUi extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                // SizedBox(
-                //   width: double.infinity,
-                //   height: Get.height,
-                //   child:
-                //       const VideoWidget(url: 'assets/video/empty_session.mp4'),
-                // ),
+                SizedBox(
+                  width: double.infinity,
+                  height: Get.height,
+                  child:
+                      const VideoWidget(url: 'assets/video/empty_session.mp4'),
+                ),
                 Container(
                   width: double.infinity,
                   height: Get.height,

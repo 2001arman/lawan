@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:lawan/utility/shared/constants/action_type.dart';
 
 class ChatState {
+  TextEditingController controller = TextEditingController();
+
   List<ActionItem> actionItemList = [
     ActionItem(
       actionType: ActionType.alertAdmin,
