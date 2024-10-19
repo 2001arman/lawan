@@ -14,6 +14,7 @@ import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_age_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_slot_widget.dart';
+import 'package:lawan/utility/util/dialog_filter.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../../utility/shared/constants/constants_ui.dart';
@@ -736,7 +737,7 @@ class PlayerAddSession {
               SizedBox(width: defaultMargin),
               CustomButton(
                 isBlack: false,
-                onTap: () {},
+                onTap: DialogFilter.showFilterDialog,
                 widget: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -42,7 +42,9 @@ class PlayerMainUi extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FilterButton(
-                      backgroundColor: kGreyColor, paddingVertical: 12),
+                    backgroundColor: kGreyColor,
+                    paddingVertical: 12,
+                  ),
                   SizedBox(width: defaultMargin),
                   SizedBox(
                     child: GradientButton(
@@ -123,12 +125,12 @@ class PlayerMainUi extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: Get.height,
-                  child:
-                      const VideoWidget(url: 'assets/video/empty_session.mp4'),
-                ),
+                // SizedBox(
+                //   width: double.infinity,
+                //   height: Get.height,
+                //   child:
+                //       const VideoWidget(url: 'assets/video/empty_session.mp4'),
+                // ),
                 Container(
                   width: double.infinity,
                   height: Get.height,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lawan/utility/util/dialog_filter.dart';
 
 import '../../constants/constants_ui.dart';
 
@@ -15,32 +16,35 @@ class FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 90,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: paddingVertical),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          border: Border.all(
-            width: 1,
-            color: kWhiteColor,
+    return GestureDetector(
+      onTap: DialogFilter.showFilterDialog,
+      child: SizedBox(
+        width: 90,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: paddingVertical),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            border: Border.all(
+              width: 1,
+              color: kWhiteColor,
+            ),
+            color: backgroundColor,
           ),
-          color: backgroundColor,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              'assets/icons/filter.svg',
-              width: 20,
-              height: 20,
-            ),
-            const SizedBox(width: 4),
-            Text(
-              'Filter',
-              style: blackTextStyle.copyWith(fontWeight: medium),
-            ),
-          ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/icons/filter.svg',
+                width: 20,
+                height: 20,
+              ),
+              const SizedBox(width: 4),
+              Text(
+                'Filter',
+                style: blackTextStyle.copyWith(fontWeight: medium),
+              ),
+            ],
+          ),
         ),
       ),
     );
