@@ -3,33 +3,55 @@ import 'package:flutter/material.dart';
 import '../shared/constants/constants_ui.dart';
 
 List<Widget> generateCardNumber(String cardNumber) {
-  List<String> parts = [
-    cardNumber.substring(0, 4),
-    cardNumber.substring(4, 8),
-    cardNumber.substring(8, 12),
-    cardNumber.substring(12, 16),
-  ];
+  // Create a list of widgets to represent the card number
+  List<Widget> widgets = [];
 
-  // Mengganti tiga bagian pertama dengan simbol bulat
-  List<Widget> widgets = parts
-      .asMap()
-      .entries
-      .map((entry) => entry.key < 3
-          ? Text(
-              '• • • •',
-              style: blackTextStyle.copyWith(
-                fontSize: 14,
-                fontWeight: medium,
-              ),
-            )
-          : Text(
-              entry.value,
-              style: blackTextStyle.copyWith(
-                fontSize: 14,
-                fontWeight: medium,
-              ),
-            ))
-      .toList();
+  // Check how many characters are in the card number
+  int length = cardNumber.length;
+
+  // Iterate over the four groups
+  for (int i = 0; i < 4; i++) {
+    if (i < 3) {
+      // For the first three parts, show the masked symbol
+      widgets.add(
+        Text(
+          '• • • •',
+          style: blackTextStyle.copyWith(
+            fontSize: 14,
+            fontWeight: FontWeight.w500, // Adjust this according to your style
+          ),
+        ),
+      );
+    } else {
+      // For the last part, show the actual numbers
+      if (length > i * 4) {
+        String part = cardNumber.substring(
+            i * 4, length > (i + 1) * 4 ? (i + 1) * 4 : length);
+        widgets.add(
+          Text(
+            part,
+            style: blackTextStyle.copyWith(
+              fontSize: 14,
+              fontWeight:
+                  FontWeight.w500, // Adjust this according to your style
+            ),
+          ),
+        );
+      } else {
+        // If there's no number to show, add an empty text widget
+        widgets.add(
+          Text(
+            '',
+            style: blackTextStyle.copyWith(
+              fontSize: 14,
+              fontWeight:
+                  FontWeight.w500, // Adjust this according to your style
+            ),
+          ),
+        );
+      }
+    }
+  }
 
   return widgets;
 }

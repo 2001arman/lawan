@@ -15,6 +15,9 @@ class PaymentAddCardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cardNumber = ''.obs;
+    var expired = ''.obs;
+    var name = ''.obs;
     return Scaffold(
       backgroundColor: kBackgroundColor,
       resizeToAvoidBottomInset: true,
@@ -52,14 +55,22 @@ class PaymentAddCardPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const CardWidget(
-            icon: "assets/icons/mastercard.svg",
-            expDate: "09/23",
-            cardNumber: '1234567812345678',
-            cardOwner: 'Malinna',
-            cardType: 'Debit Card',
+          Obx(
+            () => CardWidget(
+              icon: "assets/icons/mastercard.svg",
+              expDate: expired.value,
+              cardNumber: cardNumber.value,
+              cardOwner: name.value,
+              cardType: 'Debit Card',
+            ),
           ),
-          Expanded(child: _buildForm()),
+          Expanded(
+            child: _buildForm(
+              cardNumber: cardNumber,
+              expired: expired,
+              name: name,
+            ),
+          ),
           Container(
             margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             height: 48,
@@ -78,7 +89,11 @@ class PaymentAddCardPage extends StatelessWidget {
     );
   }
 
-  Widget _buildForm() {
+  Widget _buildForm({
+    required RxString cardNumber,
+    required RxString expired,
+    required RxString name,
+  }) {
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 10, 16, 0),
       child: SingleChildScrollView(
@@ -86,7 +101,6 @@ class PaymentAddCardPage extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         child: Form(
           key: ctrl.formKey,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: [
               CustomTextFormField(
@@ -94,10 +108,32 @@ class PaymentAddCardPage extends StatelessWidget {
                 controller: ctrl.cardNumberCtrl,
                 title: 'Card Number',
                 textInputType: TextInputType.number,
+                maxLength: 19,
+                onChanged: (value) {
+                  // Remove non-digit characters
+                  String digits = value.replaceAll(RegExp(r'\D'), '');
+
+                  // Format the card number
+                  StringBuffer formatted = StringBuffer();
+                  for (int i = 0; i < digits.length; i++) {
+                    if (i > 0 && i % 4 == 0) {
+                      formatted.write('-');
+                    }
+                    formatted.write(digits[i]);
+                  }
+
+                  // Update the text in the TextFormField
+                  ctrl.cardNumberCtrl.value = TextEditingValue(
+                    text: formatted.toString(),
+                    selection:
+                        TextSelection.collapsed(offset: formatted.length),
+                  );
+                  cardNumber.value = digits;
+                },
                 validator: (v) {
                   if (v!.isEmpty) {
                     return 'please fill out this field.';
-                  } else if (v.length != 16) {
+                  } else if (v.length != 19) {
                     return 'card number must be 16 digits.';
                   } else {
                     return null;
@@ -111,6 +147,7 @@ class PaymentAddCardPage extends StatelessWidget {
                       hintText: 'MM/YY',
                       controller: ctrl.expDateCtrl,
                       title: 'Expired Date',
+                      onChanged: (data) => expired.value = data,
                       validator: (v) {
                         if (v!.isEmpty) {
                           return 'please fill out this field.';
@@ -154,6 +191,7 @@ class PaymentAddCardPage extends StatelessWidget {
                 hintText: 'Name',
                 controller: ctrl.nameCtrl,
                 title: 'Name on Card',
+                onChanged: (data) => name.value = data,
                 validator: (v) {
                   if (v!.isEmpty) {
                     return 'please fill out this field.';

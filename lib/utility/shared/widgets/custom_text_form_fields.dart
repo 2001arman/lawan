@@ -19,6 +19,7 @@ class CustomTextFormField extends StatefulWidget {
     this.borderColor,
     this.prefix,
     this.showSuffix = false,
+    this.maxLength,
   });
 
   final String hintText;
@@ -33,6 +34,7 @@ class CustomTextFormField extends StatefulWidget {
   final double margin;
   final Color? borderColor;
   final bool showSuffix;
+  final int? maxLength;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -99,6 +101,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   ),
                 )
               : TextFormField(
+                  maxLength: widget.maxLength,
                   controller: widget.controller,
                   obscureText: widget.isPassword,
                   readOnly: widget.isReadOnly,
@@ -117,6 +120,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   style:
                       blackTextStyle.copyWith(fontWeight: medium, fontSize: 14),
                   decoration: InputDecoration(
+                    counterText: "",
                     prefixIcon: widget.prefix,
                     suffixIcon: Visibility(
                         visible: true,

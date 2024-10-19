@@ -53,11 +53,14 @@ class CardWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                cardOwner,
-                style: darkGreyTextStyle.copyWith(
-                  fontSize: 14,
-                  fontWeight: medium,
+              Expanded(
+                child: Text(
+                  cardOwner,
+                  style: darkGreyTextStyle.copyWith(
+                    fontSize: 14,
+                    fontWeight: medium,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Text(
