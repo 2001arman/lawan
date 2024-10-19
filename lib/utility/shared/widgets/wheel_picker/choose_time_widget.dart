@@ -79,6 +79,7 @@ class ChooseTimeWidget extends StatelessWidget {
             onTap: () => DialogWheelPicker.showChooseTimeDialog(
               startTime: openTime.value.hour,
               endTime: closeTime.value.hour,
+              totalHour: totalHour,
               onSave: (startTime, endTime) {
                 openTime.value = TimeOfDay(
                   hour: startTime,
