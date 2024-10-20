@@ -19,6 +19,7 @@ import '../../../../../utility/shared/widgets/wheel_picker/choose_time_widget.da
 import '../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
 import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
+import '../../../../domain/session/session_model.dart';
 
 class AdminAddSession {
   final SessionState state;
@@ -26,16 +27,14 @@ class AdminAddSession {
 
   AdminAddSession({required this.state, required this.logic});
 
-  Widget contentSection() {
+  Widget contentSection({SessionModel? sessionData}) {
     switch (state.selectedIndex.value) {
-      case 1:
-        return slotSection();
       case 2:
-        return arenaSection();
+        return arenaSection(sessionData: sessionData);
       case 3:
-        return detailSection();
+        return detailSection(sessionData: sessionData);
       default:
-        return slotSection();
+        return slotSection(sessionData: sessionData);
     }
   }
 
@@ -78,7 +77,18 @@ class AdminAddSession {
     );
   }
 
-  void createNewSession() {
+  void createNewSession({
+    SessionModel? sessionData,
+    int? dateIndex,
+    int? sessionIndex,
+  }) {
+    if (sessionData != null) {
+      state.selectedHour.value = sessionData.totalHour;
+      state.openTime.value = sessionData.startHour;
+      state.closeTime.value = sessionData.endHour;
+      state.selectedDate = sessionData.dateTime;
+    }
+
     Get.bottomSheet(
       Padding(
         padding: const EdgeInsets.all(8),
@@ -146,7 +156,7 @@ class AdminAddSession {
                       ],
                     ),
                   ),
-                  contentSection(),
+                  contentSection(sessionData: sessionData),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                     child: Row(
@@ -160,7 +170,11 @@ class AdminAddSession {
                         CustomButton(
                           title: 'Next',
                           isBlack: true,
-                          onTap: logic.handleNextButton,
+                          onTap: () => logic.handleNextButton(
+                            sessionData: sessionData,
+                            dateIndex: dateIndex,
+                            sessionIndex: sessionIndex,
+                          ),
                         ),
                       ],
                     ),
@@ -176,7 +190,14 @@ class AdminAddSession {
     ).whenComplete(() {});
   }
 
-  Widget detailSection() {
+  Widget detailSection({SessionModel? sessionData}) {
+    if (sessionData != null) {
+      state.firstNameController.text = sessionData.firstName;
+      state.lastNameController.text = sessionData.lastName;
+      state.contactController.text = sessionData.contactNumber;
+      state.identificationController.text = sessionData.identificationNumber;
+      state.priceController.text = sessionData.price.toString();
+    }
     return Expanded(
       child: ListView(
         padding: EdgeInsets.symmetric(horizontal: defaultMargin),
@@ -281,7 +302,7 @@ class AdminAddSession {
     );
   }
 
-  Widget slotSection() {
+  Widget slotSection({SessionModel? sessionData}) {
     return Expanded(
       child: ListView(
         children: [
@@ -354,6 +375,7 @@ class AdminAddSession {
               cellColor: kWhiteColor,
               cellMargin: 3,
               onDaySelected: (data) => state.selectedDate = data,
+              selectedDays: state.selectedDate,
             ),
           ),
           const SizedBox(height: 6),
@@ -407,7 +429,13 @@ class AdminAddSession {
     );
   }
 
-  Widget arenaSection() {
+  Widget arenaSection({SessionModel? sessionData}) {
+    if (sessionData != null) {
+      state.selectedArenaIndex.value =
+          logic.arenaDataSource.getArenaIndex(arena: sessionData.arena);
+      state.selectedCourtIndex.value = sessionData.selectedCourt;
+      state.selectedDate = sessionData.dateTime;
+    }
     return Expanded(
       child: ListView(
         padding: EdgeInsets.symmetric(horizontal: defaultMargin),
@@ -471,6 +499,10 @@ class AdminAddSession {
                       child: SelectFieldImageWidget(
                         arenaModel: data.value,
                         isSelected: data.key == state.selectedArenaIndex.value,
+                        selectedCourt: sessionData != null &&
+                                data.key == state.selectedArenaIndex.value
+                            ? state.selectedCourtIndex.value
+                            : null,
                         onChangeCourt: (courtIndex) =>
                             state.selectedCourtIndex.value = courtIndex,
                       ),

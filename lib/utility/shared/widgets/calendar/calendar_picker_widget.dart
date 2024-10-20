@@ -13,7 +13,7 @@ final kLastDay = DateTime(kToday.year + 1, kToday.month, kToday.day);
 
 // Add your disabled dates here
 final List<DateTime> disabledDates = [
-  DateTime(kToday.year, kToday.month, kToday.day + 1), // Example disabled date
+  DateTime(kToday.year, kToday.month, kToday.day + 9), // Example disabled date
   DateTime(kToday.year, kToday.month, 15), // Example disabled date
   // Add more dates as needed
 ];
@@ -29,6 +29,7 @@ class CalendarPickerWidget extends StatefulWidget {
   CalendarFormat calendarMode;
   final Color? cellColor;
   final double cellMargin;
+  final DateTime? selectedDays; // Nullable argument for selected days
 
   CalendarPickerWidget({
     super.key,
@@ -37,6 +38,7 @@ class CalendarPickerWidget extends StatefulWidget {
     this.cellColor,
     this.cellMargin = 6.0,
     required this.onDaySelected,
+    this.selectedDays, // Add the selectedDays to the constructor
   });
 
   @override
@@ -44,11 +46,7 @@ class CalendarPickerWidget extends StatefulWidget {
 }
 
 class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
-  final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
-    equals: isSameDay,
-    hashCode: getHashCode,
-  );
-
+  late Set<DateTime> _selectedDays; // Declare _selectedDays as a late variable
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -77,8 +75,11 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
   @override
   void initState() {
     super.initState();
-    _selectedDays.clear();
-    _selectedDays.add(kToday);
+    // If selectedDays is provided, use it; otherwise, default to today's date
+    _selectedDays = LinkedHashSet<DateTime>(
+      equals: isSameDay,
+      hashCode: getHashCode,
+    )..add(widget.selectedDays ?? kToday);
   }
 
   @override

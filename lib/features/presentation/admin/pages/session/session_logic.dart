@@ -44,8 +44,18 @@ class SessionLogic extends GetxController {
   }) {
     AdminSessionBottomSheet().showDetailSessionSheet(
       sessionData: sessionData,
-      onDelete: () =>
-          deleteSession(dateIndex: dateIndex, sessionIndex: sessionIndex),
+      onDelete: () => deleteSession(
+        dateIndex: dateIndex,
+        sessionIndex: sessionIndex,
+      ),
+      onUpdate: () {
+        Get.back();
+        AdminAddSession(state: state, logic: this).createNewSession(
+          sessionData: sessionData,
+          dateIndex: dateIndex,
+          sessionIndex: sessionIndex,
+        );
+      },
     );
   }
 
@@ -56,13 +66,27 @@ class SessionLogic extends GetxController {
   PageController setController(PageController controller) =>
       state.pageController = controller;
 
-  void handleNextButton() {
+  void handleNextButton({
+    SessionModel? sessionData,
+    int? dateIndex,
+    int? sessionIndex,
+  }) {
     if (state.selectedIndex.value == 3) {
       Get.back();
       CustomDialogSuccess.confirmDialog(
-        actionType: ActionType.booking,
+        actionType: sessionData != null ? ActionType.edit : ActionType.booking,
         onAction: () {
-          createSession();
+          String title = 'Session Succesfully Created';
+          if (sessionData != null) {
+            updateSession(
+              sessionData: sessionData,
+              dateIndex: dateIndex!,
+              sessionIndex: sessionIndex!,
+            );
+            title = 'Session Succesfully Updated';
+          } else {
+            createSession();
+          }
           Get.back();
           AdminSessionBottomSheet().successCreateSesssionSheet(
             arenaModel: arenaDataSource.getArena(
@@ -70,6 +94,7 @@ class SessionLogic extends GetxController {
             ),
             selectedCourt: state.selectedCourtIndex.value,
             session: factorySession(),
+            title: title,
           );
           resetState();
         },
@@ -124,6 +149,34 @@ class SessionLogic extends GetxController {
         ),
       );
     }
+    state.listSession.refresh();
+  }
+
+  void updateSession({
+    required SessionModel sessionData,
+    required int dateIndex,
+    required int sessionIndex,
+  }) {
+    int indexDate = state.listSession.indexWhere(
+      (session) =>
+          session.date ==
+          DateFormat('dd MMM').format(factorySession().dateTime),
+    );
+    if (indexDate != -1) {
+      state.listSession[indexDate].sessionsData.add(factorySession());
+    } else {
+      state.listSession.add(
+        SessionDate(
+          date: DateFormat('dd MMM')
+              .format(factorySession().dateTime), // Date as '23 Sep'
+          dayName: Helper.formatDayName(factorySession().dateTime.day),
+          sessionsData: [
+            factorySession(),
+          ],
+        ),
+      );
+    }
+    state.listSession[dateIndex].sessionsData.removeAt(sessionIndex);
     state.listSession.refresh();
   }
 

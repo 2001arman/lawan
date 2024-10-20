@@ -17,8 +17,11 @@ import '../../../../domain/arena/arena_model.dart';
 import '../../../../domain/session/session_model.dart';
 
 class AdminSessionBottomSheet {
-  void sessionContainerSheet(
-      {required Widget widgetContent, required VoidCallback onDelete}) {
+  void sessionContainerSheet({
+    required Widget widgetContent,
+    required VoidCallback onDelete,
+    required VoidCallback onUpdate,
+  }) {
     Get.bottomSheet(
       Padding(
         padding: const EdgeInsets.all(8),
@@ -89,7 +92,7 @@ class AdminSessionBottomSheet {
                         ),
                         const SizedBox(width: 16),
                         CircleButtonTransparentWidget(
-                          onTap: () {},
+                          onTap: onUpdate,
                           borderColor: kGreyColor,
                           widget: SvgPicture.asset('assets/icons/pencil.svg'),
                         ),
@@ -132,9 +135,11 @@ class AdminSessionBottomSheet {
   void showDetailSessionSheet({
     required SessionModel sessionData,
     required VoidCallback onDelete,
+    required VoidCallback onUpdate,
   }) {
     return sessionContainerSheet(
       onDelete: onDelete,
+      onUpdate: onUpdate,
       widgetContent: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -248,6 +253,7 @@ class AdminSessionBottomSheet {
     required SessionModel session,
     bool successCreate = true,
     bool showPill = false,
+    String title = 'Session Succesfully Created',
   }) {
     if (successCreate) {
       Helper.showToast(isSuccess: true, message: 'Success created session');
@@ -255,6 +261,7 @@ class AdminSessionBottomSheet {
 
     return sessionContainerSheet(
       onDelete: () {},
+      onUpdate: () {},
       widgetContent: SizedBox(
         width: Get.width,
         child: Column(
@@ -291,7 +298,7 @@ class AdminSessionBottomSheet {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Session Succesfully Created',
+                    title,
                     style: darkGreyTextStyle.copyWith(fontWeight: medium),
                   ),
                 ],

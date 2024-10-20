@@ -16,6 +16,10 @@ class ArenaDataSource {
     return listArena[index];
   }
 
+  int getArenaIndex({required ArenaModel arena}) {
+    return listArena.indexWhere((data) => data == arena);
+  }
+
   List<CourtModel> getCourt({required int indexArena}) {
     return listArena[indexArena].courtData;
   }
