@@ -221,6 +221,101 @@ class CustomDialog {
     );
   }
 
+  static Future<void> chooseMonth({
+    required int selectedMonth,
+    required Function(int index) onSelected,
+  }) {
+    // List of month names
+    List<String> monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+
+    TextStyle textStyle =
+        blackTextStyle.copyWith(fontSize: 14, height: 1.5, fontFamily: 'Lufga');
+
+    var startWheel = WheelPickerController(
+      itemCount: monthNames.length, // Adjust for month names
+      initialIndex:
+          selectedMonth - 1, // Use zero-based index for month selection
+    );
+
+    return Get.dialog(
+      Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Container(
+          width: Get.width * .8,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: kWhiteColor,
+            borderRadius: BorderRadius.circular(32),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 160,
+                width: double.infinity,
+                child: WheelPicker(
+                  builder: (context, index) => Text(
+                    // Display the corresponding month name
+                    monthNames[index],
+                    style: textStyle.copyWith(
+                      fontFamily: 'Lufga',
+                    ),
+                  ),
+                  controller: startWheel,
+                  selectedIndexColor: Colors.black,
+                  looping: false,
+                  style: WheelPickerStyle(
+                    itemExtent:
+                        textStyle.fontSize! * textStyle.height!, // Text height
+                    squeeze: 0.9,
+                    diameterRatio: 1,
+                    surroundingOpacity: .25,
+                    magnification: 1.2,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomButton(
+                    isBlack: false,
+                    onTap: Get.back,
+                    title: 'Cancel',
+                    borderColor: kGreyColor,
+                  ),
+                  const SizedBox(width: 16),
+                  CustomButton(
+                    isBlack: true,
+                    onTap: () {
+                      onSelected(startWheel.selected + 3);
+                      Get.back();
+                    },
+                    title: 'Okay',
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget receiptDetailValue({required String title, required String value}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

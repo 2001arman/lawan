@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lawan/features/domain/session/session_model.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../../utility/util/helper.dart';
 
@@ -11,6 +12,8 @@ class SessionState {
   PageController pageController = PageController();
   List<int> optionHour = [1, 2, 3, 4, 5];
 
+  var calendarFormat = CalendarFormat.week.obs;
+
   // arena
   var activeAlignment = Alignment.centerLeft.obs;
   var tabActive = 'Indoor'.obs;
@@ -18,7 +21,6 @@ class SessionState {
     'Indoor',
     'Outdoor',
   ];
-  final ValueNotifier<DateTime> focusedDay = ValueNotifier(DateTime.now());
 
   var listSession = List.generate(
     7,

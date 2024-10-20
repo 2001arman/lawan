@@ -4,7 +4,6 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:lawan/features/presentation/player/ui/player_add_player_bottom_sheet.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
@@ -15,10 +14,10 @@ import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_age_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_slot_widget.dart';
 import 'package:lawan/utility/util/dialog_filter.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../../utility/shared/constants/constants_ui.dart';
-import '../../../../../utility/shared/widgets/calendar_picker_widget.dart';
+import '../../../../utility/shared/widgets/calendar/calendar_month_widget.dart';
+import '../../../../utility/shared/widgets/calendar/calendar_picker_widget.dart';
 import '../../../../utility/shared/widgets/wheel_picker/choose_time_widget.dart';
 import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
@@ -568,35 +567,12 @@ class PlayerAddSession {
             padding: EdgeInsets.symmetric(horizontal: defaultMargin),
             child: Row(
               children: [
-                CustomButton(
-                  isBlack: true,
-                  onTap: () {},
-                  widget: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/calendar.svg',
-                          color: kWhiteColor,
-                        ),
-                        const SizedBox(width: 8),
-                        ValueListenableBuilder<DateTime>(
-                          valueListenable: focusedDayData,
-                          builder: (context, value, _) => Text(
-                            DateFormat.MMMM().format(value),
-                            style: whiteTextStyle.copyWith(fontWeight: medium),
-                          ),
-                        ),
-                        const Spacer(),
-                        Image.asset(
-                          'assets/icons/arrow_up_down.png',
-                          width: 20,
-                          height: 20,
-                          color: kWhiteColor,
-                        ),
-                      ],
-                    ),
+                CalendarMonthWidget(
+                  calendarFormat: state.calendarFormat,
+                  onSelected: (index) => state.pageController.animateToPage(
+                    index,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
                   ),
                 ),
                 SizedBox(width: defaultMargin),
@@ -629,12 +605,14 @@ class PlayerAddSession {
           SizedBox(height: defaultMargin),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-            child: CalendarPickerWidget(
-              pageController: logic.setController,
-              calendarMode: CalendarFormat.month,
-              cellColor: kWhiteColor,
-              cellMargin: 3,
-              onDaySelected: (data) => state.selectedDate = data,
+            child: Obx(
+              () => CalendarPickerWidget(
+                pageController: logic.setController,
+                calendarMode: state.calendarFormat.value,
+                cellColor: kWhiteColor,
+                cellMargin: 3,
+                onDaySelected: (data) => state.selectedDate = data,
+              ),
             ),
           ),
 

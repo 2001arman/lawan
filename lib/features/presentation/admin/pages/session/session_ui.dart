@@ -3,15 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:lawan/features/presentation/admin/pages/session/session_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
-import 'package:lawan/utility/shared/widgets/calendar_picker_widget.dart';
+import 'package:lawan/utility/shared/widgets/calendar/calendar_picker_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
-import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_circle_button.dart';
 import 'package:lawan/utility/shared/widgets/session_item_card.dart';
-import 'package:table_calendar/table_calendar.dart';
+
+import '../../../../../utility/shared/widgets/calendar/calendar_month_widget.dart';
 
 class SessionUi extends StatelessWidget {
   SessionUi({super.key});
@@ -49,10 +48,13 @@ class SessionUi extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               CircleButtonTransparentWidget(
-                onTap: () => state.pageController.nextPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut,
-                ),
+                onTap: () {
+                  state.pageController.nextPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  );
+                  // focusedDayData.
+                },
                 widget: Center(
                   child: SvgPicture.asset(
                     'assets/icons/forward.svg',
@@ -64,36 +66,12 @@ class SessionUi extends StatelessWidget {
                 borderColor: kGreyColor,
               ),
               SizedBox(width: defaultMargin),
-              CustomButton(
-                isBlack: true,
-                onTap: () {},
-                widget: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.date_range,
-                        color: kMidgreyColor,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 8),
-                      ValueListenableBuilder<DateTime>(
-                        valueListenable: focusedDayData,
-                        builder: (context, value, _) => Text(
-                          DateFormat.MMMM().format(value),
-                          style: whiteTextStyle.copyWith(fontWeight: medium),
-                        ),
-                      ),
-                      const Spacer(),
-                      Image.asset(
-                        'assets/icons/arrow_up_down.png',
-                        width: 20,
-                        height: 20,
-                        color: kWhiteColor,
-                      ),
-                    ],
-                  ),
+              CalendarMonthWidget(
+                calendarFormat: state.calendarFormat,
+                onSelected: (index) => state.pageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
                 ),
               ),
               SizedBox(width: defaultMargin),
@@ -103,10 +81,12 @@ class SessionUi extends StatelessWidget {
             ],
           ),
         ),
-        CalendarPickerWidget(
-          pageController: logic.setController,
-          calendarMode: CalendarFormat.week,
-          onDaySelected: (_) {},
+        Obx(
+          () => CalendarPickerWidget(
+            pageController: logic.setController,
+            calendarMode: state.calendarFormat.value,
+            onDaySelected: (_) {},
+          ),
         ),
         Container(
           width: 40,

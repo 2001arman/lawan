@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../constants/constants_ui.dart';
+import '../../constants/constants_ui.dart';
 
 final kToday = DateTime.now();
-final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
+final kFirstDay = DateTime(kToday.year - 1, kToday.month, kToday.day);
 final ValueNotifier<DateTime> focusedDayData = ValueNotifier(DateTime.now());
-final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
+final kLastDay = DateTime(kToday.year + 1, kToday.month, kToday.day);
 
 // Add your disabled dates here
 final List<DateTime> disabledDates = [

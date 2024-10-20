@@ -4,9 +4,8 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
-import 'package:lawan/utility/shared/widgets/calendar_picker_widget.dart';
+import 'package:lawan/utility/shared/widgets/calendar/calendar_picker_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -14,6 +13,7 @@ import '../shared/constants/action_type.dart';
 import '../shared/constants/arena_type.dart';
 import '../shared/constants/constants_ui.dart';
 import '../shared/widgets/buttons/custom_button.dart';
+import '../shared/widgets/calendar/calendar_month_widget.dart';
 import '../shared/widgets/selected_container_widget.dart';
 import '../shared/widgets/wheel_picker/choose_time_widget.dart';
 
@@ -310,6 +310,7 @@ class CustomDialogSuccess {
     var closeTime = const TimeOfDay(hour: 10, minute: 00).obs;
     List<int> listHour = [1, 2, 3, 4, 5];
     var selectedHour = 1.obs;
+    var calendarFormat = CalendarFormat.month.obs;
 
     Get.dialog(
       Dialog(
@@ -365,36 +366,12 @@ class CustomDialogSuccess {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    CustomButton(
-                      isBlack: true,
-                      onTap: () {},
-                      widget: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/calendar.svg',
-                              color: kWhiteColor,
-                            ),
-                            const SizedBox(width: 8),
-                            ValueListenableBuilder<DateTime>(
-                              valueListenable: focusedDayData,
-                              builder: (context, value, _) => Text(
-                                DateFormat.MMMM().format(value),
-                                style:
-                                    whiteTextStyle.copyWith(fontWeight: medium),
-                              ),
-                            ),
-                            const Spacer(),
-                            Image.asset(
-                              'assets/icons/arrow_up_down.png',
-                              width: 20,
-                              height: 20,
-                              color: kWhiteColor,
-                            ),
-                          ],
-                        ),
+                    CalendarMonthWidget(
+                      calendarFormat: calendarFormat,
+                      onSelected: (index) => pageController.animateToPage(
+                        index,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
                       ),
                     ),
                     SizedBox(width: defaultMargin),
@@ -424,12 +401,14 @@ class CustomDialogSuccess {
                   ],
                 ),
                 SizedBox(height: defaultMargin),
-                CalendarPickerWidget(
-                  pageController: (controller) => pageController = controller,
-                  calendarMode: CalendarFormat.month,
-                  cellColor: kWhiteColor,
-                  cellMargin: 3,
-                  onDaySelected: (data) {},
+                Obx(
+                  () => CalendarPickerWidget(
+                    pageController: (controller) => pageController = controller,
+                    calendarMode: calendarFormat.value,
+                    cellColor: kWhiteColor,
+                    cellMargin: 3,
+                    onDaySelected: (data) {},
+                  ),
                 ),
 
                 const SizedBox(height: 8),

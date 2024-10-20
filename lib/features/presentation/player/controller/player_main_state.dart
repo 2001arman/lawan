@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/domain/session/session_model.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 import '../../../domain/session/avatar_model.dart';
 
@@ -15,6 +16,7 @@ class PlayerMainState {
   ];
 
   // add new session
+  var calendarFormat = CalendarFormat.month.obs;
   PageController pageController = PageController();
   var selectedIndex = 1.obs;
   // create Arena
