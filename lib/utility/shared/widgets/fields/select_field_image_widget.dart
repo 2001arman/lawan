@@ -151,64 +151,69 @@ class _SelectFieldImageWidgetState extends State<SelectFieldImageWidget> {
               ),
             ),
           ),
-          Visibility(
-            visible: widget.arenaModel.courtData.length > 1,
-            child: Column(
-              children: [
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/arena.svg',
-                      color: kMidgreyColor,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Choose Court',
-                      style: darkGreyTextStyle,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: widget.arenaModel.courtData
-                        .asMap()
-                        .entries
-                        .map(
-                          (court) => CircleButtonWidget(
-                            widget: Center(
-                              child: Text(
-                                court.value.courtName,
-                                style: whiteTextStyle.copyWith(
-                                  color: court.key == selectedCourtIndex
-                                      ? kWhiteColor
-                                      : kBlackColor,
+          AnimatedSize(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: Visibility(
+              visible:
+                  widget.arenaModel.courtData.length > 1 && widget.isSelected,
+              child: Column(
+                children: [
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/arena.svg',
+                        color: kMidgreyColor,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Choose Court',
+                        style: darkGreyTextStyle,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: widget.arenaModel.courtData
+                          .asMap()
+                          .entries
+                          .map(
+                            (court) => CircleButtonWidget(
+                              widget: Center(
+                                child: Text(
+                                  court.value.courtName,
+                                  style: whiteTextStyle.copyWith(
+                                    color: court.key == selectedCourtIndex
+                                        ? kWhiteColor
+                                        : kBlackColor,
+                                  ),
                                 ),
                               ),
+                              margin: const EdgeInsets.only(right: 12),
+                              borderColor: court.key != selectedCourtIndex
+                                  ? kGreyColor
+                                  : Colors.transparent,
+                              onTap: () {
+                                widget.onChangeCourt(court.key);
+                                setState(() {
+                                  selectedCourtIndex = court.key;
+                                  path = widget.arenaModel.courtData[court.key]
+                                      .pictures.first.path;
+                                });
+                              },
+                              isActive: court.key == selectedCourtIndex,
                             ),
-                            margin: const EdgeInsets.only(right: 12),
-                            borderColor: court.key != selectedCourtIndex
-                                ? kGreyColor
-                                : Colors.transparent,
-                            onTap: () {
-                              widget.onChangeCourt(court.key);
-                              setState(() {
-                                selectedCourtIndex = court.key;
-                                path = widget.arenaModel.courtData[court.key]
-                                    .pictures.first.path;
-                              });
-                            },
-                            isActive: court.key == selectedCourtIndex,
-                          ),
-                        )
-                        .toList(),
+                          )
+                          .toList(),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
-              ],
+                  const SizedBox(height: 12),
+                ],
+              ),
             ),
           )
         ],
