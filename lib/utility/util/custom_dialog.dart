@@ -165,13 +165,12 @@ class CustomDialog {
                   Icons.search,
                   color: kDarkgreyColor,
                 ),
-                suffix: Obx(
-                  () => textInput.value != ''
-                      ? Icon(
-                          Icons.highlight_remove_outlined,
-                          color: kDarkgreyColor,
-                        )
-                      : const SizedBox(),
+                suffix: GestureDetector(
+                  onTap: () => nameController.text = '',
+                  child: Icon(
+                    Icons.highlight_remove_outlined,
+                    color: kDarkgreyColor,
+                  ),
                 ),
               ),
               SizedBox(
