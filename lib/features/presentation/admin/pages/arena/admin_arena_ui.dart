@@ -25,127 +25,255 @@ class AdminArenaUi extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget arenaHourSection() {
       return Obx(
-        () => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Standard Hours',
-              style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              'Standard hours of operation for this arena',
-              style: darkGreyTextStyle.copyWith(fontSize: 12),
-            ),
-            const SizedBox(height: 8),
-            Column(
-              children: state.selectedCourt.value.operationalHours
-                  .map(
-                    (data) => Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(data.dayName, style: darkGreyTextStyle),
-                            const Spacer(),
-                            Text(data.isActive.value ? 'Open' : 'Closed',
-                                style: darkGreyTextStyle),
-                            SizedBox(
-                              height: 30,
-                              width: 50,
-                              child: FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child: Switch(
-                                  value: data.isActive.value,
-                                  onChanged: (active) {
-                                    data.isActive.value = active;
-                                  },
-                                  activeColor: kWhiteColor,
-                                  activeTrackColor: kGreenColor,
-                                  inactiveThumbColor: kDarkgreyColor,
-                                  inactiveTrackColor: Colors.transparent,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        if (data.isActive.value) const SizedBox(height: 8),
-                        Visibility(
-                          visible: data.isActive.value,
-                          child: Row(
+        () => Padding(
+          padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Standard Hours',
+                style:
+                    blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                'Standard hours of operation for this arena',
+                style: darkGreyTextStyle.copyWith(fontSize: 12),
+              ),
+              const SizedBox(height: 8),
+              Column(
+                children: state.selectedCourt.value.operationalHours
+                    .map(
+                      (data) => Column(
+                        children: [
+                          Row(
                             children: [
-                              Expanded(
-                                child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(80),
-                                    color: kWhiteColor,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/clock.png',
-                                        width: 16,
-                                        height: 16,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        Helper.formatTime12Hour(
-                                            data.openTime.value),
-                                        style: blackTextStyle.copyWith(
-                                            fontWeight: medium),
-                                      ),
-                                      const Spacer(),
-                                      Image.asset(
-                                          'assets/icons/arrow_up_down.png',
-                                          width: 20,
-                                          height: 20),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                child: Text(
-                                  'to',
-                                  style: darkGreyTextStyle,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(80),
-                                    color: kWhiteColor,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/clock.png',
-                                        width: 16,
-                                        height: 16,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        Helper.formatTime12Hour(
-                                            data.closeTIme.value),
-                                        style: blackTextStyle.copyWith(
-                                            fontWeight: medium),
-                                      ),
-                                      const Spacer(),
-                                      Image.asset(
-                                        'assets/icons/arrow_up_down.png',
-                                        width: 20,
-                                        height: 20,
-                                      ),
-                                    ],
+                              Text(data.dayName, style: darkGreyTextStyle),
+                              const Spacer(),
+                              Text(data.isActive.value ? 'Open' : 'Closed',
+                                  style: darkGreyTextStyle),
+                              SizedBox(
+                                height: 30,
+                                width: 50,
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Switch(
+                                    value: data.isActive.value,
+                                    onChanged: (active) {
+                                      data.isActive.value = active;
+                                    },
+                                    activeColor: kWhiteColor,
+                                    activeTrackColor: kGreenColor,
+                                    inactiveThumbColor: kDarkgreyColor,
+                                    inactiveTrackColor: Colors.transparent,
                                   ),
                                 ),
                               ),
                             ],
                           ),
+                          if (data.isActive.value) const SizedBox(height: 8),
+                          Visibility(
+                            visible: data.isActive.value,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(80),
+                                      color: kWhiteColor,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/clock.png',
+                                          width: 16,
+                                          height: 16,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          Helper.formatTime12Hour(
+                                              data.openTime.value),
+                                          style: blackTextStyle.copyWith(
+                                              fontWeight: medium),
+                                        ),
+                                        const Spacer(),
+                                        Image.asset(
+                                            'assets/icons/arrow_up_down.png',
+                                            width: 20,
+                                            height: 20),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  child: Text(
+                                    'to',
+                                    style: darkGreyTextStyle,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(80),
+                                      color: kWhiteColor,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/clock.png',
+                                          width: 16,
+                                          height: 16,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          Helper.formatTime12Hour(
+                                              data.closeTIme.value),
+                                          style: blackTextStyle.copyWith(
+                                              fontWeight: medium),
+                                        ),
+                                        const Spacer(),
+                                        Image.asset(
+                                          'assets/icons/arrow_up_down.png',
+                                          width: 20,
+                                          height: 20,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                        ],
+                      ),
+                    )
+                    .toList(),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    Widget arenaRateSection() {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Court Rate ',
+              style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              'Customize to fit your needs',
+              style: darkGreyTextStyle.copyWith(fontSize: 12),
+            ),
+            const SizedBox(height: 16),
+            Column(
+              children: state.selectedCourt.value.rateArena
+                  .map(
+                    (data) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(data.name, style: darkGreyTextStyle),
+                        const SizedBox(height: 4),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(80),
+                                  color: kWhiteColor,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'RM',
+                                      style: blackTextStyle,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      '${data.price}',
+                                      style: blackTextStyle.copyWith(
+                                          fontWeight: medium),
+                                    ),
+                                    const Spacer(),
+                                    Image.asset(
+                                        'assets/icons/arrow_up_down.png',
+                                        width: 20,
+                                        height: 20),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(80),
+                                  color: kWhiteColor,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      data.hour.toStringAsPrecision(1),
+                                      style: blackTextStyle.copyWith(
+                                          fontWeight: medium),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Hour',
+                                      style: blackTextStyle,
+                                    ),
+                                    const Spacer(),
+                                    Image.asset(
+                                      'assets/icons/arrow_up_down.png',
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 8),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          margin: EdgeInsets.symmetric(vertical: defaultMargin),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(32),
+                            gradient: mainGradient,
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Listing Price',
+                                style: midGreyTextStyle.copyWith(fontSize: 12),
+                              ),
+                              Text(
+                                'RM${data.finalPrice}',
+                                style: whiteTextStyle.copyWith(
+                                    fontSize: 24, fontWeight: semiBold),
+                              ),
+                              Text(
+                                '20% hosting fee by Lawan included',
+                                style: greyTextStyle.copyWith(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   )
@@ -153,125 +281,6 @@ class AdminArenaUi extends StatelessWidget {
             ),
           ],
         ),
-      );
-    }
-
-    Widget arenaRateSection() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Court Rate ',
-            style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            'Customize to fit your needs',
-            style: darkGreyTextStyle.copyWith(fontSize: 12),
-          ),
-          const SizedBox(height: 16),
-          Column(
-            children: state.selectedCourt.value.rateArena
-                .map(
-                  (data) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(data.name, style: darkGreyTextStyle),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(80),
-                                color: kWhiteColor,
-                              ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'RM',
-                                    style: blackTextStyle,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    '${data.price}',
-                                    style: blackTextStyle.copyWith(
-                                        fontWeight: medium),
-                                  ),
-                                  const Spacer(),
-                                  Image.asset('assets/icons/arrow_up_down.png',
-                                      width: 20, height: 20),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(80),
-                                color: kWhiteColor,
-                              ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    data.hour.toStringAsPrecision(1),
-                                    style: blackTextStyle.copyWith(
-                                        fontWeight: medium),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    'Hour',
-                                    style: blackTextStyle,
-                                  ),
-                                  const Spacer(),
-                                  Image.asset(
-                                    'assets/icons/arrow_up_down.png',
-                                    width: 20,
-                                    height: 20,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        margin: EdgeInsets.symmetric(vertical: defaultMargin),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(32),
-                          gradient: mainGradient,
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              'Listing Price',
-                              style: midGreyTextStyle.copyWith(fontSize: 12),
-                            ),
-                            Text(
-                              'RM${data.finalPrice}',
-                              style: whiteTextStyle.copyWith(
-                                  fontSize: 24, fontWeight: semiBold),
-                            ),
-                            Text(
-                              '20% hosting fee by Lawan included',
-                              style: greyTextStyle.copyWith(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )
-                .toList(),
-          ),
-        ],
       );
     }
 
