@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:intl/intl.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
@@ -35,10 +36,10 @@ class CalendarMonthWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.date_range,
-                  color: kMidgreyColor,
-                  size: 18,
+                SvgPicture.asset(
+                  'assets/icons/calendar.svg',
+                  // ignore: deprecated_member_use
+                  color: kWhiteColor,
                 ),
                 const SizedBox(width: 8),
                 Text(
