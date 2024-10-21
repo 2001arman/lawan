@@ -69,10 +69,24 @@ class Helper {
       return 'Field cannot be empty';
     }
 
-    // Updated regex to allow spaces along with alphabets and numbers
-    final regex = RegExp(r'^[a-zA-Z0-9\s]+$');
+    // Updated regex to allow only alphabets and spaces (no numbers)
+    final regex = RegExp(r'^[a-zA-Z\s]+$');
     if (!regex.hasMatch(data)) {
-      return 'Only alphabets, numbers, and spaces are allowed';
+      return 'Only alphabets and spaces are allowed';
+    }
+
+    return null;
+  }
+
+  static String? numberValidator(String? data) {
+    if (data == null || data.isEmpty) {
+      return 'Field cannot be empty';
+    }
+
+    // Updated regex to allow only numbers, commas, and periods
+    final regex = RegExp(r'^[0-9,.]+$');
+    if (!regex.hasMatch(data)) {
+      return 'Only numbers, commas, and periods are allowed';
     }
 
     return null;

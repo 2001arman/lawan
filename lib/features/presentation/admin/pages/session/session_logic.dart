@@ -76,6 +76,9 @@ class SessionLogic extends GetxController {
         Helper.showToast(isSuccess: false, message: 'Please choose arena');
         return;
       }
+      final validator = state.textFormKey.currentState!.validate();
+      if (!validator) return;
+
       Get.back();
       CustomDialogSuccess.confirmDialog(
         actionType: sessionData != null ? ActionType.edit : ActionType.booking,

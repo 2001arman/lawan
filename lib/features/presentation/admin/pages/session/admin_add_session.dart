@@ -19,6 +19,7 @@ import '../../../../../utility/shared/widgets/wheel_picker/choose_time_widget.da
 import '../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
 import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
+import '../../../../../utility/util/helper.dart';
 import '../../../../domain/session/session_model.dart';
 
 class AdminAddSession {
@@ -199,105 +200,113 @@ class AdminAddSession {
       state.priceController.text = sessionData.price.toString();
     }
     return Expanded(
-      child: ListView(
-        padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-        children: [
-          SizedBox(height: defaultMargin),
-          Text(
-            'Add Manual Booking',
-            style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            'Sync with online booking. Key in the details below.',
-            style: darkGreyTextStyle.copyWith(fontSize: 12),
-          ),
-          const SizedBox(height: 12),
-          CustomTextFormField(
-            hintText: 'First Name',
-            controller: state.firstNameController,
-            title: 'First Name',
-          ),
-          CustomTextFormField(
-            hintText: 'Last Name / Family Name',
-            controller: state.lastNameController,
-            title: 'Last Name',
-          ),
-          Text(
-            'Contact Number',
-            style: darkGreyTextStyle.copyWith(
-              fontSize: 14,
+      child: Form(
+        key: state.textFormKey,
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+          children: [
+            SizedBox(height: defaultMargin),
+            Text(
+              'Add Manual Booking',
+              style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
             ),
-          ),
-          const SizedBox(height: 4),
-          Row(
-            children: [
-              SizedBox(
-                width: Get.width * 0.25,
-                child: CustomTextFormField(
-                  hintText: '+60',
-                  controller: TextEditingController(),
-                  prefix: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 10,
-                      bottom: 10,
-                      left: 0,
-                      right: 0,
-                    ),
-                    child: Image.asset(
-                      'assets/images/malaysia.png',
-                      width: 16,
-                      height: 16,
+            const SizedBox(height: 2),
+            Text(
+              'Sync with online booking. Key in the details below.',
+              style: darkGreyTextStyle.copyWith(fontSize: 12),
+            ),
+            const SizedBox(height: 12),
+            CustomTextFormField(
+              hintText: 'First Name',
+              controller: state.firstNameController,
+              title: 'First Name',
+              validator: (data) => Helper.regularValidator(data),
+            ),
+            CustomTextFormField(
+              hintText: 'Last Name / Family Name',
+              controller: state.lastNameController,
+              title: 'Last Name',
+              validator: (data) => Helper.regularValidator(data),
+            ),
+            Text(
+              'Contact Number',
+              style: darkGreyTextStyle.copyWith(
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                SizedBox(
+                  width: Get.width * 0.25,
+                  child: CustomTextFormField(
+                    hintText: '+60',
+                    controller: TextEditingController(),
+                    prefix: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                        bottom: 10,
+                        left: 0,
+                        right: 0,
+                      ),
+                      child: Image.asset(
+                        'assets/images/malaysia.png',
+                        width: 16,
+                        height: 16,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: CustomTextFormField(
-                  hintText: '12 345 6789',
-                  controller: state.contactController,
-                  textInputType: TextInputType.number,
-                ),
-              ),
-            ],
-          ),
-          CustomTextFormField(
-            hintText: 'Enter Identification Number',
-            controller: state.identificationController,
-            title: 'Identification Number',
-            textInputType: TextInputType.number,
-            prefix: Padding(
-              padding: const EdgeInsets.only(
-                top: 10,
-                bottom: 10,
-                left: 16,
-                right: 8,
-              ),
-              child: SvgPicture.asset(
-                'assets/icons/identification.svg',
-                width: 24,
-                height: 24,
-              ),
-            ),
-          ),
-          CustomTextFormField(
-            hintText: '0.00',
-            controller: state.priceController,
-            textInputType: TextInputType.number,
-            title: 'Price',
-            prefix: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'RM',
-                  style: midGreyTextStyle.copyWith(
-                      fontSize: 14, fontWeight: FontWeight.normal),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: CustomTextFormField(
+                    hintText: '12 345 6789',
+                    controller: state.contactController,
+                    textInputType: TextInputType.number,
+                    validator: (data) => Helper.numberValidator(data),
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
+            CustomTextFormField(
+              hintText: 'Enter Identification Number',
+              controller: state.identificationController,
+              title: 'Identification Number',
+              textInputType: TextInputType.number,
+              validator: (data) => Helper.numberValidator(data),
+              prefix: Padding(
+                padding: const EdgeInsets.only(
+                  top: 10,
+                  bottom: 10,
+                  left: 16,
+                  right: 8,
+                ),
+                child: SvgPicture.asset(
+                  'assets/icons/identification.svg',
+                  width: 24,
+                  height: 24,
+                ),
+              ),
+            ),
+            CustomTextFormField(
+              hintText: '0.00',
+              controller: state.priceController,
+              textInputType: TextInputType.number,
+              title: 'Price',
+              validator: (data) => Helper.numberValidator(data),
+              prefix: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'RM',
+                    style: midGreyTextStyle.copyWith(
+                        fontSize: 14, fontWeight: FontWeight.normal),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

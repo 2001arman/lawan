@@ -43,6 +43,7 @@ class SessionState {
   var openTime = const TimeOfDay(hour: 9, minute: 00).obs;
   var closeTime = const TimeOfDay(hour: 10, minute: 00).obs;
 
+  final textFormKey = GlobalKey<FormState>();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController contactController = TextEditingController();
