@@ -61,12 +61,10 @@ class DialogFilter {
       'Melaka',
       'Negeri Sembilan',
     ];
-    var selectedState = 'All'.obs;
     List<String> availableData = [
       'Weekend',
       'Weekdays',
     ];
-    var selectedAvailable = 'Weekend'.obs;
 
     List<String> flooringData = [
       'All',
@@ -74,21 +72,33 @@ class DialogFilter {
       'Turf',
       'Cement',
     ];
-    var selectedFlooring = 'Grass'.obs;
 
     List<String> genderData = [
       'All',
       'Male',
       'Female',
     ];
-    var selectedGender = 'Male'.obs;
 
     List<String> arenaData = [
       'All',
       'Outdoor',
       'Indoor',
     ];
+
+    var selectedState = 'All'.obs;
     var selectedArena = 'Outdoor'.obs;
+    var selectedGender = 'Male'.obs;
+    var selectedFlooring = 'Grass'.obs;
+    var selectedAvailable = 'Weekend'.obs;
+
+    void resetData() {
+      selectedState.value = 'All';
+      selectedArena.value = 'Outdoor';
+      selectedGender.value = 'Male';
+      selectedFlooring.value = 'Grass';
+      selectedAvailable.value = 'Weekend';
+    }
+
     return Get.dialog(
       Dialog(
         backgroundColor: Colors.transparent,
@@ -188,7 +198,7 @@ class DialogFilter {
                   children: [
                     CircleButtonTransparentWidget(
                       size: 48,
-                      onTap: () {},
+                      onTap: resetData,
                       borderColor: kGreyColor,
                       widget: SvgPicture.asset('assets/icons/refresh.svg'),
                     ),
