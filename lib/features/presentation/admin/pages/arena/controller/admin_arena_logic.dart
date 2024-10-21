@@ -128,17 +128,24 @@ class AdminArenaLogic extends GetxController {
   }
 
   void handleNextButton({ArenaModel? arenaData}) async {
+    final isHaveImage = state.uploadedPictures.length > 1;
     if (state.selectedIndex.value == 1) {
       final validator = state.textFormKey.currentState!.validate();
-      if (!validator) return;
+      Helper.showToast(
+        isSuccess: false,
+        message: 'Please fill Arena, Court name and Picture',
+      );
+      if (!validator || !isHaveImage) return;
       state.selectedIndex.value++;
     } else if (state.selectedIndex.value == 3) {
       final validationName = Helper.regularValidator(state.nameController.text);
       final validationCourt =
           Helper.regularValidator(state.courtController.text);
-      if (validationName != null && validationCourt != null) {
+      if (validationName != null && validationCourt != null || !isHaveImage) {
         Helper.showToast(
-            isSuccess: false, message: 'Please fill Arena and Court name');
+          isSuccess: false,
+          message: 'Please fill Arena, Court name and Picture',
+        );
         return;
       }
       if (arenaData != null) {
