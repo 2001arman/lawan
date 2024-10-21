@@ -1,6 +1,7 @@
 import 'package:blur/blur.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/domain/arena/arena_model.dart';
 import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_logic.dart';
@@ -356,7 +357,13 @@ class AdminAddArena {
               CustomTextFormField(
                 hintText: 'Location',
                 controller: state.locationController,
+                showSuffix: true,
                 isReadOnly: true,
+                prefix: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: defaultMargin, vertical: 12),
+                  child: SvgPicture.asset('assets/icons/target.svg'),
+                ),
                 suffix: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
