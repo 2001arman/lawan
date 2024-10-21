@@ -30,10 +30,10 @@ class AdminArenaState {
   ].obs;
 
   var selectedArenaType = 'Indoor'.obs;
-  var selectedFlooringType = 'Court Turf'.obs;
+  var selectedFlooringType = 'Turf'.obs;
 
   List<String> arenaType = ["Indoor", "Outdoor"];
-  List<String> flooringType = ["Court Turf", "Court Grass", "Cement"];
+  List<String> flooringType = ["Turf", "Grass", "Cement"];
   var rateList = [
     RateModel(name: 'Weekend Rate', price: 10.obs, hour: 1.0.obs),
     RateModel(name: 'Weekdays Rate', price: 10.obs, hour: 1.0.obs),

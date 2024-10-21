@@ -98,7 +98,7 @@ class ArenaDataSource {
           pictureType: PictureType.asset,
           courtName: '1',
           arenaType: 'Indoor',
-          flooringType: 'Court Turf',
+          flooringType: 'Turf',
           operationalHours: List.generate(
             7,
             (index) => OperationalHour(
@@ -121,7 +121,7 @@ class ArenaDataSource {
           pictureType: PictureType.asset,
           courtName: '2',
           arenaType: 'Outdoor',
-          flooringType: 'Court Grass',
+          flooringType: 'Grass',
           operationalHours: List.generate(
             7,
             (index) => OperationalHour(
