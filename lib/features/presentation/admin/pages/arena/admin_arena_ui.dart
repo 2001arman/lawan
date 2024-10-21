@@ -274,6 +274,7 @@ class AdminArenaUi extends StatelessWidget {
               isReadOnly: true,
               controller:
                   TextEditingController(text: 'Petaling Jaya, Selangor'),
+              showSuffix: true,
               prefix: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
                 child: SvgPicture.asset('assets/icons/target.svg'),

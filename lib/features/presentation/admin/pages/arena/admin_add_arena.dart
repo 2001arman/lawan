@@ -386,6 +386,7 @@ class AdminAddArena {
               CustomTextFormField(
                 hintText: 'Enter Court Name',
                 controller: state.courtController,
+                showSuffix: true,
                 validator: (data) => Helper.regularValidator(data),
                 suffix: Padding(
                   padding: const EdgeInsets.only(right: 16),
