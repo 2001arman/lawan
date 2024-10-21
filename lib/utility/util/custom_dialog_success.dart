@@ -18,7 +18,9 @@ import '../shared/widgets/selected_container_widget.dart';
 import '../shared/widgets/wheel_picker/choose_time_widget.dart';
 
 class CustomDialogSuccess {
-  static void successCreateArena() {
+  static void successCreateArena({
+    required VoidCallback ontapAddCourt,
+  }) {
     Get.dialog(
       Dialog(
         backgroundColor: Colors.transparent,
@@ -78,7 +80,7 @@ class CustomDialogSuccess {
                     CustomButton(
                       title: 'Add Another Court',
                       isBlack: false,
-                      onTap: Get.back,
+                      onTap: ontapAddCourt,
                     ),
                   ],
                 ),

@@ -131,11 +131,13 @@ class AdminArenaLogic extends GetxController {
     final isHaveImage = state.uploadedPictures.length > 1;
     if (state.selectedIndex.value == 1) {
       final validator = state.textFormKey.currentState!.validate();
-      Helper.showToast(
-        isSuccess: false,
-        message: 'Please fill Arena, Court name and Picture',
-      );
-      if (!validator || !isHaveImage) return;
+      if (!validator || !isHaveImage) {
+        Helper.showToast(
+          isSuccess: false,
+          message: 'Please fill Arena, Court name and Picture',
+        );
+        return;
+      }
       state.selectedIndex.value++;
     } else if (state.selectedIndex.value == 3) {
       final validationName = Helper.regularValidator(state.nameController.text);
@@ -155,7 +157,12 @@ class AdminArenaLogic extends GetxController {
       }
       Get.back();
       await Future.delayed(const Duration(seconds: 1));
-      CustomDialogSuccess.successCreateArena();
+      CustomDialogSuccess.successCreateArena(
+        ontapAddCourt: () {
+          Get.back();
+          createNewCourt();
+        },
+      );
     } else {
       state.selectedIndex.value++;
     }
