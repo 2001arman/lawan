@@ -11,6 +11,7 @@ import 'package:lawan/utility/shared/widgets/fields/field_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
 import 'package:lawan/utility/shared/widgets/host_avatar_widget.dart';
 import 'package:lawan/utility/shared/widgets/text/text_pill_widget.dart';
+import 'package:lawan/utility/util/custom_dialog.dart';
 
 import '../../../../../utility/util/helper.dart';
 import '../../../../domain/arena/arena_model.dart';
@@ -86,7 +87,7 @@ class AdminSessionBottomSheet {
                         ),
                         const SizedBox(width: 16),
                         CircleButtonTransparentWidget(
-                          onTap: () {},
+                          onTap: () => CustomDialog().showShareDialog(),
                           borderColor: kGreyColor,
                           widget: SvgPicture.asset('assets/icons/upload.svg'),
                         ),

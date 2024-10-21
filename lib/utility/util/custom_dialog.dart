@@ -482,4 +482,16 @@ class CustomDialog {
       enableDrag: true,
     );
   }
+
+  Future<void> showShareDialog() {
+    return Get.bottomSheet(
+      Container(
+        width: double.infinity,
+        height: 163,
+        padding: EdgeInsets.all(defaultMargin),
+        color: kWhiteColor,
+        child: const ShareSection(),
+      ),
+    );
+  }
 }
