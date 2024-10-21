@@ -158,25 +158,28 @@ class AdminAddArena {
                     arenaData: arenaData,
                     arenaType: arenaType,
                   ),
-                  Row(
-                    children: [
-                      CustomButton(
-                        title: 'Cancel',
-                        isBlack: false,
-                        onTap: () => Get.back(),
-                      ),
-                      const SizedBox(width: 16),
-                      CustomButton(
-                        title: state.selectedIndex.value == 3
-                            ? arenaData == null
-                                ? 'Add Arena'
-                                : 'Add Court'
-                            : 'Next',
-                        isBlack: true,
-                        onTap: () =>
-                            logic.handleNextButton(arenaData: arenaData),
-                      ),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.only(top: defaultMargin),
+                    child: Row(
+                      children: [
+                        CustomButton(
+                          title: 'Cancel',
+                          isBlack: false,
+                          onTap: () => Get.back(),
+                        ),
+                        const SizedBox(width: 16),
+                        CustomButton(
+                          title: state.selectedIndex.value == 3
+                              ? arenaData == null
+                                  ? 'Add Arena'
+                                  : 'Add Court'
+                              : 'Next',
+                          isBlack: true,
+                          onTap: () =>
+                              logic.handleNextButton(arenaData: arenaData),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
