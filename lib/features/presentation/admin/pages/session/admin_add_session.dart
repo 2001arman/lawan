@@ -437,6 +437,7 @@ class AdminAddSession {
       state.selectedCourtIndex.value = sessionData.selectedCourt;
       state.selectedDate = sessionData.dateTime;
     }
+    TextEditingController searchController = TextEditingController();
     return Expanded(
       child: ListView(
         padding: EdgeInsets.symmetric(horizontal: defaultMargin),
@@ -468,16 +469,18 @@ class AdminAddSession {
                 child: CustomTextFormField(
                   margin: 0,
                   hintText: '',
-                  controller: TextEditingController(),
-                  onChanged: (data) {},
+                  controller: searchController,
                   borderColor: kGreyColor,
                   prefix: Icon(
                     Icons.search,
                     color: kDarkgreyColor,
                   ),
-                  suffix: Icon(
-                    Icons.highlight_remove_outlined,
-                    color: kDarkgreyColor,
+                  suffix: GestureDetector(
+                    onTap: () => searchController.text = '',
+                    child: Icon(
+                      Icons.highlight_remove_outlined,
+                      color: kDarkgreyColor,
+                    ),
                   ),
                 ),
               ),
