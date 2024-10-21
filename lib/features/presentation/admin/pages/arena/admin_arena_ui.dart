@@ -10,11 +10,13 @@ import '../../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../../utility/shared/widgets/add_picture_button_widget.dart';
 import '../../../../../utility/shared/widgets/buttons/circle_button_widget.dart';
 import '../../../../../utility/shared/widgets/buttons/gradient_button.dart';
+import '../../../../../utility/shared/widgets/container/selectable_text_field.dart';
 import '../../../../../utility/shared/widgets/custom_image_widget.dart';
 import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
 import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import '../../../../../utility/shared/widgets/selected_container_widget.dart';
-import '../../../../../utility/util/helper.dart';
+import '../../../../../utility/shared/widgets/wheel_picker/choose_time_widget.dart';
+import '../../../../../utility/util/dialog_wheel_picker.dart';
 
 class AdminArenaUi extends StatelessWidget {
   final logic = Get.find<AdminArenaLogic>();
@@ -74,78 +76,20 @@ class AdminArenaUi extends StatelessWidget {
                           if (data.isActive.value) const SizedBox(height: 8),
                           Visibility(
                             visible: data.isActive.value,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(80),
-                                      color: kWhiteColor,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          'assets/icons/clock.png',
-                                          width: 16,
-                                          height: 16,
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          Helper.formatTime12Hour(
-                                              data.openTime.value),
-                                          style: blackTextStyle.copyWith(
-                                              fontWeight: medium),
-                                        ),
-                                        const Spacer(),
-                                        Image.asset(
-                                            'assets/icons/arrow_up_down.png',
-                                            width: 20,
-                                            height: 20),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12),
-                                  child: Text(
-                                    'to',
-                                    style: darkGreyTextStyle,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(80),
-                                      color: kWhiteColor,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          'assets/icons/clock.png',
-                                          width: 16,
-                                          height: 16,
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          Helper.formatTime12Hour(
-                                              data.closeTIme.value),
-                                          style: blackTextStyle.copyWith(
-                                              fontWeight: medium),
-                                        ),
-                                        const Spacer(),
-                                        Image.asset(
-                                          'assets/icons/arrow_up_down.png',
-                                          width: 20,
-                                          height: 20,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            child: ChooseTimeWidget(
+                              openTime: data.openTime,
+                              closeTime: data.closeTIme,
+                              onSave: (startTime, endTime) {
+                                Get.back();
+                                data.openTime.value = TimeOfDay(
+                                  hour: startTime,
+                                  minute: 0,
+                                );
+                                data.closeTIme.value = TimeOfDay(
+                                  hour: endTime,
+                                  minute: 0,
+                                );
+                              },
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -186,64 +130,53 @@ class AdminArenaUi extends StatelessWidget {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 12),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(80),
-                                  color: kWhiteColor,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'RM',
-                                      style: blackTextStyle,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      '${data.price}',
-                                      style: blackTextStyle.copyWith(
-                                          fontWeight: medium),
-                                    ),
-                                    const Spacer(),
-                                    Image.asset(
-                                        'assets/icons/arrow_up_down.png',
-                                        width: 20,
-                                        height: 20),
-                                  ],
-                                ),
+                            SelectableTextField(
+                              suffix: Text(
+                                'RM',
+                                style: darkGreyTextStyle,
+                              ),
+                              data: Text(
+                                '${data.price}',
+                                style:
+                                    blackTextStyle.copyWith(fontWeight: medium),
+                              ),
+                              onTap: () =>
+                                  DialogWheelPicker.showChoosePriceDialog(
+                                selectedHour: data.hour.value,
+                                selectedPrice: data.price.value,
+                                onSave: (price, hour) {
+                                  Get.back();
+                                  data.hour.value = hour;
+                                  data.price.value = price;
+                                  data.finalPrice.value =
+                                      (price + (price * 0.2).toInt());
+                                },
                               ),
                             ),
                             const SizedBox(width: 12),
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 12),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(80),
-                                  color: kWhiteColor,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      data.hour.toStringAsPrecision(1),
-                                      style: blackTextStyle.copyWith(
-                                          fontWeight: medium),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'Hour',
-                                      style: blackTextStyle,
-                                    ),
-                                    const Spacer(),
-                                    Image.asset(
-                                      'assets/icons/arrow_up_down.png',
-                                      width: 20,
-                                      height: 20,
-                                    ),
-                                  ],
-                                ),
+                            SelectableTextField(
+                              suffix: Text(
+                                data.hour.value != 0.5
+                                    ? data.hour.toStringAsFixed(0)
+                                    : '${data.hour.value}',
+                                style:
+                                    blackTextStyle.copyWith(fontWeight: medium),
+                              ),
+                              data: Text(
+                                'Hour',
+                                style: darkGreyTextStyle,
+                              ),
+                              onTap: () =>
+                                  DialogWheelPicker.showChoosePriceDialog(
+                                selectedHour: data.hour.value,
+                                selectedPrice: data.price.value,
+                                onSave: (price, hour) {
+                                  Get.back();
+                                  data.hour.value = hour;
+                                  data.price.value = price;
+                                  data.finalPrice.value =
+                                      (price + (price * 0.2).toInt());
+                                },
                               ),
                             ),
                           ],

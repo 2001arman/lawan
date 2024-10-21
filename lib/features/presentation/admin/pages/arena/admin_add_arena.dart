@@ -7,6 +7,7 @@ import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_a
 import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_state.dart';
 import 'package:lawan/utility/shared/constants/arena_type.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
+import 'package:lawan/utility/shared/widgets/container/selectable_text_field.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_time_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_image_widget.dart';
@@ -214,94 +215,53 @@ class AdminAddArena {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () =>
-                                    DialogWheelPicker.showChoosePriceDialog(
-                                  selectedHour: data.hour.value,
-                                  selectedPrice: data.price.value,
-                                  onSave: (price, hour) {
-                                    Get.back();
-                                    data.hour.value = hour;
-                                    data.price.value = price;
-                                    data.finalPrice.value =
-                                        (price + (price * 0.2).toInt());
-                                  },
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 12),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(80),
-                                    color: kWhiteColor,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        'RM',
-                                        style: blackTextStyle,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        '${data.price}',
-                                        style: blackTextStyle.copyWith(
-                                            fontWeight: medium),
-                                      ),
-                                      const Spacer(),
-                                      Image.asset(
-                                          'assets/icons/arrow_up_down.png',
-                                          width: 20,
-                                          height: 20),
-                                    ],
-                                  ),
-                                ),
+                            SelectableTextField(
+                              suffix: Text(
+                                'RM',
+                                style: darkGreyTextStyle,
+                              ),
+                              data: Text(
+                                '${data.price}',
+                                style:
+                                    blackTextStyle.copyWith(fontWeight: medium),
+                              ),
+                              onTap: () =>
+                                  DialogWheelPicker.showChoosePriceDialog(
+                                selectedHour: data.hour.value,
+                                selectedPrice: data.price.value,
+                                onSave: (price, hour) {
+                                  Get.back();
+                                  data.hour.value = hour;
+                                  data.price.value = price;
+                                  data.finalPrice.value =
+                                      (price + (price * 0.2).toInt());
+                                },
                               ),
                             ),
                             const SizedBox(width: 12),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () =>
-                                    DialogWheelPicker.showChoosePriceDialog(
-                                  selectedHour: data.hour.value,
-                                  selectedPrice: data.price.value,
-                                  onSave: (price, hour) {
-                                    Get.back();
-                                    data.hour.value = hour;
-                                    data.price.value = price;
-                                    data.finalPrice.value =
-                                        (price + (price * 0.2).toInt());
-                                  },
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 12),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(80),
-                                    color: kWhiteColor,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        data.hour.value != 0.5
-                                            ? data.hour.toStringAsFixed(0)
-                                            : '${data.hour.value}',
-                                        style: blackTextStyle.copyWith(
-                                            fontWeight: medium),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        'Hour',
-                                        style: blackTextStyle,
-                                      ),
-                                      const Spacer(),
-                                      Image.asset(
-                                        'assets/icons/arrow_up_down.png',
-                                        width: 20,
-                                        height: 20,
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                            SelectableTextField(
+                              suffix: Text(
+                                data.hour.value != 0.5
+                                    ? data.hour.toStringAsFixed(0)
+                                    : '${data.hour.value}',
+                                style:
+                                    blackTextStyle.copyWith(fontWeight: medium),
+                              ),
+                              data: Text(
+                                'Hour',
+                                style: darkGreyTextStyle,
+                              ),
+                              onTap: () =>
+                                  DialogWheelPicker.showChoosePriceDialog(
+                                selectedHour: data.hour.value,
+                                selectedPrice: data.price.value,
+                                onSave: (price, hour) {
+                                  Get.back();
+                                  data.hour.value = hour;
+                                  data.price.value = price;
+                                  data.finalPrice.value =
+                                      (price + (price * 0.2).toInt());
+                                },
                               ),
                             ),
                           ],
@@ -534,22 +494,23 @@ class AdminAddArena {
                           ),
                           if (data.isActive.value) const SizedBox(height: 8),
                           Visibility(
-                              visible: data.isActive.value,
-                              child: ChooseTimeWidget(
-                                openTime: data.openTime,
-                                closeTime: data.closeTIme,
-                                onSave: (startTime, endTime) {
-                                  Get.back();
-                                  data.openTime.value = TimeOfDay(
-                                    hour: startTime,
-                                    minute: 0,
-                                  );
-                                  data.closeTIme.value = TimeOfDay(
-                                    hour: endTime,
-                                    minute: 0,
-                                  );
-                                },
-                              )),
+                            visible: data.isActive.value,
+                            child: ChooseTimeWidget(
+                              openTime: data.openTime,
+                              closeTime: data.closeTIme,
+                              onSave: (startTime, endTime) {
+                                Get.back();
+                                data.openTime.value = TimeOfDay(
+                                  hour: startTime,
+                                  minute: 0,
+                                );
+                                data.closeTIme.value = TimeOfDay(
+                                  hour: endTime,
+                                  minute: 0,
+                                );
+                              },
+                            ),
+                          ),
                           const SizedBox(height: 8),
                         ],
                       ),
