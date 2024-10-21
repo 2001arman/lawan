@@ -10,6 +10,7 @@ class ArenaDataSource {
 
   ArenaDataSource() {
     listArena.addAll(dummyArenaData);
+    listArena.addAll(dummyArenaData);
   }
 
   ArenaModel getArena({required int index}) {

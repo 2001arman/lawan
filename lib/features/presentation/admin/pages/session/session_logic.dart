@@ -72,6 +72,10 @@ class SessionLogic extends GetxController {
     int? sessionIndex,
   }) {
     if (state.selectedIndex.value == 3) {
+      if (state.selectedArenaIndex.value == -1) {
+        Helper.showToast(isSuccess: false, message: 'Please choose arena');
+        return;
+      }
       Get.back();
       CustomDialogSuccess.confirmDialog(
         actionType: sessionData != null ? ActionType.edit : ActionType.booking,

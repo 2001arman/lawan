@@ -35,7 +35,7 @@ class SessionState {
   ).obs;
 
   // create Arena
-  var selectedArenaIndex = 0.obs;
+  var selectedArenaIndex = (-1).obs;
   var selectedCourtIndex = 0.obs;
 
   DateTime selectedDate = DateTime.now();
