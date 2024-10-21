@@ -69,9 +69,10 @@ class Helper {
       return 'Field cannot be empty';
     }
 
-    final regex = RegExp(r'^[a-zA-Z0-9]+$');
+    // Updated regex to allow spaces along with alphabets and numbers
+    final regex = RegExp(r'^[a-zA-Z0-9\s]+$');
     if (!regex.hasMatch(data)) {
-      return 'Only alphabets and numbers are allowed';
+      return 'Only alphabets, numbers, and spaces are allowed';
     }
 
     return null;

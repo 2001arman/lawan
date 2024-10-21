@@ -47,14 +47,21 @@ class AdminArenaLogic extends GetxController {
     return;
   }
 
-  void showEditAddDialog() {
-    CustomDialog.editAddDialog(onTapAdd: () {
-      Get.back();
-      createNewArena();
-    }, onTapEdit: () {
-      Get.back();
-      editArena(arenaType: ArenaType.arena);
-    });
+  void showEditAddDialog({
+    required VoidCallback createFunction,
+    required ArenaType arenaType,
+  }) {
+    CustomDialog.editAddDialog(
+      onTapAdd: () {
+        Get.back();
+        // createNewArena();
+        createFunction();
+      },
+      onTapEdit: () {
+        Get.back();
+        editArena(arenaType: arenaType);
+      },
+    );
   }
 
   void chooseArenaDialog() {
@@ -96,6 +103,7 @@ class AdminArenaLogic extends GetxController {
             name: newData,
           );
         }
+        Get.log('cek newData $newData');
         Get.back();
         arenaDataSource.listArena.refresh();
       },
@@ -115,6 +123,7 @@ class AdminArenaLogic extends GetxController {
   void createNewCourt() {
     AdminAddArena(state: state, logic: this).createNewArena(
       arenaData: arenaDataSource.getArena(index: state.selectedListArena.value),
+      arenaType: ArenaType.court,
     );
   }
 

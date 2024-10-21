@@ -426,8 +426,10 @@ class AdminArenaUi extends StatelessWidget {
               child: Row(
                 children: [
                   GestureDetector(
-                    // onTap: () => logic.editArena(arenaType: ArenaType.arena),
-                    onTap: logic.showEditAddDialog,
+                    onTap: () => logic.showEditAddDialog(
+                      createFunction: logic.createNewArena,
+                      arenaType: ArenaType.arena,
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(12),
                       child: Image.asset(
@@ -472,7 +474,10 @@ class AdminArenaUi extends StatelessWidget {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () => logic.editArena(arenaType: ArenaType.court),
+                    onTap: () => logic.showEditAddDialog(
+                      createFunction: logic.createNewCourt,
+                      arenaType: ArenaType.court,
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(12),
                       child: Image.asset(
@@ -510,9 +515,6 @@ class AdminArenaUi extends StatelessWidget {
                           )
                           .toList(),
                     ),
-                  ),
-                  CircleButtonWidget(
-                    onTap: logic.createNewCourt,
                   ),
                 ],
               ),

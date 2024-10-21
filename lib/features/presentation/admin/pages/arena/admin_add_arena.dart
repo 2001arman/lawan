@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lawan/features/domain/arena/arena_model.dart';
 import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_logic.dart';
 import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_state.dart';
+import 'package:lawan/utility/shared/constants/arena_type.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_time_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
@@ -22,16 +23,20 @@ class AdminAddArena {
 
   AdminAddArena({required this.state, required this.logic});
 
-  Widget contentSection({ArenaModel? arenaData}) {
+  Widget contentSection({
+    ArenaModel? arenaData,
+    required ArenaType arenaType,
+  }) {
     switch (state.selectedIndex.value) {
-      case 1:
-        return detailSection(arenaData: arenaData);
       case 2:
         return hourSection();
       case 3:
         return rateSection();
       default:
-        return detailSection(arenaData: arenaData);
+        return detailSection(
+          arenaData: arenaData,
+          arenaType: arenaType,
+        );
     }
   }
 
@@ -74,7 +79,10 @@ class AdminAddArena {
     );
   }
 
-  void createNewArena({ArenaModel? arenaData}) {
+  void createNewArena({
+    ArenaModel? arenaData,
+    ArenaType arenaType = ArenaType.arena,
+  }) {
     if (arenaData != null) {
       state.nameController.text = arenaData.name;
       state.locationController.text = 'Petaling Jaya, Selangor';
@@ -144,7 +152,10 @@ class AdminAddArena {
                       ),
                     ],
                   ),
-                  contentSection(arenaData: arenaData),
+                  contentSection(
+                    arenaData: arenaData,
+                    arenaType: arenaType,
+                  ),
                   Row(
                     children: [
                       CustomButton(
@@ -335,7 +346,10 @@ class AdminAddArena {
     );
   }
 
-  Widget detailSection({ArenaModel? arenaData}) {
+  Widget detailSection({
+    ArenaModel? arenaData,
+    required ArenaType arenaType,
+  }) {
     return Expanded(
       child: Form(
         key: state.textFormKey,
@@ -345,7 +359,7 @@ class AdminAddArena {
             children: [
               SizedBox(height: defaultMargin),
               Text(
-                'Add Arena Details',
+                'Add ${arenaType.title} Details',
                 style:
                     blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
               ),
