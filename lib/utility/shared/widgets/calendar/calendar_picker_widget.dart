@@ -30,6 +30,7 @@ class CalendarPickerWidget extends StatefulWidget {
   final Color? cellColor;
   final double cellMargin;
   final DateTime? selectedDays; // Nullable argument for selected days
+  final bool fixedMode;
 
   CalendarPickerWidget({
     super.key,
@@ -39,6 +40,7 @@ class CalendarPickerWidget extends StatefulWidget {
     this.cellMargin = 6.0,
     required this.onDaySelected,
     this.selectedDays, // Add the selectedDays to the constructor
+    this.fixedMode = false,
   });
 
   @override
@@ -133,6 +135,7 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
       onCalendarCreated: widget.pageController,
       onPageChanged: (focusedDay) => focusedDayData.value = focusedDay,
       onFormatChanged: (format) {
+        if (widget.fixedMode) return;
         if (widget.calendarMode == CalendarFormat.month) {
           setState(() => widget.calendarMode = CalendarFormat.week);
         } else {

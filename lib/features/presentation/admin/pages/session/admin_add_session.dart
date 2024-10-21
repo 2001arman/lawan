@@ -376,6 +376,7 @@ class AdminAddSession {
               cellMargin: 3,
               onDaySelected: (data) => state.selectedDate = data,
               selectedDays: state.selectedDate,
+              fixedMode: true,
             ),
           ),
           const SizedBox(height: 6),
