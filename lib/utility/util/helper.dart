@@ -50,7 +50,6 @@ class Helper {
   }
 
   static Widget successToast({required String message}) {
-    Get.log('kesini kah');
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(

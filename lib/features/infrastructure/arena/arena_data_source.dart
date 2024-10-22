@@ -9,8 +9,7 @@ class ArenaDataSource {
   var listArena = <ArenaModel>[].obs;
 
   ArenaDataSource() {
-    listArena.addAll(dummyArenaData);
-    listArena.addAll(dummyArenaData);
+    listArena.assignAll(dummyArenaData);
   }
 
   ArenaModel getArena({required int index}) {
@@ -87,7 +86,11 @@ class ArenaDataSource {
     listArena.removeAt(index);
   }
 
-  List<ArenaModel> dummyArenaData = [
+  void deleteCourt({required int arenaIndex, required int courtIndex}) {
+    listArena[arenaIndex].courtData.removeAt(courtIndex);
+  }
+
+  RxList<ArenaModel> dummyArenaData = [
     ArenaModel(
       location: 'Petaling Jaya, Selangor',
       name: 'MBPJ Sports Complex',
@@ -169,5 +172,5 @@ class ArenaDataSource {
         ),
       ],
     ),
-  ];
+  ].obs;
 }

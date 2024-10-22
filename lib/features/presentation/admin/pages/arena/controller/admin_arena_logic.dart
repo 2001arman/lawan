@@ -94,24 +94,46 @@ class AdminArenaLogic extends GetxController {
       data: data,
       onAction: (newData) {
         if (arenaType == ArenaType.arena) {
+          Helper.showToast(isSuccess: true, message: 'Update arena successful');
           arenaDataSource.editArenaName(
               index: state.selectedListArena.value, name: newData);
         } else {
+          Helper.showToast(isSuccess: true, message: 'Update court successful');
           arenaDataSource.editCourtName(
             arenaIndex: state.selectedListArena.value,
             courtIndex: state.selectedListCourt.value,
             name: newData,
           );
         }
-        Get.log('cek newData $newData');
         Get.back();
-        arenaDataSource.listArena.refresh();
+        state.selectedArena.value =
+            arenaDataSource.listArena[state.selectedListArena.value];
       },
       onDelete: () {
-        arenaDataSource.deleteArena(index: state.selectedListArena.value);
+        if (arenaType == ArenaType.arena) {
+          Helper.showToast(isSuccess: true, message: 'Delete arena successful');
+          arenaDataSource.deleteArena(index: state.selectedListArena.value);
+
+          if (arenaDataSource.listArena.isNotEmpty) {
+            state.selectedArena.value = arenaDataSource.listArena.first;
+            state.selectedCourt.value =
+                arenaDataSource.listArena.first.courtData.first;
+          }
+        } else {
+          Helper.showToast(isSuccess: true, message: 'Delete court successful');
+          arenaDataSource.deleteCourt(
+            arenaIndex: state.selectedListArena.value,
+            courtIndex: state.selectedListCourt.value,
+          );
+
+          if (arenaDataSource.listArena.isNotEmpty) {
+            state.selectedCourt.value =
+                arenaDataSource.listArena.first.courtData.first;
+          }
+        }
         Get.back();
-        arenaDataSource.listArena.refresh();
-        Helper.showToast(isSuccess: true, message: 'Delete arena successful');
+        state.selectedArena.value =
+            arenaDataSource.listArena[state.selectedListArena.value];
       },
     );
   }
@@ -324,6 +346,6 @@ class AdminArenaLogic extends GetxController {
         state.selectedCourt.value.copy();
     state.isEditing.value = false;
 
-    Helper.showToast(isSuccess: true, message: 'Update arena successful');
+    Helper.showToast(isSuccess: true, message: 'Update court successful');
   }
 }
