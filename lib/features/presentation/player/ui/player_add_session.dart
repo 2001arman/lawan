@@ -614,6 +614,7 @@ class PlayerAddSession {
                 cellColor: kWhiteColor,
                 cellMargin: 3,
                 onDaySelected: (data) => state.selectedDate = data,
+                selectedDays: DateTime.now().add(const Duration(days: 1)),
                 fixedMode: true,
               ),
             ),
