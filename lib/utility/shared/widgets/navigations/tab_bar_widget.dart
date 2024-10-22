@@ -106,7 +106,8 @@ class TabbarWidget extends StatelessWidget {
                                         child: SvgPicture.asset(
                                           tabBarIcon![title.key]!,
                                           color: tabActive.value == title.value
-                                              ? textActiveColor ?? kBlackColor
+                                              ? textActiveColor ??
+                                                  kDarkgreyColor
                                               : textInActiveColor ??
                                                   kDarkgreyColor,
                                           width: iconSize,
