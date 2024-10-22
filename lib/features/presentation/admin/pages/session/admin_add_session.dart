@@ -188,7 +188,9 @@ class AdminAddSession {
       ),
       isScrollControlled: true,
       enableDrag: true,
-    ).whenComplete(() {});
+    ).whenComplete(() {
+      logic.resetState();
+    });
   }
 
   Widget detailSection({SessionModel? sessionData}) {

@@ -189,6 +189,8 @@ class SessionLogic extends GetxController {
 
   void resetState() {
     state.selectedIndex.value = 1;
+    state.selectedArenaIndex.value = -1;
+    state.selectedCourtIndex.value = 0;
     state.selectedDate = DateTime.now();
     state.firstNameController.text = '';
     state.lastNameController.text = '';
