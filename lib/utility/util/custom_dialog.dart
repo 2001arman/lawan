@@ -457,11 +457,7 @@ class CustomDialog {
                   size: 40,
                   onTap: Get.back,
                   borderColor: kGreyColor,
-                  widget: Icon(
-                    Icons.close,
-                    color: kDarkgreyColor,
-                    size: 20,
-                  ),
+                  widget: SvgPicture.asset('assets/icons/x.svg'),
                 ),
               ),
             ),
