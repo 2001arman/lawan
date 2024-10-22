@@ -7,11 +7,15 @@ import '../../constants/constants_ui.dart';
 class FilterButton extends StatelessWidget {
   final Color? backgroundColor;
   final double paddingVertical;
+  final Color iconColor;
+  final Color textColor;
 
   const FilterButton({
     super.key,
     this.backgroundColor,
     this.paddingVertical = 14,
+    required this.iconColor,
+    required this.textColor,
   });
 
   @override
@@ -37,12 +41,15 @@ class FilterButton extends StatelessWidget {
               width: 20,
               height: 20,
               // ignore: deprecated_member_use
-              color: kWhiteColor,
+              color: iconColor,
             ),
             const SizedBox(width: 4),
             Text(
               'Filter',
-              style: whiteTextStyle.copyWith(fontWeight: medium),
+              style: whiteTextStyle.copyWith(
+                fontWeight: medium,
+                color: textColor,
+              ),
             ),
           ],
         ),

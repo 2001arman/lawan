@@ -494,7 +494,10 @@ class AdminAddSession {
                 ),
               ),
               SizedBox(width: defaultMargin),
-              const FilterButton(),
+              FilterButton(
+                iconColor: kDarkgreyColor,
+                textColor: kBlackColor,
+              ),
             ],
           ),
           SizedBox(height: defaultMargin),

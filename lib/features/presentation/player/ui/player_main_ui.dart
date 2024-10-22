@@ -45,6 +45,8 @@ class PlayerMainUi extends StatelessWidget {
                   FilterButton(
                     backgroundColor: kMidgreyColor,
                     paddingVertical: 12,
+                    iconColor: kWhiteColor,
+                    textColor: kWhiteColor,
                   ),
                   SizedBox(width: defaultMargin),
                   SizedBox(
