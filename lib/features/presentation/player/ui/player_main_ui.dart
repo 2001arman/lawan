@@ -43,7 +43,7 @@ class PlayerMainUi extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FilterButton(
-                    backgroundColor: kGreyColor,
+                    backgroundColor: kMidgreyColor,
                     paddingVertical: 12,
                   ),
                   SizedBox(width: defaultMargin),

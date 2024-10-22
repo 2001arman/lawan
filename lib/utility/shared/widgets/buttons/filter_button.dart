@@ -18,33 +18,33 @@ class FilterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: DialogFilter.showFilterDialog,
-      child: SizedBox(
+      child: Container(
         width: 90,
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: paddingVertical),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            border: Border.all(
-              width: 1,
+        padding: EdgeInsets.symmetric(vertical: paddingVertical),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(
+            width: 1,
+            color: kGreyColor,
+          ),
+          color: backgroundColor,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              'assets/icons/filter.svg',
+              width: 20,
+              height: 20,
+              // ignore: deprecated_member_use
               color: kWhiteColor,
             ),
-            color: backgroundColor,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/icons/filter.svg',
-                width: 20,
-                height: 20,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                'Filter',
-                style: blackTextStyle.copyWith(fontWeight: medium),
-              ),
-            ],
-          ),
+            const SizedBox(width: 4),
+            Text(
+              'Filter',
+              style: whiteTextStyle.copyWith(fontWeight: medium),
+            ),
+          ],
         ),
       ),
     );
