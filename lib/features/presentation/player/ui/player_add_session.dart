@@ -288,22 +288,24 @@ class PlayerAddSession {
               SizedBox(width: Get.width * 0.2),
               Obx(
                 () => CustomButton(
-                  isBlack: state.isMale.value,
-                  onTap: state.isMale.toggle,
+                  isBlack: state.selectedGender.value == 'male',
+                  onTap: () => state.selectedGender.value = 'male',
                   widget: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
                         'assets/icons/male.svg',
-                        color:
-                            state.isMale.value ? kWhiteColor : kDarkgreyColor,
+                        color: state.selectedGender.value == 'male'
+                            ? kWhiteColor
+                            : kDarkgreyColor,
                       ),
                       const SizedBox(width: 4),
                       Text(
                         'Male',
                         style: whiteTextStyle.copyWith(
-                          color:
-                              state.isMale.value ? kWhiteColor : kDarkgreyColor,
+                          color: state.selectedGender.value == 'male'
+                              ? kWhiteColor
+                              : kDarkgreyColor,
                         ),
                       ),
                     ],
@@ -313,21 +315,22 @@ class PlayerAddSession {
               const SizedBox(width: 12),
               Obx(
                 () => CustomButton(
-                  isBlack: state.isFemale.value,
-                  onTap: state.isFemale.toggle,
+                  isBlack: state.selectedGender.value == 'female',
+                  onTap: () => state.selectedGender.value = 'female',
                   widget: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
                         'assets/icons/female.svg',
-                        color:
-                            state.isFemale.value ? kWhiteColor : kDarkgreyColor,
+                        color: state.selectedGender.value == 'female'
+                            ? kWhiteColor
+                            : kDarkgreyColor,
                       ),
                       const SizedBox(width: 4),
                       Text(
                         'Female',
                         style: whiteTextStyle.copyWith(
-                          color: state.isFemale.value
+                          color: state.selectedGender.value == 'female'
                               ? kWhiteColor
                               : kDarkgreyColor,
                         ),
