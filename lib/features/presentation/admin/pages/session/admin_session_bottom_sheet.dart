@@ -256,10 +256,6 @@ class AdminSessionBottomSheet {
     bool showPill = false,
     String title = 'Session Succesfully Created',
   }) {
-    if (successCreate) {
-      Helper.showToast(isSuccess: true, message: 'Success created session');
-    }
-
     return sessionContainerSheet(
       onDelete: () {},
       onUpdate: () {},
