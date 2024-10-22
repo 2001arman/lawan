@@ -54,7 +54,11 @@ class ChatUi extends StatelessWidget {
 
     Widget listChatSection() {
       return ListView.builder(
-        padding: EdgeInsets.only(top: defaultMargin),
+        padding: EdgeInsets.only(
+          top: defaultMargin,
+          left: defaultMargin,
+          right: defaultMargin,
+        ),
         itemCount: state.listChat.length,
         itemBuilder: (context, index) {
           ChatModel chatModel = state.listChat[index];
@@ -133,65 +137,66 @@ class ChatUi extends StatelessWidget {
       );
     }
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Visibility(
-              visible: state.listChat.isNotEmpty,
-              replacement: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/chat.svg',
-                    color: kWhiteColor,
-                    width: 60,
-                    height: 60,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Welcome to the lobby!',
-                    style: blackTextStyle.copyWith(
-                        fontSize: 16, fontWeight: medium),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Start the conversation or wait for others to join.',
-                    style: blackTextStyle.copyWith(fontSize: 12),
-                  ),
-                ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Visibility(
+            visible: state.listChat.isNotEmpty,
+            replacement: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/chat.svg',
+                  color: kWhiteColor,
+                  width: 60,
+                  height: 60,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Welcome to the lobby!',
+                  style:
+                      blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Start the conversation or wait for others to join.',
+                  style: blackTextStyle.copyWith(fontSize: 12),
+                ),
+              ],
+            ),
+            child: listChatSection(),
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              SizedBox(width: defaultMargin),
+              ...state.actionItemList.map(
+                (data) => containerItem(
+                  onTap: () => data.actionType == ActionType.reschedule
+                      ? CustomDialogSuccess.rescheduleDialog(
+                          onSubmit: () => CustomDialogSuccess.confirmDialog(
+                            actionType: data.actionType,
+                            onAction: Get.back,
+                          ),
+                        )
+                      : CustomDialogSuccess.confirmDialog(
+                          actionType: data.actionType,
+                          onAction: Get.back,
+                        ),
+                  name: data.name,
+                  icon: data.icon,
+                ),
               ),
-              child: listChatSection(),
-            ),
+            ],
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: state.actionItemList
-                  .map(
-                    (data) => containerItem(
-                      onTap: () => data.actionType == ActionType.reschedule
-                          ? CustomDialogSuccess.rescheduleDialog(
-                              onSubmit: () => CustomDialogSuccess.confirmDialog(
-                                actionType: data.actionType,
-                                onAction: Get.back,
-                              ),
-                            )
-                          : CustomDialogSuccess.confirmDialog(
-                              actionType: data.actionType,
-                              onAction: Get.back,
-                            ),
-                      name: data.name,
-                      icon: data.icon,
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-          SizedBox(height: defaultMargin),
-          Row(
+        ),
+        SizedBox(height: defaultMargin),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+          child: Row(
             children: [
               CircleButtonWidget(
                 onTap: () async {
@@ -244,33 +249,32 @@ class ChatUi extends StatelessWidget {
               ),
             ],
           ),
-          Obx(
-            () => AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              height: showEmoji.value
-                  ? 200
-                  : 0, // Adjust height based on your design
-              child: SingleChildScrollView(
-                child: Visibility(
-                  visible: showEmoji.value,
-                  child: EmojiPicker(
-                    textEditingController: state.controller,
-                    onEmojiSelected: (category, emoji) {
-                      // state.controller.text = state.controller.text + emoji.emoji;
-                    },
-                    config: const Config(
-                      bottomActionBarConfig: BottomActionBarConfig(
-                        enabled: false,
-                      ),
+        ),
+        Obx(
+          () => AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            height:
+                showEmoji.value ? 200 : 0, // Adjust height based on your design
+            child: SingleChildScrollView(
+              child: Visibility(
+                visible: showEmoji.value,
+                child: EmojiPicker(
+                  textEditingController: state.controller,
+                  onEmojiSelected: (category, emoji) {
+                    // state.controller.text = state.controller.text + emoji.emoji;
+                  },
+                  config: const Config(
+                    bottomActionBarConfig: BottomActionBarConfig(
+                      enabled: false,
                     ),
                   ),
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
