@@ -12,6 +12,7 @@ import 'package:lawan/utility/shared/widgets/container/select_friend_item.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_session_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
+import 'package:lawan/utility/util/helper.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/widgets/bottom_navbar_item.dart';
@@ -314,6 +315,11 @@ class PlayerMainUi extends StatelessWidget {
                                               data.isSelected.value = false;
                                               state.selectedFriends
                                                   .remove(data);
+                                              Helper.showToast(
+                                                isSuccess: true,
+                                                message:
+                                                    'user removed from card successfully',
+                                              );
                                             },
                                             isActive: true,
                                             widget: Padding(
@@ -328,6 +334,11 @@ class PlayerMainUi extends StatelessWidget {
                                             onTap: () {
                                               data.isSelected.value = true;
                                               state.selectedFriends.add(data);
+                                              Helper.showToast(
+                                                isSuccess: true,
+                                                message:
+                                                    'user added to card successfully',
+                                              );
                                             },
                                             size: 36,
                                             widget: SvgPicture.asset(
