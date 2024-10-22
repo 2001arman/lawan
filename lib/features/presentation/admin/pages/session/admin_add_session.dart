@@ -159,7 +159,7 @@ class AdminAddSession {
                   ),
                   contentSection(sessionData: sessionData),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    padding: EdgeInsets.all(defaultMargin),
                     child: Row(
                       children: [
                         CustomButton(
