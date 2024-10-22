@@ -21,9 +21,9 @@ class SalesLogic {
 
   List<String> titleBar() {
     switch (state.tabActive.value) {
-      case 'Monthly':
+      case 'Weekly':
         return ['Sep ', 'Aug', 'Selected'];
-      case 'Yearly':
+      case 'Monthly':
         return ['2024', '2023', 'Selected'];
       default:
         return ['Week 3', 'Week 2', 'Selected'];
