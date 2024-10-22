@@ -188,10 +188,11 @@ class PlayerAddSession {
   Widget selectedFriendItem({required AvatarModel data}) {
     return GestureDetector(
       onTap: () {
-        state.listFriends
-            .firstWhere((friend) => friend == data)
-            .isSelected
-            .value = false;
+        // state.listFriends
+        //     .firstWhere((friend) => friend == data)
+        //     .isSelected
+        //     .value = false;
+        state.listFriends.add(data);
         state.selectedFriends.remove(data);
       },
       child: Container(
@@ -665,6 +666,7 @@ class PlayerAddSession {
   }
 
   Widget arenaSection() {
+    TextEditingController nameController = TextEditingController();
     return Expanded(
       child: ListView(
         padding: EdgeInsets.symmetric(horizontal: defaultMargin),
@@ -698,16 +700,19 @@ class PlayerAddSession {
                 child: CustomTextFormField(
                   margin: 0,
                   hintText: '',
-                  controller: TextEditingController(),
+                  controller: nameController,
                   onChanged: (data) {},
                   borderColor: kGreyColor,
                   prefix: Padding(
                     padding: const EdgeInsets.all(12),
                     child: SvgPicture.asset('assets/icons/search.svg'),
                   ),
-                  suffix: Icon(
-                    Icons.highlight_remove_outlined,
-                    color: kDarkgreyColor,
+                  suffix: GestureDetector(
+                    onTap: () => nameController.text = '',
+                    child: Icon(
+                      Icons.highlight_remove_outlined,
+                      color: kDarkgreyColor,
+                    ),
                   ),
                 ),
               ),

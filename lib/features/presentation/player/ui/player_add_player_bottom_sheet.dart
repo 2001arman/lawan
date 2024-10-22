@@ -23,6 +23,7 @@ class PlayerAddPlayerBottomSheet {
   PlayerAddPlayerBottomSheet({required this.state, required this.logic});
 
   void addPlayerBottomSheet({required}) {
+    TextEditingController searchController = TextEditingController();
     Get.bottomSheet(
       Padding(
         padding: const EdgeInsets.all(8),
@@ -55,8 +56,8 @@ class PlayerAddPlayerBottomSheet {
                 // title and close button
                 Row(
                   children: [
-                    Icon(
-                      Icons.person_add_alt,
+                    SvgPicture.asset(
+                      'assets/icons/user-plus-arena.svg',
                       color: kDarkgreyColor,
                     ),
                     const SizedBox(width: 8),
@@ -68,9 +69,8 @@ class PlayerAddPlayerBottomSheet {
                     const Spacer(),
                     CircleButtonTransparentWidget(
                       onTap: Get.back,
-                      widget: Icon(
-                        Icons.close,
-                        size: 20,
+                      widget: SvgPicture.asset(
+                        'assets/icons/x.svg',
                         color: kDarkgreyColor,
                       ),
                       borderColor: kGreyColor,
@@ -83,10 +83,20 @@ class PlayerAddPlayerBottomSheet {
                 // text input search
                 CustomTextFormField(
                   hintText: 'Search or add name/email',
-                  controller: TextEditingController(),
-                  prefix: Icon(
-                    Icons.search,
-                    color: kDarkgreyColor,
+                  controller: searchController,
+                  prefix: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: SvgPicture.asset(
+                      'assets/icons/search.svg',
+                      color: kDarkgreyColor,
+                    ),
+                  ),
+                  suffix: GestureDetector(
+                    onTap: () => searchController.text = '',
+                    child: Icon(
+                      Icons.highlight_remove_outlined,
+                      color: kDarkgreyColor,
+                    ),
                   ),
                 ),
 
@@ -235,9 +245,8 @@ class PlayerAddPlayerBottomSheet {
                                           state.selectedFriends.add(data);
                                           state.listFriends.remove(data);
                                         },
-                                        widget: Icon(
-                                          Icons.add,
-                                          size: 20,
+                                        widget: SvgPicture.asset(
+                                          'assets/icons/plus.svg',
                                           color: kDarkgreyColor,
                                         ),
                                         borderColor: kGreyColor,
@@ -317,9 +326,8 @@ class PlayerAddPlayerBottomSheet {
                   children: [
                     CircleButtonTransparentWidget(
                       onTap: Get.back,
-                      widget: Icon(
-                        Icons.arrow_back_ios_sharp,
-                        size: 18,
+                      widget: SvgPicture.asset(
+                        'assets/icons/back.svg',
                         color: kDarkgreyColor,
                       ),
                     ),
