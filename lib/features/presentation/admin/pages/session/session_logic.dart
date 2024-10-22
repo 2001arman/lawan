@@ -136,7 +136,7 @@ class SessionLogic extends GetxController {
     );
   }
 
-  void createSession() {
+  void createSession() async {
     int indexDate = state.listSession.indexWhere(
       (session) =>
           session.date ==
@@ -157,6 +157,8 @@ class SessionLogic extends GetxController {
       );
     }
     state.listSession.refresh();
+    await Future.delayed(const Duration(seconds: 1));
+    resetState();
   }
 
   void updateSession({
@@ -189,14 +191,12 @@ class SessionLogic extends GetxController {
 
   void resetState() {
     state.selectedIndex.value = 1;
-    state.selectedArenaIndex.value = -1;
-    state.selectedCourtIndex.value = 0;
     state.selectedDate = DateTime.now();
     state.firstNameController.text = '';
     state.lastNameController.text = '';
     state.contactController.text = '';
     state.identificationController.text = '';
-    state.priceController.text = '';
+    state.priceController.text = '0';
   }
 
   void deleteSession({required int dateIndex, required int sessionIndex}) {
@@ -207,6 +207,10 @@ class SessionLogic extends GetxController {
         Get.back();
         state.listSession[dateIndex].sessionsData.removeAt(sessionIndex);
         state.listSession.refresh();
+        Helper.showToast(
+          isSuccess: true,
+          message: 'Session deletion successful',
+        );
       },
     );
   }

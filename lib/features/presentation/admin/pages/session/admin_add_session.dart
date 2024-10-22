@@ -188,9 +188,7 @@ class AdminAddSession {
       ),
       isScrollControlled: true,
       enableDrag: true,
-    ).whenComplete(() {
-      logic.resetState();
-    });
+    ).whenComplete(() {});
   }
 
   Widget detailSection({SessionModel? sessionData}) {
@@ -510,6 +508,8 @@ class AdminAddSession {
                       onTap: () {
                         state.selectedArenaIndex.value = data.key;
                         state.selectedCourtIndex.value = 0;
+                        Get.log(
+                            'ada ga arena index ${state.selectedArenaIndex.value}');
                       },
                       child: SelectFieldImageWidget(
                         arenaModel: data.value,
