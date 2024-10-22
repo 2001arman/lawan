@@ -36,10 +36,8 @@ class PlayerAddSession {
         return slotSection();
       case 2:
         return arenaSection();
-      case 3:
-        return detailSection();
       default:
-        return slotSection();
+        return detailSection();
     }
   }
 
@@ -612,6 +610,7 @@ class PlayerAddSession {
                 cellColor: kWhiteColor,
                 cellMargin: 3,
                 onDaySelected: (data) => state.selectedDate = data,
+                fixedMode: true,
               ),
             ),
           ),
