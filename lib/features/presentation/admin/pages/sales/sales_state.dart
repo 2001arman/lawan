@@ -21,7 +21,7 @@ class SalesState {
     'Complete',
   ];
 
-  ChartModel weeklyChart = ChartModel(
+  ChartModel dailyChart = ChartModel(
     activeChartList: [0.5, 0.8, 0.7, 0.6, 0.7, 1, 0.0],
     inActiveChartList: [0.5, 0.8, 0.7, 0.6, 0.7, 1, 0.7],
     titles: [
@@ -37,7 +37,7 @@ class SalesState {
     activeType: 0.obs,
   );
 
-  ChartModel monthlyChart = ChartModel(
+  ChartModel weeklyChart = ChartModel(
     activeChartList: [0.5, 0.8, 1, 0.0],
     inActiveChartList: [0.5, 0.8, 0.9, 0.6],
     titles: [
@@ -50,7 +50,7 @@ class SalesState {
     activeType: 0.obs,
   );
 
-  ChartModel yearlyChart = ChartModel(
+  ChartModel monthlyChart = ChartModel(
     activeChartList: [0.3, 0.5, 0.4, 0.3, 0.6, 0.7, 0.7, 1, 0, 0, 0, 0],
     inActiveChartList: [
       0.3,

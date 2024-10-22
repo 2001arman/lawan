@@ -52,7 +52,7 @@ class SalesLogic {
       case 'Monthly':
         return state.monthlyChart;
       default:
-        return state.yearlyChart;
+        return state.dailyChart;
     }
   }
 }
