@@ -133,140 +133,144 @@ class ChatUi extends StatelessWidget {
       );
     }
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Visibility(
-            visible: state.listChat.isNotEmpty,
-            replacement: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/chat.svg',
-                  color: kWhiteColor,
-                  width: 60,
-                  height: 60,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Welcome to the lobby!',
-                  style:
-                      blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Start the conversation or wait for others to join.',
-                  style: blackTextStyle.copyWith(fontSize: 12),
-                ),
-              ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Visibility(
+              visible: state.listChat.isNotEmpty,
+              replacement: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/chat.svg',
+                    color: kWhiteColor,
+                    width: 60,
+                    height: 60,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Welcome to the lobby!',
+                    style: blackTextStyle.copyWith(
+                        fontSize: 16, fontWeight: medium),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Start the conversation or wait for others to join.',
+                    style: blackTextStyle.copyWith(fontSize: 12),
+                  ),
+                ],
+              ),
+              child: listChatSection(),
             ),
-            child: listChatSection(),
           ),
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: state.actionItemList
-                .map(
-                  (data) => containerItem(
-                    onTap: () => data.actionType == ActionType.reschedule
-                        ? CustomDialogSuccess.rescheduleDialog(
-                            onSubmit: () => CustomDialogSuccess.confirmDialog(
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: state.actionItemList
+                  .map(
+                    (data) => containerItem(
+                      onTap: () => data.actionType == ActionType.reschedule
+                          ? CustomDialogSuccess.rescheduleDialog(
+                              onSubmit: () => CustomDialogSuccess.confirmDialog(
+                                actionType: data.actionType,
+                                onAction: Get.back,
+                              ),
+                            )
+                          : CustomDialogSuccess.confirmDialog(
                               actionType: data.actionType,
                               onAction: Get.back,
                             ),
-                          )
-                        : CustomDialogSuccess.confirmDialog(
-                            actionType: data.actionType,
-                            onAction: Get.back,
-                          ),
-                    name: data.name,
-                    icon: data.icon,
-                  ),
-                )
-                .toList(),
+                      name: data.name,
+                      icon: data.icon,
+                    ),
+                  )
+                  .toList(),
+            ),
           ),
-        ),
-        SizedBox(height: defaultMargin),
-        Row(
-          children: [
-            CircleButtonWidget(
-              onTap: () async {
-                await FilePicker.platform.pickFiles();
-              },
-              isActive: false,
-              size: 48,
-              widget: Padding(
-                padding: const EdgeInsets.all(12),
-                child: SvgPicture.asset(
-                  'assets/icons/paperclip.svg',
-                  width: 16,
-                  height: 16,
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: CustomTextFormField(
-                hintText: 'Write message',
-                controller: state.controller,
-                margin: 0,
-                showSuffix: true,
-                suffix: GestureDetector(
-                  onTap: () {
-                    showEmoji.toggle();
-                    if (showEmoji.value) {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: SvgPicture.asset('assets/icons/smile.svg'),
+          SizedBox(height: defaultMargin),
+          Row(
+            children: [
+              CircleButtonWidget(
+                onTap: () async {
+                  await FilePicker.platform.pickFiles();
+                },
+                isActive: false,
+                size: 48,
+                widget: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: SvgPicture.asset(
+                    'assets/icons/paperclip.svg',
+                    width: 16,
+                    height: 16,
                   ),
                 ),
               ),
-            ),
-            const SizedBox(width: 8),
-            CircleButtonWidget(
-              onTap: () {},
-              isActive: true,
-              size: 48,
-              widget: Center(
-                child: Icon(
-                  Icons.send_outlined,
-                  color: kWhiteColor,
-                  size: 20,
+              const SizedBox(width: 8),
+              Expanded(
+                child: CustomTextFormField(
+                  hintText: 'Write message',
+                  controller: state.controller,
+                  margin: 0,
+                  showSuffix: true,
+                  suffix: GestureDetector(
+                    onTap: () {
+                      showEmoji.toggle();
+                      if (showEmoji.value) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: SvgPicture.asset('assets/icons/smile.svg'),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        Obx(
-          () => AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            height:
-                showEmoji.value ? 200 : 0, // Adjust height based on your design
-            child: SingleChildScrollView(
-              child: Visibility(
-                visible: showEmoji.value,
-                child: EmojiPicker(
-                  textEditingController: state.controller,
-                  onEmojiSelected: (category, emoji) {
-                    // state.controller.text = state.controller.text + emoji.emoji;
-                  },
-                  config: const Config(
-                    bottomActionBarConfig: BottomActionBarConfig(
-                      enabled: false,
+              const SizedBox(width: 8),
+              CircleButtonWidget(
+                onTap: () {},
+                isActive: true,
+                size: 48,
+                widget: Center(
+                  child: Icon(
+                    Icons.send_outlined,
+                    color: kWhiteColor,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Obx(
+            () => AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              height: showEmoji.value
+                  ? 200
+                  : 0, // Adjust height based on your design
+              child: SingleChildScrollView(
+                child: Visibility(
+                  visible: showEmoji.value,
+                  child: EmojiPicker(
+                    textEditingController: state.controller,
+                    onEmojiSelected: (category, emoji) {
+                      // state.controller.text = state.controller.text + emoji.emoji;
+                    },
+                    config: const Config(
+                      bottomActionBarConfig: BottomActionBarConfig(
+                        enabled: false,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

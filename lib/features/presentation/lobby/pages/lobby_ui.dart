@@ -116,36 +116,37 @@ class LobbyUi extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(
-              defaultMargin,
-              MediaQuery.of(context).padding.top + defaultMargin,
-              defaultMargin,
-              defaultMargin,
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + defaultMargin,
+              bottom: defaultMargin,
             ),
             child: Column(
               children: [
                 // appbar
-                Row(
-                  children: [
-                    CircleButtonTransparentWidget(
-                      onTap: Get.back,
-                      widget: SvgPicture.asset('assets/icons/back.svg'),
-                      margin: const EdgeInsets.only(right: 8),
-                    ),
-                    Expanded(
-                      child: TabbarWidget(
-                        tabBarTitle: state.lobbyTabBarTitle,
-                        tabBarIcon: state.lobbyTabBarIcon,
-                        tabActive: state.lobbyTabActive,
-                        backgroundColor: kBlackColor,
-                        onTap: (title) {
-                          state.lobbyTabActive.value = title;
-                          logic.lobbyAlignmentTabbar(title);
-                        },
-                        alignment: state.lobbyActiveAlignment,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  child: Row(
+                    children: [
+                      CircleButtonTransparentWidget(
+                        onTap: Get.back,
+                        widget: SvgPicture.asset('assets/icons/back.svg'),
+                        margin: const EdgeInsets.only(right: 8),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: TabbarWidget(
+                          tabBarTitle: state.lobbyTabBarTitle,
+                          tabBarIcon: state.lobbyTabBarIcon,
+                          tabActive: state.lobbyTabActive,
+                          backgroundColor: kBlackColor,
+                          onTap: (title) {
+                            state.lobbyTabActive.value = title;
+                            logic.lobbyAlignmentTabbar(title);
+                          },
+                          alignment: state.lobbyActiveAlignment,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
 
                 // content body

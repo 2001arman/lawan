@@ -21,219 +21,218 @@ class LineupUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: [
-        Column(
+        // score
+        SizedBox(height: defaultMargin),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // score
-            SizedBox(height: defaultMargin),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Column(
               children: [
-                Column(
-                  children: [
-                    SvgPicture.asset('assets/icons/home_shield.svg'),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Home',
-                      style: blackTextStyle.copyWith(
-                          fontSize: 12, fontWeight: medium),
-                    ),
-                  ],
-                ),
+                SvgPicture.asset('assets/icons/home_shield.svg'),
+                const SizedBox(height: 8),
                 Text(
-                  '0',
-                  style: blackTextStyle.copyWith(fontSize: 40),
-                ),
-                Text(
-                  ':',
-                  style: darkGreyTextStyle.copyWith(fontSize: 40),
-                ),
-                Text(
-                  '0',
-                  style: blackTextStyle.copyWith(fontSize: 40),
-                ),
-                Column(
-                  children: [
-                    SvgPicture.asset('assets/icons/away_shield.svg'),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Away',
-                      style: blackTextStyle.copyWith(
-                          fontSize: 12, fontWeight: medium),
-                    ),
-                  ],
+                  'Home',
+                  style:
+                      blackTextStyle.copyWith(fontSize: 12, fontWeight: medium),
                 ),
               ],
             ),
-
-            // tabbar
-            SizedBox(height: defaultMargin),
-            Obx(
-              () => TabbarWidget(
-                tabBarIcon: const [null, 'assets/icons/whistle.svg', null],
-                selectedWidth:
-                    lobbyState.lineUpTabActive.value == '' ? 40 : null,
-                tabBarTitle: lobbyState.lineUpTabBarTitle,
-                tabActive: lobbyState.lineUpTabActive,
-                iconSize: 20,
-                onTap: (title) {
-                  lobbyState.lineUpTabActive.value = title;
-                  logic.alignmentTabbar(title);
-                },
-                alignment: lobbyState.lineUpActiveAlignment,
-              ),
+            Text(
+              '0',
+              style: blackTextStyle.copyWith(fontSize: 40),
             ),
+            Text(
+              ':',
+              style: darkGreyTextStyle.copyWith(fontSize: 40),
+            ),
+            Text(
+              '0',
+              style: blackTextStyle.copyWith(fontSize: 40),
+            ),
+            Column(
+              children: [
+                SvgPicture.asset('assets/icons/away_shield.svg'),
+                const SizedBox(height: 8),
+                Text(
+                  'Away',
+                  style:
+                      blackTextStyle.copyWith(fontSize: 12, fontWeight: medium),
+                ),
+              ],
+            ),
+          ],
+        ),
 
-            // friendsList
-            SizedBox(height: defaultMargin),
-            Obx(
-              () => Visibility(
-                visible: lobbyState.lineUpTabActive.value != '',
-                child: SizedBox(
-                  width: double.infinity,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.zero,
-                    child: Obx(
-                      () => Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: state.listFriends
-                            .map(
-                              (data) => SelectFriendItem(
-                                name: data.name,
-                                asset: data.asset,
-                                suffixWidget: CircleButtonTransparentWidget(
-                                  onTap: () {
-                                    state.selectedFriends.add(data);
-                                    state.listFriends.remove(data);
-                                  },
-                                  size: 36,
-                                  widget: Icon(
-                                    Icons.add,
-                                    color: kDarkgreyColor,
-                                  ),
-                                  borderColor: kGreyColor,
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
+        // tabbar
+        SizedBox(height: defaultMargin),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+          child: Obx(
+            () => TabbarWidget(
+              tabBarIcon: const [null, 'assets/icons/whistle.svg', null],
+              selectedWidth: lobbyState.lineUpTabActive.value == '' ? 40 : null,
+              tabBarTitle: lobbyState.lineUpTabBarTitle,
+              tabActive: lobbyState.lineUpTabActive,
+              iconSize: 20,
+              onTap: (title) {
+                lobbyState.lineUpTabActive.value = title;
+                logic.alignmentTabbar(title);
+              },
+              alignment: lobbyState.lineUpActiveAlignment,
+            ),
+          ),
+        ),
+
+        // friendsList
+        SizedBox(height: defaultMargin),
+        Obx(
+          () => Visibility(
+            visible: lobbyState.lineUpTabActive.value != '',
+            child: SizedBox(
+              width: double.infinity,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.zero,
+                child: Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: defaultMargin),
+                      ...state.listFriends.map(
+                        (data) => SelectFriendItem(
+                          name: data.name,
+                          asset: data.asset,
+                          suffixWidget: CircleButtonTransparentWidget(
+                            onTap: () {
+                              state.selectedFriends.add(data);
+                              state.listFriends.remove(data);
+                            },
+                            size: 36,
+                            widget: Icon(
+                              Icons.add,
+                              color: kDarkgreyColor,
+                            ),
+                            borderColor: kGreyColor,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
             ),
+          ),
+        ),
 
-            // selected friends
-            SizedBox(height: defaultMargin),
-            Obx(
-              () => Expanded(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: state.selectedFriends
-                      .asMap()
-                      .entries
-                      .map(
-                        (data) => Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(8),
-                          margin: const EdgeInsets.only(bottom: 12),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(32),
-                            color: kWhiteColor,
+        // selected friends
+        SizedBox(height: defaultMargin),
+        Obx(
+          () => Expanded(
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+              children: state.selectedFriends
+                  .asMap()
+                  .entries
+                  .map(
+                    (data) => Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(8),
+                      margin: const EdgeInsets.only(bottom: 12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(32),
+                        color: kWhiteColor,
+                      ),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            data.value.asset,
+                            width: 48,
+                            height: 48,
                           ),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                data.value.asset,
-                                width: 48,
-                                height: 48,
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data.value.name,
+                                  style: blackTextStyle.copyWith(
+                                      fontSize: 12, fontWeight: medium),
+                                ),
+                                const SizedBox(height: 8),
+                                Row(
                                   children: [
-                                    Text(
-                                      data.value.name,
-                                      style: blackTextStyle.copyWith(
-                                          fontSize: 12, fontWeight: medium),
+                                    TextPillWidget(
+                                      verticalPadding: 2,
+                                      backgroundColor: kBackgroundColor,
+                                      prefix: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 3),
+                                        child: SvgPicture.asset(
+                                            'assets/icons/user.svg'),
+                                      ),
+                                      title: data.value.position,
+                                      titleColor: kBlackColor,
                                     ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                      children: [
-                                        TextPillWidget(
-                                          verticalPadding: 2,
-                                          backgroundColor: kBackgroundColor,
-                                          prefix: Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 3),
-                                            child: SvgPicture.asset(
-                                                'assets/icons/user.svg'),
-                                          ),
-                                          title: data.value.position,
-                                          titleColor: kBlackColor,
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Visibility(
-                                          visible: data.key ==
-                                              state.selectedRefereeIndex.value,
-                                          child: SvgPicture.asset(
-                                            'assets/icons/whistle.svg',
-                                            color: kBlackColor,
-                                            width: 16,
-                                            height: 16,
-                                          ),
-                                        )
-                                      ],
+                                    const SizedBox(width: 8),
+                                    Visibility(
+                                      visible: data.key ==
+                                          state.selectedRefereeIndex.value,
+                                      child: SvgPicture.asset(
+                                        'assets/icons/whistle.svg',
+                                        color: kBlackColor,
+                                        width: 16,
+                                        height: 16,
+                                      ),
                                     )
                                   ],
-                                ),
-                              ),
-                              TextBorder(
-                                textTitle: 'Novice',
-                                backgroundColor: kWhiteColor,
-                                fontSize: 10,
-                              ),
-                              Obx(
-                                () => Visibility(
-                                  visible: (lobbyState.lineUpTabActive.value ==
-                                          '') &&
+                                )
+                              ],
+                            ),
+                          ),
+                          TextBorder(
+                            textTitle: 'Novice',
+                            backgroundColor: kWhiteColor,
+                            fontSize: 10,
+                          ),
+                          Obx(
+                            () => Visibility(
+                              visible:
+                                  (lobbyState.lineUpTabActive.value == '') &&
                                       (data.key !=
                                           state.selectedRefereeIndex.value),
-                                  child: CircleButtonTransparentWidget(
-                                    onTap: () {
-                                      CustomDialogSuccess.confirmDialog(
-                                        actionType: ActionType.alertAdmin,
-                                        onAction: () {
-                                          state.selectedRefereeIndex.value =
-                                              data.key;
-                                          Get.back();
-                                        },
-                                      );
+                              child: CircleButtonTransparentWidget(
+                                onTap: () {
+                                  CustomDialogSuccess.confirmDialog(
+                                    actionType: ActionType.alertAdmin,
+                                    onAction: () {
+                                      state.selectedRefereeIndex.value =
+                                          data.key;
+                                      Get.back();
                                     },
-                                    borderColor: kGreyColor,
-                                    margin: const EdgeInsets.only(left: 12),
-                                    widget: SvgPicture.asset(
-                                      'assets/icons/whistle.svg',
-                                      color: kBlackColor,
-                                      width: 20,
-                                      height: 20,
-                                    ),
-                                  ),
+                                  );
+                                },
+                                borderColor: kGreyColor,
+                                margin: const EdgeInsets.only(left: 12),
+                                widget: SvgPicture.asset(
+                                  'assets/icons/whistle.svg',
+                                  color: kBlackColor,
+                                  width: 20,
+                                  height: 20,
                                 ),
                               ),
-                              const SizedBox(width: 4),
-                            ],
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
+                          const SizedBox(width: 4),
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
-          ],
+          ),
         ),
       ],
     );
