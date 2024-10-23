@@ -20,6 +20,8 @@ class CustomTextFormField extends StatefulWidget {
     this.prefix,
     this.showSuffix = false,
     this.maxLength,
+    this.onTap,
+    this.showClear = false,
   });
 
   final String hintText;
@@ -35,6 +37,8 @@ class CustomTextFormField extends StatefulWidget {
   final Color? borderColor;
   final bool showSuffix;
   final int? maxLength;
+  final VoidCallback? onTap;
+  final bool showClear;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -105,6 +109,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   controller: widget.controller,
                   obscureText: widget.isPassword,
                   readOnly: widget.isReadOnly,
+                  onTap: widget.onTap,
                   onChanged: (value) {
                     if (widget.onChanged != null) {
                       widget.onChanged!(value);
@@ -126,7 +131,19 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                         ? widget.suffix
                         : Visibility(
                             visible: showIcon,
-                            child: widget.suffix ?? const SizedBox(),
+                            child: widget.showClear
+                                ? GestureDetector(
+                                    onTap: () {
+                                      widget.controller.text = '';
+                                      showIcon = false;
+                                      setState(() {});
+                                    },
+                                    child: Icon(
+                                      Icons.highlight_remove_outlined,
+                                      color: kDarkgreyColor,
+                                    ),
+                                  )
+                                : widget.suffix ?? const SizedBox(),
                           ),
                     hintText: widget.hintText,
                     hintStyle: midGreyTextStyle.copyWith(

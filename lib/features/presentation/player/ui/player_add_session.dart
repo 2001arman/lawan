@@ -711,13 +711,7 @@ class PlayerAddSession {
                     padding: const EdgeInsets.all(12),
                     child: SvgPicture.asset('assets/icons/search.svg'),
                   ),
-                  suffix: GestureDetector(
-                    onTap: () => nameController.text = '',
-                    child: Icon(
-                      Icons.highlight_remove_outlined,
-                      color: kDarkgreyColor,
-                    ),
-                  ),
+                  showClear: true,
                 ),
               ),
               SizedBox(width: defaultMargin),

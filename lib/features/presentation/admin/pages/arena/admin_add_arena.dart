@@ -1,4 +1,3 @@
-import 'package:blur/blur.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,7 +13,9 @@ import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
+import 'package:lawan/utility/util/custom_dialog_maps.dart';
 import 'package:lawan/utility/util/dialog_wheel_picker.dart';
+import 'package:lawan/utility/util/glass_effect_dialog_container.dart';
 
 import '../../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../../utility/util/helper.dart';
@@ -90,100 +91,75 @@ class AdminAddArena {
       state.locationController.text = 'Petaling Jaya, Selangor';
     }
     Get.bottomSheet(
-      Padding(
-        padding: const EdgeInsets.all(8),
-        child: SizedBox(
-          height: Get.height * 0.9,
-          width: Get.width,
-        ).blurred(
-          blur: 7,
-          blurColor: Colors.white,
-          colorOpacity: 0,
-          borderRadius: BorderRadius.circular(32),
-          overlay: Container(
-            padding: EdgeInsets.all(defaultMargin),
-            decoration: BoxDecoration(
-              color: kModalColor,
-              borderRadius: BorderRadius.circular(32),
-              boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0, -0.5),
-                  blurStyle: BlurStyle.inner,
-                  spreadRadius: 0,
-                  blurRadius: 0,
-                  color: kBlackColor.withOpacity(0.1),
-                ),
-              ],
-            ),
-            child: Obx(
-              () => Column(
+      GlassEffectDialogContainer(
+        height: 0.9,
+        padding: EdgeInsets.all(defaultMargin),
+        child: Obx(
+          () => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      topItemBottomSheet(
-                        number: 1,
-                        title: 'Details',
-                        isActive: state.selectedIndex.value == 1,
-                      ),
-                      Container(
-                        width: 24,
-                        height: 1,
-                        color: kWhiteColor,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: defaultMargin, vertical: 20),
-                      ),
-                      topItemBottomSheet(
-                        number: 2,
-                        title: 'Hour',
-                        isActive: state.selectedIndex.value == 2,
-                      ),
-                      Container(
-                        width: 24,
-                        height: 1,
-                        color: kWhiteColor,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: defaultMargin, vertical: 20),
-                      ),
-                      topItemBottomSheet(
-                        number: 3,
-                        title: 'Rate',
-                        isActive: state.selectedIndex.value == 3,
-                      ),
-                    ],
+                  topItemBottomSheet(
+                    number: 1,
+                    title: 'Details',
+                    isActive: state.selectedIndex.value == 1,
                   ),
-                  contentSection(
-                    arenaData: arenaData,
-                    arenaType: arenaType,
+                  Container(
+                    width: 24,
+                    height: 1,
+                    color: kWhiteColor,
+                    margin: EdgeInsets.symmetric(
+                        horizontal: defaultMargin, vertical: 20),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(top: defaultMargin),
-                    child: Row(
-                      children: [
-                        CustomButton(
-                          title: 'Cancel',
-                          isBlack: false,
-                          onTap: () => Get.back(),
-                        ),
-                        const SizedBox(width: 16),
-                        CustomButton(
-                          title: state.selectedIndex.value == 3
-                              ? arenaData == null
-                                  ? 'Add Arena'
-                                  : 'Add Court'
-                              : 'Next',
-                          isBlack: true,
-                          onTap: () =>
-                              logic.handleNextButton(arenaData: arenaData),
-                        ),
-                      ],
-                    ),
+                  topItemBottomSheet(
+                    number: 2,
+                    title: 'Hour',
+                    isActive: state.selectedIndex.value == 2,
+                  ),
+                  Container(
+                    width: 24,
+                    height: 1,
+                    color: kWhiteColor,
+                    margin: EdgeInsets.symmetric(
+                        horizontal: defaultMargin, vertical: 20),
+                  ),
+                  topItemBottomSheet(
+                    number: 3,
+                    title: 'Rate',
+                    isActive: state.selectedIndex.value == 3,
                   ),
                 ],
               ),
-            ),
+              contentSection(
+                arenaData: arenaData,
+                arenaType: arenaType,
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: defaultMargin),
+                child: Row(
+                  children: [
+                    CustomButton(
+                      title: 'Cancel',
+                      isBlack: false,
+                      onTap: () => Get.back(),
+                    ),
+                    const SizedBox(width: 16),
+                    CustomButton(
+                      title: state.selectedIndex.value == 3
+                          ? arenaData == null
+                              ? 'Add Arena'
+                              : 'Add Court'
+                          : 'Next',
+                      isBlack: true,
+                      onTap: () => logic.handleNextButton(arenaData: arenaData),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -362,6 +338,7 @@ class AdminAddArena {
                 controller: state.locationController,
                 showSuffix: true,
                 isReadOnly: true,
+                onTap: CustomDialogMaps.chooseDialogLocation,
                 prefix: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: defaultMargin, vertical: 12),

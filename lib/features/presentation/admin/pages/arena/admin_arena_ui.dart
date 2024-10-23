@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/pages/arena/admin_empty_arena.dart';
 import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_logic.dart';
+import 'package:lawan/utility/util/custom_dialog_maps.dart';
 
 import '../../../../../utility/shared/constants/arena_type.dart';
 import '../../../../../utility/shared/constants/constants_ui.dart';
@@ -275,6 +276,7 @@ class AdminArenaUi extends StatelessWidget {
               controller:
                   TextEditingController(text: 'Petaling Jaya, Selangor'),
               showSuffix: true,
+              onTap: CustomDialogMaps.chooseDialogLocation,
               prefix: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
                 child: SvgPicture.asset('assets/icons/target.svg'),

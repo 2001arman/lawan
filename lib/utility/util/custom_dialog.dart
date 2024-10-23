@@ -1,4 +1,3 @@
-import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -10,41 +9,9 @@ import 'package:wheel_picker/wheel_picker.dart';
 
 import '../../features/domain/arena/arena_model.dart';
 import '../shared/widgets/buttons/circle_button_transparent_widget.dart';
+import 'glass_effect_dialog_container.dart';
 
 class CustomDialog {
-  Widget glassEfectDialogContainer(
-      {required Widget child, double height = 0.8}) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: SizedBox(
-        height: Get.height * height,
-        width: Get.width,
-      ).blurred(
-        blur: 7,
-        blurColor: Colors.white,
-        colorOpacity: 0,
-        borderRadius: BorderRadius.circular(32),
-        overlay: Container(
-          width: Get.width,
-          decoration: BoxDecoration(
-            color: kModalColor,
-            borderRadius: BorderRadius.circular(32),
-            boxShadow: [
-              BoxShadow(
-                offset: const Offset(0, -0.5),
-                blurStyle: BlurStyle.inner,
-                spreadRadius: 0,
-                blurRadius: 0,
-                color: kBlackColor.withOpacity(0.1),
-              ),
-            ],
-          ),
-          child: child,
-        ),
-      ),
-    );
-  }
-
   static Future<void> editAddDialog(
       {required VoidCallback onTapEdit, required VoidCallback onTapAdd}) {
     return Get.dialog(
@@ -333,7 +300,7 @@ class CustomDialog {
 
   Future<void> showRecipeDialog() {
     return Get.bottomSheet(
-      glassEfectDialogContainer(
+      GlassEffectDialogContainer(
         height: 0.85,
         child: Stack(
           children: [

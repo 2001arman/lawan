@@ -484,13 +484,7 @@ class AdminAddSession {
                     Icons.search,
                     color: kDarkgreyColor,
                   ),
-                  suffix: GestureDetector(
-                    onTap: () => searchController.text = '',
-                    child: Icon(
-                      Icons.highlight_remove_outlined,
-                      color: kDarkgreyColor,
-                    ),
-                  ),
+                  showClear: true,
                 ),
               ),
               SizedBox(width: defaultMargin),
