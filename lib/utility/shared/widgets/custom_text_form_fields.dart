@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../constants/constants_ui.dart';
 
@@ -22,6 +23,7 @@ class CustomTextFormField extends StatefulWidget {
     this.maxLength,
     this.onTap,
     this.showClear = false,
+    this.inputFormatters,
   });
 
   final String hintText;
@@ -39,6 +41,7 @@ class CustomTextFormField extends StatefulWidget {
   final int? maxLength;
   final VoidCallback? onTap;
   final bool showClear;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -122,6 +125,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     setState(() {});
                   },
                   validator: widget.validator,
+                  inputFormatters: widget.inputFormatters,
                   style:
                       blackTextStyle.copyWith(fontWeight: medium, fontSize: 14),
                   decoration: InputDecoration(

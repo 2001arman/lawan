@@ -2,6 +2,7 @@
 
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/pages/session/session_logic.dart';
@@ -11,6 +12,7 @@ import 'package:lawan/utility/shared/widgets/calendar/calendar_month_widget.dart
 import 'package:lawan/utility/shared/widgets/fields/select_field_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/filter_button.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
+import 'package:lawan/utility/util/formatter/identification_number_formatter.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../../utility/shared/constants/constants_ui.dart';
@@ -274,6 +276,11 @@ class AdminAddSession {
               title: 'Identification Number',
               textInputType: TextInputType.number,
               validator: (data) => Helper.numberValidator(data),
+              maxLength: 14,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                IdentificationNumberFormatter(),
+              ],
               prefix: Padding(
                 padding: const EdgeInsets.only(
                   top: 10,
