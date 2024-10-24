@@ -24,6 +24,7 @@ class CustomTextFormField extends StatefulWidget {
     this.onTap,
     this.showClear = false,
     this.inputFormatters,
+    this.onClear,
   });
 
   final String hintText;
@@ -42,6 +43,7 @@ class CustomTextFormField extends StatefulWidget {
   final VoidCallback? onTap;
   final bool showClear;
   final List<TextInputFormatter>? inputFormatters;
+  final VoidCallback? onClear;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -67,124 +69,83 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               ),
             ),
           if (widget.title != null) const SizedBox(height: 4),
-          widget.isPassword
-              ? TextFormField(
-                  controller: widget.controller,
-                  obscureText: obscure,
-                  onChanged: widget.onChanged,
-                  validator: widget.validator,
-                  style:
-                      blackTextStyle.copyWith(fontWeight: medium, fontSize: 14),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                    filled: true,
-                    focusColor: kWhiteColor,
-                    fillColor: kWhiteColor,
-                    border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(30.0), // Rounded corners
-                      borderSide: BorderSide(
-                          color: widget.borderColor ??
-                              Colors.transparent), // No border
-                    ),
-                    hintText: widget.hintText,
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        if (obscure == false) {
-                          obscure = true;
-                        } else {
-                          obscure = false;
-                        }
-                        setState(() {});
-                      },
-                      child: obscure
-                          ? Icon(Icons.visibility_off_outlined,
-                              color: kBlackColor)
-                          : Icon(Icons.visibility_outlined, color: kBlackColor),
-                    ),
-                    hintStyle: midGreyTextStyle.copyWith(
-                        fontSize: 14, fontWeight: FontWeight.normal),
-                  ),
-                )
-              : TextFormField(
-                  maxLength: widget.maxLength,
-                  controller: widget.controller,
-                  obscureText: widget.isPassword,
-                  readOnly: widget.isReadOnly,
-                  onTap: widget.onTap,
-                  onChanged: (value) {
-                    if (widget.onChanged != null) {
-                      widget.onChanged!(value);
-                    }
-                    if (value == '') {
-                      showIcon = false;
-                    } else {
-                      showIcon = true;
-                    }
-                    setState(() {});
-                  },
-                  validator: widget.validator,
-                  inputFormatters: widget.inputFormatters,
-                  style:
-                      blackTextStyle.copyWith(fontWeight: medium, fontSize: 14),
-                  decoration: InputDecoration(
-                    counterText: "",
-                    prefixIcon: widget.prefix,
-                    suffixIcon: widget.showSuffix
-                        ? widget.suffix
-                        : Visibility(
-                            visible: showIcon,
-                            child: widget.showClear
-                                ? GestureDetector(
-                                    onTap: () {
-                                      widget.controller.text = '';
-                                      showIcon = false;
-                                      setState(() {});
-                                    },
-                                    child: Icon(
-                                      Icons.highlight_remove_outlined,
-                                      color: kDarkgreyColor,
-                                    ),
-                                  )
-                                : widget.suffix ?? const SizedBox(),
-                          ),
-                    hintText: widget.hintText,
-                    hintStyle: midGreyTextStyle.copyWith(
-                        fontSize: 14, fontWeight: FontWeight.normal),
-                    isDense: false,
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 16,
-                    ),
-                    filled: true,
-                    focusColor: kWhiteColor,
-                    fillColor: kWhiteColor,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(30.0), // Rounded corners
-                      borderSide: BorderSide(
-                        color: widget.borderColor ?? Colors.transparent,
+          TextFormField(
+            maxLength: widget.maxLength,
+            controller: widget.controller,
+            obscureText: widget.isPassword,
+            readOnly: widget.isReadOnly,
+            onTap: widget.onTap,
+            onChanged: (value) {
+              if (widget.onChanged != null) {
+                widget.onChanged!(value);
+              }
+              if (value == '') {
+                showIcon = false;
+              } else {
+                showIcon = true;
+              }
+              setState(() {});
+            },
+            validator: widget.validator,
+            inputFormatters: widget.inputFormatters,
+            style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 14),
+            decoration: InputDecoration(
+              counterText: "",
+              prefixIcon: widget.prefix,
+              suffixIcon: widget.showSuffix
+                  ? widget.suffix
+                  : Visibility(
+                      visible: showIcon,
+                      child: GestureDetector(
+                        onTap: () {
+                          widget.controller.text = '';
+                          showIcon = false;
+                          setState(() {});
+                          if (widget.onClear != null) {
+                            widget.onClear!();
+                          }
+                        },
+                        child: widget.showClear
+                            ? Icon(
+                                Icons.highlight_remove_outlined,
+                                color: kDarkgreyColor,
+                              )
+                            : widget.suffix,
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(30.0), // Rounded corners
-                      borderSide: BorderSide(
-                        color: widget.borderColor ?? Colors.transparent,
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(30.0), // Rounded corners
-                      borderSide: BorderSide(
-                        color: widget.borderColor ?? Colors.transparent,
-                      ),
-                    ),
-                  ),
-                  maxLines: widget.minLines,
-                  keyboardType: widget.textInputType,
+              hintText: widget.hintText,
+              hintStyle: midGreyTextStyle.copyWith(
+                  fontSize: 14, fontWeight: FontWeight.normal),
+              isDense: false,
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 16,
+              ),
+              filled: true,
+              focusColor: kWhiteColor,
+              fillColor: kWhiteColor,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30.0), // Rounded corners
+                borderSide: BorderSide(
+                  color: widget.borderColor ?? Colors.transparent,
                 ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30.0), // Rounded corners
+                borderSide: BorderSide(
+                  color: widget.borderColor ?? Colors.transparent,
+                ),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30.0), // Rounded corners
+                borderSide: BorderSide(
+                  color: widget.borderColor ?? Colors.transparent,
+                ),
+              ),
+            ),
+            maxLines: widget.minLines,
+            keyboardType: widget.textInputType,
+          ),
         ],
       ),
     );

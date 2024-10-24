@@ -178,16 +178,8 @@ class PlayerAddPlayerBottomSheet {
                       color: kDarkgreyColor,
                     ),
                   ),
-                  suffix: GestureDetector(
-                    onTap: () {
-                      searchController.text = '';
-                      showPlayer.value = false;
-                    },
-                    child: Icon(
-                      Icons.highlight_remove_outlined,
-                      color: kDarkgreyColor,
-                    ),
-                  ),
+                  showClear: true,
+                  onClear: () => showPlayer.value = false,
                 ),
 
                 // info container
