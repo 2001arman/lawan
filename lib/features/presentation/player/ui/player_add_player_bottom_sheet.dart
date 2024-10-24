@@ -11,6 +11,7 @@ import 'package:lawan/utility/shared/widgets/container/select_friend_item.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 import 'package:lawan/utility/shared/widgets/text/text_pill_widget.dart';
+import 'package:lawan/utility/util/helper.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 import '../controller/player_main_logic.dart';
@@ -236,6 +237,10 @@ class PlayerAddPlayerBottomSheet {
                                       const SizedBox(width: 12),
                                       CircleButtonTransparentWidget(
                                         onTap: () {
+                                          Helper.showToast(
+                                              isSuccess: true,
+                                              message:
+                                                  'user added to card successfully');
                                           state.selectedFriends.add(data);
                                           state.listFriends.remove(data);
                                         },
@@ -284,6 +289,10 @@ class PlayerAddPlayerBottomSheet {
                               suffixWidget: data.isSelected.value
                                   ? CircleButtonWidget(
                                       onTap: () {
+                                        Helper.showToast(
+                                            isSuccess: true,
+                                            message:
+                                                'user removed from cart successfully');
                                         data.isSelected.value = false;
                                         state.selectedFriends.remove(data);
                                       },
@@ -297,6 +306,10 @@ class PlayerAddPlayerBottomSheet {
                                     )
                                   : CircleButtonTransparentWidget(
                                       onTap: () {
+                                        Helper.showToast(
+                                            isSuccess: true,
+                                            message:
+                                                'user added to cart successfully');
                                         data.isSelected.value = true;
                                         state.selectedFriends.add(data);
                                       },
@@ -328,7 +341,12 @@ class PlayerAddPlayerBottomSheet {
                     SizedBox(width: defaultMargin),
                     CustomButton(
                       isBlack: true,
-                      onTap: Get.back,
+                      onTap: () {
+                        Helper.showToast(
+                            isSuccess: true,
+                            message: 'Users added to cart successfully');
+                        Get.back();
+                      },
                       widget: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
