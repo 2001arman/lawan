@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
+import 'package:lawan/utility/util/formatter/alphabet_formatter.dart';
+import 'package:lawan/utility/util/formatter/expired_date_format.dart';
 
 import '../../../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
@@ -148,6 +151,10 @@ class PaymentAddCardPage extends StatelessWidget {
                       controller: ctrl.expDateCtrl,
                       title: 'Expired Date',
                       onChanged: (data) => expired.value = data,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        ExpirationDateFormatter(), // Apply the custom formatter here
+                      ],
                       validator: (v) {
                         if (v!.isEmpty) {
                           return 'please fill out this field.';
@@ -164,6 +171,10 @@ class PaymentAddCardPage extends StatelessWidget {
                       controller: ctrl.cvvCtrl,
                       title: 'CVV',
                       textInputType: TextInputType.number,
+                      maxLength: 3,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                       validator: (v) {
                         if (v!.isEmpty) {
                           return 'please fill out this field.';
@@ -179,6 +190,9 @@ class PaymentAddCardPage extends StatelessWidget {
                 hintText: 'Bank Name',
                 controller: ctrl.bankNameCtrl,
                 title: 'Bank Name',
+                inputFormatters: [
+                  AlphabeticFormatter(),
+                ],
                 validator: (v) {
                   if (v!.isEmpty) {
                     return 'please fill out this field.';
@@ -192,6 +206,9 @@ class PaymentAddCardPage extends StatelessWidget {
                 controller: ctrl.nameCtrl,
                 title: 'Name on Card',
                 onChanged: (data) => name.value = data,
+                inputFormatters: [
+                  AlphabeticFormatter(),
+                ],
                 validator: (v) {
                   if (v!.isEmpty) {
                     return 'please fill out this field.';
