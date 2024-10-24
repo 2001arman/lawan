@@ -30,6 +30,10 @@ dependencies:
   google_maps_flutter: ^2.9.0
   geolocator: ^13.0.1
 
+  flutter_to_pdf: ^0.2.2
+  path_provider: ^2.1.4
+  syncfusion_flutter_pdfviewer: ^27.1.55
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

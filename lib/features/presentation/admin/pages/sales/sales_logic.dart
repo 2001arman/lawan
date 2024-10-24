@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/pages/sales/sales_state.dart';
+import 'package:lawan/features/presentation/pdf_view.dart';
 
 class SalesLogic {
   SalesState state = SalesState();
@@ -54,5 +56,9 @@ class SalesLogic {
       default:
         return state.dailyChart;
     }
+  }
+
+  void openPdfNetwork() {
+    Get.to(const PdfView());
   }
 }

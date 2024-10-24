@@ -119,7 +119,7 @@ class SalesUi extends StatelessWidget {
               ),
               SizedBox(width: defaultMargin),
               CircleButtonWidget(
-                onTap: () {},
+                onTap: logic.openPdfNetwork,
                 widget: Padding(
                   padding: const EdgeInsets.all(12),
                   child: SvgPicture.asset(
