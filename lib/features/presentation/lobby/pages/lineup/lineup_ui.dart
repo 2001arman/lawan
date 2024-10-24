@@ -7,6 +7,7 @@ import 'package:lawan/features/presentation/lobby/pages/lineup/controller/lineup
 import 'package:lawan/utility/shared/constants/action_type.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/util/custom_dialog_success.dart';
+import 'package:lawan/utility/util/helper.dart';
 import '../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../utility/shared/widgets/container/select_friend_item.dart';
 import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
@@ -26,42 +27,68 @@ class LineupUi extends StatelessWidget {
         // score
         SizedBox(height: defaultMargin),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Column(
-              children: [
-                SvgPicture.asset('assets/icons/home_shield.svg'),
-                const SizedBox(height: 8),
-                Text(
-                  'Home',
-                  style:
-                      blackTextStyle.copyWith(fontSize: 12, fontWeight: medium),
-                ),
-              ],
-            ),
-            Text(
-              '0',
-              style: blackTextStyle.copyWith(fontSize: 40),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: [
+                          SvgPicture.asset('assets/icons/home_shield.svg'),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Home',
+                            style: blackTextStyle.copyWith(
+                                fontSize: 12, fontWeight: medium),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 15,
+                          left: 6,
+                        ),
+                        child:
+                            SvgPicture.asset('assets/icons/check-circle.svg'),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '0',
+                    style: blackTextStyle.copyWith(fontSize: 40),
+                  ),
+                ],
+              ),
             ),
             Text(
               ':',
               style: darkGreyTextStyle.copyWith(fontSize: 40),
             ),
-            Text(
-              '0',
-              style: blackTextStyle.copyWith(fontSize: 40),
-            ),
-            Column(
-              children: [
-                SvgPicture.asset('assets/icons/away_shield.svg'),
-                const SizedBox(height: 8),
-                Text(
-                  'Away',
-                  style:
-                      blackTextStyle.copyWith(fontSize: 12, fontWeight: medium),
-                ),
-              ],
-            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    '0',
+                    style: blackTextStyle.copyWith(fontSize: 40),
+                  ),
+                  Column(
+                    children: [
+                      SvgPicture.asset('assets/icons/away_shield.svg'),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Away',
+                        style: blackTextStyle.copyWith(
+                            fontSize: 12, fontWeight: medium),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
           ],
         ),
 
@@ -106,6 +133,10 @@ class LineupUi extends StatelessWidget {
                           asset: data.asset,
                           suffixWidget: CircleButtonTransparentWidget(
                             onTap: () {
+                              Helper.showToast(
+                                isSuccess: true,
+                                message: 'Invititation sent',
+                              );
                               state.selectedFriends.add(data);
                               state.listFriends.remove(data);
                             },
