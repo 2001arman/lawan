@@ -47,5 +47,12 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
+
+	<!-- share -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	<string>whatsapp</string>
+    <string>tg</string>
+	</array>
 </dict>
 </plist>
