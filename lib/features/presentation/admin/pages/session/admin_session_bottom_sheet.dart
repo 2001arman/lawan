@@ -22,6 +22,8 @@ class AdminSessionBottomSheet {
     required Widget widgetContent,
     required VoidCallback onDelete,
     required VoidCallback onUpdate,
+    required VoidCallback onShare,
+    bool isAdmin = true,
   }) {
     Get.bottomSheet(
       Padding(
@@ -82,12 +84,15 @@ class AdminSessionBottomSheet {
                           onTap: onDelete,
                           borderColor: kGreyColor,
                           widget: SvgPicture.asset(
-                            'assets/icons/trash.svg',
+                            isAdmin
+                                ? 'assets/icons/trash.svg'
+                                : 'assets/icons/pencil.svg',
                           ),
                         ),
                         const SizedBox(width: 16),
                         CircleButtonTransparentWidget(
-                          onTap: () => CustomDialog().showShareDialog(),
+                          // onTap: () => CustomDialog().showShareDialog(),
+                          onTap: onShare,
                           borderColor: kGreyColor,
                           widget: SvgPicture.asset('assets/icons/upload.svg'),
                         ),
@@ -95,7 +100,9 @@ class AdminSessionBottomSheet {
                         CircleButtonTransparentWidget(
                           onTap: onUpdate,
                           borderColor: kGreyColor,
-                          widget: SvgPicture.asset('assets/icons/pencil.svg'),
+                          widget: SvgPicture.asset(isAdmin
+                              ? 'assets/icons/pencil.svg'
+                              : 'assets/icons/calendar.svg'),
                         ),
                         const SizedBox(width: 16),
                         CustomButton(
@@ -141,6 +148,7 @@ class AdminSessionBottomSheet {
     return sessionContainerSheet(
       onDelete: onDelete,
       onUpdate: onUpdate,
+      onShare: () => CustomDialog().showShareDialog(),
       widgetContent: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -255,10 +263,19 @@ class AdminSessionBottomSheet {
     bool successCreate = true,
     bool showPill = false,
     String title = 'Session Succesfully Created',
+    bool isAdmin = true,
   }) {
+    var showQr = false.obs;
     return sessionContainerSheet(
       onDelete: () {},
       onUpdate: () {},
+      onShare: () {
+        showQr.toggle();
+        // CustomDialog().showShareDialog().whenComplete(() {
+        //   showQr.value = false;
+        // });
+      },
+      isAdmin: isAdmin,
       widgetContent: SizedBox(
         width: Get.width,
         child: Column(
@@ -302,11 +319,20 @@ class AdminSessionBottomSheet {
               ),
             ),
             SizedBox(height: defaultMargin),
-            FieldImageWidget(
-              arenaModel: arenaModel,
-              selectedCourt: selectedCourt,
-              showInformation: true,
-              showLocation: false,
+            Obx(
+              () => Visibility(
+                visible: showQr.value == false,
+                replacement: SvgPicture.asset(
+                  'assets/icons/QR.svg',
+                  width: Get.width * 0.5,
+                ),
+                child: FieldImageWidget(
+                  arenaModel: arenaModel,
+                  selectedCourt: selectedCourt,
+                  showInformation: true,
+                  showLocation: false,
+                ),
+              ),
             ),
             const SizedBox(height: 12),
             Visibility(

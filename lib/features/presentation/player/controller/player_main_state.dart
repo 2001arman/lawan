@@ -25,7 +25,7 @@ class PlayerMainState {
 
   List<int> optionHour = [1, 2, 3, 4, 5];
 
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
   var selectedHour = 1.obs;
   var openTime = const TimeOfDay(hour: 9, minute: 00).obs;
   var closeTime = const TimeOfDay(hour: 10, minute: 00).obs;

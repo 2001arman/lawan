@@ -321,6 +321,7 @@ class CheckoutUi extends StatelessWidget {
                               session: sessionModel,
                               showPill: true,
                               successCreate: true,
+                              isAdmin: false,
                             );
                           },
                           widget: Text(
