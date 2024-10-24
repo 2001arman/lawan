@@ -14,6 +14,7 @@ import 'package:lawan/utility/shared/widgets/text/text_pill_widget.dart';
 import 'package:lawan/utility/util/helper.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
+import '../../../domain/session/avatar_model.dart';
 import '../controller/player_main_logic.dart';
 import '../controller/player_main_state.dart';
 
@@ -23,8 +24,88 @@ class PlayerAddPlayerBottomSheet {
 
   PlayerAddPlayerBottomSheet({required this.state, required this.logic});
 
+  Widget friendWidget({required AvatarModel data}) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: kGreyColor, width: 1),
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Image.asset(data.asset, width: 48),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data.name,
+                  style: blackTextStyle.copyWith(
+                    fontWeight: medium,
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                TextBorder(
+                  textTitle: 'Novice',
+                  backgroundColor: kWhiteColor,
+                  fontSize: 10,
+                  paddingVertical: 2,
+                  paddingHorizontal: 8,
+                )
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              Text(
+                'Prefer as',
+                style: darkGreyTextStyle.copyWith(fontSize: 10),
+              ),
+              const SizedBox(width: 8),
+              TextPillWidget(
+                verticalPadding: 2,
+                backgroundColor: kWhiteColor,
+                prefix: Padding(
+                  padding: const EdgeInsets.only(right: 2),
+                  child: Icon(
+                    Icons.person_2_outlined,
+                    size: 18,
+                    color: kMidgreyColor,
+                  ),
+                ),
+                title: data.position,
+                titleColor: kBlackColor,
+              ),
+            ],
+          ),
+          const SizedBox(width: 12),
+          CircleButtonTransparentWidget(
+            onTap: () {
+              Helper.showToast(
+                  isSuccess: true, message: 'user added to card successfully');
+              state.selectedFriends.add(data);
+              state.listFriends.remove(data);
+            },
+            widget: SvgPicture.asset(
+              'assets/icons/plus.svg',
+              color: kDarkgreyColor,
+            ),
+            borderColor: kGreyColor,
+            size: 40,
+          ),
+        ],
+      ),
+    );
+  }
+
   void addPlayerBottomSheet({required}) {
     TextEditingController searchController = TextEditingController();
+    var showPlayer = false.obs;
     Get.bottomSheet(
       Padding(
         padding: const EdgeInsets.all(8),
@@ -85,6 +166,11 @@ class PlayerAddPlayerBottomSheet {
                 CustomTextFormField(
                   hintText: 'Search or add name/email',
                   controller: searchController,
+                  onChanged: (value) {
+                    value != ''
+                        ? showPlayer.value = true
+                        : showPlayer.value = false;
+                  },
                   prefix: Padding(
                     padding: const EdgeInsets.all(16),
                     child: SvgPicture.asset(
@@ -92,7 +178,16 @@ class PlayerAddPlayerBottomSheet {
                       color: kDarkgreyColor,
                     ),
                   ),
-                  showClear: true,
+                  suffix: GestureDetector(
+                    onTap: () {
+                      searchController.text = '';
+                      showPlayer.value = false;
+                    },
+                    child: Icon(
+                      Icons.highlight_remove_outlined,
+                      color: kDarkgreyColor,
+                    ),
+                  ),
                 ),
 
                 // info container
@@ -144,12 +239,14 @@ class PlayerAddPlayerBottomSheet {
                   child: SingleChildScrollView(
                     child: Obx(
                       () => Visibility(
-                        visible: state.listFriends.isNotEmpty,
+                        visible:
+                            state.listFriends.isNotEmpty && showPlayer.value,
                         replacement: SizedBox(
+                          width: double.infinity,
                           height: 200,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Icon(
                                 Icons.groups_2_outlined,
@@ -170,91 +267,7 @@ class PlayerAddPlayerBottomSheet {
                         ),
                         child: Column(
                           children: state.listFriends
-                              .map(
-                                (data) => Container(
-                                  width: double.infinity,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: kGreyColor, width: 1),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Image.asset(data.asset, width: 48),
-                                      const SizedBox(width: 8),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              data.name,
-                                              style: blackTextStyle.copyWith(
-                                                fontWeight: medium,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 6),
-                                            TextBorder(
-                                              textTitle: 'Novice',
-                                              backgroundColor: kWhiteColor,
-                                              fontSize: 10,
-                                              paddingVertical: 2,
-                                              paddingHorizontal: 8,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Prefer as',
-                                            style: darkGreyTextStyle.copyWith(
-                                                fontSize: 10),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          TextPillWidget(
-                                            verticalPadding: 2,
-                                            backgroundColor: kWhiteColor,
-                                            prefix: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 2),
-                                              child: Icon(
-                                                Icons.person_2_outlined,
-                                                size: 18,
-                                                color: kMidgreyColor,
-                                              ),
-                                            ),
-                                            title: data.position,
-                                            titleColor: kBlackColor,
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(width: 12),
-                                      CircleButtonTransparentWidget(
-                                        onTap: () {
-                                          Helper.showToast(
-                                              isSuccess: true,
-                                              message:
-                                                  'user added to card successfully');
-                                          state.selectedFriends.add(data);
-                                          state.listFriends.remove(data);
-                                        },
-                                        widget: SvgPicture.asset(
-                                          'assets/icons/plus.svg',
-                                          color: kDarkgreyColor,
-                                        ),
-                                        borderColor: kGreyColor,
-                                        size: 40,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
+                              .map((data) => friendWidget(data: data))
                               .toList(),
                         ),
                       ),

@@ -154,7 +154,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                         fontSize: 14, fontWeight: FontWeight.normal),
                     isDense: false,
                     contentPadding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
+                      vertical: 12,
+                      horizontal: 16,
+                    ),
                     filled: true,
                     focusColor: kWhiteColor,
                     fillColor: kWhiteColor,
