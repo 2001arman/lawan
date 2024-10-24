@@ -13,7 +13,7 @@ final kLastDay = DateTime(kToday.year + 1, kToday.month, kToday.day);
 
 // Add your disabled dates here
 final List<DateTime> disabledDates = [
-  DateTime(kToday.year, kToday.month, kToday.day + 9), // Example disabled date
+  DateTime(kToday.year, kToday.month, 16), // Example disabled date
   DateTime(kToday.year, kToday.month, 15), // Example disabled date
   // Add more dates as needed
 ];
@@ -130,6 +130,10 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
         disabledTextStyle: darkGreyTextStyle.copyWith(fontWeight: medium),
         defaultTextStyle: darkGreyTextStyle.copyWith(fontWeight: medium),
         selectedTextStyle: whiteTextStyle.copyWith(fontWeight: medium),
+        outsideTextStyle: darkGreyTextStyle.copyWith(
+          fontWeight: medium,
+          color: Colors.transparent,
+        ),
       ),
       onDaySelected: _onDaySelected,
       onCalendarCreated: widget.pageController,
