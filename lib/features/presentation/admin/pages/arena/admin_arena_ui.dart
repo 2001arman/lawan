@@ -222,6 +222,7 @@ class AdminArenaUi extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: defaultMargin),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: defaultMargin),
             child: Visibility(
@@ -229,45 +230,39 @@ class AdminArenaUi extends StatelessWidget {
               replacement: AddPictureButtonWidget(
                 onTap: logic.updateAddimage,
               ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: defaultMargin,
-                  bottom: 12,
-                  right: 8,
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: 130,
+                  viewportFraction: 1.0,
+                  enlargeCenterPage: false,
+                  enableInfiniteScroll: false,
                 ),
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    height: 126,
-                    viewportFraction: 1.0,
-                    enlargeCenterPage: false,
-                    enableInfiniteScroll: false,
-                  ),
-                  items: state.selectedCourt.value.pictures
-                      .asMap()
-                      .entries
-                      .map((data) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        if (data.value.path == 'empty') {
-                          return AddPictureButtonWidget(
-                            onTap: logic.image,
-                          );
-                        }
-                        return CustomImageWidget(
-                          path: data.value.path,
-                          pictureType: state.selectedCourt.value.pictureType,
-                          changeImage: () =>
-                              logic.updateChangeImage(index: data.key),
-                          deleteImage: () =>
-                              logic.updateDeleteImage(index: data.key),
+                items: state.selectedCourt.value.pictures
+                    .asMap()
+                    .entries
+                    .map((data) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      if (data.value.path == 'empty') {
+                        return AddPictureButtonWidget(
+                          onTap: logic.image,
                         );
-                      },
-                    );
-                  }).toList(),
-                ),
+                      }
+                      return CustomImageWidget(
+                        path: data.value.path,
+                        pictureType: state.selectedCourt.value.pictureType,
+                        changeImage: () =>
+                            logic.updateChangeImage(index: data.key),
+                        deleteImage: () =>
+                            logic.updateDeleteImage(index: data.key),
+                      );
+                    },
+                  );
+                }).toList(),
               ),
             ),
           ),
+          const SizedBox(height: 12),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: defaultMargin),
             child: CustomTextFormField(
@@ -276,7 +271,9 @@ class AdminArenaUi extends StatelessWidget {
               controller:
                   TextEditingController(text: 'Petaling Jaya, Selangor'),
               showSuffix: true,
-              onTap: CustomDialogMaps.chooseDialogLocation,
+              onTap: () => CustomDialogMaps.chooseDialogLocation(
+                onSelected: (data) {},
+              ),
               prefix: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
                 child: SvgPicture.asset('assets/icons/target.svg'),

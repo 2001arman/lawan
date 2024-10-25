@@ -16,7 +16,7 @@
         android:label="lawan"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAgZSJ8f979GgWyMJZmY8353Nnd_w1-b60"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBgg1c6SuSdfEttI5OjRL7goBoj4YvBfG4"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

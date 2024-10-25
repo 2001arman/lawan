@@ -308,6 +308,7 @@ class AdminAddArena {
                 'Add photos, name and location',
                 style: darkGreyTextStyle.copyWith(fontSize: 12),
               ),
+              const SizedBox(height: 12),
               CarouselSlider(
                 options: CarouselOptions(
                   height: 126,
@@ -333,12 +334,15 @@ class AdminAddArena {
                   );
                 }).toList(),
               ),
+              const SizedBox(height: 12),
               CustomTextFormField(
                 hintText: 'Location',
                 controller: state.locationController,
                 showSuffix: true,
                 isReadOnly: true,
-                onTap: CustomDialogMaps.chooseDialogLocation,
+                onTap: () => CustomDialogMaps.chooseDialogLocation(
+                  onSelected: (data) => state.locationController.text = data,
+                ),
                 prefix: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: defaultMargin, vertical: 12),

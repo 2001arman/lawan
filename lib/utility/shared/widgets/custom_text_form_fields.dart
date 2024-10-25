@@ -94,23 +94,25 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               prefixIcon: widget.prefix,
               suffixIcon: widget.showSuffix
                   ? widget.suffix
-                  : Visibility(
-                      visible: showIcon,
-                      child: GestureDetector(
-                        onTap: () {
-                          widget.controller.text = '';
-                          showIcon = false;
-                          setState(() {});
-                          if (widget.onClear != null) {
-                            widget.onClear!();
-                          }
-                        },
-                        child: widget.showClear
-                            ? Icon(
-                                Icons.highlight_remove_outlined,
-                                color: kDarkgreyColor,
-                              )
-                            : widget.suffix,
+                  : GestureDetector(
+                      onTap: () {
+                        widget.controller.text = '';
+                        showIcon = false;
+                        setState(() {});
+                        if (widget.onClear != null) {
+                          widget.onClear!();
+                        }
+                      },
+                      child: Visibility(
+                        visible: showIcon,
+                        child: SizedBox(
+                          child: widget.showClear
+                              ? Icon(
+                                  Icons.highlight_remove_outlined,
+                                  color: kDarkgreyColor,
+                                )
+                              : widget.suffix,
+                        ),
                       ),
                     ),
               hintText: widget.hintText,

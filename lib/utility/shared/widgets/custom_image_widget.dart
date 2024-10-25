@@ -19,43 +19,47 @@ class CustomImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 2.88 / 1,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          image: DecorationImage(
-            image: pictureType == PictureType.file
-                ? FileImage(
-                    File(path),
-                  )
-                : AssetImage(path),
-            fit: BoxFit.cover,
+    return SizedBox(
+      width: double.infinity,
+      child: AspectRatio(
+        aspectRatio: 2.88 / 1,
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            image: DecorationImage(
+              image: pictureType == PictureType.file
+                  ? FileImage(
+                      File(path),
+                    )
+                  : AssetImage(path),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            GestureDetector(
-              onTap: changeImage,
-              child: SvgPicture.asset(
-                'assets/icons/container_rotate.svg',
-                width: 36,
-                height: 36,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: changeImage,
+                child: SvgPicture.asset(
+                  'assets/icons/container_rotate.svg',
+                  width: 36,
+                  height: 36,
+                ),
               ),
-            ),
-            const SizedBox(width: 8),
-            GestureDetector(
-              onTap: deleteImage,
-              child: SvgPicture.asset(
-                'assets/icons/container_trash.svg',
-                width: 36,
-                height: 36,
+              const SizedBox(width: 8),
+              GestureDetector(
+                onTap: deleteImage,
+                child: SvgPicture.asset(
+                  'assets/icons/container_trash.svg',
+                  width: 36,
+                  height: 36,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

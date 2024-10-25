@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
@@ -11,7 +12,12 @@ import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/util/glass_effect_dialog_container.dart';
 
 class CustomDialogMaps {
-  static void chooseDialogLocation() {
+  static void chooseDialogLocation({required Function(String) onSelected}) {
+    final names = [
+      'Kuala Lumpur',
+      'Selangor',
+      'Petaling Jaya',
+    ];
     Get.bottomSheet(
       GlassEffectDialogContainer(
         height: 0.75,
@@ -58,6 +64,12 @@ class CustomDialogMaps {
                   myLocationEnabled: true,
                   zoomControlsEnabled: true,
                   onMapCreated: (GoogleMapController controller) {},
+                  onTap: (data) async {
+                    Get.log('cek data $data');
+                    final address = await placemarkFromCoordinates(
+                        data.latitude, data.longitude);
+                    Get.log('cek address $address');
+                  },
                 ),
               ),
             ),
@@ -123,7 +135,7 @@ class CustomDialogMaps {
                       child: Row(
                         children: [
                           SvgPicture.asset(
-                            'assets/icons/target.svg',
+                            'assets/icons/location.svg',
                             width: 20,
                             height: 20,
                           ),
@@ -133,7 +145,7 @@ class CustomDialogMaps {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Petaling Jaya',
+                                  names[i],
                                   style: blackTextStyle.copyWith(
                                       fontWeight: medium),
                                 ),
@@ -164,7 +176,10 @@ class CustomDialogMaps {
                   CustomButton(
                     title: 'Save',
                     isBlack: true,
-                    onTap: Get.back,
+                    onTap: () {
+                      Get.back();
+                      onSelected('Petaling Jaya');
+                    },
                   ),
                 ],
               ),
