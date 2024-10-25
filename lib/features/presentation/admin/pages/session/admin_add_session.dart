@@ -12,6 +12,7 @@ import 'package:lawan/utility/shared/widgets/calendar/calendar_month_widget.dart
 import 'package:lawan/utility/shared/widgets/fields/select_field_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/filter_button.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
+import 'package:lawan/utility/util/formatter/alphabet_formatter.dart';
 import 'package:lawan/utility/util/formatter/identification_number_formatter.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -223,12 +224,18 @@ class AdminAddSession {
               controller: state.firstNameController,
               title: 'First Name',
               validator: (data) => Helper.regularValidator(data),
+              inputFormatters: [
+                AlphabeticFormatter(),
+              ],
             ),
             CustomTextFormField(
               hintText: 'Last Name / Family Name',
               controller: state.lastNameController,
               title: 'Last Name',
               validator: (data) => Helper.regularValidator(data),
+              inputFormatters: [
+                AlphabeticFormatter(),
+              ],
             ),
             Text(
               'Contact Number',
@@ -266,6 +273,9 @@ class AdminAddSession {
                     controller: state.contactController,
                     textInputType: TextInputType.number,
                     validator: (data) => Helper.numberValidator(data),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
                   ),
                 ),
               ],
@@ -301,6 +311,9 @@ class AdminAddSession {
               textInputType: TextInputType.number,
               title: 'Price',
               validator: (data) => Helper.numberValidator(data),
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
               prefix: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

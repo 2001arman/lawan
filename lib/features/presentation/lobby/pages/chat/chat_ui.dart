@@ -53,87 +53,101 @@ class ChatUi extends StatelessWidget {
     }
 
     Widget listChatSection() {
-      return ListView.builder(
-        padding: EdgeInsets.only(
-          top: defaultMargin,
-          left: defaultMargin,
-          right: defaultMargin,
-        ),
-        itemCount: state.listChat.length,
-        itemBuilder: (context, index) {
-          ChatModel chatModel = state.listChat[index];
-          return Column(
-            crossAxisAlignment: chatModel.isMe
-                ? CrossAxisAlignment.end
-                : CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                visible: !chatModel.isMe,
-                child: Row(
-                  children: [
-                    Image.asset(
-                      chatModel.avatarImage,
-                      width: 32,
-                      height: 32,
-                    ),
-                    const SizedBox(width: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          chatModel.name,
-                          style: blackTextStyle.copyWith(
-                              fontSize: 12, fontWeight: medium),
-                        ),
-                        const SizedBox(height: 2),
-                        TextBorder(
-                          textTitle: 'Novice',
-                          backgroundColor: kWhiteColor,
-                          paddingVertical: 2,
-                          paddingHorizontal: 8,
-                          fontSize: 10,
-                        )
-                      ],
-                    ),
-                  ],
-                ),
+      return Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.only(
+                top: 24,
+                left: 28,
+                right: 28,
               ),
-              const SizedBox(height: 8),
-              ...chatModel.listChatData.map(
-                (data) => Column(
+              itemCount: state.listChat.length,
+              itemBuilder: (context, index) {
+                ChatModel chatModel = state.listChat[index];
+                return Column(
                   crossAxisAlignment: chatModel.isMe
                       ? CrossAxisAlignment.end
                       : CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(26),
-                        color: chatModel.isMe ? kBlackColor : kWhiteColor,
-                      ),
-                      child: Text(
-                        data.chatText,
-                        style: darkGreyTextStyle.copyWith(
-                            fontSize: 12,
-                            color:
-                                chatModel.isMe ? kWhiteColor : kDarkgreyColor),
+                    Visibility(
+                      visible: !chatModel.isMe,
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            chatModel.avatarImage,
+                            width: 32,
+                            height: 32,
+                          ),
+                          const SizedBox(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                chatModel.name,
+                                style: blackTextStyle.copyWith(
+                                    fontSize: 12, fontWeight: medium),
+                              ),
+                              const SizedBox(height: 2),
+                              TextBorder(
+                                textTitle: 'Novice',
+                                backgroundColor: kWhiteColor,
+                                paddingVertical: 2,
+                                paddingHorizontal: 8,
+                                fontSize: 10,
+                              )
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      data.time,
-                      style: darkGreyTextStyle.copyWith(fontSize: 10),
+                    ...chatModel.listChatData.map(
+                      (data) => Column(
+                        crossAxisAlignment: chatModel.isMe
+                            ? CrossAxisAlignment.end
+                            : CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(26),
+                              color: chatModel.isMe ? kBlackColor : kWhiteColor,
+                            ),
+                            child: Text(
+                              data.chatText,
+                              style: darkGreyTextStyle.copyWith(
+                                  fontSize: 12,
+                                  color: chatModel.isMe
+                                      ? kWhiteColor
+                                      : kDarkgreyColor),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            data.time,
+                            style: darkGreyTextStyle.copyWith(fontSize: 10),
+                          ),
+                          const SizedBox(height: 8),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 8),
                   ],
-                ),
-              ),
-            ],
-          );
-        },
+                );
+              },
+            ),
+          ),
+          Text(
+            'Chee Lin is typing ....',
+            style: darkGreyTextStyle.copyWith(
+              fontSize: 10,
+            ),
+          ),
+          const SizedBox(height: 12),
+        ],
       );
     }
 

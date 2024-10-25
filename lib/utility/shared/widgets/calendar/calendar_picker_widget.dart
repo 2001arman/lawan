@@ -99,33 +99,33 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
         cellMargin: EdgeInsets.all(widget.cellMargin),
         todayDecoration: BoxDecoration(
           color: kBlackColor.withOpacity(0.4),
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(16),
+          shape: BoxShape.circle,
+          // borderRadius: BorderRadius.circular(16),
         ),
-        outsideDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          shape: BoxShape.rectangle,
+        outsideDecoration: const BoxDecoration(
+          // borderRadius: BorderRadius.circular(16),
+          shape: BoxShape.circle,
         ),
         defaultDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          shape: BoxShape.rectangle,
+          // borderRadius: BorderRadius.circular(16),
+          shape: BoxShape.circle,
           color: widget.cellColor,
         ),
         weekendDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          shape: BoxShape.rectangle,
+          // borderRadius: BorderRadius.circular(16),
+          shape: BoxShape.circle,
           color: widget.cellColor,
         ),
         selectedDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          // borderRadius: BorderRadius.circular(16),
           color: kBlackColor,
-          shape: BoxShape.rectangle,
+          shape: BoxShape.circle,
         ),
         // Add decoration for disabled days
-        disabledDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+        disabledDecoration: const BoxDecoration(
+          // borderRadius: BorderRadius.circular(16),
           color: Colors.transparent, // Color for disabled dates
-          shape: BoxShape.rectangle,
+          shape: BoxShape.circle,
         ),
         disabledTextStyle: darkGreyTextStyle.copyWith(fontWeight: medium),
         defaultTextStyle: darkGreyTextStyle.copyWith(fontWeight: medium),

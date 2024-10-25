@@ -5,6 +5,8 @@ import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_w
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/range_slider_widget.dart';
+import 'package:lawan/utility/util/custom_dialog.dart';
+import 'package:lawan/utility/util/helper.dart';
 
 import '../shared/constants/constants_ui.dart';
 import '../shared/widgets/selected_container_widget.dart';
@@ -21,14 +23,14 @@ class DialogFilter {
         () => Row(
           children: [
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Text(
                 title,
                 style: darkGreyTextStyle,
               ),
             ),
             Expanded(
-              flex: 5,
+              flex: 6,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -53,6 +55,9 @@ class DialogFilter {
   }
 
   static Future<void> showFilterDialog() {
+    TextEditingController monthController =
+        TextEditingController(text: 'All month');
+
     List<String> statesData = [
       'All',
       'Johor',
@@ -86,17 +91,19 @@ class DialogFilter {
     ];
 
     var selectedState = 'All'.obs;
-    var selectedArena = 'Outdoor'.obs;
-    var selectedGender = 'Male'.obs;
-    var selectedFlooring = 'Grass'.obs;
+    var selectedArena = 'All'.obs;
+    var selectedGender = 'All'.obs;
+    var selectedFlooring = 'All'.obs;
     var selectedAvailable = 'Weekend'.obs;
+    var selectedMonth = 0.obs;
 
     void resetData() {
       selectedState.value = 'All';
-      selectedArena.value = 'Outdoor';
-      selectedGender.value = 'Male';
-      selectedFlooring.value = 'Grass';
+      selectedArena.value = 'All';
+      selectedGender.value = 'All';
+      selectedFlooring.value = 'All';
       selectedAvailable.value = 'Weekend';
+      selectedMonth.value = 0;
     }
 
     return Get.dialog(
@@ -118,7 +125,17 @@ class DialogFilter {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: CustomTextFormField(
                   hintText: 'yoo',
-                  controller: TextEditingController(text: 'All month'),
+                  isReadOnly: true,
+                  controller: monthController,
+                  onTap: () => CustomDialog.chooseMonth(
+                    selectedMonth: selectedMonth.value,
+                    showAllData: true,
+                    onSelected: (index) {
+                      monthController.text = Helper.monthNames[index];
+                      selectedMonth.value = index;
+                    },
+                  ),
+                  showSuffix: true,
                   borderColor: kGreyColor,
                   suffix: Padding(
                     padding: EdgeInsets.symmetric(

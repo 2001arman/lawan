@@ -82,10 +82,10 @@ class Helper {
       return 'Field cannot be empty';
     }
 
-    // Updated regex to allow only numbers, commas, and periods
-    final regex = RegExp(r'^[0-9,.]+$');
+    // Updated regex to allow numbers, commas, periods, and hyphens
+    final regex = RegExp(r'^[0-9,.\-]+$');
     if (!regex.hasMatch(data)) {
-      return 'Only numbers, commas, and periods are allowed';
+      return 'Only numbers, commas, periods, and hyphens are allowed';
     }
 
     return null;
@@ -99,6 +99,21 @@ class Helper {
     'Thu',
     'Fri',
     'Sat'
+  ];
+
+  static List<String> monthNames = [
+    'All month',
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    "June",
+    'July',
+    'August',
+    'September',
+    'November',
+    'Desember',
   ];
 
   static String getDayLabel(int index) {

@@ -10,8 +10,8 @@ import 'package:lawan/utility/shared/widgets/card_detail_session.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
 import 'package:lawan/utility/shared/widgets/host_avatar_widget.dart';
+import 'package:lawan/utility/shared/widgets/share_section.dart';
 import 'package:lawan/utility/shared/widgets/text/text_pill_widget.dart';
-import 'package:lawan/utility/util/custom_dialog.dart';
 
 import '../../../../../utility/util/helper.dart';
 import '../../../../domain/arena/arena_model.dart';
@@ -23,114 +23,138 @@ class AdminSessionBottomSheet {
     required VoidCallback onDelete,
     required VoidCallback onUpdate,
     required VoidCallback onShare,
+    required VoidCallback onBackShare,
     bool isAdmin = true,
   }) {
+    var showShare = false.obs;
     Get.bottomSheet(
       Padding(
         padding: const EdgeInsets.all(8),
-        child: SizedBox(
-          height: Get.height * 0.8,
-          width: Get.width,
-        ).blurred(
-          blur: 7,
-          blurColor: Colors.white,
-          colorOpacity: 0,
-          borderRadius: BorderRadius.circular(32),
-          overlay: Container(
+        child: Obx(
+          () => SizedBox(
+            height: showShare.value ? Get.height * 0.9 : Get.height * 0.8,
             width: Get.width,
-            decoration: BoxDecoration(
-              color: kModalColor,
-              borderRadius: BorderRadius.circular(32),
-              boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0, -0.5),
-                  blurStyle: BlurStyle.inner,
-                  spreadRadius: 0,
-                  blurRadius: 0,
-                  color: kBlackColor.withOpacity(0.1),
-                ),
-              ],
-            ),
-            child: Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-                  child: SingleChildScrollView(
-                    child: widgetContent,
+          ).blurred(
+            blur: 7,
+            blurColor: Colors.white,
+            colorOpacity: 0,
+            borderRadius: BorderRadius.circular(32),
+            overlay: Container(
+              width: Get.width,
+              decoration: BoxDecoration(
+                color: kModalColor,
+                borderRadius: BorderRadius.circular(32),
+                boxShadow: [
+                  BoxShadow(
+                    offset: const Offset(0, -0.5),
+                    blurStyle: BlurStyle.inner,
+                    spreadRadius: 0,
+                    blurRadius: 0,
+                    color: kBlackColor.withOpacity(0.1),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: CircleButtonTransparentWidget(
-                      size: 40,
-                      onTap: Get.back,
-                      borderColor: kGreyColor,
-                      widget: SvgPicture.asset('assets/icons/x.svg'),
+                ],
+              ),
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                    child: SingleChildScrollView(
+                      child: widgetContent,
                     ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    width: double.infinity,
-                    height: 80,
-                    padding: EdgeInsets.all(defaultMargin),
-                    color: kWhiteColor,
-                    child: Row(
-                      children: [
-                        CircleButtonTransparentWidget(
-                          onTap: onDelete,
-                          borderColor: kGreyColor,
-                          widget: SvgPicture.asset(
-                            isAdmin
-                                ? 'assets/icons/trash.svg'
-                                : 'assets/icons/pencil.svg',
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: CircleButtonTransparentWidget(
+                        size: 40,
+                        onTap: Get.back,
+                        borderColor: kGreyColor,
+                        widget: SvgPicture.asset('assets/icons/x.svg'),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Obx(
+                      () => Visibility(
+                        visible: showShare.value == false,
+                        replacement: Container(
+                          width: double.infinity,
+                          height: 163,
+                          padding: EdgeInsets.all(defaultMargin),
+                          color: kWhiteColor,
+                          child: ShareSection(
+                            onTapBack: () {
+                              showShare.value = false;
+                              onBackShare();
+                            },
                           ),
                         ),
-                        const SizedBox(width: 16),
-                        CircleButtonTransparentWidget(
-                          // onTap: () => CustomDialog().showShareDialog(),
-                          onTap: onShare,
-                          borderColor: kGreyColor,
-                          widget: SvgPicture.asset('assets/icons/upload.svg'),
-                        ),
-                        const SizedBox(width: 16),
-                        CircleButtonTransparentWidget(
-                          onTap: onUpdate,
-                          borderColor: kGreyColor,
-                          widget: SvgPicture.asset(isAdmin
-                              ? 'assets/icons/pencil.svg'
-                              : 'assets/icons/calendar.svg'),
-                        ),
-                        const SizedBox(width: 16),
-                        CustomButton(
-                          isBlack: true,
-                          onTap: () => Get.toNamed(LobbyUi.namePath),
-                          widget: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                        child: Container(
+                          width: double.infinity,
+                          height: 80,
+                          padding: EdgeInsets.all(defaultMargin),
+                          color: kWhiteColor,
+                          child: Row(
                             children: [
-                              SvgPicture.asset(
-                                'assets/icons/users_group.svg',
-                                width: 16,
-                                height: 16,
+                              CircleButtonTransparentWidget(
+                                onTap: onDelete,
+                                borderColor: kGreyColor,
+                                widget: SvgPicture.asset(
+                                  isAdmin
+                                      ? 'assets/icons/trash.svg'
+                                      : 'assets/icons/pencil.svg',
+                                ),
                               ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'Lobby',
-                                style:
-                                    whiteTextStyle.copyWith(fontWeight: medium),
+                              const SizedBox(width: 16),
+                              CircleButtonTransparentWidget(
+                                onTap: () {
+                                  showShare.value = true;
+                                  onShare();
+                                },
+                                borderColor: kGreyColor,
+                                widget:
+                                    SvgPicture.asset('assets/icons/upload.svg'),
+                              ),
+                              const SizedBox(width: 16),
+                              CircleButtonTransparentWidget(
+                                onTap: onUpdate,
+                                borderColor: kGreyColor,
+                                widget: SvgPicture.asset(isAdmin
+                                    ? 'assets/icons/pencil.svg'
+                                    : 'assets/icons/calendar.svg'),
+                              ),
+                              const SizedBox(width: 16),
+                              CustomButton(
+                                isBlack: true,
+                                onTap: () => Get.toNamed(LobbyUi.namePath),
+                                widget: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/users_group.svg',
+                                      width: 16,
+                                      height: 16,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Lobby',
+                                      style: whiteTextStyle.copyWith(
+                                          fontWeight: medium),
+                                    )
+                                  ],
+                                ),
                               )
                             ],
                           ),
-                        )
-                      ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -148,7 +172,8 @@ class AdminSessionBottomSheet {
     return sessionContainerSheet(
       onDelete: onDelete,
       onUpdate: onUpdate,
-      onShare: () => CustomDialog().showShareDialog(),
+      onShare: () {},
+      onBackShare: () {},
       widgetContent: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -269,6 +294,9 @@ class AdminSessionBottomSheet {
     return sessionContainerSheet(
       onDelete: () {},
       onUpdate: () {},
+      onBackShare: () {
+        showQr.toggle();
+      },
       onShare: () {
         showQr.toggle();
         // CustomDialog().showShareDialog().whenComplete(() {

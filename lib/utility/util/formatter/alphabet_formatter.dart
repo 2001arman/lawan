@@ -7,7 +7,7 @@ class AlphabeticFormatter extends TextInputFormatter {
     TextEditingValue newValue,
   ) {
     // Allow only alphabetic characters (A-Z, a-z)
-    String newText = newValue.text.replaceAll(RegExp(r'[^a-zA-Z]'), '');
+    String newText = newValue.text.replaceAll(RegExp(r'[^a-zA-Z ]'), '');
 
     // Return the formatted value with the new valid alphabetic text
     return TextEditingValue(

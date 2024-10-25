@@ -190,6 +190,7 @@ class CustomDialog {
   static Future<void> chooseMonth({
     required int selectedMonth,
     required Function(int index) onSelected,
+    bool showAllData = false,
   }) {
     // List of month names
     List<String> monthNames = [
@@ -206,6 +207,10 @@ class CustomDialog {
       'November',
       'December'
     ];
+
+    if (showAllData) {
+      monthNames.insert(0, 'All month');
+    }
 
     TextStyle textStyle =
         blackTextStyle.copyWith(fontSize: 14, height: 1.5, fontFamily: 'Lufga');
@@ -268,7 +273,7 @@ class CustomDialog {
                   CustomButton(
                     isBlack: true,
                     onTap: () {
-                      onSelected(startWheel.selected + 3);
+                      onSelected(startWheel.selected);
                       Get.back();
                     },
                     title: 'Okay',

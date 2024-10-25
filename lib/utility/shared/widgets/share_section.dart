@@ -14,7 +14,8 @@ import '../constants/constants_ui.dart';
 import 'buttons/custom_button.dart';
 
 class ShareSection extends StatefulWidget {
-  const ShareSection({super.key});
+  const ShareSection({super.key, this.onTapBack});
+  final VoidCallback? onTapBack;
 
   @override
   State<ShareSection> createState() => _ShareSectionState();
@@ -127,7 +128,11 @@ class _ShareSectionState extends State<ShareSection> {
         Row(
           children: [
             CircleButtonTransparentWidget(
-              onTap: () {},
+              onTap: () {
+                if (widget.onTapBack != null) {
+                  widget.onTapBack!();
+                }
+              },
               borderColor: kGreyColor,
               widget: SvgPicture.asset(
                 'assets/icons/back.svg',
