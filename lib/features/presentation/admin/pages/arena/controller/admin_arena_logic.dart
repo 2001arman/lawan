@@ -211,7 +211,7 @@ class AdminArenaLogic extends GetxController {
     arenaDataSource.addArena(arena: arena);
     state.selectedArena = arena.obs;
     state.selectedCourt = courtModel.obs;
-    if (state.selectedListArena.value != 0) state.selectedListArena++;
+    state.selectedListArena.value = arenaDataSource.listArena.length - 1;
     clearState();
   }
 
