@@ -21,6 +21,7 @@ class CustomImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
+      height: 130,
       child: AspectRatio(
         aspectRatio: 2.88 / 1,
         child: Container(

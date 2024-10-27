@@ -247,7 +247,7 @@ class AdminAddSession {
             Row(
               children: [
                 SizedBox(
-                  width: Get.width * 0.23,
+                  width: 90,
                   child: CustomTextFormField(
                     hintText: '+60',
                     controller: TextEditingController(),

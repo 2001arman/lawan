@@ -8,26 +8,29 @@ class AddPictureButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 2.88 / 1,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          // margin: EdgeInsets.symmetric(vertical: margin),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(32),
-            color: kWhiteColor,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/icons/picture.png', width: 24, height: 24),
-              const SizedBox(height: 8),
-              Text(
-                'Add Picture (2.88:1 aspect ratio)',
-                style: midGreyTextStyle,
-              ),
-            ],
+    return SizedBox(
+      height: 130,
+      child: AspectRatio(
+        aspectRatio: 2.88 / 1,
+        child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            // margin: EdgeInsets.symmetric(vertical: margin),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(32),
+              color: kWhiteColor,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/icons/picture.png', width: 24, height: 24),
+                const SizedBox(height: 8),
+                Text(
+                  'Add Picture (2.88:1 aspect ratio)',
+                  style: midGreyTextStyle,
+                ),
+              ],
+            ),
           ),
         ),
       ),
