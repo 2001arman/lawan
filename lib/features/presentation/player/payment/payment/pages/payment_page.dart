@@ -255,6 +255,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         children: [
                           Image.asset(
                             item.iconBank,
+                            width: 32,
                           ),
                           const SizedBox(width: 8.0),
                           Expanded(

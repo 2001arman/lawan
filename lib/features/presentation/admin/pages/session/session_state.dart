@@ -9,6 +9,7 @@ import '../../../../../utility/util/helper.dart';
 class SessionState {
   var selectedIndex = 1.obs;
 
+  PageController homePageController = PageController();
   PageController pageController = PageController();
   List<int> optionHour = [1, 2, 3, 4, 5];
 

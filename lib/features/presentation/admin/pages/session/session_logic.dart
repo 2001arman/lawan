@@ -66,6 +66,9 @@ class SessionLogic extends GetxController {
   PageController setController(PageController controller) =>
       state.pageController = controller;
 
+  PageController setHomeController(PageController controller) =>
+      state.homePageController = controller;
+
   void handleNextButton({
     SessionModel? sessionData,
     int? dateIndex,

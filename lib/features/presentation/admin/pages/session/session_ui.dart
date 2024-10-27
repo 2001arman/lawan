@@ -32,7 +32,7 @@ class SessionUi extends StatelessWidget {
           child: Row(
             children: [
               CircleButtonTransparentWidget(
-                onTap: () => state.pageController.previousPage(
+                onTap: () => state.homePageController.previousPage(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeOut,
                 ),
@@ -49,7 +49,7 @@ class SessionUi extends StatelessWidget {
               const SizedBox(width: 4),
               CircleButtonTransparentWidget(
                 onTap: () {
-                  state.pageController.nextPage(
+                  state.homePageController.nextPage(
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeOut,
                   );
@@ -68,7 +68,7 @@ class SessionUi extends StatelessWidget {
               SizedBox(width: defaultMargin),
               CalendarMonthWidget(
                 calendarFormat: state.calendarFormat,
-                onSelected: (index) => state.pageController.animateToPage(
+                onSelected: (index) => state.homePageController.animateToPage(
                   index,
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeOut,
@@ -83,7 +83,7 @@ class SessionUi extends StatelessWidget {
         ),
         Obx(
           () => CalendarPickerWidget(
-            pageController: logic.setController,
+            pageController: logic.setHomeController,
             calendarMode: state.calendarFormat.value,
             onDaySelected: (_) {},
           ),
