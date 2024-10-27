@@ -54,7 +54,7 @@ class SessionItemCard extends StatelessWidget {
                 Row(
                   children: [
                     Image.asset(
-                      'assets/images/avatars_image.png',
+                      'assets/images/avatars-image-clear.png',
                       width: 72,
                       height: 24,
                     ),

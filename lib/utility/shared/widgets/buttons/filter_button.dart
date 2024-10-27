@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lawan/utility/util/dialog_filter.dart';
@@ -5,14 +7,14 @@ import 'package:lawan/utility/util/dialog_filter.dart';
 import '../../constants/constants_ui.dart';
 
 class FilterButton extends StatelessWidget {
-  final Color? backgroundColor;
+  final bool useBlur;
   final double paddingVertical;
   final Color iconColor;
   final Color textColor;
 
   const FilterButton({
     super.key,
-    this.backgroundColor,
+    this.useBlur = false,
     this.paddingVertical = 14,
     required this.iconColor,
     required this.textColor,
@@ -24,34 +26,42 @@ class FilterButton extends StatelessWidget {
       onTap: DialogFilter.showFilterDialog,
       child: Container(
         width: 90,
-        padding: EdgeInsets.symmetric(vertical: paddingVertical),
+        height: 45,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           border: Border.all(
             width: 1,
             color: kGreyColor,
           ),
-          color: backgroundColor,
+          color: useBlur ? Colors.black.withOpacity(0.3) : null,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              'assets/icons/filter.svg',
-              width: 20,
-              height: 20,
-              // ignore: deprecated_member_use
-              color: iconColor,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(100),
+          child: BackdropFilter(
+            filter: useBlur
+                ? ImageFilter.blur(sigmaX: 40, sigmaY: 40)
+                : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/filter.svg',
+                  width: 20,
+                  height: 20,
+                  // ignore: deprecated_member_use
+                  color: iconColor,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  'Filter',
+                  style: whiteTextStyle.copyWith(
+                    fontWeight: medium,
+                    color: textColor,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 4),
-            Text(
-              'Filter',
-              style: whiteTextStyle.copyWith(
-                fontWeight: medium,
-                color: textColor,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

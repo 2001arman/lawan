@@ -103,12 +103,9 @@ class AdminMainUi extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
-        width: Get.width,
-        height: Get.height,
-        decoration: BoxDecoration(
-          color: kBackgroundColor,
-        ),
+      backgroundColor: kBackgroundColor,
+      body: SafeArea(
+        top: false,
         child: Stack(
           children: [
             Obx(

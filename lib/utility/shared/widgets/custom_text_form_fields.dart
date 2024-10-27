@@ -28,7 +28,7 @@ class CustomTextFormField extends StatefulWidget {
     this.showClear = false,
     this.inputFormatters,
     this.onClear,
-    this.verticalPadding = 14,
+    this.verticalPadding = 12,
     this.horizontalPadding = 16,
   });
 

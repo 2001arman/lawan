@@ -4,7 +4,12 @@ import '../../constants/constants_ui.dart';
 
 class CustomBottomNavbar extends StatelessWidget {
   final Widget navbarItemWidget;
-  const CustomBottomNavbar({super.key, required this.navbarItemWidget});
+  final bool useGradient;
+  const CustomBottomNavbar({
+    super.key,
+    required this.navbarItemWidget,
+    this.useGradient = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +17,16 @@ class CustomBottomNavbar extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.only(top: 12),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            kBlackColor.withOpacity(0),
-            kBlackColor.withOpacity(0.3),
-          ],
-        ),
+        gradient: useGradient
+            ? LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  kBlackColor.withOpacity(0),
+                  kBlackColor.withOpacity(0.3),
+                ],
+              )
+            : null,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

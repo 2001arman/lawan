@@ -8,12 +8,12 @@ import 'package:lawan/features/presentation/player/ui/player_add_player_bottom_s
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/buttons/filter_button.dart';
 import 'package:lawan/utility/shared/widgets/fields/select_field_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_age_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_slot_widget.dart';
-import 'package:lawan/utility/util/dialog_filter.dart';
 import 'package:lawan/utility/util/helper.dart';
 
 import '../../../../../utility/shared/constants/constants_ui.dart';
@@ -716,24 +716,9 @@ class PlayerAddSession {
                 ),
               ),
               SizedBox(width: defaultMargin),
-              CustomButton(
-                isBlack: false,
-                onTap: DialogFilter.showFilterDialog,
-                widget: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/filter.svg',
-                      width: 20,
-                      height: 20,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Filter',
-                      style: blackTextStyle.copyWith(fontWeight: medium),
-                    ),
-                  ],
-                ),
+              FilterButton(
+                iconColor: kDarkgreyColor,
+                textColor: kBlackColor,
               ),
             ],
           ),

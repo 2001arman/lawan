@@ -118,6 +118,7 @@ class FieldSessionWidget extends StatelessWidget {
                           style: whiteTextStyle.copyWith(
                             fontSize: 12,
                             fontWeight: medium,
+                            height: 12 / 12,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -133,6 +134,7 @@ class FieldSessionWidget extends StatelessWidget {
                               backgroundColor: kWhiteColor,
                               paddingVertical: 0,
                               paddingHorizontal: 8,
+                              borderColor: Colors.transparent,
                             ),
                             Expanded(
                               child: Row(

@@ -34,91 +34,111 @@ class PlayerMainUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget createSessionButton() {
+      return Obx(
+        () => Row(
+          children: [
+            SvgPicture.asset(
+              'assets/icons/play.svg',
+              width: 16,
+              height: 16,
+            ),
+            const SizedBox(width: 4),
+            Text(
+              'Create a session',
+              style: whiteTextStyle.copyWith(fontWeight: medium),
+            ),
+            if (state.selectedFriends.isNotEmpty) const SizedBox(width: 4),
+            Visibility(
+              visible: state.selectedFriends.isNotEmpty,
+              child: TextBorder(
+                textTitle: '+${state.selectedFriends.length}',
+                fontSize: 11,
+                paddingVertical: 0,
+                paddingHorizontal: 8,
+                borderColor: Colors.transparent,
+                textColor: const Color(0xFF44D8BE),
+                backgroundColor: kWhiteColor,
+                gradient: mainGradient,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     Widget customNavbar() {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Obx(
-            () => Visibility(
-              visible: state.sessionList.isNotEmpty,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FilterButton(
-                    backgroundColor: kMidgreyColor,
-                    paddingVertical: 12,
-                    iconColor: kGreyColor,
-                    textColor: kWhiteColor,
-                  ),
-                  SizedBox(width: defaultMargin),
-                  GradientButton(
-                    onTap: () => PlayerAddSession(
-                      logic: logic,
-                      state: state,
-                    ).createNewSession(),
-                    widget: Obx(
-                      () => Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icons/play.svg',
-                            width: 16,
-                            height: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            'Create a session',
-                            style: whiteTextStyle.copyWith(fontWeight: medium),
-                          ),
-                          if (state.selectedFriends.isNotEmpty)
-                            const SizedBox(width: 4),
-                          Visibility(
-                            visible: state.selectedFriends.isNotEmpty,
-                            child: TextBorder(
-                              textTitle: '+${state.selectedFriends.length}',
-                              fontSize: 11,
-                              paddingVertical: 0,
-                              paddingHorizontal: 8,
-                              borderColor: Colors.transparent,
-                              textColor: const Color(0xFF44D8BE),
-                              backgroundColor: kWhiteColor,
-                              gradient: mainGradient,
-                            ),
-                          ),
-                        ],
-                      ),
+      return Container(
+        width: double.infinity,
+        height: 183,
+        padding: const EdgeInsets.only(top: 12),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              kBlackColor.withOpacity(0),
+              kBlackColor.withOpacity(0.4),
+            ],
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Obx(
+              () => Visibility(
+                visible: state.sessionList.isNotEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FilterButton(
+                      paddingVertical: 12,
+                      iconColor: kGreyColor,
+                      textColor: kWhiteColor,
+                      useBlur: true,
                     ),
-                  ),
-                ],
+                    SizedBox(width: defaultMargin),
+                    GradientButton(
+                      onTap: () => PlayerAddSession(
+                        logic: logic,
+                        state: state,
+                      ).createNewSession(),
+                      widget: createSessionButton(),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          CustomBottomNavbar(
-            navbarItemWidget: Obx(
-              () => Row(
-                children: state.listNavbarItem
-                    .asMap()
-                    .entries
-                    .map(
-                      (data) => Padding(
-                        padding: EdgeInsets.only(
-                          right: data.key != state.listNavbarItem.length - 1
-                              ? 4
-                              : 0,
+            CustomBottomNavbar(
+              useGradient: false,
+              navbarItemWidget: Obx(
+                () => Row(
+                  children: state.listNavbarItem
+                      .asMap()
+                      .entries
+                      .map(
+                        (data) => Padding(
+                          padding: EdgeInsets.only(
+                            right: data.key != state.listNavbarItem.length - 1
+                                ? 4
+                                : 0,
+                          ),
+                          child: BottomNavbarItem(
+                            title: data.value.name,
+                            isActive:
+                                state.selectedNavbarIndex.value == data.key,
+                            icon: data.value.icon,
+                            onTap: () =>
+                                state.selectedNavbarIndex.value = data.key,
+                          ),
                         ),
-                        child: BottomNavbarItem(
-                          title: data.value.name,
-                          isActive: state.selectedNavbarIndex.value == data.key,
-                          icon: data.value.icon,
-                          onTap: () =>
-                              state.selectedNavbarIndex.value = data.key,
-                        ),
-                      ),
-                    )
-                    .toList(),
+                      )
+                      .toList(),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     }
 
@@ -185,39 +205,7 @@ class PlayerMainUi extends StatelessWidget {
                             logic: logic,
                             state: state,
                           ).createNewSession(),
-                          widget: Obx(
-                            () => Row(
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/icons/play.svg',
-                                  width: 16,
-                                  height: 16,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  'Create a session',
-                                  style: whiteTextStyle.copyWith(
-                                      fontWeight: medium),
-                                ),
-                                if (state.selectedFriends.isNotEmpty)
-                                  const SizedBox(width: 4),
-                                Visibility(
-                                  visible: state.selectedFriends.isNotEmpty,
-                                  child: TextBorder(
-                                    textTitle:
-                                        '+${state.selectedFriends.length}',
-                                    fontSize: 11,
-                                    paddingVertical: 0,
-                                    paddingHorizontal: 8,
-                                    borderColor: Colors.transparent,
-                                    textColor: const Color(0xFF44D8BE),
-                                    backgroundColor: kWhiteColor,
-                                    gradient: mainGradient,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          widget: createSessionButton(),
                         ),
                       ],
                     )
@@ -239,18 +227,15 @@ class PlayerMainUi extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
-        width: Get.width,
-        height: Get.height,
-        decoration: BoxDecoration(
-          color: kBackgroundColor,
-        ),
+      backgroundColor: kBackgroundColor,
+      body: SafeArea(
+        top: false,
         child: Stack(
           children: [
             Column(
               children: [
-                // appbar
                 SizedBox(height: MediaQuery.paddingOf(context).top),
+                // appbar
                 CustomAppbar(
                   onTap: () => Get.offAndToNamed(AdminMainUi.namePath),
                 ),

@@ -47,7 +47,7 @@ class FieldImageWidget extends StatelessWidget {
           children: [
             Container(
               width: Get.width * 0.5,
-              padding: const EdgeInsets.symmetric(vertical: 2),
+              padding: const EdgeInsets.symmetric(vertical: 4),
               decoration: BoxDecoration(
                 color: kBlackColor,
                 borderRadius: const BorderRadius.only(
@@ -60,6 +60,7 @@ class FieldImageWidget extends StatelessWidget {
                 style: whiteTextStyle.copyWith(
                   fontSize: 12,
                   fontWeight: medium,
+                  height: 12 / 12,
                 ),
                 textAlign: TextAlign.center,
               ),
