@@ -9,10 +9,10 @@ class AdminMainBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => AdminMainLogic());
-    Get.lazyPut(() => ArenaDataSource());
+    Get.lazyPut(() => ArenaDataSource(), fenix: true);
 
-    Get.lazyPut(() => AdminArenaLogic());
-    Get.lazyPut(() => SessionLogic());
+    Get.lazyPut(() => AdminArenaLogic(), fenix: true);
+    Get.lazyPut(() => SessionLogic(), fenix: true);
     Get.lazyPut(() => SalesLogic());
   }
 }

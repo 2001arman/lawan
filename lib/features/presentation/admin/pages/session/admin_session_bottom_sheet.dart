@@ -18,7 +18,7 @@ import '../../../../domain/arena/arena_model.dart';
 import '../../../../domain/session/session_model.dart';
 
 class AdminSessionBottomSheet {
-  void sessionContainerSheet({
+  Future<void> sessionContainerSheet({
     required Widget widgetContent,
     required VoidCallback onDelete,
     required VoidCallback onUpdate,
@@ -27,7 +27,7 @@ class AdminSessionBottomSheet {
     bool isAdmin = true,
   }) {
     var showShare = false.obs;
-    Get.bottomSheet(
+    return Get.bottomSheet(
       Padding(
         padding: const EdgeInsets.all(8),
         child: Obx(
@@ -99,7 +99,7 @@ class AdminSessionBottomSheet {
                           child: Row(
                             children: [
                               CircleButtonTransparentWidget(
-                                onTap: onDelete,
+                                onTap: isAdmin ? onDelete : onUpdate,
                                 borderColor: kGreyColor,
                                 widget: SvgPicture.asset(
                                   isAdmin
@@ -119,7 +119,7 @@ class AdminSessionBottomSheet {
                               ),
                               const SizedBox(width: 16),
                               CircleButtonTransparentWidget(
-                                onTap: onUpdate,
+                                onTap: isAdmin ? onUpdate : () {},
                                 borderColor: kGreyColor,
                                 widget: SvgPicture.asset(isAdmin
                                     ? 'assets/icons/pencil.svg'
@@ -164,7 +164,7 @@ class AdminSessionBottomSheet {
     );
   }
 
-  void showDetailSessionSheet({
+  Future<void> showDetailSessionSheet({
     required SessionModel sessionData,
     required VoidCallback onDelete,
     required VoidCallback onUpdate,
@@ -281,10 +281,12 @@ class AdminSessionBottomSheet {
     );
   }
 
-  void successCreateSesssionSheet({
+  Future<void> successCreateSesssionSheet({
     required ArenaModel arenaModel,
     required int selectedCourt,
     required SessionModel session,
+    required VoidCallback onUpdate,
+    required VoidCallback onDelete,
     bool successCreate = true,
     bool showPill = false,
     String title = 'Session Succesfully Created',
@@ -292,16 +294,13 @@ class AdminSessionBottomSheet {
   }) {
     var showQr = false.obs;
     return sessionContainerSheet(
-      onDelete: () {},
-      onUpdate: () {},
+      onDelete: onDelete,
+      onUpdate: onUpdate,
       onBackShare: () {
         showQr.toggle();
       },
       onShare: () {
         showQr.toggle();
-        // CustomDialog().showShareDialog().whenComplete(() {
-        //   showQr.value = false;
-        // });
       },
       isAdmin: isAdmin,
       widgetContent: SizedBox(

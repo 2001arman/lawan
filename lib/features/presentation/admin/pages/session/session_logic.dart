@@ -70,7 +70,7 @@ class SessionLogic extends GetxController {
     SessionModel? sessionData,
     int? dateIndex,
     int? sessionIndex,
-  }) {
+  }) async {
     if (state.selectedIndex.value == 3) {
       if (state.selectedArenaIndex.value == -1) {
         Helper.showToast(isSuccess: false, message: 'Please choose arena');
@@ -82,7 +82,7 @@ class SessionLogic extends GetxController {
       Get.back();
       CustomDialogSuccess.confirmDialog(
         actionType: sessionData != null ? ActionType.edit : ActionType.booking,
-        onAction: () {
+        onAction: () async {
           String title = 'Session Succesfully Created';
           if (sessionData != null) {
             updateSession(
@@ -95,9 +95,21 @@ class SessionLogic extends GetxController {
             createSession();
           }
           Get.back();
-          AdminSessionBottomSheet().successCreateSesssionSheet(
+          await AdminSessionBottomSheet().successCreateSesssionSheet(
             arenaModel: arenaDataSource.getArena(
               index: state.selectedArenaIndex.value,
+            ),
+            onUpdate: () {
+              Get.back();
+              AdminAddSession(state: state, logic: this).createNewSession(
+                sessionData: sessionData,
+                dateIndex: dateIndex,
+                sessionIndex: sessionIndex,
+              );
+            },
+            onDelete: () => deleteSession(
+              dateIndex: (state.listSession.length) - 1,
+              sessionIndex: (state.listSession.last.sessionsData.length) - 1,
             ),
             selectedCourt: state.selectedCourtIndex.value,
             session: factorySession(),

@@ -46,13 +46,17 @@ class LineupUi extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 15,
-                          left: 6,
+                      Obx(
+                        () => Padding(
+                          padding: const EdgeInsets.only(
+                            top: 15,
+                            left: 6,
+                          ),
+                          child: state.showTick.value == 0
+                              ? SvgPicture.asset(
+                                  'assets/icons/check-circle.svg')
+                              : const SizedBox(width: 16),
                         ),
-                        child:
-                            SvgPicture.asset('assets/icons/check-circle.svg'),
                       ),
                     ],
                   ),
@@ -75,14 +79,31 @@ class LineupUi extends StatelessWidget {
                     '0',
                     style: blackTextStyle.copyWith(fontSize: 40),
                   ),
-                  Column(
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SvgPicture.asset('assets/icons/away_shield.svg'),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Away',
-                        style: blackTextStyle.copyWith(
-                            fontSize: 12, fontWeight: medium),
+                      Obx(
+                        () => Padding(
+                          padding: const EdgeInsets.only(
+                            top: 15,
+                            right: 6,
+                          ),
+                          child: state.showTick.value == 1
+                              ? SvgPicture.asset(
+                                  'assets/icons/check-circle.svg')
+                              : const SizedBox(width: 16),
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          SvgPicture.asset('assets/icons/away_shield.svg'),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Away',
+                            style: blackTextStyle.copyWith(
+                                fontSize: 12, fontWeight: medium),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -106,6 +127,11 @@ class LineupUi extends StatelessWidget {
               onTap: (title) {
                 lobbyState.lineUpTabActive.value = title;
                 logic.alignmentTabbar(title);
+                if (title == 'Home') {
+                  state.showTick.value = 0;
+                } else if (title == 'Away') {
+                  state.showTick.value = 1;
+                }
               },
               alignment: lobbyState.lineUpActiveAlignment,
             ),

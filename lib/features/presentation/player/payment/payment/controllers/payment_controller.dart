@@ -126,6 +126,8 @@ class PaymentController extends GetxController {
       session: sessionModel,
       showPill: true,
       successCreate: true,
+      onUpdate: () {},
+      onDelete: () {},
     );
   }
 

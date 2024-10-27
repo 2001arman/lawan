@@ -1,5 +1,8 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/util/formatter/alphabet_formatter.dart';
@@ -28,10 +31,9 @@ class PaymentAddCardPage extends StatelessWidget {
         backgroundColor: kBackgroundColor,
         title: Row(
           children: [
-            Icon(
-              Icons.credit_card,
-              color: kDarkgreyColor,
-              size: 20,
+            SvgPicture.asset(
+              'assets/icons/credit-card.svg',
+              color: kBlackColor,
             ),
             const SizedBox(width: 10),
             Text(
@@ -49,9 +51,8 @@ class PaymentAddCardPage extends StatelessWidget {
             ctrl.clearData();
           },
           size: 48,
-          widget: Icon(
-            Icons.arrow_back_ios,
-            size: 18,
+          widget: SvgPicture.asset(
+            'assets/icons/back.svg',
             color: kBlackColor,
           ),
         ),

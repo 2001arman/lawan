@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/admin/pages/session/admin_add_session.dart';
+import 'package:lawan/features/presentation/admin/pages/session/session_logic.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/controller/checkout_logic.dart';
 import 'package:lawan/features/presentation/player/payment/payment/pages/payment_page.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
@@ -322,6 +324,14 @@ class CheckoutUi extends StatelessWidget {
                               showPill: true,
                               successCreate: true,
                               isAdmin: false,
+                              onUpdate: () {
+                                Get.back();
+                                AdminAddSession(
+                                  state: Get.find<SessionLogic>().state,
+                                  logic: Get.find<SessionLogic>(),
+                                ).createNewSession();
+                              },
+                              onDelete: () {},
                             );
                           },
                           widget: Text(

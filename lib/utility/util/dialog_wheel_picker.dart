@@ -294,12 +294,9 @@ class DialogWheelPicker {
                         ),
                       ),
                     ),
-                    const Text(
+                    Text(
                       'to',
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black),
+                      style: darkGreyTextStyle.copyWith(fontSize: 12),
                     ),
                     Expanded(
                       child: WheelPicker(

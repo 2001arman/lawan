@@ -1,6 +1,9 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/domain/session/session_model.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
@@ -47,76 +50,130 @@ class FieldSessionWidget extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              child: Column(
+              child: Stack(
                 children: [
-                  Container(
-                    width: Get.width * 0.5,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      color: kBlackColor,
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(80),
-                        bottomRight: Radius.circular(80),
-                      ),
-                    ),
-                    child: Text(
-                      arenaModel.name,
-                      style: whiteTextStyle.copyWith(
-                        fontSize: 12,
-                        fontWeight: medium,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const Spacer(),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                    child: Row(
-                      children: [
-                        TextBorder(
-                          textTitle: '5.2km',
-                          backgroundColor: kWhiteColor,
-                          paddingVertical: 0,
-                          paddingHorizontal: 8,
-                        ),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/avatars_image.png',
-                                height: 20,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'VS',
-                                style: whiteTextStyle.copyWith(
-                                    fontSize: 10, fontWeight: bold),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(width: 8),
-                              Image.asset('assets/images/avatars_image.png',
-                                  height: 20),
-                            ],
+                  // Center(
+                  // child: SizedBox(
+                  //   width: Get.width * 0.8,
+                  //   height: 58,
+                  //   child: CustomButton(
+                  //     isBlack: true,
+                  //     onTap: () {},
+                  //     paddingVertical: 8,
+                  //     widget: Column(
+                  //       children: [
+                  //         Text(
+                  //           'Sesssion starting in',
+                  //           style: midGreyTextStyle.copyWith(fontSize: 12),
+                  //         ),
+                  //         Text(
+                  //           Helper.timeBetweenNowAndSession(
+                  //             sessionModel.getStartDateTime(),
+                  //           ),
+                  //           style: whiteTextStyle.copyWith(
+                  //             fontSize: 16,
+                  //             fontWeight: semiBold,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  // child: SizedBox(
+                  //   width: Get.width * 0.5,
+                  //   height: 64,
+                  //   child: GradientButton(
+                  //     onTap: () {},
+
+                  //     widget: Column(
+                  //       children: [
+                  //         Text(
+                  //           'The session has begun',
+                  //           style: midGreyTextStyle.copyWith(fontSize: 12),
+                  //         ),
+                  //         Text(
+                  //           'Game on!',
+                  //           style: whiteTextStyle.copyWith(
+                  //               fontSize: 16, fontWeight: bold),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  // ),
+                  Column(
+                    children: [
+                      Container(
+                        width: Get.width * 0.5,
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        decoration: BoxDecoration(
+                          color: kBlackColor,
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(80),
+                            bottomRight: Radius.circular(80),
                           ),
                         ),
-                        Row(
+                        child: Text(
+                          arenaModel.name,
+                          style: whiteTextStyle.copyWith(
+                            fontSize: 12,
+                            fontWeight: medium,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 8),
+                        child: Row(
                           children: [
-                            Icon(
-                              Icons.group_outlined,
-                              color: kGreyColor,
-                              size: 20,
+                            TextBorder(
+                              textTitle: '5.2km',
+                              backgroundColor: kWhiteColor,
+                              paddingVertical: 0,
+                              paddingHorizontal: 8,
                             ),
-                            const SizedBox(width: 4),
-                            Text(
-                              '8/28',
-                              style: whiteTextStyle.copyWith(fontSize: 12),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/avatars_image.png',
+                                    height: 20,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    'VS',
+                                    style: whiteTextStyle.copyWith(
+                                        fontSize: 10, fontWeight: bold),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Image.asset('assets/images/avatars_image.png',
+                                      height: 20),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/users.svg',
+                                  color: kGreyColor,
+                                  width: 16,
+                                  height: 16,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '8/28',
+                                  style: whiteTextStyle.copyWith(fontSize: 12),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -134,10 +191,10 @@ class FieldSessionWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextIcon(
-                            icon: Icon(
-                              Icons.date_range_outlined,
-                              size: 20,
+                            icon: SvgPicture.asset(
+                              'assets/icons/calendar.svg',
                               color: kMidgreyColor,
+                              width: 16,
                             ),
                             text: 'Date',
                           ),
@@ -153,10 +210,10 @@ class FieldSessionWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextIcon(
-                            icon: Icon(
-                              Icons.access_time_outlined,
-                              size: 20,
+                            icon: SvgPicture.asset(
+                              'assets/icons/clock.svg',
                               color: kMidgreyColor,
+                              width: 16,
                             ),
                             text: 'Time',
                           ),
@@ -172,15 +229,16 @@ class FieldSessionWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextIcon(
-                            icon: Icon(
-                              Icons.location_on_outlined,
-                              size: 20,
+                            icon: SvgPicture.asset(
+                              'assets/icons/location.svg',
                               color: kMidgreyColor,
+                              width: 16,
                             ),
                             text: 'Location',
                           ),
                           const SizedBox(width: 8),
                           FieldNumberWidget(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             court:
                                 '${arenaModel.courtData[selectedCourt].courtName}, ${arenaModel.location}',
                             iconColor: kMidgreyColor,
@@ -193,14 +251,17 @@ class FieldSessionWidget extends StatelessWidget {
                 ),
                 Container(
                   width: 44,
-                  height: 100,
+                  height: 70,
                   margin: EdgeInsets.only(left: defaultMargin),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(width: 1, color: kGreyColor),
                   ),
-                  child: Icon(
-                    Icons.play_arrow_outlined,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: SvgPicture.asset(
+                    'assets/icons/player-play.svg',
+                    width: 20,
+                    height: 20,
                     color: kDarkgreyColor,
                   ),
                 )

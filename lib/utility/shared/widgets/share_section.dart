@@ -77,7 +77,10 @@ class _ShareSectionState extends State<ShareSection> {
               onTap: () async {
                 await Clipboard.setData(
                     const ClipboardData(text: "Lawan link text"));
-                Helper.showToast(isSuccess: true, message: 'Success copy link');
+                Helper.showToast(
+                  isSuccess: true,
+                  message: 'Link copied successfully',
+                );
               },
             ),
             shareItem(

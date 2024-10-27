@@ -14,6 +14,7 @@ import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_age_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_slot_widget.dart';
 import 'package:lawan/utility/util/dialog_filter.dart';
+import 'package:lawan/utility/util/helper.dart';
 
 import '../../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/widgets/calendar/calendar_month_widget.dart';
@@ -188,12 +189,12 @@ class PlayerAddSession {
   Widget selectedFriendItem({required AvatarModel data}) {
     return GestureDetector(
       onTap: () {
-        // state.listFriends
-        //     .firstWhere((friend) => friend == data)
-        //     .isSelected
-        //     .value = false;
         state.listFriends.add(data);
         state.selectedFriends.remove(data);
+        Helper.showToast(
+          isSuccess: true,
+          message: 'User removed from cart successfully',
+        );
       },
       child: Container(
         width: 46,

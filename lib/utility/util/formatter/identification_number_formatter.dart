@@ -22,6 +22,10 @@ class IdentificationNumberFormatter extends TextInputFormatter {
           '${newText.substring(0, 6)}-${newText.substring(6, 8)}-${newText.substring(8)}';
     }
 
+    if (newText.length == 14) {
+      return newValue;
+    }
+
     // Return the formatted value
     return TextEditingValue(
       text: newText,

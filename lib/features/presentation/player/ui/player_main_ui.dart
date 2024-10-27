@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
+import 'package:lawan/features/presentation/admin/pages/session/admin_add_session.dart';
 import 'package:lawan/features/presentation/admin/pages/session/admin_session_bottom_sheet.dart';
+import 'package:lawan/features/presentation/admin/pages/session/session_logic.dart';
 import 'package:lawan/features/presentation/player/ui/player_add_session.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
@@ -45,17 +47,17 @@ class PlayerMainUi extends StatelessWidget {
                   FilterButton(
                     backgroundColor: kMidgreyColor,
                     paddingVertical: 12,
-                    iconColor: kWhiteColor,
+                    iconColor: kGreyColor,
                     textColor: kWhiteColor,
                   ),
                   SizedBox(width: defaultMargin),
-                  SizedBox(
-                    child: GradientButton(
-                      onTap: () => PlayerAddSession(
-                        logic: logic,
-                        state: state,
-                      ).createNewSession(),
-                      widget: Row(
+                  GradientButton(
+                    onTap: () => PlayerAddSession(
+                      logic: logic,
+                      state: state,
+                    ).createNewSession(),
+                    widget: Obx(
+                      () => Row(
                         children: [
                           SvgPicture.asset(
                             'assets/icons/play.svg',
@@ -74,12 +76,14 @@ class PlayerMainUi extends StatelessWidget {
                             child: TextBorder(
                               textTitle: '+${state.selectedFriends.length}',
                               fontSize: 11,
-                              paddingVertical: 2,
+                              paddingVertical: 0,
                               paddingHorizontal: 8,
+                              borderColor: Colors.transparent,
                               textColor: const Color(0xFF44D8BE),
                               backgroundColor: kWhiteColor,
+                              gradient: mainGradient,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -320,7 +324,7 @@ class PlayerMainUi extends StatelessWidget {
                                               Helper.showToast(
                                                 isSuccess: true,
                                                 message:
-                                                    'user removed from card successfully',
+                                                    'User removed from card successfully',
                                               );
                                             },
                                             isActive: true,
@@ -339,7 +343,7 @@ class PlayerMainUi extends StatelessWidget {
                                               Helper.showToast(
                                                 isSuccess: true,
                                                 message:
-                                                    'user added to card successfully',
+                                                    'User added to card successfully',
                                               );
                                             },
                                             size: 36,
@@ -405,6 +409,15 @@ class PlayerMainUi extends StatelessWidget {
                                 session: data,
                                 successCreate: false,
                                 showPill: true,
+                                onUpdate: () {
+                                  Get.back();
+                                  AdminAddSession(
+                                    state: Get.find<SessionLogic>().state,
+                                    logic: Get.find<SessionLogic>(),
+                                  ).createNewSession();
+                                },
+                                onDelete: () {},
+                                isAdmin: false,
                               ),
                               child: FieldSessionWidget(sessionModel: data),
                             ),

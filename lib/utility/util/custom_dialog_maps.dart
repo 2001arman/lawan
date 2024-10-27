@@ -77,35 +77,40 @@ class CustomDialogMaps {
               child: ListView(
                 padding: EdgeInsets.all(defaultMargin),
                 children: [
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/target.svg',
-                        width: 20,
-                        height: 20,
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Petaling Jaya',
-                              style:
-                                  blackTextStyle.copyWith(fontWeight: medium),
-                            ),
-                            Text(
-                              'Selangor',
-                              style: darkGreyTextStyle.copyWith(fontSize: 12),
-                            ),
-                          ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/target.svg',
+                          width: 20,
+                          height: 20,
                         ),
-                      ),
-                      Icon(
-                        Icons.highlight_remove_outlined,
-                        color: kDarkgreyColor,
-                      ),
-                    ],
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Petaling Jaya',
+                                style:
+                                    blackTextStyle.copyWith(fontWeight: medium),
+                              ),
+                              Text(
+                                'Selangor',
+                                style: darkGreyTextStyle.copyWith(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SvgPicture.asset(
+                          'assets/icons/x-circle.svg',
+                          color: kDarkgreyColor,
+                          width: 20,
+                          height: 20,
+                        ),
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: defaultMargin),
@@ -122,7 +127,7 @@ class CustomDialogMaps {
                   ),
                   for (int i = 0; i < 3; i++)
                     Container(
-                      margin: const EdgeInsets.only(bottom: 8),
+                      margin: const EdgeInsets.only(bottom: 8, left: 14),
                       padding: const EdgeInsets.only(bottom: 8),
                       decoration: BoxDecoration(
                         border: Border(
@@ -136,8 +141,8 @@ class CustomDialogMaps {
                         children: [
                           SvgPicture.asset(
                             'assets/icons/location.svg',
-                            width: 20,
-                            height: 20,
+                            width: 16,
+                            height: 16,
                           ),
                           const SizedBox(width: 12),
                           Expanded(

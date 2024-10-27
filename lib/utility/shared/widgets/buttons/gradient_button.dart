@@ -5,7 +5,11 @@ class GradientButton extends StatelessWidget {
   final VoidCallback onTap;
   final Widget widget;
 
-  const GradientButton({super.key, required this.onTap, required this.widget});
+  const GradientButton({
+    super.key,
+    required this.onTap,
+    required this.widget,
+  });
 
   @override
   Widget build(BuildContext context) {

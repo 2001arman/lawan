@@ -371,7 +371,7 @@ class AdminAddArena {
                 hintText: 'Enter Court Name',
                 controller: state.courtController,
                 showSuffix: true,
-                validator: (data) => Helper.regularValidator(data),
+                validator: (data) => Helper.regularValidatorAndNumber(data),
                 suffix: Padding(
                   padding: const EdgeInsets.only(right: 16),
                   child: Column(

@@ -40,4 +40,5 @@ class LineupState {
   ].obs;
 
   var selectedRefereeIndex = 0.obs;
+  var showTick = 0.obs;
 }

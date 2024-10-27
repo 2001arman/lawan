@@ -1,4 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 
@@ -39,9 +42,8 @@ class _PaymentPageState extends State<PaymentPage> {
           margin: EdgeInsets.only(left: defaultMargin),
           onTap: () => Get.back(),
           size: 48,
-          widget: Icon(
-            Icons.arrow_back_ios,
-            size: 18,
+          widget: SvgPicture.asset(
+            'assets/icons/back.svg',
             color: kBlackColor,
           ),
         ),
@@ -68,7 +70,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     'Confirm',
                     style: whiteTextStyle.copyWith(fontWeight: medium),
                   ),
-                  onTap: widget.ctrl.successPayment,
+                  onTap: () {},
                 ),
               ),
             ),

@@ -1,5 +1,8 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../constants/constants_ui.dart';
 
@@ -25,6 +28,8 @@ class CustomTextFormField extends StatefulWidget {
     this.showClear = false,
     this.inputFormatters,
     this.onClear,
+    this.verticalPadding = 14,
+    this.horizontalPadding = 16,
   });
 
   final String hintText;
@@ -44,6 +49,7 @@ class CustomTextFormField extends StatefulWidget {
   final bool showClear;
   final List<TextInputFormatter>? inputFormatters;
   final VoidCallback? onClear;
+  final double verticalPadding, horizontalPadding;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -92,36 +98,45 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             decoration: InputDecoration(
               counterText: "",
               prefixIcon: widget.prefix,
+              suffixIconConstraints: widget.showClear
+                  ? BoxConstraints.tight(
+                      const Size(40, 20),
+                    )
+                  : null,
               suffixIcon: widget.showSuffix
                   ? widget.suffix
-                  : GestureDetector(
-                      onTap: () {
-                        widget.controller.text = '';
-                        showIcon = false;
-                        setState(() {});
-                        if (widget.onClear != null) {
-                          widget.onClear!();
-                        }
-                      },
-                      child: Visibility(
-                        visible: showIcon,
-                        child: SizedBox(
-                          child: widget.showClear
-                              ? Icon(
-                                  Icons.highlight_remove_outlined,
-                                  color: kDarkgreyColor,
-                                )
-                              : widget.suffix,
-                        ),
-                      ),
-                    ),
+                  : widget.suffix != null || widget.showClear
+                      ? GestureDetector(
+                          onTap: () {
+                            widget.controller.text = '';
+                            showIcon = false;
+                            setState(() {});
+                            if (widget.onClear != null) {
+                              widget.onClear!();
+                            }
+                          },
+                          child: Visibility(
+                            visible: showIcon,
+                            child: widget.showClear
+                                ? SvgPicture.asset(
+                                    'assets/icons/x-circle.svg',
+                                    color: kDarkgreyColor,
+                                    width: 20,
+                                    height: 20,
+                                  )
+                                : widget.suffix as Widget,
+                          ),
+                        )
+                      : null,
               hintText: widget.hintText,
               hintStyle: midGreyTextStyle.copyWith(
-                  fontSize: 14, fontWeight: FontWeight.normal),
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+              ),
               isDense: false,
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 12,
-                horizontal: 16,
+              contentPadding: EdgeInsets.symmetric(
+                vertical: widget.verticalPadding,
+                horizontal: widget.horizontalPadding,
               ),
               filled: true,
               focusColor: kWhiteColor,

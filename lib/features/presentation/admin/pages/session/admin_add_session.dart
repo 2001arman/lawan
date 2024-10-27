@@ -247,23 +247,30 @@ class AdminAddSession {
             Row(
               children: [
                 SizedBox(
-                  width: Get.width * 0.25,
+                  width: Get.width * 0.23,
                   child: CustomTextFormField(
                     hintText: '+60',
                     controller: TextEditingController(),
-                    prefix: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10,
-                        bottom: 10,
-                        left: 0,
-                        right: 0,
-                      ),
-                      child: Image.asset(
-                        'assets/images/malaysia.png',
-                        width: 16,
-                        height: 16,
-                      ),
+                    validator: (_) {
+                      if (state.contactController.text == '') {
+                        return '';
+                      }
+                      return null;
+                    },
+                    prefix: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/malaysia.svg',
+                          height: 16,
+                          width: 16,
+                        ),
+                      ],
                     ),
+                    isReadOnly: true,
+                    verticalPadding: 14,
+                    horizontalPadding: 16,
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -288,7 +295,6 @@ class AdminAddSession {
               validator: (data) => Helper.numberValidator(data),
               maxLength: 14,
               inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
                 IdentificationNumberFormatter(),
               ],
               prefix: Padding(
@@ -311,6 +317,7 @@ class AdminAddSession {
               textInputType: TextInputType.number,
               title: 'Price',
               validator: (data) => Helper.numberValidator(data),
+              maxLength: 7,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
               ],

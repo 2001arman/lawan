@@ -87,7 +87,7 @@ class PlayerAddPlayerBottomSheet {
           CircleButtonTransparentWidget(
             onTap: () {
               Helper.showToast(
-                  isSuccess: true, message: 'user added to card successfully');
+                  isSuccess: true, message: 'User added to card successfully');
               state.selectedFriends.add(data);
               state.listFriends.remove(data);
             },
@@ -118,7 +118,7 @@ class PlayerAddPlayerBottomSheet {
           colorOpacity: 0,
           borderRadius: BorderRadius.circular(32),
           overlay: Container(
-            padding: EdgeInsets.all(defaultMargin),
+            padding: EdgeInsets.symmetric(vertical: defaultMargin),
             decoration: BoxDecoration(
               color: kModalColor,
               borderRadius: BorderRadius.circular(32),
@@ -136,57 +136,66 @@ class PlayerAddPlayerBottomSheet {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // title and close button
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/user-plus-arena.svg',
-                      color: kDarkgreyColor,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Invite Friend(s)',
-                      style: blackTextStyle.copyWith(
-                          fontSize: 16, fontWeight: medium),
-                    ),
-                    const Spacer(),
-                    CircleButtonTransparentWidget(
-                      onTap: Get.back,
-                      widget: SvgPicture.asset(
-                        'assets/icons/x.svg',
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/user-plus-arena.svg',
+                        height: 20,
+                        width: 20,
                         color: kDarkgreyColor,
                       ),
-                      borderColor: kGreyColor,
-                      size: 40,
-                    ),
-                  ],
+                      const SizedBox(width: 8),
+                      Text(
+                        'Invite Friend(s)',
+                        style: blackTextStyle.copyWith(
+                            fontSize: 16, fontWeight: medium),
+                      ),
+                      const Spacer(),
+                      CircleButtonTransparentWidget(
+                        onTap: Get.back,
+                        widget: SvgPicture.asset(
+                          'assets/icons/x.svg',
+                          color: kDarkgreyColor,
+                        ),
+                        borderColor: kGreyColor,
+                        size: 40,
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: defaultMargin),
 
                 // text input search
-                CustomTextFormField(
-                  hintText: 'Search or add name/email',
-                  controller: searchController,
-                  onChanged: (value) {
-                    value != ''
-                        ? showPlayer.value = true
-                        : showPlayer.value = false;
-                  },
-                  prefix: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: SvgPicture.asset(
-                      'assets/icons/search.svg',
-                      color: kDarkgreyColor,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  child: CustomTextFormField(
+                    hintText: 'Search or add name/email',
+                    controller: searchController,
+                    onChanged: (value) {
+                      value != ''
+                          ? showPlayer.value = true
+                          : showPlayer.value = false;
+                    },
+                    prefix: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: SvgPicture.asset(
+                        'assets/icons/search.svg',
+                        color: kDarkgreyColor,
+                      ),
                     ),
+                    showClear: true,
+                    onClear: () => showPlayer.value = false,
                   ),
-                  showClear: true,
-                  onClear: () => showPlayer.value = false,
                 ),
 
                 // info container
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.all(defaultMargin),
-                  margin: const EdgeInsets.only(bottom: 10),
+                  margin: EdgeInsets.only(
+                      bottom: 10, right: defaultMargin, left: defaultMargin),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: kGreyColor, width: 1),
@@ -211,56 +220,63 @@ class PlayerAddPlayerBottomSheet {
                   ),
                 ),
 
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: 'Invitation will expire in',
-                    style: blackTextStyle.copyWith(fontSize: 12),
-                    children: [
-                      TextSpan(
-                        text: ' 2 days 2 hours 6 mins 3 sec ',
-                        style: blackTextStyle.copyWith(fontWeight: bold),
-                      ),
-                    ],
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: 'Invitation will expire in',
+                      style: blackTextStyle.copyWith(fontSize: 12),
+                      children: [
+                        TextSpan(
+                          text: ' 2 days 2 hours 6 mins 3 sec ',
+                          style: blackTextStyle.copyWith(fontWeight: bold),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 
                 // friends
                 SizedBox(height: defaultMargin),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Obx(
-                      () => Visibility(
-                        visible:
-                            state.listFriends.isNotEmpty && showPlayer.value,
-                        replacement: SizedBox(
-                          width: double.infinity,
-                          height: 200,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.groups_2_outlined,
-                                size: 30,
-                                color: kWhiteColor,
-                              ),
-                              Text(
-                                'Search Players',
-                                style: blackTextStyle.copyWith(
-                                    fontSize: 16, fontWeight: medium),
-                              ),
-                              Text(
-                                'Search for player to team up and play together',
-                                style: blackTextStyle.copyWith(fontSize: 12),
-                              ),
-                            ],
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                    child: SingleChildScrollView(
+                      child: Obx(
+                        () => Visibility(
+                          visible:
+                              state.listFriends.isNotEmpty && showPlayer.value,
+                          replacement: SizedBox(
+                            width: double.infinity,
+                            height: 200,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/users_group.svg',
+                                  color: kWhiteColor,
+                                  width: 60,
+                                  height: 60,
+                                ),
+                                Text(
+                                  'Search Players',
+                                  style: blackTextStyle.copyWith(
+                                      fontSize: 16, fontWeight: medium),
+                                ),
+                                Text(
+                                  'Search for player to team up and play together',
+                                  style: blackTextStyle.copyWith(fontSize: 12),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          children: state.listFriends
-                              .map((data) => friendWidget(data: data))
-                              .toList(),
+                          child: Column(
+                            children: state.listFriends
+                                .map((data) => friendWidget(data: data))
+                                .toList(),
+                          ),
                         ),
                       ),
                     ),
@@ -270,15 +286,19 @@ class PlayerAddPlayerBottomSheet {
                 // recent people
                 Obx(
                   () => state.listFriendsRecent.isNotEmpty
-                      ? Column(
-                          children: [
-                            SizedBox(height: defaultMargin),
-                            Text(
-                              'Recent people',
-                              style: darkGreyTextStyle.copyWith(fontSize: 12),
-                            ),
-                            const SizedBox(height: 8),
-                          ],
+                      ? Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: defaultMargin),
+                          child: Column(
+                            children: [
+                              SizedBox(height: defaultMargin),
+                              Text(
+                                'Recent people',
+                                style: darkGreyTextStyle.copyWith(fontSize: 12),
+                              ),
+                              const SizedBox(height: 8),
+                            ],
+                          ),
                         )
                       : const SizedBox(),
                 ),
@@ -286,136 +306,141 @@ class PlayerAddPlayerBottomSheet {
                   scrollDirection: Axis.horizontal,
                   child: Obx(
                     () => Row(
-                      children: state.listFriendsRecent
-                          .map(
-                            (data) => SelectFriendItem(
-                              name: data.name,
-                              asset: data.asset,
-                              suffixWidget: data.isSelected.value
-                                  ? CircleButtonWidget(
-                                      onTap: () {
-                                        Helper.showToast(
-                                            isSuccess: true,
-                                            message:
-                                                'user removed from cart successfully');
-                                        data.isSelected.value = false;
-                                        state.selectedFriends.remove(data);
-                                      },
-                                      isActive: true,
-                                      widget: Icon(
-                                        Icons.done,
-                                        size: 20,
-                                        color: kWhiteColor,
-                                      ),
-                                      size: 36,
-                                    )
-                                  : CircleButtonTransparentWidget(
-                                      onTap: () {
-                                        Helper.showToast(
-                                            isSuccess: true,
-                                            message:
-                                                'user added to cart successfully');
-                                        data.isSelected.value = true;
-                                        state.selectedFriends.add(data);
-                                      },
-                                      size: 36,
-                                      widget: SvgPicture.asset(
-                                        'assets/icons/plus.svg',
-                                        color: kDarkgreyColor,
-                                      ),
-                                      borderColor: kGreyColor,
+                      children: [
+                        SizedBox(width: defaultMargin),
+                        ...state.listFriendsRecent.map(
+                          (data) => SelectFriendItem(
+                            name: data.name,
+                            asset: data.asset,
+                            suffixWidget: data.isSelected.value
+                                ? CircleButtonWidget(
+                                    onTap: () {
+                                      Helper.showToast(
+                                          isSuccess: true,
+                                          message:
+                                              'User removed from cart successfully');
+                                      data.isSelected.value = false;
+                                      state.selectedFriends.remove(data);
+                                    },
+                                    isActive: true,
+                                    widget: Icon(
+                                      Icons.done,
+                                      size: 20,
+                                      color: kWhiteColor,
                                     ),
-                            ),
-                          )
-                          .toList(),
+                                    size: 36,
+                                  )
+                                : CircleButtonTransparentWidget(
+                                    onTap: () {
+                                      Helper.showToast(
+                                          isSuccess: true,
+                                          message:
+                                              'User added to cart successfully');
+                                      data.isSelected.value = true;
+                                      state.selectedFriends.add(data);
+                                    },
+                                    size: 36,
+                                    widget: SvgPicture.asset(
+                                      'assets/icons/plus.svg',
+                                      color: kDarkgreyColor,
+                                    ),
+                                    borderColor: kGreyColor,
+                                  ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
 
                 // button
                 SizedBox(height: defaultMargin),
-                Row(
-                  children: [
-                    CircleButtonTransparentWidget(
-                      onTap: Get.back,
-                      widget: SvgPicture.asset(
-                        'assets/icons/back.svg',
-                        color: kDarkgreyColor,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  child: Row(
+                    children: [
+                      CircleButtonTransparentWidget(
+                        onTap: Get.back,
+                        widget: SvgPicture.asset(
+                          'assets/icons/back.svg',
+                          color: kDarkgreyColor,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: defaultMargin),
-                    CustomButton(
-                      isBlack: true,
-                      onTap: () {
-                        Helper.showToast(
-                            isSuccess: true,
-                            message: 'Users added to cart successfully');
-                        Get.back();
-                      },
-                      widget: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Add',
-                            style: whiteTextStyle.copyWith(fontWeight: medium),
-                          ),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: kWhiteColor,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: defaultMargin),
-                    Obx(
-                      () => Row(
-                        children: [
-                          ...state.selectedFriends.take(3).map(
-                                (friend) => Align(
-                                  widthFactor: .55,
-                                  child: SizedBox(
-                                    width: 48,
-                                    height: 48,
-                                    child: CircleAvatar(
-                                      backgroundColor: kGreyColor,
-                                      radius: 48,
-                                      child: CircleAvatar(
-                                        radius: 40,
-                                        backgroundImage:
-                                            AssetImage(friend.asset),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                          if (state.selectedFriends.length > 3)
-                            Align(
-                              widthFactor: .55,
-                              child: SizedBox(
-                                width: 48,
-                                height: 48,
-                                child: CircleAvatar(
-                                  backgroundColor: kGreyColor,
-                                  radius: 48,
-                                  child: CircleAvatar(
-                                    radius: 40,
-                                    backgroundColor: Colors.black,
-                                    child: Text(
-                                      '+${state.selectedFriends.length - 3}',
-                                      style: whiteTextStyle.copyWith(
-                                        fontSize: 16,
-                                        fontWeight: medium,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                      SizedBox(width: defaultMargin),
+                      CustomButton(
+                        isBlack: true,
+                        onTap: () {
+                          Helper.showToast(
+                              isSuccess: true,
+                              message: 'Users added to cart successfully');
+                          Get.back();
+                        },
+                        widget: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Add',
+                              style:
+                                  whiteTextStyle.copyWith(fontWeight: medium),
                             ),
-                        ],
+                            Icon(
+                              Icons.arrow_forward,
+                              color: kWhiteColor,
+                              size: 20,
+                            ),
+                          ],
+                        ),
                       ),
-                    )
-                  ],
+                      SizedBox(width: defaultMargin),
+                      Obx(
+                        () => Row(
+                          children: [
+                            ...state.selectedFriends.take(3).map(
+                                  (friend) => Align(
+                                    widthFactor: .55,
+                                    child: SizedBox(
+                                      width: 48,
+                                      height: 48,
+                                      child: CircleAvatar(
+                                        backgroundColor: kGreyColor,
+                                        radius: 48,
+                                        child: CircleAvatar(
+                                          radius: 40,
+                                          backgroundImage:
+                                              AssetImage(friend.asset),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            if (state.selectedFriends.length > 3)
+                              Align(
+                                widthFactor: .55,
+                                child: SizedBox(
+                                  width: 48,
+                                  height: 48,
+                                  child: CircleAvatar(
+                                    backgroundColor: kGreyColor,
+                                    radius: 48,
+                                    child: CircleAvatar(
+                                      radius: 40,
+                                      backgroundColor: Colors.black,
+                                      child: Text(
+                                        '+${state.selectedFriends.length - 3}',
+                                        style: whiteTextStyle.copyWith(
+                                          fontSize: 16,
+                                          fontWeight: medium,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 )
               ],
             ),

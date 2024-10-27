@@ -77,6 +77,20 @@ class Helper {
     return null;
   }
 
+  static String? regularValidatorAndNumber(String? data) {
+    if (data == null || data.isEmpty) {
+      return 'Field cannot be empty';
+    }
+
+    // Updated regex to allow alphabets, spaces, and numbers
+    final regex = RegExp(r'^[a-zA-Z0-9\s]+$');
+    if (!regex.hasMatch(data)) {
+      return 'Only alphabets, numbers, and spaces are allowed';
+    }
+
+    return null;
+  }
+
   static String? numberValidator(String? data) {
     if (data == null || data.isEmpty) {
       return 'Field cannot be empty';
