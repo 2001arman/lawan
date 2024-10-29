@@ -361,7 +361,10 @@ class PlayerAddPlayerBottomSheet {
                   child: Row(
                     children: [
                       CircleButtonTransparentWidget(
-                        onTap: Get.back,
+                        onTap: () {
+                          Get.back();
+                          logic.showCreateDialog();
+                        },
                         widget: SvgPicture.asset(
                           'assets/icons/back.svg',
                           color: kDarkgreyColor,
@@ -375,6 +378,7 @@ class PlayerAddPlayerBottomSheet {
                               isSuccess: true,
                               message: 'Users added to cart successfully');
                           Get.back();
+                          logic.showCreateDialog();
                         },
                         widget: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

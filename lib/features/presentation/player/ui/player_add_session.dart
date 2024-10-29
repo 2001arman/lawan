@@ -261,10 +261,13 @@ class PlayerAddSession {
               () => Row(
                 children: [
                   CircleButtonTransparentWidget(
-                    onTap: () => PlayerAddPlayerBottomSheet(
-                      logic: logic,
-                      state: state,
-                    ).addPlayerBottomSheet(),
+                    onTap: () {
+                      Get.back();
+                      PlayerAddPlayerBottomSheet(
+                        logic: logic,
+                        state: state,
+                      ).addPlayerBottomSheet();
+                    },
                     borderColor: kGreyColor,
                     size: 44,
                     widget: SvgPicture.asset(

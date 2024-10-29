@@ -7,6 +7,7 @@ import 'package:lawan/features/presentation/player/payment/checkout/ui/checkout_
 import 'package:lawan/utility/util/helper.dart';
 
 import '../../../infrastructure/arena/arena_data_source.dart';
+import '../ui/player_add_session.dart';
 
 class PlayerMainLogic {
   PlayerMainState state = PlayerMainState();
@@ -64,6 +65,11 @@ class PlayerMainLogic {
 
     state.selectedIndex.value++;
   }
+
+  void showCreateDialog() => PlayerAddSession(
+        logic: this,
+        state: state,
+      ).createNewSession();
 
   PageController setController(PageController controller) =>
       state.pageController = controller;

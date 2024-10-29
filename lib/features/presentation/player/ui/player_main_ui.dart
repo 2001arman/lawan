@@ -7,7 +7,6 @@ import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
 import 'package:lawan/features/presentation/admin/pages/session/admin_add_session.dart';
 import 'package:lawan/features/presentation/admin/pages/session/admin_session_bottom_sheet.dart';
 import 'package:lawan/features/presentation/admin/pages/session/session_logic.dart';
-import 'package:lawan/features/presentation/player/ui/player_add_session.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/container/select_friend_item.dart';
@@ -99,10 +98,7 @@ class PlayerMainUi extends StatelessWidget {
                     ),
                     SizedBox(width: defaultMargin),
                     GradientButton(
-                      onTap: () => PlayerAddSession(
-                        logic: logic,
-                        state: state,
-                      ).createNewSession(),
+                      onTap: logic.showCreateDialog,
                       widget: createSessionButton(),
                     ),
                   ],
@@ -201,10 +197,7 @@ class PlayerMainUi extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GradientButton(
-                          onTap: () => PlayerAddSession(
-                            logic: logic,
-                            state: state,
-                          ).createNewSession(),
+                          onTap: logic.showCreateDialog,
                           widget: createSessionButton(),
                         ),
                       ],
