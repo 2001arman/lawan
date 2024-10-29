@@ -8,8 +8,7 @@ import 'package:lawan/features/presentation/player/ui/player_add_player_bottom_s
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
-import 'package:lawan/utility/shared/widgets/buttons/filter_button.dart';
-import 'package:lawan/utility/shared/widgets/fields/select_field_image_widget.dart';
+import 'package:lawan/utility/shared/widgets/fields/choose_arena_section_modal.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_age_widget.dart';
@@ -21,8 +20,6 @@ import '../../../../utility/shared/widgets/calendar/calendar_month_widget.dart';
 import '../../../../utility/shared/widgets/calendar/calendar_picker_widget.dart';
 import '../../../../utility/shared/widgets/wheel_picker/choose_time_widget.dart';
 import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
-import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
-import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import '../../../domain/session/avatar_model.dart';
 
 class PlayerAddSession {
@@ -36,7 +33,9 @@ class PlayerAddSession {
       case 1:
         return slotSection();
       case 2:
-        return arenaSection();
+        return ChooseArenaSectionModal(
+          onSelectedArena: logic.onSelectedArena,
+        );
       default:
         return detailSection();
     }
@@ -663,86 +662,6 @@ class PlayerAddSession {
                   minute: 0,
                 );
               },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget arenaSection() {
-    TextEditingController nameController = TextEditingController();
-    return Expanded(
-      child: ListView(
-        padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-        children: [
-          SizedBox(height: defaultMargin),
-          Text(
-            'Choose arena',
-            style: blackTextStyle.copyWith(fontWeight: medium, fontSize: 16),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            'Set where it should take place',
-            style: darkGreyTextStyle.copyWith(fontSize: 12),
-          ),
-          const SizedBox(height: 8),
-          TabbarWidget(
-            tabBarTitle: state.tabBarTitle,
-            tabActive: state.tabActive,
-            onTap: (title) {
-              state.tabActive.value = title;
-              logic.alignmentTabbar(title);
-            },
-            alignment: state.activeAlignment,
-          ),
-          const SizedBox(height: 8),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 2,
-                child: CustomTextFormField(
-                  margin: 0,
-                  hintText: '',
-                  controller: nameController,
-                  onChanged: (data) {},
-                  borderColor: kGreyColor,
-                  prefix: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: SvgPicture.asset('assets/icons/search.svg'),
-                  ),
-                  showClear: true,
-                ),
-              ),
-              SizedBox(width: defaultMargin),
-              FilterButton(
-                iconColor: kDarkgreyColor,
-                textColor: kBlackColor,
-              ),
-            ],
-          ),
-          SizedBox(height: defaultMargin),
-          Obx(
-            () => Column(
-              children: logic.arenaDataSource.listArena
-                  .asMap()
-                  .entries
-                  .map(
-                    (data) => GestureDetector(
-                      onTap: () {
-                        state.selectedArenaIndex.value = data.key;
-                        state.selectedCourtIndex.value = 0;
-                      },
-                      child: SelectFieldImageWidget(
-                        arenaModel: data.value,
-                        isSelected: data.key == state.selectedArenaIndex.value,
-                        onChangeCourt: (courtIndex) =>
-                            state.selectedCourtIndex.value = courtIndex,
-                      ),
-                    ),
-                  )
-                  .toList(),
             ),
           ),
         ],

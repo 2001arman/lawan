@@ -26,21 +26,25 @@ class _RangeSliderWidgetState extends State<RangeSliderWidget> {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              '${widget.rangeValues.start.toStringAsFixed(0)}${widget.dataText}',
-              style: blackTextStyle.copyWith(
-                fontSize: 16,
-                fontWeight: medium,
+            Expanded(
+              child: Text(
+                '${widget.rangeValues.start.toStringAsFixed(0)}${widget.dataText}',
+                style: blackTextStyle.copyWith(
+                  fontSize: 16,
+                  fontWeight: medium,
+                ),
               ),
             ),
             Text(widget.title, style: darkGreyTextStyle),
-            Text(
-              '${widget.rangeValues.end.toStringAsFixed(0)}${widget.dataText}',
-              style: blackTextStyle.copyWith(
-                fontSize: 16,
-                fontWeight: medium,
+            Expanded(
+              child: Text(
+                '${widget.rangeValues.end.toStringAsFixed(0)}${widget.dataText}',
+                style: blackTextStyle.copyWith(
+                  fontSize: 16,
+                  fontWeight: medium,
+                ),
+                textAlign: TextAlign.end,
               ),
             ),
           ],

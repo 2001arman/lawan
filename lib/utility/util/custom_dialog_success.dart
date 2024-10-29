@@ -311,7 +311,7 @@ class CustomDialogSuccess {
     var openTime = const TimeOfDay(hour: 9, minute: 00).obs;
     var closeTime = const TimeOfDay(hour: 10, minute: 00).obs;
     List<int> listHour = [1, 2, 3, 4, 5];
-    var selectedHour = 1.obs;
+    var selectedHour = 2.obs;
     var calendarFormat = CalendarFormat.month.obs;
 
     Get.dialog(
@@ -329,12 +329,7 @@ class CustomDialogSuccess {
           overlay: Container(
             width: Get.width,
             height: 609,
-            padding: EdgeInsets.only(
-              top: 24,
-              left: defaultMargin,
-              right: defaultMargin,
-              bottom: defaultMargin,
-            ),
+            padding: EdgeInsets.only(top: 24, bottom: defaultMargin),
             decoration: BoxDecoration(
               color: kModalColor,
               borderRadius: BorderRadius.circular(32),
@@ -352,64 +347,78 @@ class CustomDialogSuccess {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Reschedule Session',
-                  style: blackTextStyle.copyWith(
-                    fontSize: 16,
-                    fontWeight: medium,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  child: Text(
+                    'Reschedule Session',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: medium,
+                    ),
                   ),
                 ),
-                Text(
-                  'Choose the time and slot',
-                  style: darkGreyTextStyle.copyWith(
-                    fontSize: 12,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  child: Text(
+                    'Choose the time and slot',
+                    style: darkGreyTextStyle.copyWith(
+                      fontSize: 12,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  children: [
-                    CalendarMonthWidget(
-                      calendarFormat: calendarFormat,
-                      onSelected: (index) => pageController.animateToPage(
-                        index,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOut,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  child: Row(
+                    children: [
+                      CalendarMonthWidget(
+                        calendarFormat: calendarFormat,
+                        onSelected: (index) => pageController.animateToPage(
+                          index,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOut,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: defaultMargin),
-                    CircleButtonTransparentWidget(
-                      onTap: () => pageController.previousPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOut,
+                      SizedBox(width: defaultMargin),
+                      CircleButtonTransparentWidget(
+                        onTap: () => pageController.previousPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOut,
+                        ),
+                        widget: SvgPicture.asset(
+                          'assets/icons/back.svg',
+                          color: kBlackColor,
+                        ),
+                        borderColor: kGreyColor,
                       ),
-                      widget: SvgPicture.asset(
-                        'assets/icons/back.svg',
-                        color: kBlackColor,
+                      const SizedBox(width: 4),
+                      CircleButtonTransparentWidget(
+                        onTap: () => pageController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOut,
+                        ),
+                        widget: SvgPicture.asset(
+                          'assets/icons/forward.svg',
+                          color: kBlackColor,
+                        ),
+                        borderColor: kGreyColor,
                       ),
-                      borderColor: kGreyColor,
-                    ),
-                    const SizedBox(width: 4),
-                    CircleButtonTransparentWidget(
-                      onTap: () => pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOut,
-                      ),
-                      widget: SvgPicture.asset(
-                        'assets/icons/forward.svg',
-                        color: kBlackColor,
-                      ),
-                      borderColor: kGreyColor,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 SizedBox(height: defaultMargin),
-                Obx(
-                  () => CalendarPickerWidget(
-                    pageController: (controller) => pageController = controller,
-                    calendarMode: calendarFormat.value,
-                    cellColor: kWhiteColor,
-                    cellMargin: 3,
-                    onDaySelected: (data) {},
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  child: Obx(
+                    () => CalendarPickerWidget(
+                      pageController: (controller) =>
+                          pageController = controller,
+                      calendarMode: calendarFormat.value,
+                      cellColor: kWhiteColor,
+                      cellMargin: 3,
+                      onDaySelected: (data) {},
+                      fixedMode: true,
+                    ),
                   ),
                 ),
 
@@ -420,6 +429,7 @@ class CustomDialogSuccess {
                   child: Obx(
                     () => Row(
                       children: [
+                        SizedBox(width: defaultMargin),
                         ...listHour.map(
                           (data) => SelectedContainerWidget(
                             title: '$data hr',
@@ -439,43 +449,49 @@ class CustomDialogSuccess {
                   ),
                 ),
                 SizedBox(height: defaultMargin),
-                Obx(
-                  () => ChooseTimeWidget(
-                    openTime: openTime,
-                    closeTime: closeTime,
-                    totalHour: selectedHour.value,
-                    onSave: (startTime, endTime) {
-                      Get.back();
-                      openTime.value = TimeOfDay(
-                        hour: startTime,
-                        minute: 0,
-                      );
-                      closeTime.value = TimeOfDay(
-                        hour: endTime,
-                        minute: 0,
-                      );
-                    },
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  child: Obx(
+                    () => ChooseTimeWidget(
+                      openTime: openTime,
+                      closeTime: closeTime,
+                      totalHour: selectedHour.value,
+                      onSave: (startTime, endTime) {
+                        Get.back();
+                        openTime.value = TimeOfDay(
+                          hour: startTime,
+                          minute: 0,
+                        );
+                        closeTime.value = TimeOfDay(
+                          hour: endTime,
+                          minute: 0,
+                        );
+                      },
+                    ),
                   ),
                 ),
 
                 SizedBox(height: defaultMargin),
-                Row(
-                  children: [
-                    CustomButton(
-                      title: 'Cancel',
-                      isBlack: false,
-                      onTap: () => Get.back(),
-                    ),
-                    const SizedBox(width: 16),
-                    CustomButton(
-                      title: 'Next',
-                      isBlack: true,
-                      onTap: () {
-                        Get.back();
-                        onSubmit();
-                      },
-                    ),
-                  ],
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  child: Row(
+                    children: [
+                      CustomButton(
+                        title: 'Cancel',
+                        isBlack: false,
+                        onTap: () => Get.back(),
+                      ),
+                      const SizedBox(width: 16),
+                      CustomButton(
+                        title: 'Next',
+                        isBlack: true,
+                        onTap: () {
+                          Get.back();
+                          onSubmit();
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -155,21 +155,34 @@ class DialogFilter {
               // range slider
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: RangeSliderWidget(
-                  dataText: 'km',
-                  title: 'Range',
-                  rangeValues: const RangeValues(10, 70),
+                child: Theme(
+                  data: ThemeData(
+                    sliderTheme: SliderThemeData(
+                      overlayShape: SliderComponentShape.noOverlay,
+                    ),
+                  ),
+                  child: RangeSliderWidget(
+                    dataText: ' km',
+                    title: 'Range',
+                    rangeValues: const RangeValues(10, 70),
+                  ),
                 ),
               ),
               SizedBox(height: defaultMargin),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: RangeSliderWidget(
-                  dataText: ' years',
-                  title: 'Age',
-                  rangeValues: const RangeValues(20, 30),
-                  maxRange: 40,
-                  minRange: 15,
+                child: Theme(
+                  data: ThemeData(
+                    sliderTheme: SliderThemeData(
+                        overlayShape: SliderComponentShape.noOverlay),
+                  ),
+                  child: RangeSliderWidget(
+                    dataText: ' years',
+                    title: 'Age',
+                    rangeValues: const RangeValues(20, 30),
+                    maxRange: 40,
+                    minRange: 15,
+                  ),
                 ),
               ),
 

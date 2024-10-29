@@ -24,14 +24,21 @@ class PlayerMainLogic {
     return;
   }
 
+  void onSelectedArena(int arenaIndex, int courtInted) {
+    state.selectedArenaIndex.value = arenaIndex;
+    state.selectedCourtIndex.value = courtInted;
+  }
+
   void handleNextButton() {
-    if (state.selectedIndex.value == 3) {
+    if (state.selectedIndex.value == 3 || state.selectedIndex.value == 2) {
       if (state.selectedArenaIndex.value == -1) {
         return Helper.showToast(
           isSuccess: false,
           message: "Please choose arena first!",
         );
       }
+    }
+    if (state.selectedIndex.value == 3) {
       ArenaModel arenaModel =
           arenaDataSource.listArena[state.selectedArenaIndex.value];
       SessionModel sessionModel = SessionModel(
@@ -54,6 +61,7 @@ class PlayerMainLogic {
       );
       return;
     }
+
     state.selectedIndex.value++;
   }
 

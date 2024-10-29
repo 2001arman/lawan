@@ -220,7 +220,8 @@ class PlayerAddPlayerBottomSheet {
                   ),
                 ),
 
-                Padding(
+                Container(
+                  width: double.infinity,
                   padding: EdgeInsets.symmetric(horizontal: defaultMargin),
                   child: RichText(
                     textAlign: TextAlign.center,

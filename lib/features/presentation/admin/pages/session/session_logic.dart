@@ -37,17 +37,25 @@ class SessionLogic extends GetxController {
     super.onInit();
   }
 
+  void onSelectedArena(int arenaIndex, int courtInted) {
+    state.selectedArenaIndex.value = arenaIndex;
+    state.selectedCourtIndex.value = courtInted;
+  }
+
   void showDetailSession({
     required SessionModel sessionData,
     required int dateIndex,
     required int sessionIndex,
   }) {
-    AdminSessionBottomSheet().showDetailSessionSheet(
-      sessionData: sessionData,
+    AdminSessionBottomSheet().successCreateSesssionSheet(
+      session: sessionData,
       onDelete: () => deleteSession(
         dateIndex: dateIndex,
         sessionIndex: sessionIndex,
       ),
+      successCreate: false,
+      arenaModel: sessionData.arena,
+      selectedCourt: sessionData.selectedCourt,
       onUpdate: () {
         Get.back();
         AdminAddSession(state: state, logic: this).createNewSession(

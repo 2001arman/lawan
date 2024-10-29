@@ -261,31 +261,35 @@ class PlayerMainUi extends StatelessWidget {
                     Obx(
                       () => Visibility(
                         visible: state.listFriends.isNotEmpty,
-                        replacement: Row(
-                          children: [
-                            CustomButton(
-                              isBlack: false,
-                              onTap: () {},
-                              borderColor: kGreyColor,
-                              widget: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/icons/add_user.svg',
-                                    color: kDarkgreyColor,
-                                    width: 16,
-                                    height: 16,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    'Find Friends',
-                                    style: blackTextStyle.copyWith(
-                                        fontWeight: medium),
-                                  ),
-                                ],
+                        replacement: Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: defaultMargin),
+                          child: Row(
+                            children: [
+                              CustomButton(
+                                isBlack: false,
+                                onTap: () {},
+                                borderColor: kGreyColor,
+                                widget: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/add_user.svg',
+                                      color: kDarkgreyColor,
+                                      width: 16,
+                                      height: 16,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      'Find Friends',
+                                      style: blackTextStyle.copyWith(
+                                          fontWeight: medium),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         child: SizedBox(
                           width: double.infinity,

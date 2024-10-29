@@ -88,20 +88,20 @@ class _SelectFieldImageWidgetState extends State<SelectFieldImageWidget> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  Expanded(
-                    child: Visibility(
-                      visible: widget.isSelected,
-                      child: CircleButtonWidget(
-                        onTap: () {},
-                        widget: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: SvgPicture.asset(
-                            'assets/icons/check.svg',
-                          ),
+                  const Spacer(),
+                  Visibility(
+                    visible: widget.isSelected,
+                    child: CircleButtonWidget(
+                      onTap: () {},
+                      widget: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: SvgPicture.asset(
+                          'assets/icons/check.svg',
                         ),
                       ),
                     ),
                   ),
+                  const Spacer(),
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 24, vertical: 8),

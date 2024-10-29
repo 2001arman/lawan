@@ -8,7 +8,6 @@ import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_w
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/card_detail_session.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_image_widget.dart';
-import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
 import 'package:lawan/utility/shared/widgets/host_avatar_widget.dart';
 import 'package:lawan/utility/shared/widgets/share_section.dart';
 import 'package:lawan/utility/shared/widgets/text/text_pill_widget.dart';
@@ -164,123 +163,6 @@ class AdminSessionBottomSheet {
     );
   }
 
-  Future<void> showDetailSessionSheet({
-    required SessionModel sessionData,
-    required VoidCallback onDelete,
-    required VoidCallback onUpdate,
-  }) {
-    return sessionContainerSheet(
-      onDelete: onDelete,
-      onUpdate: onUpdate,
-      onShare: () {},
-      onBackShare: () {},
-      widgetContent: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: Get.width * 0.5,
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            decoration: BoxDecoration(
-              gradient: mainGradient,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(80),
-                bottomRight: Radius.circular(80),
-              ),
-            ),
-            child: Text(
-              sessionData.arena.name,
-              style: whiteTextStyle.copyWith(
-                fontSize: 12,
-                fontWeight: medium,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(height: 12),
-          SvgPicture.asset(
-            'assets/icons/QR.svg',
-            width: Get.width * 0.5,
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              FieldNumberWidget(
-                iconColor: kDarkgreyColor,
-                mainAxisAlignment: MainAxisAlignment.center,
-                court: sessionData
-                    .arena.courtData[sessionData.selectedCourt].courtName,
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Visibility(
-            visible: Helper.isUpcoming(
-              sessionData.getStartDateTime(),
-            ),
-            replacement: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextPillWidget(
-                  title: 'Complete',
-                  verticalPadding: 2,
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextPillWidget(
-                  title: 'Ongoing',
-                  backgroundColor: kOrangeColor,
-                  verticalPadding: 4,
-                ),
-              ],
-            ),
-          ),
-          const HostAvatarWidget(),
-          Row(
-            children: [
-              CardDetailSession(
-                contentText: Helper.formatFullDate(sessionData.dateTime),
-                title: 'Date',
-                icon: 'assets/icons/calendar.svg',
-                fontSize: 14,
-              ),
-              const SizedBox(width: 8),
-              CardDetailSession(
-                contentText:
-                    '${Helper.formatTime12Hour(sessionData.startHour)} - ${Helper.formatTime12Hour(sessionData.endHour)}',
-                title: 'Time',
-                icon: 'assets/icons/clock.svg',
-                fontSize: 14,
-                description: '${sessionData.totalHour}hr',
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              CardDetailSession(
-                contentText: sessionData.arena.location,
-                title: 'Location',
-                icon: 'assets/icons/location.svg',
-                fontSize: 14,
-              ),
-              const SizedBox(width: 8),
-              CardDetailSession(
-                contentText: 'RM${sessionData.price}',
-                title: 'Price',
-                icon: 'assets/icons/currency.svg',
-                fontSize: 20,
-              ),
-            ],
-          ),
-          const SizedBox(height: 100),
-        ],
-      ),
-    );
-  }
-
   Future<void> successCreateSesssionSheet({
     required ArenaModel arenaModel,
     required int selectedCourt,
@@ -307,51 +189,83 @@ class AdminSessionBottomSheet {
         width: Get.width,
         child: Column(
           children: [
-            SizedBox(height: defaultMargin),
-            Visibility(
-              visible: successCreate,
-              replacement: Row(
-                children: [
-                  Image.asset(
-                    'assets/icons/ball.png',
-                    width: 30,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Friendly',
-                    style: blackTextStyle.copyWith(
-                        fontSize: 20, fontWeight: medium),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: kGreenColor),
-                    child: Icon(
-                      Icons.check,
-                      color: kWhiteColor,
-                      size: 20,
+            Obx(
+              () => showQr.value
+                  ? const SizedBox()
+                  : Visibility(
+                      visible: successCreate,
+                      replacement: Padding(
+                        padding: EdgeInsets.symmetric(vertical: defaultMargin),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              'assets/icons/ball.png',
+                              width: 30,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Friendly',
+                              style: blackTextStyle.copyWith(
+                                  fontSize: 20, fontWeight: medium),
+                            ),
+                          ],
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(height: defaultMargin),
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: kGreenColor),
+                            child: Icon(
+                              Icons.check,
+                              color: kWhiteColor,
+                              size: 20,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            title,
+                            style:
+                                darkGreyTextStyle.copyWith(fontWeight: medium),
+                          ),
+                          SizedBox(height: defaultMargin),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    title,
-                    style: darkGreyTextStyle.copyWith(fontWeight: medium),
-                  ),
-                ],
-              ),
             ),
-            SizedBox(height: defaultMargin),
             Obx(
               () => Visibility(
                 visible: showQr.value == false,
-                replacement: SvgPicture.asset(
-                  'assets/icons/QR.svg',
-                  width: Get.width * 0.5,
+                replacement: Column(
+                  children: [
+                    Container(
+                      width: Get.width * 0.5,
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      decoration: BoxDecoration(
+                        gradient: mainGradient,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(80),
+                          bottomRight: Radius.circular(80),
+                        ),
+                      ),
+                      child: Text(
+                        session.arena.name,
+                        style: whiteTextStyle.copyWith(
+                          fontSize: 12,
+                          fontWeight: medium,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    SvgPicture.asset(
+                      'assets/icons/QR.svg',
+                      width: Get.width * 0.5,
+                    ),
+                  ],
                 ),
                 child: FieldImageWidget(
                   arenaModel: arenaModel,

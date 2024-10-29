@@ -435,14 +435,19 @@ class AdminArenaUi extends StatelessWidget {
                           .entries
                           .map(
                             (court) => CircleButtonWidget(
-                              widget: Center(
-                                child: Text(
-                                  court.value.courtName,
-                                  style: whiteTextStyle.copyWith(
-                                    color: court.key ==
-                                            state.selectedListCourt.value
-                                        ? kWhiteColor
-                                        : kDarkgreyColor,
+                              dynamicWidth: true,
+                              widget: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: Center(
+                                  child: Text(
+                                    court.value.courtName,
+                                    style: whiteTextStyle.copyWith(
+                                      color: court.key ==
+                                              state.selectedListCourt.value
+                                          ? kWhiteColor
+                                          : kDarkgreyColor,
+                                    ),
                                   ),
                                 ),
                               ),

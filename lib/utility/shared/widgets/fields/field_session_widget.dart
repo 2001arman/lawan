@@ -194,7 +194,7 @@ class FieldSessionWidget extends StatelessWidget {
                         children: [
                           TextIcon(
                             icon: SvgPicture.asset(
-                              'assets/icons/calendar.svg',
+                              'assets/icons/calendar2.svg',
                               color: kMidgreyColor,
                               width: 16,
                             ),
@@ -209,7 +209,6 @@ class FieldSessionWidget extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextIcon(
                             icon: SvgPicture.asset(
@@ -219,10 +218,17 @@ class FieldSessionWidget extends StatelessWidget {
                             ),
                             text: 'Time',
                           ),
+                          const Spacer(),
                           Text(
                             '${Helper.formatTime12Hour(sessionModel.startHour)} - ${Helper.formatTime12Hour(sessionModel.endHour)}',
                             style: blackTextStyle.copyWith(
                                 fontSize: 12, fontWeight: medium),
+                          ),
+                          const SizedBox(width: 4),
+                          const TextBorder(
+                            textTitle: '2hr',
+                            paddingVertical: 0,
+                            paddingHorizontal: 6,
                           ),
                         ],
                       ),
