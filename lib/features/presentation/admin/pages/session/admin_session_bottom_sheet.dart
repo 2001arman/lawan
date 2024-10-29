@@ -118,7 +118,7 @@ class AdminSessionBottomSheet {
                               ),
                               const SizedBox(width: 16),
                               CircleButtonTransparentWidget(
-                                onTap: isAdmin ? onUpdate : () {},
+                                onTap: isAdmin ? onUpdate : Helper.openCalendar,
                                 borderColor: kGreyColor,
                                 widget: SvgPicture.asset(isAdmin
                                     ? 'assets/icons/pencil.svg'

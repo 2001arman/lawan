@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../shared/constants/constants_ui.dart';
 
@@ -169,5 +172,21 @@ class Helper {
 
   static bool isUpcoming(DateTime sessionDateTime) {
     return sessionDateTime.isAfter(DateTime.now());
+  }
+
+  static void openCalendar() async {
+    final androidUri = Uri.parse('content://com.android.calendar/time');
+    final iosUri =
+        Uri.parse('calshow:${DateTime.now().millisecondsSinceEpoch}');
+
+    if (Platform.isAndroid) {
+      if (await canLaunchUrl(androidUri)) {
+        await launchUrl(androidUri);
+      }
+    } else if (Platform.isIOS) {
+      if (await canLaunchUrl(iosUri)) {
+        await launchUrl(iosUri);
+      }
+    }
   }
 }
