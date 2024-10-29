@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -44,19 +45,31 @@ class CustomImageWidget extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: changeImage,
-                child: SvgPicture.asset(
-                  'assets/icons/container_rotate.svg',
-                  width: 36,
-                  height: 36,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                    child: SvgPicture.asset(
+                      'assets/icons/container_rotate.svg',
+                      width: 36,
+                      height: 36,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: 8),
               GestureDetector(
                 onTap: deleteImage,
-                child: SvgPicture.asset(
-                  'assets/icons/container_trash.svg',
-                  width: 36,
-                  height: 36,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                    child: SvgPicture.asset(
+                      'assets/icons/container_trash.svg',
+                      width: 36,
+                      height: 36,
+                    ),
+                  ),
                 ),
               ),
             ],

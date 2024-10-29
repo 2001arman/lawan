@@ -13,15 +13,91 @@ import 'package:lawan/utility/shared/widgets/text/text_icon.dart';
 import '../../../../features/domain/arena/arena_model.dart';
 import '../../../util/helper.dart';
 import '../../constants/constants_ui.dart';
+import '../buttons/custom_button.dart';
+import '../buttons/gradient_button.dart';
 
 class FieldSessionWidget extends StatelessWidget {
   final SessionModel sessionModel;
-  const FieldSessionWidget({super.key, required this.sessionModel});
+  final bool showGameInformation;
+  const FieldSessionWidget({
+    super.key,
+    required this.sessionModel,
+    required this.showGameInformation,
+  });
 
   @override
   Widget build(BuildContext context) {
     ArenaModel arenaModel = sessionModel.arena;
     int selectedCourt = sessionModel.selectedCourt;
+
+    Widget upComingSession() {
+      return Container(
+        width: Get.width * 0.75,
+        height: 48,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+              color: const Color(0xFF40CBB3).withOpacity(0.1),
+            ),
+            BoxShadow(
+              blurRadius: 18,
+              offset: const Offset(0, 18),
+              color: const Color(0xFF40CBB3).withOpacity(0.09),
+            ),
+          ],
+        ),
+        child: CustomButton(
+          isBlack: true,
+          onTap: () {},
+          paddingVertical: 0,
+          widget: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Sesssion starting in',
+                style: midGreyTextStyle.copyWith(fontSize: 12),
+              ),
+              Text(
+                Helper.timeBetweenNowAndSession(
+                  sessionModel.getStartDateTime(),
+                ),
+                style: whiteTextStyle.copyWith(
+                  fontSize: 16,
+                  fontWeight: semiBold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    Widget gameOn() {
+      return SizedBox(
+        width: Get.width * 0.5,
+        height: 48,
+        child: GradientButton(
+          onTap: () {},
+          paddingVertical: 0,
+          widget: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'The session has begun',
+                style: midGreyTextStyle.copyWith(fontSize: 12),
+              ),
+              Text(
+                'Game on!',
+                style: whiteTextStyle.copyWith(fontSize: 16, fontWeight: bold),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -52,55 +128,20 @@ class FieldSessionWidget extends StatelessWidget {
               ),
               child: Stack(
                 children: [
-                  // Center(
-                  // child: SizedBox(
-                  //   width: Get.width * 0.8,
-                  //   height: 58,
-                  //   child: CustomButton(
-                  //     isBlack: true,
-                  //     onTap: () {},
-                  //     paddingVertical: 8,
-                  //     widget: Column(
-                  //       children: [
-                  //         Text(
-                  //           'Sesssion starting in',
-                  //           style: midGreyTextStyle.copyWith(fontSize: 12),
-                  //         ),
-                  //         Text(
-                  //           Helper.timeBetweenNowAndSession(
-                  //             sessionModel.getStartDateTime(),
-                  //           ),
-                  //           style: whiteTextStyle.copyWith(
-                  //             fontSize: 16,
-                  //             fontWeight: semiBold,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  // child: SizedBox(
-                  //   width: Get.width * 0.5,
-                  //   height: 64,
-                  //   child: GradientButton(
-                  //     onTap: () {},
-
-                  //     widget: Column(
-                  //       children: [
-                  //         Text(
-                  //           'The session has begun',
-                  //           style: midGreyTextStyle.copyWith(fontSize: 12),
-                  //         ),
-                  //         Text(
-                  //           'Game on!',
-                  //           style: whiteTextStyle.copyWith(
-                  //               fontSize: 16, fontWeight: bold),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  // ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: double.infinity,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(32),
+                          bottomRight: Radius.circular(32),
+                        ),
+                        gradient: shadowGradient,
+                      ),
+                    ),
+                  ),
                   Column(
                     children: [
                       Container(
@@ -124,9 +165,15 @@ class FieldSessionWidget extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
+                      if (showGameInformation)
+                        Visibility(
+                          visible: Helper.isUpcoming(sessionModel.dateTime),
+                          replacement: gameOn(),
+                          child: upComingSession(),
+                        ),
+                      const Spacer(),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24, vertical: 8),
+                        padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
                         child: Row(
                           children: [
                             TextBorder(
@@ -137,25 +184,29 @@ class FieldSessionWidget extends StatelessWidget {
                               borderColor: Colors.transparent,
                             ),
                             Expanded(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/avatars_image.png',
-                                    height: 20,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    'VS',
-                                    style: whiteTextStyle.copyWith(
-                                        fontSize: 10, fontWeight: bold),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Image.asset('assets/images/avatars_image.png',
-                                      height: 20),
-                                ],
-                              ),
+                              child: showGameInformation
+                                  ? const SizedBox()
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/avatars_image.png',
+                                          height: 20,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          'VS',
+                                          style: whiteTextStyle.copyWith(
+                                              fontSize: 10, fontWeight: bold),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Image.asset(
+                                            'assets/images/avatars_image.png',
+                                            height: 20),
+                                      ],
+                                    ),
                             ),
                             Row(
                               children: [

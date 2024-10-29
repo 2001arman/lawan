@@ -389,28 +389,32 @@ class PlayerMainUi extends StatelessWidget {
                         padding:
                             EdgeInsets.symmetric(horizontal: defaultMargin),
                         children: [
-                          ...state.sessionList.map(
-                            (data) => GestureDetector(
-                              onTap: () => AdminSessionBottomSheet()
-                                  .successCreateSesssionSheet(
-                                arenaModel: data.arena,
-                                selectedCourt: data.selectedCourt,
-                                session: data,
-                                successCreate: false,
-                                showPill: true,
-                                onUpdate: () {
-                                  Get.back();
-                                  AdminAddSession(
-                                    state: Get.find<SessionLogic>().state,
-                                    logic: Get.find<SessionLogic>(),
-                                  ).createNewSession();
-                                },
-                                onDelete: () {},
-                                isAdmin: false,
+                          ...state.sessionList.asMap().entries.map(
+                                (data) => GestureDetector(
+                                  onTap: () => AdminSessionBottomSheet()
+                                      .successCreateSesssionSheet(
+                                    arenaModel: data.value.arena,
+                                    selectedCourt: data.value.selectedCourt,
+                                    session: data.value,
+                                    successCreate: false,
+                                    showPill: true,
+                                    onUpdate: () {
+                                      Get.back();
+                                      AdminAddSession(
+                                        state: Get.find<SessionLogic>().state,
+                                        logic: Get.find<SessionLogic>(),
+                                      ).createNewSession();
+                                    },
+                                    onDelete: () {},
+                                    isAdmin: false,
+                                  ),
+                                  child: FieldSessionWidget(
+                                    sessionModel: data.value,
+                                    showGameInformation:
+                                        data.key == 0 || data.key == 1,
+                                  ),
+                                ),
                               ),
-                              child: FieldSessionWidget(sessionModel: data),
-                            ),
-                          ),
                           const SizedBox(height: 150),
                         ],
                       ),

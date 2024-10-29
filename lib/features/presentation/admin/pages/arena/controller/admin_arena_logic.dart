@@ -31,9 +31,6 @@ class AdminArenaLogic extends GetxController {
 
   void alignmentTabbar(String title) {
     switch (title) {
-      case 'Details':
-        state.activeAlignment.value = Alignment.centerLeft;
-        break;
       case 'Hour':
         state.activeAlignment.value = Alignment.center;
         break;

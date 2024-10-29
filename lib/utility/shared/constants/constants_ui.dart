@@ -58,7 +58,6 @@ LinearGradient mainGradient = const LinearGradient(
   ],
 );
 
-
 LinearGradient backgroundGradient = LinearGradient(
   begin: Alignment.topCenter,
   end: Alignment.bottomCenter,
@@ -74,6 +73,15 @@ LinearGradient blackGradient = LinearGradient(
   colors: [
     kBackgroundColor,
     const Color(0xFF000000).withOpacity(0.0),
+  ],
+);
+
+LinearGradient shadowGradient = LinearGradient(
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+  colors: [
+    Colors.black.withOpacity(0.4),
+    Colors.black.withOpacity(0),
   ],
 );
 
