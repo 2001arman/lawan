@@ -97,7 +97,8 @@ class PlayerMainState {
   var slotEnd = 23.obs;
 
   // gender
-  var selectedGender = 'male'.obs;
+  var isMale = true.obs;
+  var isFemale = false.obs;
 
   //language
   var isEnglish = true.obs;
