@@ -87,7 +87,10 @@ class FieldSessionWidget extends StatelessWidget {
               ),
               Text(
                 'Game on!',
-                style: whiteTextStyle.copyWith(fontSize: 16, fontWeight: bold),
+                style: whiteTextStyle.copyWith(
+                  fontSize: 16,
+                  fontWeight: semiBold,
+                ),
               ),
             ],
           ),

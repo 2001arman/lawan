@@ -10,13 +10,16 @@ class CardDetailSession extends StatelessWidget {
   final String contentText;
   final double fontSize;
   final String? description;
-  const CardDetailSession(
-      {super.key,
-      required this.title,
-      required this.icon,
-      required this.contentText,
-      required this.fontSize,
-      this.description});
+  final bool showPax;
+  const CardDetailSession({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.contentText,
+    required this.fontSize,
+    this.description,
+    this.showPax = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +49,22 @@ class CardDetailSession extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 4),
-            Text(
-              contentText,
-              style: blackTextStyle.copyWith(
-                fontWeight: medium,
-                fontSize: fontSize,
+            RichText(
+              text: TextSpan(
+                text: contentText,
+                style: blackTextStyle.copyWith(
+                  fontWeight: medium,
+                  fontSize: fontSize,
+                ),
+                children: [
+                  if (showPax)
+                    TextSpan(
+                      text: '/pax',
+                      style: blackTextStyle.copyWith(
+                        fontSize: 12,
+                      ),
+                    )
+                ],
               ),
               overflow: description != null
                   ? TextOverflow.ellipsis
