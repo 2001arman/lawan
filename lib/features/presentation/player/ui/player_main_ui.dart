@@ -153,8 +153,8 @@ class PlayerMainUi extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   height: Get.height,
-                  // child:
-                  //     const VideoWidget(url: 'assets/video/empty_session.mp4'),
+                  child:
+                      const VideoWidget(url: 'assets/video/empty_session.mp4'),
                 ),
                 Container(
                   width: double.infinity,

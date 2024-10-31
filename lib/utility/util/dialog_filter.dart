@@ -22,30 +22,49 @@ class DialogFilter {
       child: Obx(
         () => Row(
           children: [
-            Expanded(
-              flex: 3,
+            SizedBox(
+              width: 80,
               child: Text(
                 title,
                 style: darkGreyTextStyle,
               ),
             ),
             Expanded(
-              flex: 6,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: listData
-                      .map(
-                        (data) => SelectedContainerWidget(
-                          title: data,
-                          isSelected: data == selectedData.value,
-                          onTap: () => selectedData.value = data,
-                          isTransparent: true,
-                          borderColor: kGreyColor,
+              flex: 1,
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 20),
+                        ...listData.map(
+                          (data) => SelectedContainerWidget(
+                            title: data,
+                            isSelected: data == selectedData.value,
+                            onTap: () => selectedData.value = data,
+                            isTransparent: true,
+                            borderColor: kGreyColor,
+                          ),
                         ),
-                      )
-                      .toList(),
-                ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 25,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Colors.white,
+                          Colors.white.withOpacity(0),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -111,7 +130,7 @@ class DialogFilter {
         backgroundColor: Colors.transparent,
         insetPadding: const EdgeInsets.symmetric(horizontal: 16),
         child: Container(
-          width: Get.width * .8,
+          width: Get.width * .9,
           decoration: BoxDecoration(
             color: kWhiteColor,
             borderRadius: BorderRadius.circular(32),

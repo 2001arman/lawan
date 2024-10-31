@@ -32,7 +32,7 @@ class AdminSessionBottomSheet {
         padding: const EdgeInsets.all(8),
         child: Obx(
           () => SizedBox(
-            height: showShare.value ? 730 : 650,
+            height: showShare.value ? Get.height * 0.88 : Get.height * 0.75,
             width: Get.width,
           ).blurred(
             blur: 7,

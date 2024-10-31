@@ -41,4 +41,6 @@ class LineupState {
 
   var selectedRefereeIndex = 0.obs;
   var showTick = 0.obs;
+
+  var availableSlot = 3.obs;
 }

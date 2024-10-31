@@ -5,6 +5,8 @@ import 'package:lawan/features/presentation/lobby/pages/lineup/controller/lineup
 
 import '../../../../../../utility/shared/constants/action_type.dart';
 import '../../../../../../utility/util/custom_dialog_success.dart';
+import '../../../../../../utility/util/helper.dart';
+import '../../../../../domain/session/avatar_model.dart';
 
 class LineupLogic {
   LobbyState lobbyState = Get.find<LobbyState>();
@@ -34,5 +36,15 @@ class LineupLogic {
         Get.back();
       },
     );
+  }
+
+  void addInviteFriend(AvatarModel data) {
+    Helper.showToast(
+      isSuccess: true,
+      message: 'Invitation sent',
+    );
+    state.selectedFriends.add(data);
+    state.listFriends.remove(data);
+    state.availableSlot.value--;
   }
 }

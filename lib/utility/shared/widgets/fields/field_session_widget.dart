@@ -68,11 +68,15 @@ class FieldSessionWidget extends StatelessWidget {
     }
 
     Widget gameOn() {
-      return SizedBox(
+      return Container(
         width: Get.width * 0.5,
         height: 48,
+        decoration: BoxDecoration(
+          boxShadow: greenBoxShadow,
+        ),
         child: GradientButton(
           onTap: () {},
+          boxShadow: greenBoxShadow,
           paddingVertical: 0,
           widget: Column(
             mainAxisAlignment: MainAxisAlignment.center,

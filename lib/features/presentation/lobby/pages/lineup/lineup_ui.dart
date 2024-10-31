@@ -5,12 +5,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/lobby/pages/lineup/controller/lineup_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
-import 'package:lawan/utility/util/helper.dart';
 import '../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../utility/shared/widgets/container/select_friend_item.dart';
 import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import '../../../../../utility/shared/widgets/text/text_border.dart';
 import '../../../../../utility/shared/widgets/text/text_pill_widget.dart';
+import '../../../../domain/session/avatar_model.dart';
 
 class LineupUi extends StatelessWidget {
   final logic = Get.find<LineupLogic>();
@@ -20,6 +20,172 @@ class LineupUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget selectedFriends({required AvatarModel data, required int index}) {
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32),
+          color: kWhiteColor,
+        ),
+        child: Row(
+          children: [
+            Image.asset(
+              data.asset,
+              width: 48,
+              height: 48,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    data.name,
+                    style: blackTextStyle.copyWith(
+                        fontSize: 12, fontWeight: medium),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      TextPillWidget(
+                        verticalPadding: 2,
+                        backgroundColor: kBackgroundColor,
+                        prefix: Padding(
+                          padding: const EdgeInsets.only(right: 3),
+                          child: SvgPicture.asset('assets/icons/user.svg'),
+                        ),
+                        title: data.position,
+                        titleColor: kBlackColor,
+                      ),
+                      const SizedBox(width: 8),
+                      Visibility(
+                        visible: index == state.selectedRefereeIndex.value,
+                        child: SvgPicture.asset(
+                          'assets/icons/whistle.svg',
+                          color: kBlackColor,
+                          width: 16,
+                          height: 16,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            TextBorder(
+              textTitle: 'Novice',
+              backgroundColor: kWhiteColor,
+              fontSize: 10,
+            ),
+            Obx(
+              () => Visibility(
+                visible: (lobbyState.lineUpTabActive.value == '') &&
+                    (index != state.selectedRefereeIndex.value),
+                child: CircleButtonTransparentWidget(
+                  onTap: () => logic.selectReferee(
+                    index: index,
+                    name: data.name,
+                  ),
+                  borderColor: kGreyColor,
+                  margin: const EdgeInsets.only(left: 12),
+                  widget: SvgPicture.asset(
+                    'assets/icons/whistle.svg',
+                    color: kBlackColor,
+                    width: 20,
+                    height: 20,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+          ],
+        ),
+      );
+    }
+
+    Widget invitedFriend({required AvatarModel data}) {
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32),
+          // color: kWhiteColor,
+          border: Border.all(width: 1, color: kWhiteColor),
+        ),
+        child: Row(
+          children: [
+            Image.asset(
+              data.asset,
+              width: 48,
+              height: 48,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    data.name,
+                    style: blackTextStyle.copyWith(
+                        fontSize: 12, fontWeight: medium),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Invitation sent. Waiting for player to join.',
+                    style: darkGreyTextStyle.copyWith(fontSize: 10),
+                  )
+                ],
+              ),
+            ),
+            TextBorder(
+              textTitle: 'Novice',
+              backgroundColor: kWhiteColor,
+              fontSize: 10,
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget availableSlot() {
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32),
+          // color: kWhiteColor,
+          border: Border.all(width: 1, color: kWhiteColor),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              padding: const EdgeInsets.all(13),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: kMidgreyColor,
+              ),
+              child: SvgPicture.asset(
+                'assets/icons/add_user.svg',
+                color: kWhiteColor,
+              ),
+            ),
+            const Spacer(),
+            TextBorder(
+              textTitle: 'Available slot',
+              backgroundColor: kWhiteColor,
+              fontSize: 10,
+            ),
+          ],
+        ),
+      );
+    }
+
     return Column(
       children: [
         // score
@@ -156,14 +322,7 @@ class LineupUi extends StatelessWidget {
                           name: data.name,
                           asset: data.asset,
                           suffixWidget: CircleButtonTransparentWidget(
-                            onTap: () {
-                              Helper.showToast(
-                                isSuccess: true,
-                                message: 'Invititation sent',
-                              );
-                              state.selectedFriends.add(data);
-                              state.listFriends.remove(data);
-                            },
+                            onTap: () => logic.addInviteFriend(data),
                             size: 36,
                             widget: SvgPicture.asset(
                               'assets/icons/plus.svg',
@@ -187,99 +346,15 @@ class LineupUi extends StatelessWidget {
           () => Expanded(
             child: ListView(
               padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-              children: state.selectedFriends
-                  .asMap()
-                  .entries
-                  .map(
-                    (data) => Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(8),
-                      margin: const EdgeInsets.only(bottom: 12),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(32),
-                        color: kWhiteColor,
-                      ),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            data.value.asset,
-                            width: 48,
-                            height: 48,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data.value.name,
-                                  style: blackTextStyle.copyWith(
-                                      fontSize: 12, fontWeight: medium),
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  children: [
-                                    TextPillWidget(
-                                      verticalPadding: 2,
-                                      backgroundColor: kBackgroundColor,
-                                      prefix: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 3),
-                                        child: SvgPicture.asset(
-                                            'assets/icons/user.svg'),
-                                      ),
-                                      title: data.value.position,
-                                      titleColor: kBlackColor,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Visibility(
-                                      visible: data.key ==
-                                          state.selectedRefereeIndex.value,
-                                      child: SvgPicture.asset(
-                                        'assets/icons/whistle.svg',
-                                        color: kBlackColor,
-                                        width: 16,
-                                        height: 16,
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          TextBorder(
-                            textTitle: 'Novice',
-                            backgroundColor: kWhiteColor,
-                            fontSize: 10,
-                          ),
-                          Obx(
-                            () => Visibility(
-                              visible:
-                                  (lobbyState.lineUpTabActive.value == '') &&
-                                      (data.key !=
-                                          state.selectedRefereeIndex.value),
-                              child: CircleButtonTransparentWidget(
-                                onTap: () => logic.selectReferee(
-                                  index: data.key,
-                                  name: data.value.name,
-                                ),
-                                borderColor: kGreyColor,
-                                margin: const EdgeInsets.only(left: 12),
-                                widget: SvgPicture.asset(
-                                  'assets/icons/whistle.svg',
-                                  color: kBlackColor,
-                                  width: 20,
-                                  height: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                        ],
-                      ),
+              children: [
+                ...state.selectedFriends.asMap().entries.map(
+                      (data) => data.key > 1
+                          ? invitedFriend(data: data.value)
+                          : selectedFriends(data: data.value, index: data.key),
                     ),
-                  )
-                  .toList(),
+                for (int i = 0; i < state.availableSlot.value; i++)
+                  availableSlot()
+              ],
             ),
           ),
         ),
