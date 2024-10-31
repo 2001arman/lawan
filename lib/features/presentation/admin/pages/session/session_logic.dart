@@ -82,7 +82,7 @@ class SessionLogic extends GetxController {
     int? dateIndex,
     int? sessionIndex,
   }) async {
-    if (state.selectedIndex.value == 3) {
+    if (state.selectedIndex.value == 3 || state.selectedIndex.value == 2) {
       if (state.selectedArenaIndex.value == -1) {
         Helper.showToast(isSuccess: false, message: 'Please choose arena');
         return;

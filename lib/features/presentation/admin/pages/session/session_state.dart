@@ -50,6 +50,8 @@ class SessionState {
   TextEditingController contactController = TextEditingController();
   TextEditingController identificationController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+
+  
 }
 
 class SessionDate {

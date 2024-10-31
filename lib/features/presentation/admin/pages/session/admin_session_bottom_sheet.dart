@@ -8,6 +8,7 @@ import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_w
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/card_detail_session.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_image_widget.dart';
+import 'package:lawan/utility/shared/widgets/fields/field_number_widget.dart';
 import 'package:lawan/utility/shared/widgets/host_avatar_widget.dart';
 import 'package:lawan/utility/shared/widgets/share_section.dart';
 import 'package:lawan/utility/shared/widgets/text/text_pill_widget.dart';
@@ -163,6 +164,47 @@ class AdminSessionBottomSheet {
     );
   }
 
+  Widget qrSection({required String arenaName}) {
+    return Column(
+      children: [
+        Container(
+          width: Get.width * 0.5,
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          decoration: BoxDecoration(
+            gradient: mainGradient,
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(80),
+              bottomRight: Radius.circular(80),
+            ),
+          ),
+          child: Text(
+            arenaName,
+            style: whiteTextStyle.copyWith(
+              fontSize: 12,
+              fontWeight: medium,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        const SizedBox(height: 12),
+        SvgPicture.asset(
+          'assets/icons/QR.svg',
+          width: Get.width * 0.5,
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            FieldNumberWidget(
+              court: '4',
+              iconColor: kDarkgreyColor,
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
   Future<void> successCreateSesssionSheet({
     required ArenaModel arenaModel,
     required int selectedCourt,
@@ -237,82 +279,55 @@ class AdminSessionBottomSheet {
                     ),
             ),
             Obx(
-              () => Visibility(
-                visible: showQr.value == false,
-                replacement: Column(
-                  children: [
-                    Container(
-                      width: Get.width * 0.5,
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      decoration: BoxDecoration(
-                        gradient: mainGradient,
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(80),
-                          bottomRight: Radius.circular(80),
-                        ),
-                      ),
-                      child: Text(
-                        session.arena.name,
-                        style: whiteTextStyle.copyWith(
-                          fontSize: 12,
-                          fontWeight: medium,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+              () => showQr.value
+                  ? qrSection(arenaName: session.arena.name)
+                  : FieldImageWidget(
+                      arenaModel: arenaModel,
+                      selectedCourt: selectedCourt,
+                      showInformation: true,
+                      showLocation: false,
                     ),
-                    const SizedBox(height: 12),
-                    SvgPicture.asset(
-                      'assets/icons/QR.svg',
-                      width: Get.width * 0.5,
-                    ),
-                  ],
-                ),
-                child: FieldImageWidget(
-                  arenaModel: arenaModel,
-                  selectedCourt: selectedCourt,
-                  showInformation: true,
-                  showLocation: false,
-                ),
-              ),
             ),
-            const SizedBox(height: 12),
             Obx(
               () => showQr.value
                   ? const SizedBox()
-                  : Visibility(
-                      visible: Helper.isUpcoming(session.getStartDateTime()),
-                      replacement: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextPillWidget(title: 'Complete'),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          CustomButton(
-                            isBlack: true,
-                            onTap: () {},
-                            paddingVertical: 8,
-                            widget: Column(
-                              children: [
-                                Text(
-                                  'Sesssion starting in',
-                                  style:
-                                      midGreyTextStyle.copyWith(fontSize: 12),
-                                ),
-                                Text(
-                                  Helper.timeBetweenNowAndSession(
-                                    session.getStartDateTime(),
+                  : Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: Visibility(
+                        visible: Helper.isUpcoming(session.getStartDateTime()),
+                        replacement: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextPillWidget(title: 'Complete'),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            CustomButton(
+                              isBlack: true,
+                              onTap: () {},
+                              paddingVertical: 8,
+                              widget: Column(
+                                children: [
+                                  Text(
+                                    'Sesssion starting in',
+                                    style:
+                                        midGreyTextStyle.copyWith(fontSize: 12),
                                   ),
-                                  style: whiteTextStyle.copyWith(
-                                    fontSize: 16,
-                                    fontWeight: semiBold,
+                                  Text(
+                                    Helper.timeBetweenNowAndSession(
+                                      session.getStartDateTime(),
+                                    ),
+                                    style: whiteTextStyle.copyWith(
+                                      fontSize: 16,
+                                      fontWeight: semiBold,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
             ),

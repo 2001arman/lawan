@@ -37,6 +37,7 @@ class _PaymentPageState extends State<PaymentPage> {
           style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
         ),
         leadingWidth: 48 + defaultMargin,
+        scrolledUnderElevation: 0,
         leading: CircleButtonTransparentWidget(
           borderColor: kGreyColor,
           margin: EdgeInsets.only(left: defaultMargin),
@@ -59,21 +60,52 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
             ],
           ),
-          if (_isSelected || _isSelected2)
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                height: 48,
-                child: GradientButton(
-                  widget: Text(
-                    'Confirm',
-                    style: whiteTextStyle.copyWith(fontWeight: medium),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SizedBox(
+              height: 110,
+              width: double.infinity,
+              child: Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 110,
+                    padding: const EdgeInsets.only(top: 12),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          kBlackColor.withOpacity(0),
+                          kBlackColor.withOpacity(0.4),
+                        ],
+                      ),
+                    ),
                   ),
-                  onTap: Get.back,
-                ),
+                  if (_isSelected || _isSelected2)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(
+                          16,
+                          0,
+                          16,
+                          MediaQuery.of(context).padding.bottom,
+                        ),
+                        height: 48,
+                        child: GradientButton(
+                          widget: Text(
+                            'Confirm',
+                            style: whiteTextStyle.copyWith(fontWeight: medium),
+                          ),
+                          onTap: Get.back,
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
+          )
         ],
       ),
     );

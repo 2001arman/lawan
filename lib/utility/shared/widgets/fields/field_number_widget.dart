@@ -16,7 +16,7 @@ class FieldNumberWidget extends StatelessWidget {
     required this.court,
     this.fontSize = 16,
     this.mainAxisAlignment = MainAxisAlignment.start,
-    this.textColor ,
+    this.textColor,
   });
 
   @override
@@ -36,10 +36,9 @@ class FieldNumberWidget extends StatelessWidget {
             child: Text(
               court,
               style: blackTextStyle.copyWith(
-                fontSize: fontSize,
-                fontWeight: medium,
-                color: textColor ?? kBlackColor
-              ),
+                  fontSize: fontSize,
+                  fontWeight: medium,
+                  color: textColor ?? kBlackColor),
               overflow: TextOverflow.ellipsis,
             ),
           ),
