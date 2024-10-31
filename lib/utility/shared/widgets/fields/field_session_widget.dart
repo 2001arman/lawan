@@ -35,18 +35,7 @@ class FieldSessionWidget extends StatelessWidget {
         width: Get.width * 0.75,
         height: 48,
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-              color: const Color(0xFF40CBB3).withOpacity(0.1),
-            ),
-            BoxShadow(
-              blurRadius: 18,
-              offset: const Offset(0, 18),
-              color: const Color(0xFF40CBB3).withOpacity(0.09),
-            ),
-          ],
+          boxShadow: greenBoxShadow,
         ),
         child: Row(
           children: [

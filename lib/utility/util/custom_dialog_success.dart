@@ -215,6 +215,7 @@ class CustomDialogSuccess {
   static void confirmDialog({
     required ActionType actionType,
     required VoidCallback onAction,
+    String name = '',
   }) {
     Get.dialog(
       Dialog(
@@ -254,7 +255,7 @@ class CustomDialogSuccess {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  actionType.title,
+                  actionType.title(name: name),
                   style:
                       blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
                 ),

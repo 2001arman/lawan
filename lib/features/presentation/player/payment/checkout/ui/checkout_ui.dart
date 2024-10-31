@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/admin/pages/session/admin_add_session.dart';
-import 'package:lawan/features/presentation/admin/pages/session/session_logic.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/controller/checkout_logic.dart';
 import 'package:lawan/features/presentation/player/payment/payment/pages/payment_page.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
@@ -14,9 +12,6 @@ import 'package:lawan/utility/util/helper.dart';
 import '../../../../../../utility/shared/widgets/buttons/custom_button.dart';
 import '../../../../../../utility/shared/widgets/card_detail_session.dart';
 import '../../../../../../utility/shared/widgets/text/text_pill_widget.dart';
-import '../../../../../domain/session/session_model.dart';
-import '../../../../admin/pages/session/admin_session_bottom_sheet.dart';
-import '../../../controller/player_main_state.dart';
 
 class CheckoutUi extends StatelessWidget {
   static const String namePath = '/checkout_page';
@@ -313,33 +308,7 @@ class CheckoutUi extends StatelessWidget {
                           ),
                           const Spacer(),
                           GradientButton(
-                            onTap: () async {
-                              SessionModel sessionModel = Get.arguments[0];
-                              PlayerMainState playerMainState =
-                                  Get.arguments[1];
-
-                              playerMainState.sessionList.add(sessionModel);
-
-                              Get.close(2);
-                              await Future.delayed(const Duration(seconds: 1));
-                              AdminSessionBottomSheet()
-                                  .successCreateSesssionSheet(
-                                arenaModel: sessionModel.arena,
-                                selectedCourt: sessionModel.selectedCourt,
-                                session: sessionModel,
-                                showPill: true,
-                                successCreate: true,
-                                isAdmin: false,
-                                onUpdate: () {
-                                  Get.back();
-                                  AdminAddSession(
-                                    state: Get.find<SessionLogic>().state,
-                                    logic: Get.find<SessionLogic>(),
-                                  ).createNewSession();
-                                },
-                                onDelete: () {},
-                              );
-                            },
+                            onTap: logic.onCreateSession,
                             widget: Text(
                               'Pay Now',
                               style:

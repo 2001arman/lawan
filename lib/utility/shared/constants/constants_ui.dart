@@ -76,6 +76,15 @@ LinearGradient blackGradient = LinearGradient(
   ],
 );
 
+LinearGradient whiteGradient = LinearGradient(
+  end: Alignment.topCenter,
+  begin: Alignment.bottomCenter,
+  colors: [
+    kBackgroundColor.withOpacity(0),
+    kBackgroundColor,
+  ],
+);
+
 LinearGradient shadowGradient = LinearGradient(
   begin: Alignment.bottomCenter,
   end: Alignment.topCenter,
@@ -84,6 +93,19 @@ LinearGradient shadowGradient = LinearGradient(
     Colors.black.withOpacity(0),
   ],
 );
+
+List<BoxShadow> greenBoxShadow = [
+  BoxShadow(
+    blurRadius: 10,
+    offset: const Offset(0, 5),
+    color: const Color(0xFF40CBB3).withOpacity(0.1),
+  ),
+  BoxShadow(
+    blurRadius: 18,
+    offset: const Offset(0, 18),
+    color: const Color(0xFF40CBB3).withOpacity(0.09),
+  ),
+];
 
 double defaultMargin = 16.0;
 

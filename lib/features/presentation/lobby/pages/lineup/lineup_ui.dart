@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/lobby/pages/lineup/controller/lineup_logic.dart';
-import 'package:lawan/utility/shared/constants/action_type.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
-import 'package:lawan/utility/util/custom_dialog_success.dart';
 import 'package:lawan/utility/util/helper.dart';
 import '../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../utility/shared/widgets/container/select_friend_item.dart';
@@ -167,8 +165,8 @@ class LineupUi extends StatelessWidget {
                               state.listFriends.remove(data);
                             },
                             size: 36,
-                            widget: Icon(
-                              Icons.add,
+                            widget: SvgPicture.asset(
+                              'assets/icons/plus.svg',
                               color: kDarkgreyColor,
                             ),
                             borderColor: kGreyColor,
@@ -261,16 +259,10 @@ class LineupUi extends StatelessWidget {
                                       (data.key !=
                                           state.selectedRefereeIndex.value),
                               child: CircleButtonTransparentWidget(
-                                onTap: () {
-                                  CustomDialogSuccess.confirmDialog(
-                                    actionType: ActionType.alertAdmin,
-                                    onAction: () {
-                                      state.selectedRefereeIndex.value =
-                                          data.key;
-                                      Get.back();
-                                    },
-                                  );
-                                },
+                                onTap: () => logic.selectReferee(
+                                  index: data.key,
+                                  name: data.value.name,
+                                ),
                                 borderColor: kGreyColor,
                                 margin: const EdgeInsets.only(left: 12),
                                 widget: SvgPicture.asset(

@@ -5,6 +5,7 @@ class GradientButton extends StatelessWidget {
   final VoidCallback onTap;
   final Widget widget;
   final double paddingVertical, paddingHorizontal;
+  final List<BoxShadow>? boxShadow;
 
   const GradientButton({
     super.key,
@@ -12,6 +13,7 @@ class GradientButton extends StatelessWidget {
     required this.widget,
     this.paddingHorizontal = 16,
     this.paddingVertical = 12,
+    this.boxShadow,
   });
 
   @override
@@ -24,7 +26,10 @@ class GradientButton extends StatelessWidget {
           horizontal: paddingVertical,
         ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100), gradient: mainGradient),
+          borderRadius: BorderRadius.circular(100),
+          gradient: mainGradient,
+          boxShadow: boxShadow,
+        ),
         child: Center(child: widget),
       ),
     );

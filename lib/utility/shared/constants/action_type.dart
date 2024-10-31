@@ -9,7 +9,7 @@ enum ActionType {
   assignReferee,
   ;
 
-  String get title {
+  String title({String name = ''}) {
     switch (this) {
       case ActionType.delete:
         return 'Confirm Delete?';
@@ -26,7 +26,7 @@ enum ActionType {
       case ActionType.badWeather:
         return 'Report for Bad Weather?';
       case ActionType.assignReferee:
-        return 'Assign Sarah Yahya as the referee?';
+        return 'Assign $name as the referee?';
       default:
         return '';
     }

@@ -4,16 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
-import 'package:lawan/features/presentation/admin/pages/session/admin_add_session.dart';
-import 'package:lawan/features/presentation/admin/pages/session/admin_session_bottom_sheet.dart';
-import 'package:lawan/features/presentation/admin/pages/session/session_logic.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/container/select_friend_item.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_session_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
-import 'package:lawan/utility/util/helper.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/widgets/bottom_navbar_item.dart';
@@ -34,34 +30,43 @@ class PlayerMainUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget createSessionButton() {
-      return Obx(
-        () => Row(
-          children: [
-            SvgPicture.asset(
-              'assets/icons/play.svg',
-              width: 16,
-              height: 16,
+      return Container(
+        decoration: BoxDecoration(
+          boxShadow: greenBoxShadow,
+        ),
+        child: GradientButton(
+          onTap: logic.showCreateDialog,
+          boxShadow: greenBoxShadow,
+          widget: Obx(
+            () => Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/play.svg',
+                  width: 16,
+                  height: 16,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  'Create a session',
+                  style: whiteTextStyle.copyWith(fontWeight: medium),
+                ),
+                if (state.selectedFriends.isNotEmpty) const SizedBox(width: 4),
+                Visibility(
+                  visible: state.selectedFriends.isNotEmpty,
+                  child: TextBorder(
+                    textTitle: '+${state.selectedFriends.length}',
+                    fontSize: 11,
+                    paddingVertical: 0,
+                    paddingHorizontal: 8,
+                    borderColor: Colors.transparent,
+                    textColor: const Color(0xFF44D8BE),
+                    backgroundColor: kWhiteColor,
+                    gradient: mainGradient,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 4),
-            Text(
-              'Create a session',
-              style: whiteTextStyle.copyWith(fontWeight: medium),
-            ),
-            if (state.selectedFriends.isNotEmpty) const SizedBox(width: 4),
-            Visibility(
-              visible: state.selectedFriends.isNotEmpty,
-              child: TextBorder(
-                textTitle: '+${state.selectedFriends.length}',
-                fontSize: 11,
-                paddingVertical: 0,
-                paddingHorizontal: 8,
-                borderColor: Colors.transparent,
-                textColor: const Color(0xFF44D8BE),
-                backgroundColor: kWhiteColor,
-                gradient: mainGradient,
-              ),
-            ),
-          ],
+          ),
         ),
       );
     }
@@ -97,10 +102,7 @@ class PlayerMainUi extends StatelessWidget {
                       useBlur: true,
                     ),
                     SizedBox(width: defaultMargin),
-                    GradientButton(
-                      onTap: logic.showCreateDialog,
-                      widget: createSessionButton(),
-                    ),
+                    createSessionButton(),
                   ],
                 ),
               ),
@@ -196,10 +198,7 @@ class PlayerMainUi extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GradientButton(
-                          onTap: logic.showCreateDialog,
-                          widget: createSessionButton(),
-                        ),
+                        createSessionButton(),
                       ],
                     )
                   ],
@@ -215,6 +214,123 @@ class PlayerMainUi extends StatelessWidget {
             ),
           ),
         ],
+      );
+    }
+
+    Widget inviteFriendSection() {
+      return Obx(
+        () => Visibility(
+          visible: state.listFriends.isNotEmpty,
+          replacement: Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Row(
+              children: [
+                CustomButton(
+                  isBlack: false,
+                  onTap: () {},
+                  borderColor: kGreyColor,
+                  widget: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/add_user.svg',
+                        color: kDarkgreyColor,
+                        width: 16,
+                        height: 16,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Find Friends',
+                        style: blackTextStyle.copyWith(fontWeight: medium),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          child: SizedBox(
+            width: double.infinity,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.zero,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: defaultMargin),
+                  ...state.listFriends.map(
+                    (data) => SelectFriendItem(
+                      name: data.name,
+                      asset: data.asset,
+                      suffixWidget: data.isSelected.value
+                          ? CircleButtonWidget(
+                              onTap: () => logic.removeInviteFriends(data),
+                              isActive: true,
+                              widget: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: SvgPicture.asset(
+                                  'assets/icons/check.svg',
+                                ),
+                              ),
+                              size: 36,
+                            )
+                          : CircleButtonTransparentWidget(
+                              onTap: () => logic.inviteFriends(data),
+                              size: 36,
+                              widget: SvgPicture.asset(
+                                'assets/icons/plus.svg',
+                                color: kDarkgreyColor,
+                              ),
+                              borderColor: kGreyColor,
+                            ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    Widget sessionContentSection() {
+      return Expanded(
+        child: Obx(
+          () => Stack(
+            children: [
+              Visibility(
+                visible: state.sessionList.isNotEmpty,
+                replacement: emptySession(),
+                child: ListView(
+                  padding: EdgeInsets.all(defaultMargin),
+                  children: [
+                    ...state.sessionList.asMap().entries.map(
+                          (data) => GestureDetector(
+                            onTap: () => logic.showDetailSession(data.value),
+                            child: FieldSessionWidget(
+                              sessionModel: data.value,
+                              showGameInformation:
+                                  data.key == 0 || data.key == 1,
+                            ),
+                          ),
+                        ),
+                    const SizedBox(height: 150),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: state.sessionList.isNotEmpty,
+                child: Container(
+                  width: double.infinity,
+                  height: 16,
+                  decoration: BoxDecoration(
+                    gradient: whiteGradient,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       );
     }
 
@@ -251,99 +367,7 @@ class PlayerMainUi extends StatelessWidget {
                     SizedBox(height: defaultMargin),
 
                     // friends list
-                    Obx(
-                      () => Visibility(
-                        visible: state.listFriends.isNotEmpty,
-                        replacement: Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: defaultMargin),
-                          child: Row(
-                            children: [
-                              CustomButton(
-                                isBlack: false,
-                                onTap: () {},
-                                borderColor: kGreyColor,
-                                widget: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/icons/add_user.svg',
-                                      color: kDarkgreyColor,
-                                      width: 16,
-                                      height: 16,
-                                    ),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      'Find Friends',
-                                      style: blackTextStyle.copyWith(
-                                          fontWeight: medium),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            padding: EdgeInsets.zero,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(width: defaultMargin),
-                                ...state.listFriends.map(
-                                  (data) => SelectFriendItem(
-                                    name: data.name,
-                                    asset: data.asset,
-                                    suffixWidget: data.isSelected.value
-                                        ? CircleButtonWidget(
-                                            onTap: () {
-                                              data.isSelected.value = false;
-                                              state.selectedFriends
-                                                  .remove(data);
-                                              Helper.showToast(
-                                                isSuccess: true,
-                                                message:
-                                                    'User removed from card successfully',
-                                              );
-                                            },
-                                            isActive: true,
-                                            widget: Padding(
-                                              padding: const EdgeInsets.all(8),
-                                              child: SvgPicture.asset(
-                                                'assets/icons/check.svg',
-                                              ),
-                                            ),
-                                            size: 36,
-                                          )
-                                        : CircleButtonTransparentWidget(
-                                            onTap: () {
-                                              data.isSelected.value = true;
-                                              state.selectedFriends.add(data);
-                                              Helper.showToast(
-                                                isSuccess: true,
-                                                message:
-                                                    'User added to card successfully',
-                                              );
-                                            },
-                                            size: 36,
-                                            widget: SvgPicture.asset(
-                                              'assets/icons/plus.svg',
-                                              color: kDarkgreyColor,
-                                            ),
-                                            borderColor: kGreyColor,
-                                          ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-
+                    inviteFriendSection(),
                     // available session
                     SizedBox(height: defaultMargin),
                     Row(
@@ -355,10 +379,12 @@ class PlayerMainUi extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50),
                             color: kWhiteColor,
                           ),
-                          child: Text(
-                            '${state.sessionList.length}',
-                            style: blackTextStyle.copyWith(
-                                fontSize: 11, fontWeight: medium),
+                          child: Obx(
+                            () => Text(
+                              '${state.sessionList.length}',
+                              style: blackTextStyle.copyWith(
+                                  fontSize: 11, fontWeight: medium),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -368,52 +394,17 @@ class PlayerMainUi extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ],
-                ),
-                SizedBox(height: defaultMargin),
-
-                // session content
-                Expanded(
-                  child: Obx(
-                    () => Visibility(
-                      visible: state.sessionList.isNotEmpty,
-                      replacement: emptySession(),
-                      child: ListView(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: defaultMargin),
-                        children: [
-                          ...state.sessionList.asMap().entries.map(
-                                (data) => GestureDetector(
-                                  onTap: () => AdminSessionBottomSheet()
-                                      .successCreateSesssionSheet(
-                                    arenaModel: data.value.arena,
-                                    selectedCourt: data.value.selectedCourt,
-                                    session: data.value,
-                                    successCreate: false,
-                                    showPill: true,
-                                    onUpdate: () {
-                                      Get.back();
-                                      AdminAddSession(
-                                        state: Get.find<SessionLogic>().state,
-                                        logic: Get.find<SessionLogic>(),
-                                      ).createNewSession();
-                                    },
-                                    onDelete: () {},
-                                    isAdmin: false,
-                                  ),
-                                  child: FieldSessionWidget(
-                                    sessionModel: data.value,
-                                    showGameInformation:
-                                        data.key == 0 || data.key == 1,
-                                  ),
-                                ),
-                              ),
-                          const SizedBox(height: 150),
-                        ],
+                    Obx(
+                      () => Visibility(
+                        visible: state.sessionList.isEmpty,
+                        child: SizedBox(height: defaultMargin),
                       ),
                     ),
-                  ),
+                  ],
                 ),
+
+                // session content
+                sessionContentSection(),
               ],
             ),
 

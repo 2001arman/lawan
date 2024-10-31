@@ -182,7 +182,7 @@ class PlayerAddSession {
       ),
       isScrollControlled: true,
       enableDrag: true,
-    ).whenComplete(() {});
+    );
   }
 
   Widget selectedFriendItem({required AvatarModel data}) {
@@ -192,7 +192,7 @@ class PlayerAddSession {
         state.selectedFriends.remove(data);
         Helper.showToast(
           isSuccess: true,
-          message: 'User removed from cart successfully',
+          message: 'User removed from invitation successfully',
         );
       },
       child: Container(

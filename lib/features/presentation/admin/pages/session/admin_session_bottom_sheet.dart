@@ -31,7 +31,7 @@ class AdminSessionBottomSheet {
         padding: const EdgeInsets.all(8),
         child: Obx(
           () => SizedBox(
-            height: showShare.value ? Get.height * 0.9 : Get.height * 0.8,
+            height: showShare.value ? 730 : 650,
             width: Get.width,
           ).blurred(
             blur: 7,
@@ -276,40 +276,45 @@ class AdminSessionBottomSheet {
               ),
             ),
             const SizedBox(height: 12),
-            Visibility(
-              visible: Helper.isUpcoming(session.getStartDateTime()),
-              replacement: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextPillWidget(title: 'Complete'),
-                ],
-              ),
-              child: Row(
-                children: [
-                  CustomButton(
-                    isBlack: true,
-                    onTap: () {},
-                    paddingVertical: 8,
-                    widget: Column(
-                      children: [
-                        Text(
-                          'Sesssion starting in',
-                          style: midGreyTextStyle.copyWith(fontSize: 12),
-                        ),
-                        Text(
-                          Helper.timeBetweenNowAndSession(
-                            session.getStartDateTime(),
+            Obx(
+              () => showQr.value
+                  ? const SizedBox()
+                  : Visibility(
+                      visible: Helper.isUpcoming(session.getStartDateTime()),
+                      replacement: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextPillWidget(title: 'Complete'),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          CustomButton(
+                            isBlack: true,
+                            onTap: () {},
+                            paddingVertical: 8,
+                            widget: Column(
+                              children: [
+                                Text(
+                                  'Sesssion starting in',
+                                  style:
+                                      midGreyTextStyle.copyWith(fontSize: 12),
+                                ),
+                                Text(
+                                  Helper.timeBetweenNowAndSession(
+                                    session.getStartDateTime(),
+                                  ),
+                                  style: whiteTextStyle.copyWith(
+                                    fontSize: 16,
+                                    fontWeight: semiBold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          style: whiteTextStyle.copyWith(
-                            fontSize: 16,
-                            fontWeight: semiBold,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
             ),
             const HostAvatarWidget(),
             Visibility(
