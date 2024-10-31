@@ -1,10 +1,8 @@
-import 'dart:io';
-
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../shared/constants/constants_ui.dart';
 
@@ -175,18 +173,26 @@ class Helper {
   }
 
   static void openCalendar() async {
-    final androidUri = Uri.parse('content://com.android.calendar/time');
-    final iosUri =
-        Uri.parse('calshow:${DateTime.now().millisecondsSinceEpoch}');
+    // final androidUri = Uri.parse('content://com.android.calendar/time');
+    // final iosUri =
+    //     Uri.parse('calshow:${DateTime.now().millisecondsSinceEpoch}');
 
-    if (Platform.isAndroid) {
-      if (await canLaunchUrl(androidUri)) {
-        await launchUrl(androidUri);
-      }
-    } else if (Platform.isIOS) {
-      if (await canLaunchUrl(iosUri)) {
-        await launchUrl(iosUri);
-      }
-    }
+    // if (Platform.isAndroid) {
+    //   if (await canLaunchUrl(androidUri)) {
+    //     await launchUrl(androidUri);
+    //   }
+    // } else if (Platform.isIOS) {
+    //   if (await canLaunchUrl(iosUri)) {
+    //     await launchUrl(iosUri);
+    //   }
+    // }
+    final Event event = Event(
+      title: 'Event Lawan',
+      description: 'Event Lawan description',
+      location: 'Event Lawan location',
+      startDate: DateTime.now(),
+      endDate: DateTime.now().add(const Duration(hours: 1)),
+    );
+    Add2Calendar.addEvent2Cal(event);
   }
 }

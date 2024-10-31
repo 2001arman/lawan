@@ -54,5 +54,11 @@
 	<string>whatsapp</string>
     <string>tg</string>
 	</array>
+
+	<!-- calendar -->
+	<key>NSCalendarsUsageDescription</key>
+	<string>This app needs access to device calendar</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app needs access to device calendar</string>
 </dict>
 </plist>
