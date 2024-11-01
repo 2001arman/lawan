@@ -8,4 +8,13 @@ class AuthState {
     'Login',
     'Sign Up',
   ];
+
+  RxDouble heightContainer = (442.0).obs;
+
+  List<String> listLoginIcon = [
+    'assets/icons/mail.svg',
+    'assets/icons/Apple.svg',
+    'assets/icons/Facebook.svg',
+    'assets/icons/Google.svg',
+  ];
 }

@@ -32,9 +32,11 @@ class AuthLogic extends GetxController {
     switch (title) {
       case 'Login':
         state.lobbyActiveAlignment.value = Alignment.centerLeft;
+        state.heightContainer.value = 442;
         break;
       default:
         state.lobbyActiveAlignment.value = Alignment.centerRight;
+        state.heightContainer.value = 327;
         break;
     }
     return;
