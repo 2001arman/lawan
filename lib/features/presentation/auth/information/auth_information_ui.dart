@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/auth/information/auth_information_logic.dart';
+import 'package:lawan/features/presentation/auth/information/recovery/auth_recovery_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/gradient/horizontal_white_gradient.dart';
@@ -182,11 +183,11 @@ class AuthInformationUi extends StatelessWidget {
                   const HorizontalWhiteGradient(),
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: IgnorePointer(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IgnorePointer(
+                          child: Container(
                             width: double.infinity,
                             height: 100,
                             decoration: BoxDecoration(
@@ -200,23 +201,23 @@ class AuthInformationUi extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Container(
-                            color: kBackgroundColor,
-                            padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).padding.bottom,
-                            ),
-                            child: GradientButton(
-                              onTap: () {},
-                              boxShadow: greenBoxShadow,
-                              widget: Text(
-                                'Continue',
-                                style:
-                                    whiteTextStyle.copyWith(fontWeight: medium),
-                              ),
+                        ),
+                        Container(
+                          color: kBackgroundColor,
+                          padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).padding.bottom,
+                          ),
+                          child: GradientButton(
+                            onTap: () => Get.toNamed(AuthRecoveryUi.namePath),
+                            boxShadow: greenBoxShadow,
+                            widget: Text(
+                              'Continue',
+                              style:
+                                  whiteTextStyle.copyWith(fontWeight: medium),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

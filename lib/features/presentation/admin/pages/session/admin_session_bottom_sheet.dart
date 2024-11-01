@@ -298,12 +298,6 @@ class AdminSessionBottomSheet {
                       padding: const EdgeInsets.only(top: 12),
                       child: Visibility(
                         visible: Helper.isUpcoming(session.getStartDateTime()),
-                        replacement: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextPillWidget(title: 'Complete'),
-                          ],
-                        ),
                         child: CustomButton(
                           isBlack: true,
                           onTap: () {},

@@ -14,16 +14,18 @@ class CustomAppbar extends StatelessWidget {
     required this.iconColor,
     required this.borderColor,
     required this.textColor,
+    this.onTap,
   });
   final String title;
   final Color iconColor, borderColor, textColor;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         CircleButtonTransparentWidget(
-          onTap: Get.back,
+          onTap: onTap ?? Get.back,
           widget: SvgPicture.asset(
             'assets/icons/back.svg',
             color: iconColor,

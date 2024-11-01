@@ -315,14 +315,8 @@ class PlayerAddPlayerBottomSheet {
                             asset: data.asset,
                             suffixWidget: data.isSelected.value
                                 ? CircleButtonWidget(
-                                    onTap: () {
-                                      Helper.showToast(
-                                          isSuccess: true,
-                                          message:
-                                              'User removed from invitation successfully');
-                                      data.isSelected.value = false;
-                                      state.selectedFriends.remove(data);
-                                    },
+                                    onTap: () =>
+                                        logic.removeInviteFriends(data),
                                     isActive: true,
                                     widget: Icon(
                                       Icons.done,
@@ -332,15 +326,7 @@ class PlayerAddPlayerBottomSheet {
                                     size: 36,
                                   )
                                 : CircleButtonTransparentWidget(
-                                    onTap: () {
-                                      Helper.showToast(
-                                        isSuccess: true,
-                                        message:
-                                            'User added for invitation successfully',
-                                      );
-                                      data.isSelected.value = true;
-                                      state.selectedFriends.add(data);
-                                    },
+                                    onTap: () => logic.inviteFriends(data),
                                     size: 36,
                                     widget: SvgPicture.asset(
                                       'assets/icons/plus.svg',
