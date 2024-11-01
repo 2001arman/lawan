@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/auth/auth_logic.dart';
-import 'package:lawan/features/presentation/auth/information/auth_information_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
@@ -118,7 +117,7 @@ class AuthUi extends StatelessWidget {
               ),
               SizedBox(height: defaultMargin),
               GradientButton(
-                onTap: () => Get.toNamed(AuthInformationUi.namePath),
+                onTap: logic.goToSecondScreen,
                 boxShadow: greenBoxShadow,
                 widget: Text(
                   'Create Account',
@@ -162,7 +161,7 @@ class AuthUi extends StatelessWidget {
             SizedBox(
               width: Get.width,
               height: Get.height - 311,
-              child: const VideoWidget(url: 'assets/video/login.mp4'),
+              child: VideoWidget(videoController: logic.videoPlayerController),
             ),
             Container(
               width: double.infinity,

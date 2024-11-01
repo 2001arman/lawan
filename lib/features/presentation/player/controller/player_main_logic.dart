@@ -5,6 +5,7 @@ import 'package:lawan/features/domain/session/session_model.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/ui/checkout_ui.dart';
 import 'package:lawan/utility/util/helper.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../domain/session/avatar_model.dart';
 import '../../../infrastructure/arena/arena_data_source.dart';
@@ -13,9 +14,31 @@ import '../../admin/pages/session/admin_session_bottom_sheet.dart';
 import '../../admin/pages/session/session_logic.dart';
 import '../ui/player_add_session.dart';
 
-class PlayerMainLogic {
+class PlayerMainLogic extends GetxController {
   PlayerMainState state = PlayerMainState();
   ArenaDataSource arenaDataSource = Get.find<ArenaDataSource>();
+  late VideoPlayerController videoPlayerController;
+
+  @override
+  void onInit() {
+    super.onInit();
+    videoPlayerController = VideoPlayerController.asset(
+      'assets/video/empty_session.mp4',
+      videoPlayerOptions: VideoPlayerOptions(),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    videoPlayerController.dispose();
+  }
+
+  @override
+  void onClose() {
+    videoPlayerController.dispose();
+    super.onClose();
+  }
 
   void alignmentTabbar(String title) {
     switch (title) {
@@ -59,7 +82,7 @@ class PlayerMainLogic {
         identificationNumber: '',
         price: 20,
       );
-      
+
       Get.toNamed(
         CheckoutUi.namePath,
         arguments: [sessionModel, this],

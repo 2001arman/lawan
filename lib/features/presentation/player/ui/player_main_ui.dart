@@ -154,7 +154,7 @@ class PlayerMainUi extends StatelessWidget {
                   width: double.infinity,
                   height: Get.height,
                   child:
-                      const VideoWidget(url: 'assets/video/empty_session.mp4'),
+                      VideoWidget(videoController: logic.videoPlayerController),
                 ),
                 Container(
                   width: double.infinity,
