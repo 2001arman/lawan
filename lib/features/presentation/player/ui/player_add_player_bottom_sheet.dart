@@ -335,9 +335,10 @@ class PlayerAddPlayerBottomSheet {
                                 : CircleButtonTransparentWidget(
                                     onTap: () {
                                       Helper.showToast(
-                                          isSuccess: true,
-                                          message:
-                                              'User added to cart successfully');
+                                        isSuccess: true,
+                                        message:
+                                            'User added for invitation successfully',
+                                      );
                                       data.isSelected.value = true;
                                       state.selectedFriends.add(data);
                                     },

@@ -87,6 +87,8 @@ class SessionLogic extends GetxController {
         Helper.showToast(isSuccess: false, message: 'Please choose arena');
         return;
       }
+    }
+    if (state.selectedIndex.value == 3) {
       final validator = state.textFormKey.currentState!.validate();
       if (!validator) return;
 

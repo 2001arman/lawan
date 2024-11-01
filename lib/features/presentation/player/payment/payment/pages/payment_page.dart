@@ -198,7 +198,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       children: [
                         Container(
                           alignment: Alignment.center,
-                          margin: const EdgeInsets.only(top: 10),
+                          margin: const EdgeInsets.only(top: 9),
                           child: CardWidget(
                             icon: "assets/icons/mastercard.svg",
                             expDate: item.expDate,
@@ -212,10 +212,11 @@ class _PaymentPageState extends State<PaymentPage> {
                             width: 250,
                             child: Align(
                               alignment: Alignment.topCenter,
-                              child: Icon(
-                                Icons.check_circle,
+                              child: SvgPicture.asset(
+                                'assets/icons/check-circle.svg',
                                 color: kBlackColor,
-                                size: 24.0,
+                                width: 20,
+                                height: 20,
                               ),
                             ),
                           ),
@@ -246,71 +247,89 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
             ),
           ),
-          const SizedBox(height: 10),
           Expanded(
-            child: Obx(() {
-              return GridView.builder(
-                padding: const EdgeInsets.only(bottom: 80),
-                physics: const BouncingScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 2.8,
-                  crossAxisSpacing: 16,
-                ),
-                itemCount: widget.ctrl.listBank.length,
-                itemBuilder: (context, index) {
-                  final item = widget.ctrl.listBank[index];
-                  _isSelected = _selectedBankIndex == index;
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (_selectedBankIndex == index) {
-                          _selectedBankIndex = -1;
-                          _isSelected = false;
-                          // log(_isSelected.toString());
-                        } else {
-                          _selectedBankIndex2 = -1;
-                          _selectedBankIndex = index;
-                          _isSelected = true;
-                          // log(_isSelected.toString());
-                        }
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: _isSelected ? Colors.black : kWhiteColor,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            item.iconBank,
-                            width: 32,
-                          ),
-                          const SizedBox(width: 8.0),
-                          Expanded(
-                            child: Text(
-                              item.bankName,
-                              style: _isSelected
-                                  ? whiteTextStyle.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: medium,
-                                    )
-                                  : blackTextStyle.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: medium,
-                                    ),
-                            ),
-                          ),
-                        ],
-                      ),
+            child: Stack(
+              children: [
+                Obx(() {
+                  return GridView.builder(
+                    padding: const EdgeInsets.only(bottom: 80),
+                    physics: const BouncingScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 2.8,
+                      crossAxisSpacing: 16,
                     ),
+                    itemCount: widget.ctrl.listBank.length,
+                    itemBuilder: (context, index) {
+                      final item = widget.ctrl.listBank[index];
+                      _isSelected = _selectedBankIndex == index;
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (_selectedBankIndex == index) {
+                              _selectedBankIndex = -1;
+                              _isSelected = false;
+                              // log(_isSelected.toString());
+                            } else {
+                              _selectedBankIndex2 = -1;
+                              _selectedBankIndex = index;
+                              _isSelected = true;
+                              // log(_isSelected.toString());
+                            }
+                          });
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 10),
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: _isSelected ? Colors.black : kWhiteColor,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                item.iconBank,
+                                width: 32,
+                              ),
+                              const SizedBox(width: 8.0),
+                              Expanded(
+                                child: Text(
+                                  item.bankName,
+                                  style: _isSelected
+                                      ? whiteTextStyle.copyWith(
+                                          fontSize: 12,
+                                          fontWeight: medium,
+                                        )
+                                      : blackTextStyle.copyWith(
+                                          fontSize: 12,
+                                          fontWeight: medium,
+                                        ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   );
-                },
-              );
-            }),
+                }),
+                Container(
+                  width: double.infinity,
+                  height: 16,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        kBackgroundColor,
+                        kBackgroundColor.withOpacity(0),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),

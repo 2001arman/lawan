@@ -440,7 +440,9 @@ class CustomDialog {
                 height: 163,
                 padding: EdgeInsets.all(defaultMargin),
                 color: kWhiteColor,
-                child: const ShareSection(),
+                child: ShareSection(
+                  onTapBack: Get.back,
+                ),
               ),
             ),
           ],

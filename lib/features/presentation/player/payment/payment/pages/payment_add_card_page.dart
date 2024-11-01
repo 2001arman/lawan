@@ -152,6 +152,7 @@ class PaymentAddCardPage extends StatelessWidget {
                       controller: ctrl.expDateCtrl,
                       title: 'Expired Date',
                       onChanged: (data) => expired.value = data,
+                      textInputType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         ExpirationDateFormatter(), // Apply the custom formatter here
@@ -234,6 +235,7 @@ class PaymentAddCardPage extends StatelessWidget {
                 hintText: 'Postal Code',
                 controller: ctrl.postCodeCtrl,
                 textInputType: TextInputType.number,
+                maxLength: 8,
                 validator: (v) {
                   if (v!.isEmpty) {
                     return 'please fill out this field.';

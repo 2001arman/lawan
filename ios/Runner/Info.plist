@@ -60,5 +60,13 @@
 	<string>This app needs access to device calendar</string>
 	<key>NSContactsUsageDescription</key>
 	<string>This app needs access to device calendar</string>
+
+	<!-- image picker -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to access and open device gallery</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to device camera to capture photos</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs access to device microphone to record videos</string>
 </dict>
 </plist>
