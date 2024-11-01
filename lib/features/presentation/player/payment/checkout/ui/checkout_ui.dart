@@ -69,30 +69,27 @@ class CheckoutUi extends StatelessWidget {
 
                   // button session
                   const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      CustomButton(
-                        isBlack: true,
-                        onTap: () {},
-                        paddingVertical: 8,
-                        widget: Column(
-                          children: [
-                            Text(
-                              'Sesssion starting in',
-                              style: midGreyTextStyle.copyWith(fontSize: 12),
-                            ),
-                            Text(
-                              Helper.timeBetweenNowAndSession(
-                                  logic.sessionModel.dateTime),
-                              style: whiteTextStyle.copyWith(
-                                fontSize: 16,
-                                fontWeight: semiBold,
-                              ),
-                            ),
-                          ],
+                  CustomButton(
+                    width: double.infinity,
+                    isBlack: true,
+                    onTap: () {},
+                    paddingVertical: 8,
+                    widget: Column(
+                      children: [
+                        Text(
+                          'Sesssion starting in',
+                          style: midGreyTextStyle.copyWith(fontSize: 12),
                         ),
-                      ),
-                    ],
+                        Text(
+                          Helper.timeBetweenNowAndSession(
+                              logic.sessionModel.dateTime),
+                          style: whiteTextStyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: semiBold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
 
                   // detail pill widget

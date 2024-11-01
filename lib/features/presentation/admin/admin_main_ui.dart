@@ -11,7 +11,7 @@ import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/bottom_navbar_item.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
-import 'package:lawan/utility/shared/widgets/navigations/custom_appbar.dart';
+import 'package:lawan/utility/shared/widgets/navigations/custom_appbar_profile.dart';
 import 'package:lawan/utility/shared/widgets/navigations/custom_bottom_navbar.dart';
 
 import 'controller/admin_main_logic.dart';
@@ -80,18 +80,22 @@ class AdminMainUi extends StatelessWidget {
               height: 50,
               child: Row(
                 children: [
-                  CustomButton(
-                    isBlack: false,
-                    onTap: arenaLogic.updateCancel,
-                    title: 'Cancel',
-                    backgroundColor: Colors.transparent,
-                    textColor: kBlackColor,
+                  Expanded(
+                    child: CustomButton(
+                      isBlack: false,
+                      onTap: arenaLogic.updateCancel,
+                      title: 'Cancel',
+                      backgroundColor: Colors.transparent,
+                      textColor: kBlackColor,
+                    ),
                   ),
                   SizedBox(width: defaultMargin),
-                  CustomButton(
-                    isBlack: true,
-                    onTap: arenaLogic.saveUpdate,
-                    title: 'Save and Update',
+                  Expanded(
+                    child: CustomButton(
+                      isBlack: true,
+                      onTap: arenaLogic.saveUpdate,
+                      title: 'Save and Update',
+                    ),
                   ),
                 ],
               ),
@@ -123,7 +127,7 @@ class AdminMainUi extends StatelessWidget {
             Column(
               children: [
                 SizedBox(height: MediaQuery.paddingOf(context).top),
-                CustomAppbar(
+                CustomAppbarProfile(
                   onTap: () => Get.offAndToNamed(PlayerMainUi.namePath),
                 ),
                 Expanded(

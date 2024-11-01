@@ -143,25 +143,27 @@ class _ShareSectionState extends State<ShareSection> {
               ),
             ),
             const SizedBox(width: 16),
-            CustomButton(
-              isBlack: true,
-              onTap: () {},
-              widget: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/chat.svg',
-                    color: kMidgreyColor,
-                    width: 16,
-                    height: 16,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Send via Chat',
-                    style: whiteTextStyle.copyWith(fontWeight: medium),
-                  )
-                ],
+            Expanded(
+              child: CustomButton(
+                isBlack: true,
+                onTap: () {},
+                widget: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/chat.svg',
+                      color: kMidgreyColor,
+                      width: 16,
+                      height: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Send via Chat',
+                      style: whiteTextStyle.copyWith(fontWeight: medium),
+                    )
+                  ],
+                ),
               ),
             )
           ],

@@ -10,6 +10,8 @@ import 'package:lawan/features/presentation/player/controller/player_main_state.
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/fields/choose_arena_section_modal.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
+import 'package:lawan/utility/shared/widgets/inputs/choose_gender_widget.dart';
+import 'package:lawan/utility/shared/widgets/inputs/choose_language_widget.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_age_widget.dart';
 import 'package:lawan/utility/shared/widgets/wheel_picker/choose_slot_widget.dart';
@@ -93,6 +95,8 @@ class PlayerAddSession {
           colorOpacity: 0,
           borderRadius: BorderRadius.circular(32),
           overlay: Container(
+            height: Get.height * 0.9,
+            width: Get.width,
             decoration: BoxDecoration(
               color: kModalColor,
               borderRadius: BorderRadius.circular(32),
@@ -158,18 +162,22 @@ class PlayerAddSession {
                     padding: EdgeInsets.all(defaultMargin),
                     child: Row(
                       children: [
-                        CustomButton(
-                          title: 'Cancel',
-                          isBlack: false,
-                          onTap: () => Get.back(),
+                        Expanded(
+                          child: CustomButton(
+                            title: 'Cancel',
+                            isBlack: false,
+                            onTap: () => Get.back(),
+                          ),
                         ),
                         const SizedBox(width: 16),
-                        CustomButton(
-                          title: state.selectedIndex.value == 3
-                              ? 'Proceed to Pay'
-                              : 'Next',
-                          isBlack: true,
-                          onTap: logic.handleNextButton,
+                        Expanded(
+                          child: CustomButton(
+                            title: state.selectedIndex.value == 3
+                                ? 'Proceed to Pay'
+                                : 'Next',
+                            isBlack: true,
+                            onTap: logic.handleNextButton,
+                          ),
                         ),
                       ],
                     ),
@@ -285,108 +293,16 @@ class PlayerAddSession {
           const SizedBox(height: 16),
 
           // gender
-          Row(
-            children: [
-              Text('Gender', style: darkGreyTextStyle),
-              SizedBox(width: Get.width * 0.2),
-              Obx(
-                () => CustomButton(
-                  isBlack: state.isMale.value,
-                  onTap: () => state.isMale.toggle(),
-                  widget: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/male.svg',
-                        color:
-                            state.isMale.value ? kWhiteColor : kDarkgreyColor,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Male',
-                        style: whiteTextStyle.copyWith(
-                          color:
-                              state.isMale.value ? kWhiteColor : kDarkgreyColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Obx(
-                () => CustomButton(
-                  isBlack: state.isFemale.value,
-                  onTap: () => state.isFemale.toggle(),
-                  widget: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/female.svg',
-                        color:
-                            state.isFemale.value ? kWhiteColor : kDarkgreyColor,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Female',
-                        style: whiteTextStyle.copyWith(
-                          color: state.isFemale.value
-                              ? kWhiteColor
-                              : kDarkgreyColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          ChooseGenderWidget(
+            isMaleSelected: state.isMale,
+            isFemaleSelected: state.isFemale,
           ),
 
           // language
           const SizedBox(height: 16),
-          Row(
-            children: [
-              Text('Language', style: darkGreyTextStyle),
-              SizedBox(width: Get.width * 0.15),
-              CustomButton(
-                isBlack: state.isEnglish.value,
-                onTap: state.isEnglish.toggle,
-                widget: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/images/uk.png', width: 16),
-                    const SizedBox(width: 4),
-                    Text(
-                      'English',
-                      style: whiteTextStyle.copyWith(
-                        color: state.isEnglish.value
-                            ? kWhiteColor
-                            : kDarkgreyColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              CustomButton(
-                isBlack: state.isMalay.value,
-                onTap: state.isMalay.toggle,
-                widget: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/images/malaysia.png', width: 16),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Malay',
-                      style: whiteTextStyle.copyWith(
-                        color:
-                            state.isMalay.value ? kWhiteColor : kDarkgreyColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          ChooseLanguageWidget(
+            isMalaySelected: state.isMalay,
+            isEnglishSelected: state.isEnglish,
           ),
 
           // age range

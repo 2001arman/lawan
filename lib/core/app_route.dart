@@ -3,6 +3,8 @@ import 'package:lawan/features/presentation/admin/controller/admin_main_binding.
 import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
 import 'package:lawan/features/presentation/auth/auth_binding.dart';
 import 'package:lawan/features/presentation/auth/auth_ui.dart';
+import 'package:lawan/features/presentation/auth/information/auth_information_binding.dart';
+import 'package:lawan/features/presentation/auth/information/auth_information_ui.dart';
 import 'package:lawan/features/presentation/lobby/controller/lobby_binding.dart';
 import 'package:lawan/features/presentation/lobby/pages/lobby_ui.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/controller/checkout_binding.dart';
@@ -50,6 +52,11 @@ class AppRoute {
       name: AuthUi.namePath,
       page: () => AuthUi(),
       binding: AuthBinding(),
+    ),
+    GetPage(
+      name: AuthInformationUi.namePath,
+      page: () => AuthInformationUi(),
+      binding: AuthInformationBinding(),
     ),
   ];
 }

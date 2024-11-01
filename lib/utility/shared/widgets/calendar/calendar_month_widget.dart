@@ -22,38 +22,40 @@ class CalendarMonthWidget extends StatelessWidget {
     return ValueListenableBuilder<DateTime>(
       valueListenable: focusedDayData,
       builder: (context, value, _) {
-        return CustomButton(
-          isBlack: true,
-          onTap: () async {
-            calendarFormat.value = CalendarFormat.month;
-            await CustomDialog.chooseMonth(
-              onSelected: onSelected,
-              selectedMonth: value.month,
-            );
-          },
-          widget: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/calendar.svg',
-                  // ignore: deprecated_member_use
-                  color: kWhiteColor,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  DateFormat.MMMM().format(value),
-                  style: whiteTextStyle.copyWith(fontWeight: medium),
-                ),
-                const Spacer(),
-                Image.asset(
-                  'assets/icons/arrow_up_down.png',
-                  width: 20,
-                  height: 20,
-                  color: kWhiteColor,
-                ),
-              ],
+        return Expanded(
+          child: CustomButton(
+            isBlack: true,
+            onTap: () async {
+              calendarFormat.value = CalendarFormat.month;
+              await CustomDialog.chooseMonth(
+                onSelected: onSelected,
+                selectedMonth: value.month,
+              );
+            },
+            widget: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/calendar.svg',
+                    // ignore: deprecated_member_use
+                    color: kWhiteColor,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    DateFormat.MMMM().format(value),
+                    style: whiteTextStyle.copyWith(fontWeight: medium),
+                  ),
+                  const Spacer(),
+                  Image.asset(
+                    'assets/icons/arrow_up_down.png',
+                    width: 20,
+                    height: 20,
+                    color: kWhiteColor,
+                  ),
+                ],
+              ),
             ),
           ),
         );

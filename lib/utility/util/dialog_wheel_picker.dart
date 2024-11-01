@@ -105,17 +105,22 @@ class DialogWheelPicker {
               ),
               Row(
                 children: [
-                  CustomButton(
-                    title: 'Cancel',
-                    isBlack: false,
-                    onTap: Get.back,
-                    borderColor: kGreyColor,
+                  Expanded(
+                    child: CustomButton(
+                      title: 'Cancel',
+                      isBlack: false,
+                      onTap: Get.back,
+                      borderColor: kGreyColor,
+                    ),
                   ),
                   SizedBox(width: defaultMargin),
-                  CustomButton(
-                    title: 'Save',
-                    isBlack: true,
-                    onTap: () => onSave(startWheel.selected, endWheel.selected),
+                  Expanded(
+                    child: CustomButton(
+                      title: 'Save',
+                      isBlack: true,
+                      onTap: () =>
+                          onSave(startWheel.selected, endWheel.selected),
+                    ),
                   ),
                 ],
               )
@@ -214,23 +219,27 @@ class DialogWheelPicker {
               ),
               Row(
                 children: [
-                  CustomButton(
-                    title: 'Cancel',
-                    isBlack: false,
-                    onTap: Get.back,
-                    borderColor: kGreyColor,
+                  Expanded(
+                    child: CustomButton(
+                      title: 'Cancel',
+                      isBlack: false,
+                      onTap: Get.back,
+                      borderColor: kGreyColor,
+                    ),
                   ),
                   SizedBox(width: defaultMargin),
-                  CustomButton(
-                    title: 'Save',
-                    isBlack: true,
-                    onTap: () {
-                      final selectedPrice = (priceWheel.selected + 1) * 10;
-                      final double selectedHour = hourWheel.selected == 0
-                          ? 0.5
-                          : hourWheel.selected.toDouble();
-                      onSave(selectedPrice, selectedHour);
-                    },
+                  Expanded(
+                    child: CustomButton(
+                      title: 'Save',
+                      isBlack: true,
+                      onTap: () {
+                        final selectedPrice = (priceWheel.selected + 1) * 10;
+                        final double selectedHour = hourWheel.selected == 0
+                            ? 0.5
+                            : hourWheel.selected.toDouble();
+                        onSave(selectedPrice, selectedHour);
+                      },
+                    ),
                   ),
                 ],
               )

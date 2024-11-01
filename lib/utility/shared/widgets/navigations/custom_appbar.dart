@@ -1,61 +1,42 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:lawan/utility/shared/constants/constants_ui.dart';
 
-import '../../constants/constants_ui.dart';
+import '../buttons/circle_button_transparent_widget.dart';
 
 class CustomAppbar extends StatelessWidget {
-  final bool backEnable;
-  final VoidCallback onTap;
-  const CustomAppbar({super.key, this.backEnable = false, required this.onTap});
+  const CustomAppbar({
+    super.key,
+    required this.title,
+    required this.iconColor,
+    required this.borderColor,
+    required this.textColor,
+  });
+  final String title;
+  final Color iconColor, borderColor, textColor;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            margin: const EdgeInsets.only(left: 16, top: 6),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: kWhiteColor,
-            ),
-            child: Row(
-              children: [
-                Image.asset('assets/icons/ball.png', width: 32),
-                const SizedBox(width: 6),
-                Text(
-                  'Soccer',
-                  style: blackTextStyle.copyWith(fontWeight: medium),
-                ),
-                const SizedBox(width: 4),
-                SvgPicture.asset('assets/icons/chevron-down.svg'),
-              ],
-            ),
+    return Row(
+      children: [
+        CircleButtonTransparentWidget(
+          onTap: Get.back,
+          widget: SvgPicture.asset(
+            'assets/icons/back.svg',
+            color: iconColor,
           ),
-          GestureDetector(
-            onTap: onTap,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-              margin: const EdgeInsets.only(right: 16, top: 6),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: kWhiteColor,
-              ),
-              child: Row(
-                children: [
-                  Image.asset('assets/icons/image_person.png',
-                      width: 32, fit: BoxFit.cover),
-                  const SizedBox(width: 4),
-                  SvgPicture.asset('assets/icons/chevron-down.svg'),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+          margin: EdgeInsets.only(right: defaultMargin),
+          borderColor: borderColor,
+        ),
+        Text(
+          title,
+          style: whiteTextStyle.copyWith(
+              fontSize: 16, fontWeight: medium, color: textColor),
+        ),
+      ],
     );
   }
 }

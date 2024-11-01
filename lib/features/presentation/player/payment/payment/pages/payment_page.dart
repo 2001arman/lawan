@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
+import 'package:lawan/utility/shared/widgets/gradient/horizontal_white_gradient.dart';
 
 import '../../../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
@@ -314,20 +315,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     },
                   );
                 }),
-                Container(
-                  width: double.infinity,
-                  height: 16,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        kBackgroundColor,
-                        kBackgroundColor.withOpacity(0),
-                      ],
-                    ),
-                  ),
-                ),
+                const HorizontalWhiteGradient(),
               ],
             ),
           )

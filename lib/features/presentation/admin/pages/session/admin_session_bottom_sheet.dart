@@ -126,25 +126,28 @@ class AdminSessionBottomSheet {
                                     : 'assets/icons/calendar.svg'),
                               ),
                               const SizedBox(width: 16),
-                              CustomButton(
-                                isBlack: true,
-                                onTap: () => Get.toNamed(LobbyUi.namePath),
-                                widget: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/icons/users_group.svg',
-                                      width: 16,
-                                      height: 16,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'Lobby',
-                                      style: whiteTextStyle.copyWith(
-                                          fontWeight: medium),
-                                    )
-                                  ],
+                              Expanded(
+                                child: CustomButton(
+                                  isBlack: true,
+                                  onTap: () => Get.toNamed(LobbyUi.namePath),
+                                  widget: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/icons/users_group.svg',
+                                        width: 16,
+                                        height: 16,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        'Lobby',
+                                        style: whiteTextStyle.copyWith(
+                                            fontWeight: medium),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               )
                             ],
@@ -301,32 +304,28 @@ class AdminSessionBottomSheet {
                             TextPillWidget(title: 'Complete'),
                           ],
                         ),
-                        child: Row(
-                          children: [
-                            CustomButton(
-                              isBlack: true,
-                              onTap: () {},
-                              paddingVertical: 8,
-                              widget: Column(
-                                children: [
-                                  Text(
-                                    'Sesssion starting in',
-                                    style:
-                                        midGreyTextStyle.copyWith(fontSize: 12),
-                                  ),
-                                  Text(
-                                    Helper.timeBetweenNowAndSession(
-                                      session.getStartDateTime(),
-                                    ),
-                                    style: whiteTextStyle.copyWith(
-                                      fontSize: 16,
-                                      fontWeight: semiBold,
-                                    ),
-                                  ),
-                                ],
+                        child: CustomButton(
+                          isBlack: true,
+                          onTap: () {},
+                          width: double.infinity,
+                          paddingVertical: 8,
+                          widget: Column(
+                            children: [
+                              Text(
+                                'Sesssion starting in',
+                                style: midGreyTextStyle.copyWith(fontSize: 12),
                               ),
-                            ),
-                          ],
+                              Text(
+                                Helper.timeBetweenNowAndSession(
+                                  session.getStartDateTime(),
+                                ),
+                                style: whiteTextStyle.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: semiBold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

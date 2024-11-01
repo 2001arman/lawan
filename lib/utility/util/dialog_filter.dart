@@ -239,17 +239,21 @@ class DialogFilter {
                       widget: SvgPicture.asset('assets/icons/refresh.svg'),
                     ),
                     SizedBox(width: defaultMargin),
-                    CustomButton(
-                      isBlack: false,
-                      onTap: Get.back,
-                      title: 'Cancel',
-                      borderColor: kGreyColor,
+                    Expanded(
+                      child: CustomButton(
+                        isBlack: false,
+                        onTap: Get.back,
+                        title: 'Cancel',
+                        borderColor: kGreyColor,
+                      ),
                     ),
                     SizedBox(width: defaultMargin),
-                    CustomButton(
-                      isBlack: true,
-                      onTap: Get.back,
-                      title: 'Apply',
+                    Expanded(
+                      child: CustomButton(
+                        isBlack: true,
+                        onTap: Get.back,
+                        title: 'Apply',
+                      ),
                     ),
                   ],
                 ),

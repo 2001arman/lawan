@@ -5,11 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/auth/auth_logic.dart';
+import 'package:lawan/features/presentation/auth/information/auth_information_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
+import 'package:lawan/utility/shared/widgets/navigations/custom_appbar.dart';
 
-import '../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../utility/shared/widgets/custom_text_form_fields.dart';
 import '../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import '../../../utility/util/helper.dart';
@@ -116,7 +117,7 @@ class AuthUi extends StatelessWidget {
               ),
               SizedBox(height: defaultMargin),
               GradientButton(
-                onTap: () {},
+                onTap: () => Get.toNamed(AuthInformationUi.namePath),
                 boxShadow: greenBoxShadow,
                 widget: Text(
                   'Create Account',
@@ -197,58 +198,42 @@ class AuthUi extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      CircleButtonTransparentWidget(
-                        onTap: Get.back,
-                        widget: SvgPicture.asset(
-                          'assets/icons/back.svg',
-                          color: kWhiteColor,
-                        ),
-                        margin: EdgeInsets.only(right: defaultMargin),
-                        borderColor: kWhiteColor,
-                      ),
-                      Text(
-                        'Sign Up',
-                        style: whiteTextStyle.copyWith(
-                            fontSize: 16, fontWeight: medium),
-                      ),
-                    ],
+                  CustomAppbar(
+                    title: 'Sign Up',
+                    iconColor: kWhiteColor,
+                    borderColor: kGreyColor,
+                    textColor: kWhiteColor,
                   ),
                   Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      // color: kRedColor,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/icons/logo_and_title.png',
-                            width: 236,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/icons/logo_and_title.png',
+                          width: 236,
+                        ),
+                        const SizedBox(height: 48),
+                        Text(
+                          'Pahlawan.\nEnpowered.',
+                          style: whiteTextStyle.copyWith(
+                            fontSize: 28,
+                            fontWeight: reguler,
+                            shadows: [
+                              Shadow(
+                                offset: const Offset(0, 4),
+                                blurRadius: 8,
+                                color: kWhiteColor.withOpacity(0.3),
+                              ),
+                              Shadow(
+                                offset: const Offset(0, 15),
+                                blurRadius: 15,
+                                color: kWhiteColor.withOpacity(0.2),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 48),
-                          Text(
-                            'Pahlawan.\nEnpowered.',
-                            style: whiteTextStyle.copyWith(
-                              fontSize: 28,
-                              fontWeight: reguler,
-                              shadows: [
-                                Shadow(
-                                  offset: const Offset(0, 4),
-                                  blurRadius: 8,
-                                  color: kWhiteColor.withOpacity(0.3),
-                                ),
-                                Shadow(
-                                  offset: const Offset(0, 15),
-                                  blurRadius: 15,
-                                  color: kWhiteColor.withOpacity(0.2),
-                                ),
-                              ],
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
                 ],

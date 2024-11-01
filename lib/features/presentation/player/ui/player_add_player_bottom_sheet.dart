@@ -242,38 +242,37 @@ class PlayerAddPlayerBottomSheet {
                 // friends
                 SizedBox(height: defaultMargin),
                 Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-                    child: SingleChildScrollView(
-                      child: Obx(
-                        () => Visibility(
-                          visible:
-                              state.listFriends.isNotEmpty && showPlayer.value,
-                          replacement: SizedBox(
-                            width: double.infinity,
-                            height: 200,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/icons/users_group.svg',
-                                  color: kWhiteColor,
-                                  width: 60,
-                                  height: 60,
-                                ),
-                                Text(
-                                  'Search Players',
-                                  style: blackTextStyle.copyWith(
-                                      fontSize: 16, fontWeight: medium),
-                                ),
-                                Text(
-                                  'Search for player to team up and play together',
-                                  style: blackTextStyle.copyWith(fontSize: 12),
-                                ),
-                              ],
+                  child: Obx(
+                    () => Visibility(
+                      visible: state.listFriends.isNotEmpty && showPlayer.value,
+                      replacement: SizedBox(
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/icons/users_group.svg',
+                              color: kWhiteColor,
+                              width: 60,
+                              height: 60,
                             ),
-                          ),
+                            Text(
+                              'Search Players',
+                              style: blackTextStyle.copyWith(
+                                  fontSize: 16, fontWeight: medium),
+                            ),
+                            Text(
+                              'Search for player to team up and play together',
+                              style: darkGreyTextStyle.copyWith(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ),
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: defaultMargin),
+                        child: SingleChildScrollView(
                           child: Column(
                             children: state.listFriends
                                 .map((data) => friendWidget(data: data))
@@ -373,29 +372,31 @@ class PlayerAddPlayerBottomSheet {
                         ),
                       ),
                       SizedBox(width: defaultMargin),
-                      CustomButton(
-                        isBlack: true,
-                        onTap: () {
-                          Helper.showToast(
-                              isSuccess: true,
-                              message: 'Users added to cart successfully');
-                          Get.back();
-                          logic.showCreateDialog();
-                        },
-                        widget: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Add',
-                              style:
-                                  whiteTextStyle.copyWith(fontWeight: medium),
-                            ),
-                            Icon(
-                              Icons.arrow_forward,
-                              color: kWhiteColor,
-                              size: 20,
-                            ),
-                          ],
+                      Expanded(
+                        child: CustomButton(
+                          isBlack: true,
+                          onTap: () {
+                            Helper.showToast(
+                                isSuccess: true,
+                                message: 'Users added to cart successfully');
+                            Get.back();
+                            logic.showCreateDialog();
+                          },
+                          widget: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Add',
+                                style:
+                                    whiteTextStyle.copyWith(fontWeight: medium),
+                              ),
+                              Icon(
+                                Icons.arrow_forward,
+                                color: kWhiteColor,
+                                size: 20,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(width: defaultMargin),

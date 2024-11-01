@@ -165,14 +165,11 @@ class CustomDialogSuccess {
                   controller: dataController,
                 ),
                 const SizedBox(height: 24),
-                Row(
-                  children: [
-                    CustomButton(
-                      title: 'Cancel',
-                      isBlack: false,
-                      onTap: Get.back,
-                    ),
-                  ],
+                CustomButton(
+                  width: double.infinity,
+                  title: 'Cancel',
+                  isBlack: false,
+                  onTap: Get.back,
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -190,16 +187,18 @@ class CustomDialogSuccess {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    CustomButton(
-                      title: 'Update',
-                      isBlack: true,
-                      onTap: () {
-                        Get.back();
-                        confirmDialog(
-                          actionType: ActionType.edit,
-                          onAction: () => onAction(dataController.text),
-                        );
-                      },
+                    Expanded(
+                      child: CustomButton(
+                        title: 'Update',
+                        isBlack: true,
+                        onTap: () {
+                          Get.back();
+                          confirmDialog(
+                            actionType: ActionType.edit,
+                            onAction: () => onAction(dataController.text),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -269,34 +268,29 @@ class CustomDialogSuccess {
                   textAlign: TextAlign.center,
                 ),
                 const Spacer(),
-                Row(
-                  children: [
-                    CustomButton(
-                      title: 'Cancel',
-                      isBlack: false,
-                      onTap: Get.back,
-                    ),
-                  ],
+                CustomButton(
+                  width: double.infinity,
+                  title: 'Cancel',
+                  isBlack: false,
+                  onTap: Get.back,
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Visibility(
-                      visible: actionType == ActionType.delete,
-                      replacement: CustomButton(
-                        title: 'Confirm',
-                        isBlack: true,
-                        onTap: onAction,
-                      ),
-                      child: CustomButton(
-                        title: 'Delete',
-                        isBlack: false,
-                        borderColor: kRedColor,
-                        textColor: kRedColor,
-                        onTap: onAction,
-                      ),
-                    ),
-                  ],
+                Visibility(
+                  visible: actionType == ActionType.delete,
+                  replacement: CustomButton(
+                    width: double.infinity,
+                    title: 'Confirm',
+                    isBlack: true,
+                    onTap: onAction,
+                  ),
+                  child: CustomButton(
+                    width: double.infinity,
+                    title: 'Delete',
+                    isBlack: false,
+                    borderColor: kRedColor,
+                    textColor: kRedColor,
+                    onTap: onAction,
+                  ),
                 ),
                 const SizedBox(height: 8),
               ],
@@ -477,19 +471,23 @@ class CustomDialogSuccess {
                   padding: EdgeInsets.symmetric(horizontal: defaultMargin),
                   child: Row(
                     children: [
-                      CustomButton(
-                        title: 'Cancel',
-                        isBlack: false,
-                        onTap: () => Get.back(),
+                      Expanded(
+                        child: CustomButton(
+                          title: 'Cancel',
+                          isBlack: false,
+                          onTap: () => Get.back(),
+                        ),
                       ),
                       const SizedBox(width: 16),
-                      CustomButton(
-                        title: 'Next',
-                        isBlack: true,
-                        onTap: () {
-                          Get.back();
-                          onSubmit();
-                        },
+                      Expanded(
+                        child: CustomButton(
+                          title: 'Next',
+                          isBlack: true,
+                          onTap: () {
+                            Get.back();
+                            onSubmit();
+                          },
+                        ),
                       ),
                     ],
                   ),

@@ -166,17 +166,21 @@ class CustomDialog {
               ),
               Row(
                 children: [
-                  CustomButton(
-                    isBlack: false,
-                    onTap: Get.back,
-                    title: 'Cancel',
-                    borderColor: kGreyColor,
+                  Expanded(
+                    child: CustomButton(
+                      isBlack: false,
+                      onTap: Get.back,
+                      title: 'Cancel',
+                      borderColor: kGreyColor,
+                    ),
                   ),
                   SizedBox(width: defaultMargin),
-                  CustomButton(
-                    isBlack: true,
-                    onTap: () => onSelected(startWheel.selected),
-                    title: 'Okay',
+                  Expanded(
+                    child: CustomButton(
+                      isBlack: true,
+                      onTap: () => onSelected(startWheel.selected),
+                      title: 'Okay',
+                    ),
                   ),
                 ],
               )
@@ -263,20 +267,24 @@ class CustomDialog {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomButton(
-                    isBlack: false,
-                    onTap: Get.back,
-                    title: 'Cancel',
-                    borderColor: kGreyColor,
+                  Expanded(
+                    child: CustomButton(
+                      isBlack: false,
+                      onTap: Get.back,
+                      title: 'Cancel',
+                      borderColor: kGreyColor,
+                    ),
                   ),
                   const SizedBox(width: 16),
-                  CustomButton(
-                    isBlack: true,
-                    onTap: () {
-                      onSelected(startWheel.selected);
-                      Get.back();
-                    },
-                    title: 'Okay',
+                  Expanded(
+                    child: CustomButton(
+                      isBlack: true,
+                      onTap: () {
+                        onSelected(startWheel.selected);
+                        Get.back();
+                      },
+                      title: 'Okay',
+                    ),
                   ),
                 ],
               )

@@ -165,19 +165,23 @@ class AdminAddSession {
                     padding: EdgeInsets.all(defaultMargin),
                     child: Row(
                       children: [
-                        CustomButton(
-                          title: 'Cancel',
-                          isBlack: false,
-                          onTap: () => Get.back(),
+                        Expanded(
+                          child: CustomButton(
+                            title: 'Cancel',
+                            isBlack: false,
+                            onTap: () => Get.back(),
+                          ),
                         ),
                         const SizedBox(width: 16),
-                        CustomButton(
-                          title: 'Next',
-                          isBlack: true,
-                          onTap: () => logic.handleNextButton(
-                            sessionData: sessionData,
-                            dateIndex: dateIndex,
-                            sessionIndex: sessionIndex,
+                        Expanded(
+                          child: CustomButton(
+                            title: 'Next',
+                            isBlack: true,
+                            onTap: () => logic.handleNextButton(
+                              sessionData: sessionData,
+                              dateIndex: dateIndex,
+                              sessionIndex: sessionIndex,
+                            ),
                           ),
                         ),
                       ],

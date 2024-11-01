@@ -15,7 +15,7 @@ import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/widgets/bottom_navbar_item.dart';
 import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../utility/shared/widgets/buttons/circle_button_widget.dart';
-import '../../../../utility/shared/widgets/navigations/custom_appbar.dart';
+import '../../../../utility/shared/widgets/navigations/custom_appbar_profile.dart';
 import '../../../../utility/shared/widgets/navigations/custom_bottom_navbar.dart';
 import '../../../../utility/shared/widgets/buttons/filter_button.dart';
 import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
@@ -345,7 +345,7 @@ class PlayerMainUi extends StatelessWidget {
               children: [
                 SizedBox(height: MediaQuery.paddingOf(context).top),
                 // appbar
-                CustomAppbar(
+                CustomAppbarProfile(
                   onTap: () => Get.offAndToNamed(AdminMainUi.namePath),
                 ),
                 const SizedBox(height: 8),

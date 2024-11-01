@@ -37,32 +37,29 @@ class FieldSessionWidget extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: greenBoxShadow,
         ),
-        child: Row(
-          children: [
-            CustomButton(
-              isBlack: true,
-              onTap: () {},
-              paddingVertical: 0,
-              widget: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Sesssion starting in',
-                    style: midGreyTextStyle.copyWith(fontSize: 12),
-                  ),
-                  Text(
-                    Helper.timeBetweenNowAndSession(
-                      sessionModel.getStartDateTime(),
-                    ),
-                    style: whiteTextStyle.copyWith(
-                      fontSize: 16,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                ],
+        child: CustomButton(
+          width: double.infinity,
+          isBlack: true,
+          onTap: () {},
+          paddingVertical: 0,
+          widget: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Sesssion starting in',
+                style: midGreyTextStyle.copyWith(fontSize: 12),
               ),
-            ),
-          ],
+              Text(
+                Helper.timeBetweenNowAndSession(
+                  sessionModel.getStartDateTime(),
+                ),
+                style: whiteTextStyle.copyWith(
+                  fontSize: 16,
+                  fontWeight: semiBold,
+                ),
+              ),
+            ],
+          ),
         ),
       );
     }
