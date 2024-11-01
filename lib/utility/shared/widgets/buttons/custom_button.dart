@@ -26,31 +26,28 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: EdgeInsets.symmetric(
-              vertical: paddingVertical, horizontal: paddingHorizontal),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            border: Border.all(
-              width: 1,
-              color: isBlack ? Colors.transparent : borderColor ?? kWhiteColor,
-            ),
-            color:
-                isBlack ? kBlackColor : backgroundColor ?? Colors.transparent,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+            vertical: paddingVertical, horizontal: paddingHorizontal),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(
+            width: 1,
+            color: isBlack ? Colors.transparent : borderColor ?? kWhiteColor,
           ),
-          child: Center(
-            child: widget ??
-                Text(
-                  title,
-                  style: blackTextStyle.copyWith(
-                    fontWeight: medium,
-                    color: textColor ?? (isBlack ? kWhiteColor : kBlackColor),
-                  ),
+          color: isBlack ? kBlackColor : backgroundColor ?? Colors.transparent,
+        ),
+        child: Center(
+          child: widget ??
+              Text(
+                title,
+                style: blackTextStyle.copyWith(
+                  fontWeight: medium,
+                  color: textColor ?? (isBlack ? kWhiteColor : kBlackColor),
                 ),
-          ),
+              ),
         ),
       ),
     );

@@ -1,6 +1,8 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:lawan/features/presentation/admin/controller/admin_main_binding.dart';
 import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
+import 'package:lawan/features/presentation/auth/auth_binding.dart';
+import 'package:lawan/features/presentation/auth/auth_ui.dart';
 import 'package:lawan/features/presentation/lobby/controller/lobby_binding.dart';
 import 'package:lawan/features/presentation/lobby/pages/lobby_ui.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/controller/checkout_binding.dart';
@@ -12,7 +14,7 @@ import 'package:lawan/features/presentation/player/payment/payment/pages/payment
 import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
 
 class AppRoute {
-  static const initialRoute = AdminMainUi.namePath;
+  static const initialRoute = AuthUi.namePath;
   static final routes = [
     GetPage(
       name: AdminMainUi.namePath,
@@ -43,6 +45,11 @@ class AppRoute {
       name: LobbyUi.namePath,
       page: () => LobbyUi(),
       binding: LobbyBinding(),
+    ),
+    GetPage(
+      name: AuthUi.namePath,
+      page: () => AuthUi(),
+      binding: AuthBinding(),
     ),
   ];
 }
