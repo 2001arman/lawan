@@ -13,6 +13,7 @@ import 'package:lawan/utility/shared/widgets/navigations/custom_appbar.dart';
 
 import '../../../utility/shared/widgets/custom_text_form_fields.dart';
 import '../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
+import '../../../utility/shared/widgets/video/video_widget.dart';
 import '../../../utility/util/helper.dart';
 
 class AuthUi extends StatelessWidget {
@@ -158,6 +159,16 @@ class AuthUi extends StatelessWidget {
         color: kBlackColor,
         child: Stack(
           children: [
+            SizedBox(
+              width: Get.width,
+              height: Get.height - 311,
+              child: const VideoWidget(url: 'assets/video/login.mp4'),
+            ),
+            Container(
+              width: double.infinity,
+              height: Get.height,
+              color: kBlackColor.withOpacity(0.6),
+            ),
             Container(
               width: double.infinity,
               height: 108,
