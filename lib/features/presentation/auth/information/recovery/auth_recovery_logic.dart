@@ -7,7 +7,7 @@ class AuthRecoveryLogic extends GetxController {
 
   void nextIndex() {
     if (state.stepIndex.value == 6) {
-      Get.toNamed(AdminMainUi.namePath);
+      Get.offAllNamed(AdminMainUi.namePath);
       return;
     }
     state.stepIndex++;

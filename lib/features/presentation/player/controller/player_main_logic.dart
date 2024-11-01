@@ -31,13 +31,17 @@ class PlayerMainLogic extends GetxController {
   @override
   void dispose() {
     super.dispose();
-    videoPlayerController.dispose();
+    disposeVideo();
   }
 
   @override
   void onClose() {
-    videoPlayerController.dispose();
+    disposeVideo();
     super.onClose();
+  }
+
+  void disposeVideo() {
+    videoPlayerController.dispose();
   }
 
   void alignmentTabbar(String title) {
@@ -57,7 +61,7 @@ class PlayerMainLogic extends GetxController {
     state.selectedCourtIndex.value = courtInted;
   }
 
-  void handleNextButton() {
+  void handleNextButton() async {
     if (state.selectedIndex.value == 3 || state.selectedIndex.value == 2) {
       if (state.selectedArenaIndex.value == -1) {
         return Helper.showToast(
@@ -83,10 +87,12 @@ class PlayerMainLogic extends GetxController {
         price: 20,
       );
 
-      Get.toNamed(
+      videoPlayerController.pause();
+      await Get.toNamed(
         CheckoutUi.namePath,
         arguments: [sessionModel, this],
       );
+      videoPlayerController.play();
       return;
     }
 

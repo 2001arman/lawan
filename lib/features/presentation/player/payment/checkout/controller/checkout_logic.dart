@@ -23,6 +23,7 @@ class CheckoutLogic extends GetxController {
     playerMainLogic.resetState();
 
     Get.close(2);
+    playerMainLogic.disposeVideo();
     await Future.delayed(const Duration(seconds: 1));
     AdminSessionBottomSheet().successCreateSesssionSheet(
       arenaModel: sessionModel.arena,
