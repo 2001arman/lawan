@@ -9,7 +9,7 @@ import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
-import 'package:lawan/utility/util/glass_effect_dialog_container.dart';
+import 'package:lawan/utility/util/dialogs/glass_effect_dialog_container.dart';
 
 class CustomDialogMaps {
   static void chooseDialogLocation({required Function(String) onSelected}) {

@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/pages/arena/admin_empty_arena.dart';
 import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_logic.dart';
-import 'package:lawan/utility/util/custom_dialog_maps.dart';
+import 'package:lawan/utility/util/dialogs/custom_dialog_maps.dart';
 
 import '../../../../../utility/shared/constants/arena_type.dart';
 import '../../../../../utility/shared/constants/constants_ui.dart';
@@ -17,7 +17,7 @@ import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
 import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import '../../../../../utility/shared/widgets/selected_container_widget.dart';
 import '../../../../../utility/shared/widgets/wheel_picker/choose_time_widget.dart';
-import '../../../../../utility/util/dialog_wheel_picker.dart';
+import '../../../../../utility/util/dialogs/dialog_wheel_picker.dart';
 
 class AdminArenaUi extends StatelessWidget {
   final logic = Get.find<AdminArenaLogic>();

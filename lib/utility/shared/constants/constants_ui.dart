@@ -85,6 +85,16 @@ LinearGradient whiteGradient = LinearGradient(
   ],
 );
 
+LinearGradient goldGradient = const LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    Color(0xFFF7C86C),
+    Color(0xFFE6A72C),
+    Color(0xFFD88A00),
+  ],
+);
+
 LinearGradient shadowGradient = LinearGradient(
   begin: Alignment.bottomCenter,
   end: Alignment.topCenter,

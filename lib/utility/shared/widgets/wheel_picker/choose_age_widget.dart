@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../util/dialog_wheel_picker.dart';
+import '../../../util/dialogs/dialog_wheel_picker.dart';
 import '../../constants/constants_ui.dart';
 
 class ChooseAgeWidget extends StatelessWidget {

@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/lobby/pages/chat/controller/chat_controller.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
-import 'package:lawan/utility/util/custom_dialog_success.dart';
+import 'package:lawan/utility/util/dialogs/custom_dialog_success.dart';
 
 import '../../../../../utility/shared/constants/action_type.dart';
 import '../../../../../utility/shared/widgets/buttons/circle_button_widget.dart';

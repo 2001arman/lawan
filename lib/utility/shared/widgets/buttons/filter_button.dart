@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lawan/utility/util/dialog_filter.dart';
+import 'package:lawan/utility/util/dialogs/dialog_filter.dart';
 
 import '../../constants/constants_ui.dart';
 

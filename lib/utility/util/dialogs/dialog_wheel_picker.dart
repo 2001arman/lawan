@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wheel_picker/wheel_picker.dart';
 
-import '../shared/constants/constants_ui.dart';
-import '../shared/widgets/buttons/custom_button.dart';
-import 'helper.dart';
+import '../../shared/constants/constants_ui.dart';
+import '../../shared/widgets/buttons/custom_button.dart';
+import '../helper.dart';
 
 class DialogWheelPicker {
   static Future<void> showChooseTimeDialog({
@@ -333,17 +333,22 @@ class DialogWheelPicker {
               ),
               Row(
                 children: [
-                  CustomButton(
-                    title: 'Cancel',
-                    isBlack: false,
-                    onTap: Get.back,
-                    borderColor: kGreyColor,
+                  Expanded(
+                    child: CustomButton(
+                      title: 'Cancel',
+                      isBlack: false,
+                      onTap: Get.back,
+                      borderColor: kGreyColor,
+                    ),
                   ),
                   SizedBox(width: defaultMargin),
-                  CustomButton(
-                    title: 'Save',
-                    isBlack: true,
-                    onTap: () => onSave(startWheel.selected, endWheel.selected),
+                  Expanded(
+                    child: CustomButton(
+                      title: 'Save',
+                      isBlack: true,
+                      onTap: () =>
+                          onSave(startWheel.selected, endWheel.selected),
+                    ),
                   ),
                 ],
               )

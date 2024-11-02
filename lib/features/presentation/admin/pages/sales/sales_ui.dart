@@ -7,7 +7,7 @@ import 'package:lawan/features/presentation/admin/pages/sales/sales_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/sales_item_card.dart';
-import 'package:lawan/utility/util/custom_dialog.dart';
+import 'package:lawan/utility/util/dialogs/custom_dialog.dart';
 
 import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import '../../../../../utility/shared/widgets/text/text_border.dart';

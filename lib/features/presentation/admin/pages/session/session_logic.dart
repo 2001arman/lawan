@@ -6,7 +6,7 @@ import 'package:lawan/features/presentation/admin/pages/session/admin_session_bo
 import 'package:lawan/features/presentation/admin/pages/session/session_state.dart';
 import 'package:lawan/features/domain/arena/arena_model.dart';
 import 'package:lawan/features/domain/session/session_model.dart';
-import 'package:lawan/utility/util/custom_dialog_success.dart';
+import 'package:lawan/utility/util/dialogs/custom_dialog_success.dart';
 
 import '../../../../../utility/shared/constants/action_type.dart';
 import '../../../../../utility/util/helper.dart';

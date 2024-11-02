@@ -4,7 +4,7 @@ import 'package:lawan/features/presentation/lobby/controller/lobby_state.dart';
 import 'package:lawan/features/presentation/lobby/pages/lineup/controller/lineup_state.dart';
 
 import '../../../../../../utility/shared/constants/action_type.dart';
-import '../../../../../../utility/util/custom_dialog_success.dart';
+import '../../../../../../utility/util/dialogs/custom_dialog_success.dart';
 import '../../../../../../utility/util/helper.dart';
 import '../../../../../domain/session/avatar_model.dart';
 

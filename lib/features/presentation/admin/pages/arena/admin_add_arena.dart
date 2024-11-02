@@ -13,9 +13,9 @@ import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_image_widget.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/selected_container_widget.dart';
-import 'package:lawan/utility/util/custom_dialog_maps.dart';
-import 'package:lawan/utility/util/dialog_wheel_picker.dart';
-import 'package:lawan/utility/util/glass_effect_dialog_container.dart';
+import 'package:lawan/utility/util/dialogs/custom_dialog_maps.dart';
+import 'package:lawan/utility/util/dialogs/dialog_wheel_picker.dart';
+import 'package:lawan/utility/util/dialogs/glass_effect_dialog_container.dart';
 
 import '../../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../../utility/util/helper.dart';

@@ -13,6 +13,7 @@ import 'package:lawan/utility/shared/widgets/bottom_navbar_item.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/navigations/custom_appbar_profile.dart';
 import 'package:lawan/utility/shared/widgets/navigations/custom_bottom_navbar.dart';
+import 'package:lawan/utility/util/dialogs/custom_dialog_profile.dart';
 
 import 'controller/admin_main_logic.dart';
 
@@ -127,8 +128,9 @@ class AdminMainUi extends StatelessWidget {
             Column(
               children: [
                 SizedBox(height: MediaQuery.paddingOf(context).top),
-                CustomAppbarProfile(
-                  onTap: () => Get.offAndToNamed(PlayerMainUi.namePath),
+                const CustomAppbarProfile(
+                  // onTap: () => Get.offAndToNamed(PlayerMainUi.namePath),
+                  onTap: CustomDialogProfile.showDialogProfile,
                 ),
                 Expanded(
                   child: Obx(() {

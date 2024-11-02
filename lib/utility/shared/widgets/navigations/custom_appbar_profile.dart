@@ -6,8 +6,11 @@ import '../../constants/constants_ui.dart';
 class CustomAppbarProfile extends StatelessWidget {
   final bool backEnable;
   final VoidCallback onTap;
-  const CustomAppbarProfile(
-      {super.key, this.backEnable = false, required this.onTap});
+  const CustomAppbarProfile({
+    super.key,
+    this.backEnable = false,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

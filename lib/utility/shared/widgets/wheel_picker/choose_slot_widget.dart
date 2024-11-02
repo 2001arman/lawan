@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/utility/util/dialog_wheel_picker.dart';
+import 'package:lawan/utility/util/dialogs/dialog_wheel_picker.dart';
 
 import '../../constants/constants_ui.dart';
 

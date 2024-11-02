@@ -243,44 +243,48 @@ class PlayerAddPlayerBottomSheet {
                 SizedBox(height: defaultMargin),
                 Expanded(
                   child: Obx(
-                    () => Visibility(
-                      visible: state.listFriends.isNotEmpty && showPlayer.value,
-                      replacement: SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/users_group.svg',
-                              color: kWhiteColor,
-                              width: 60,
-                              height: 60,
+                    () => state.listFriends.isNotEmpty && showPlayer.value
+                        ? Padding(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: defaultMargin),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: state.listFriends
+                                    .map((data) => friendWidget(data: data))
+                                    .toList(),
+                              ),
                             ),
-                            Text(
-                              'Search Players',
-                              style: blackTextStyle.copyWith(
-                                  fontSize: 16, fontWeight: medium),
+                          )
+                        : SizedBox(
+                            width: Get.width,
+                            height: Get.height,
+                            child: Center(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/users_group.svg',
+                                      color: kWhiteColor,
+                                      width: 60,
+                                      height: 60,
+                                    ),
+                                    Text(
+                                      'Search Players',
+                                      style: blackTextStyle.copyWith(
+                                          fontSize: 16, fontWeight: medium),
+                                    ),
+                                    Text(
+                                      'Search for player to team up and play together',
+                                      style: darkGreyTextStyle.copyWith(
+                                          fontSize: 12),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            Text(
-                              'Search for player to team up and play together',
-                              style: darkGreyTextStyle.copyWith(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ),
-                      child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: defaultMargin),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: state.listFriends
-                                .map((data) => friendWidget(data: data))
-                                .toList(),
                           ),
-                        ),
-                      ),
-                    ),
                   ),
                 ),
 

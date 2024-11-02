@@ -7,8 +7,8 @@ import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/share_section.dart';
 import 'package:wheel_picker/wheel_picker.dart';
 
-import '../../features/domain/arena/arena_model.dart';
-import '../shared/widgets/buttons/circle_button_transparent_widget.dart';
+import '../../../features/domain/arena/arena_model.dart';
+import '../../shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'glass_effect_dialog_container.dart';
 
 class CustomDialog {

@@ -11,6 +11,7 @@ class CustomButton extends StatelessWidget {
   final Widget? widget;
   final double paddingVertical, paddingHorizontal;
   final double? width;
+  final double radius;
 
   const CustomButton({
     super.key,
@@ -24,6 +25,7 @@ class CustomButton extends StatelessWidget {
     this.backgroundColor,
     this.paddingHorizontal = 0,
     this.width,
+    this.radius = 100,
   });
 
   @override
@@ -35,9 +37,11 @@ class CustomButton extends StatelessWidget {
         child: Container(
           width: width,
           padding: EdgeInsets.symmetric(
-              vertical: paddingVertical, horizontal: paddingHorizontal),
+            vertical: paddingVertical,
+            horizontal: paddingHorizontal,
+          ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
+            borderRadius: BorderRadius.circular(radius),
             border: Border.all(
               width: 1,
               color: isBlack ? Colors.transparent : borderColor ?? kWhiteColor,

@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/calendar/calendar_picker_widget.dart';
-import 'package:lawan/utility/util/custom_dialog.dart';
+import 'package:lawan/utility/util/dialogs/custom_dialog.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarMonthWidget extends StatelessWidget {

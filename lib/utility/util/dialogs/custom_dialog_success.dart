@@ -9,13 +9,13 @@ import 'package:lawan/utility/shared/widgets/calendar/calendar_picker_widget.dar
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../shared/constants/action_type.dart';
-import '../shared/constants/arena_type.dart';
-import '../shared/constants/constants_ui.dart';
-import '../shared/widgets/buttons/custom_button.dart';
-import '../shared/widgets/calendar/calendar_month_widget.dart';
-import '../shared/widgets/selected_container_widget.dart';
-import '../shared/widgets/wheel_picker/choose_time_widget.dart';
+import '../../shared/constants/action_type.dart';
+import '../../shared/constants/arena_type.dart';
+import '../../shared/constants/constants_ui.dart';
+import '../../shared/widgets/buttons/custom_button.dart';
+import '../../shared/widgets/calendar/calendar_month_widget.dart';
+import '../../shared/widgets/selected_container_widget.dart';
+import '../../shared/widgets/wheel_picker/choose_time_widget.dart';
 
 class CustomDialogSuccess {
   static void successCreateArena({
@@ -75,20 +75,18 @@ class CustomDialogSuccess {
                   style: darkGreyTextStyle.copyWith(fontSize: 12),
                 ),
                 const SizedBox(height: 24),
-                Row(
-                  children: [
-                    CustomButton(
-                      title: 'Add Another Court',
-                      isBlack: false,
-                      onTap: ontapAddCourt,
-                    ),
-                  ],
+                CustomButton(
+                  title: 'Add Another Court',
+                  isBlack: false,
+                  onTap: ontapAddCourt,
+                  width: double.infinity,
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  children: [
-                    CustomButton(title: 'Done', isBlack: true, onTap: Get.back),
-                  ],
+                CustomButton(
+                  title: 'Done',
+                  isBlack: true,
+                  onTap: Get.back,
+                  width: double.infinity,
                 ),
               ],
             ),

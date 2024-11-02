@@ -5,11 +5,11 @@ import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_w
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/range_slider_widget.dart';
-import 'package:lawan/utility/util/custom_dialog.dart';
+import 'package:lawan/utility/util/dialogs/custom_dialog.dart';
 import 'package:lawan/utility/util/helper.dart';
 
-import '../shared/constants/constants_ui.dart';
-import '../shared/widgets/selected_container_widget.dart';
+import '../../shared/constants/constants_ui.dart';
+import '../../shared/widgets/selected_container_widget.dart';
 
 class DialogFilter {
   static Widget selectableItem({
