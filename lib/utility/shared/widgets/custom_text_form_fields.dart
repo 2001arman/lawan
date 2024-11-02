@@ -61,6 +61,56 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   bool showIcon = false;
 
   @override
+  void initState() {
+    super.initState();
+    obscure = widget.isPassword;
+  }
+
+  Widget? suffixIcon() {
+    if (widget.isPassword) {
+      return GestureDetector(
+        onTap: () {
+          if (obscure == false) {
+            obscure = true;
+          } else {
+            obscure = false;
+          }
+          setState(() {});
+        },
+        child: obscure
+            ? Icon(Icons.visibility_off_outlined, color: kDarkgreyColor)
+            : Icon(Icons.visibility_outlined, color: kDarkgreyColor),
+      );
+    } else {
+      return widget.showSuffix
+          ? widget.suffix
+          : widget.suffix != null || widget.showClear
+              ? GestureDetector(
+                  onTap: () {
+                    widget.controller.text = '';
+                    showIcon = false;
+                    setState(() {});
+                    if (widget.onClear != null) {
+                      widget.onClear!();
+                    }
+                  },
+                  child: Visibility(
+                    visible: showIcon,
+                    child: widget.showClear
+                        ? SvgPicture.asset(
+                            'assets/icons/x-circle.svg',
+                            color: kDarkgreyColor,
+                            width: 20,
+                            height: 20,
+                          )
+                        : widget.suffix as Widget,
+                  ),
+                )
+              : null;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: widget.margin),
@@ -78,7 +128,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           TextFormField(
             maxLength: widget.maxLength,
             controller: widget.controller,
-            obscureText: widget.isPassword,
+            obscureText: obscure,
             readOnly: widget.isReadOnly,
             onTap: widget.onTap,
             onChanged: (value) {
@@ -103,31 +153,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                       const Size(40, 20),
                     )
                   : null,
-              suffixIcon: widget.showSuffix
-                  ? widget.suffix
-                  : widget.suffix != null || widget.showClear
-                      ? GestureDetector(
-                          onTap: () {
-                            widget.controller.text = '';
-                            showIcon = false;
-                            setState(() {});
-                            if (widget.onClear != null) {
-                              widget.onClear!();
-                            }
-                          },
-                          child: Visibility(
-                            visible: showIcon,
-                            child: widget.showClear
-                                ? SvgPicture.asset(
-                                    'assets/icons/x-circle.svg',
-                                    color: kDarkgreyColor,
-                                    width: 20,
-                                    height: 20,
-                                  )
-                                : widget.suffix as Widget,
-                          ),
-                        )
-                      : null,
+              suffixIcon: suffixIcon(),
               hintText: widget.hintText,
               hintStyle: midGreyTextStyle.copyWith(
                 fontSize: 14,

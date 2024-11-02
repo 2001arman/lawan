@@ -28,6 +28,20 @@ class AuthLogic extends GetxController {
     videoPlayerController.dispose();
   }
 
+  void handleTapOptionLogin(int index) {
+    switch (index) {
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      default:
+        state.loginPhone.toggle();
+        break;
+    }
+  }
+
   void lobbyAlignmentTabbar(String title) {
     switch (title) {
       case 'Login':

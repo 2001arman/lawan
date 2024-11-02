@@ -76,6 +76,7 @@ class AuthUi extends StatelessWidget {
               textInputType: TextInputType.number,
               validator: (data) => Helper.numberValidator(data),
               margin: 0,
+              maxLength: 6,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
               ],
@@ -139,12 +140,53 @@ class AuthUi extends StatelessWidget {
       );
     }
 
+    Widget loginWithEmail() {
+      return Column(
+        children: [
+          CustomTextFormField(
+            hintText: 'Email address',
+            controller: TextEditingController(),
+            margin: defaultMargin,
+            prefix: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              child: SvgPicture.asset(
+                'assets/icons/mail.svg',
+                color: kMidgreyColor,
+              ),
+            ),
+          ),
+          CustomTextFormField(
+            hintText: 'Password',
+            controller: TextEditingController(),
+            isPassword: true,
+            margin: 3,
+            prefix: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              child: SvgPicture.asset(
+                'assets/icons/key.svg',
+                color: kMidgreyColor,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    Widget loginWithPhone() {
+      return Column(
+        children: [
+          phoneNumberSection(),
+          digitCodeSection(),
+        ],
+      );
+    }
+
     Widget loginSection() {
       return Column(
         children: [
           Center(
             child: SvgPicture.asset(
-              'assets/icons/face-id.svg',
+              'assets/icons/fingerprint.svg',
               width: 36,
               color: kBlackColor,
             ),
@@ -174,26 +216,30 @@ class AuthUi extends StatelessWidget {
                 .asMap()
                 .entries
                 .map(
-                  (data) => Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 27, vertical: 12),
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: kGreyColor),
-                      borderRadius: BorderRadius.circular(80),
-                    ),
-                    child: SvgPicture.asset(
-                      data.value,
-                      width: 24,
-                      height: 24,
-                      color: data.key == 0 ? kDarkgreyColor : null,
+                  (data) => GestureDetector(
+                    onTap: () => logic.handleTapOptionLogin(data.key),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 27, vertical: 12),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: kGreyColor),
+                        borderRadius: BorderRadius.circular(80),
+                      ),
+                      child: SvgPicture.asset(
+                        data.value,
+                        width: 24,
+                        height: 24,
+                        color: data.key == 0 ? kDarkgreyColor : null,
+                      ),
                     ),
                   ),
                 )
                 .toList(),
           ),
           SizedBox(height: defaultMargin),
-          phoneNumberSection(),
-          digitCodeSection(),
+          Obx(
+            () => state.loginPhone.value ? loginWithPhone() : loginWithEmail(),
+          ),
           SizedBox(height: defaultMargin),
           GradientButton(
             onTap: logic.goToSecondScreen,
@@ -314,21 +360,25 @@ class AuthUi extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    CustomAppbar(
-                      title: 'Sign Up',
-                      iconColor: kWhiteColor,
-                      borderColor: kGreyColor,
-                      textColor: kWhiteColor,
+                    Obx(
+                      () => CustomAppbar(
+                        title: state.lobbyTabActive.value == 'Login'
+                            ? 'Welcome Back'
+                            : 'Sign Up',
+                        iconColor: kWhiteColor,
+                        borderColor: kGreyColor,
+                        textColor: kWhiteColor,
+                      ),
                     ),
                     Expanded(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          const Spacer(),
                           Image.asset(
                             'assets/icons/logo_and_title.png',
                             width: 236,
                           ),
-                          const SizedBox(height: 48),
+                          const Spacer(),
                           Text(
                             'Pahlawan.\nEnpowered.',
                             style: whiteTextStyle.copyWith(
@@ -349,6 +399,7 @@ class AuthUi extends StatelessWidget {
                             ),
                             textAlign: TextAlign.center,
                           ),
+                          const Spacer(),
                         ],
                       ),
                     ),
@@ -363,6 +414,7 @@ class AuthUi extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: kBackgroundColor,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           backgroundSection(),

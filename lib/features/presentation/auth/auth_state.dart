@@ -17,4 +17,6 @@ class AuthState {
     'assets/icons/Facebook.svg',
     'assets/icons/Google.svg',
   ];
+
+  var loginPhone = true.obs;
 }
