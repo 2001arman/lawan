@@ -6,6 +6,7 @@ import 'package:lawan/features/presentation/admin/pages/session/admin_session_bo
 import 'package:lawan/features/presentation/admin/pages/session/session_state.dart';
 import 'package:lawan/features/domain/arena/arena_model.dart';
 import 'package:lawan/features/domain/session/session_model.dart';
+import 'package:lawan/utility/shared/constants/session_type.dart';
 import 'package:lawan/utility/util/dialogs/custom_dialog_success.dart';
 
 import '../../../../../utility/shared/constants/action_type.dart';
@@ -56,6 +57,7 @@ class SessionLogic extends GetxController {
       successCreate: false,
       arenaModel: sessionData.arena,
       selectedCourt: sessionData.selectedCourt,
+      sessionType: SessionType.friendly,
       onUpdate: () {
         Get.back();
         AdminAddSession(state: state, logic: this).createNewSession(
@@ -112,6 +114,7 @@ class SessionLogic extends GetxController {
             arenaModel: arenaDataSource.getArena(
               index: state.selectedArenaIndex.value,
             ),
+            sessionType: SessionType.friendly,
             onUpdate: () {
               Get.back();
               AdminAddSession(state: state, logic: this).createNewSession(

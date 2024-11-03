@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lawan/utility/shared/constants/session_type.dart';
 
 import '../../../../../domain/session/session_model.dart';
 import '../../../../admin/pages/session/admin_add_session.dart';
@@ -18,7 +19,8 @@ class CheckoutLogic extends GetxController {
   void onCreateSession() async {
     SessionModel sessionModel = Get.arguments[0];
     Function(SessionModel session) sessionLogic = Get.arguments[1];
-    
+    SessionType sessionType = Get.arguments[2];
+
     final friendSessionLogic = Get.find<PlayerAddSessionLogic>();
     friendSessionLogic.resetState();
 
@@ -26,6 +28,7 @@ class CheckoutLogic extends GetxController {
     Get.close(2);
     await Future.delayed(const Duration(seconds: 1));
     AdminSessionBottomSheet().successCreateSesssionSheet(
+      sessionType: sessionType,
       arenaModel: sessionModel.arena,
       selectedCourt: sessionModel.selectedCourt,
       session: sessionModel,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
 import 'package:lawan/features/presentation/player/friendly/friendly_main_state.dart';
+import 'package:lawan/utility/shared/constants/session_type.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../utility/util/helper.dart';
@@ -72,6 +73,7 @@ class FriendlyMainLogic extends GetxController {
   void showCreateDialog() => PlayerAddSession(
         onCreate: onCreate,
         selectedFriends: playerMainState.selectedFriends,
+        sessionType: SessionType.friendly,
       ).createNewSession();
 
   void inviteFriends(AvatarModel data) {
@@ -94,6 +96,7 @@ class FriendlyMainLogic extends GetxController {
 
   void showDetailSession(SessionModel data) {
     AdminSessionBottomSheet().successCreateSesssionSheet(
+      sessionType: SessionType.friendly,
       arenaModel: data.arena,
       selectedCourt: data.selectedCourt,
       session: data,

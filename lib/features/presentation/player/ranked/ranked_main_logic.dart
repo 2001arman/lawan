@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/ranked/ranked_main_state.dart';
+import 'package:lawan/utility/shared/constants/session_type.dart';
 import 'package:lawan/utility/util/helper_data.dart';
 import 'package:video_player/video_player.dart';
 
@@ -71,9 +72,10 @@ class RankedMainLogic extends GetxController {
   }
 
   void showCreateDialog() => PlayerAddSession(
-        onCreate: onCreate,
-        selectedFriends: playerMainState.selectedFriends,
-      ).createNewSession();
+          onCreate: onCreate,
+          selectedFriends: playerMainState.selectedFriends,
+          sessionType: SessionType.ranked)
+      .createNewSession();
 
   void inviteFriends(AvatarModel data) {
     data.isSelected.value = true;
@@ -95,6 +97,7 @@ class RankedMainLogic extends GetxController {
 
   void showDetailSession(SessionModel data) {
     AdminSessionBottomSheet().successCreateSesssionSheet(
+      sessionType: SessionType.ranked,
       arenaModel: data.arena,
       selectedCourt: data.selectedCourt,
       session: data,

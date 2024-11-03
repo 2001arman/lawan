@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:lawan/features/domain/session/session_model.dart';
 import 'package:lawan/features/presentation/player/create-session/player_add_session_state.dart';
 import 'package:lawan/features/presentation/player/create-session/player_add_bottom_sheet.dart';
+import 'package:lawan/utility/shared/constants/session_type.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/fields/choose_arena_section_modal.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
@@ -30,10 +31,12 @@ class PlayerAddSession {
   final PlayerAddSessionState state = Get.find<PlayerAddSessionLogic>().state;
   final Function(SessionModel) onCreate;
   final RxList<AvatarModel> selectedFriends;
+  final SessionType sessionType;
 
   PlayerAddSession({
     required this.onCreate,
     required this.selectedFriends,
+    required this.sessionType,
   });
 
   Widget contentSection() {
@@ -187,6 +190,7 @@ class PlayerAddSession {
                             isBlack: true,
                             onTap: () => logic.handleNextButton(
                               onCreate: onCreate,
+                              sessionType: sessionType,
                             ),
                           ),
                         ),

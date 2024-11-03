@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/create-session/player_add_session_state.dart';
+import 'package:lawan/utility/shared/constants/session_type.dart';
 
 import '../../../../utility/util/helper.dart';
 import '../../../domain/arena/arena_model.dart';
@@ -20,6 +21,7 @@ class PlayerAddSessionLogic {
 
   void handleNextButton({
     required Function(SessionModel session) onCreate,
+    required SessionType sessionType,
   }) async {
     if (state.selectedIndex.value == 3 || state.selectedIndex.value == 2) {
       if (state.selectedArenaIndex.value == -1) {
@@ -48,7 +50,7 @@ class PlayerAddSessionLogic {
 
       await Get.toNamed(
         CheckoutUi.namePath,
-        arguments: [sessionModel, onCreate],
+        arguments: [sessionModel, onCreate, sessionType],
       );
       return;
     }

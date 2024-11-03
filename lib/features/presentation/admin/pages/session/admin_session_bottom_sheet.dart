@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/lobby/pages/lobby_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
+import 'package:lawan/utility/shared/constants/session_type.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/card_detail_session.dart';
@@ -214,6 +215,7 @@ class AdminSessionBottomSheet {
     required SessionModel session,
     required VoidCallback onUpdate,
     required VoidCallback onDelete,
+    required SessionType sessionType,
     bool successCreate = true,
     bool showPill = false,
     String title = 'Session Succesfully Created',
@@ -249,7 +251,7 @@ class AdminSessionBottomSheet {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Friendly',
+                              sessionType.title,
                               style: blackTextStyle.copyWith(
                                   fontSize: 20, fontWeight: medium),
                             ),
