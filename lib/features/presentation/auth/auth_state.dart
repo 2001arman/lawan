@@ -19,4 +19,9 @@ class AuthState {
   ];
 
   var loginPhone = true.obs;
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController codeController = TextEditingController();
 }

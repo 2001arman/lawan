@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/auth/information/recovery/auth_recovery_logic.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
+import 'package:lawan/utility/shared/widgets/navigations/custom_will_pop_scope.dart';
 
 import '../../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
@@ -30,7 +31,8 @@ class AuthRecoveryUi extends StatelessWidget {
             const SizedBox(height: 8),
             CustomTextFormField(
               hintText: 'Password',
-              controller: TextEditingController(),
+              controller: state.passwordController,
+              isPassword: true,
               prefix: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 child: SvgPicture.asset(
@@ -41,7 +43,7 @@ class AuthRecoveryUi extends StatelessWidget {
             ),
             CustomTextFormField(
               hintText: 'Email address',
-              controller: TextEditingController(),
+              controller: state.emailController,
               prefix: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 child: SvgPicture.asset(
@@ -96,73 +98,78 @@ class AuthRecoveryUi extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: Container(
-        width: double.infinity,
-        padding: EdgeInsets.fromLTRB(
-          defaultMargin,
-          MediaQuery.of(context).padding.top,
-          defaultMargin,
-          MediaQuery.of(context).padding.bottom,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Obx(
-              () => CustomAppbar(
-                title: state.stepIndex.value == 0 ? 'Recovery information' : '',
-                iconColor: kBlackColor,
-                borderColor: kGreyColor,
-                textColor: kBlackColor,
-                onTap: logic.previousIndex,
+      body: CustomWillPopScope(
+        action: () => logic.previousIndex(),
+        onWillPop: false,
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.fromLTRB(
+            defaultMargin,
+            MediaQuery.of(context).padding.top + defaultMargin,
+            defaultMargin,
+            MediaQuery.of(context).padding.bottom + defaultMargin,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Obx(
+                () => CustomAppbar(
+                  title:
+                      state.stepIndex.value == 0 ? 'Recovery information' : '',
+                  iconColor: kBlackColor,
+                  borderColor: kGreyColor,
+                  textColor: kBlackColor,
+                  onTap: logic.previousIndex,
+                ),
               ),
-            ),
-            // recoverySection(),
-            Obx(
-              () => state.stepIndex.value == 0
-                  ? recoverySection()
-                  : settingsSection(state.stepIndex.value),
-            ),
+              // recoverySection(),
+              Obx(
+                () => state.stepIndex.value == 0
+                    ? recoverySection()
+                    : settingsSection(state.stepIndex.value),
+              ),
 
-            Obx(
-              () => Row(
-                children: [
-                  if (state.stepIndex.value == 6)
+              Obx(
+                () => Row(
+                  children: [
+                    if (state.stepIndex.value == 6)
+                      Expanded(
+                        child: GradientButton(
+                          onTap: logic.nextIndex,
+                          boxShadow: greenBoxShadow,
+                          widget: SvgPicture.asset('assets/icons/camera.svg'),
+                        ),
+                      ),
+                    if (state.stepIndex.value == 6) const SizedBox(width: 8),
                     Expanded(
                       child: GradientButton(
                         onTap: logic.nextIndex,
                         boxShadow: greenBoxShadow,
-                        widget: SvgPicture.asset('assets/icons/camera.svg'),
+                        widget: Text(
+                          state.textButton[state.stepIndex.value],
+                          style: whiteTextStyle.copyWith(fontWeight: medium),
+                        ),
                       ),
                     ),
-                  if (state.stepIndex.value == 6) const SizedBox(width: 8),
-                  Expanded(
-                    child: GradientButton(
-                      onTap: logic.nextIndex,
-                      boxShadow: greenBoxShadow,
-                      widget: Text(
-                        state.textButton[state.stepIndex.value],
-                        style: whiteTextStyle.copyWith(fontWeight: medium),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 27),
-            GestureDetector(
-              onTap: logic.nextIndex,
-              child: SizedBox(
-                width: double.infinity,
-                child: Obx(
-                  () => Text(
-                    state.textSkip[state.stepIndex.value],
-                    style: greenTextStyle.copyWith(fontWeight: medium),
-                    textAlign: TextAlign.center,
-                  ),
+                  ],
                 ),
               ),
-            )
-          ],
+              const SizedBox(height: 27),
+              GestureDetector(
+                onTap: logic.nextIndex,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Obx(
+                    () => Text(
+                      state.textSkip[state.stepIndex.value],
+                      style: greenTextStyle.copyWith(fontWeight: medium),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -26,10 +26,14 @@ class AuthInformationUi extends StatelessWidget {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+        padding: EdgeInsets.fromLTRB(
+          defaultMargin,
+          MediaQuery.of(context).padding.top + defaultMargin,
+          defaultMargin,
+          MediaQuery.of(context).padding.bottom + defaultMargin,
+        ),
         child: Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).padding.top),
             CustomAppbar(
               title: 'Profile Information',
               iconColor: kBlackColor,

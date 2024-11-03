@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthRecoveryState {
@@ -49,4 +50,7 @@ class AuthRecoveryState {
     'Maybe Later',
     'Skip',
   ];
+
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 }

@@ -48,6 +48,7 @@ class AdminArenaLogic extends GetxController {
     required VoidCallback createFunction,
     required ArenaType arenaType,
   }) {
+    updateCancel();
     CustomDialog.editAddDialog(
       onTapAdd: () {
         Get.back();

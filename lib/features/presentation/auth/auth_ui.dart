@@ -52,7 +52,7 @@ class AuthUi extends StatelessWidget {
           Expanded(
             child: CustomTextFormField(
               hintText: 'Phone number',
-              controller: TextEditingController(),
+              controller: state.phoneController,
               margin: defaultMargin,
               textInputType: TextInputType.number,
               validator: (data) => Helper.numberValidator(data),
@@ -72,7 +72,7 @@ class AuthUi extends StatelessWidget {
           Expanded(
             child: CustomTextFormField(
               hintText: 'Enter 6-digit code',
-              controller: TextEditingController(),
+              controller: state.codeController,
               textInputType: TextInputType.number,
               validator: (data) => Helper.numberValidator(data),
               margin: 0,
@@ -145,7 +145,7 @@ class AuthUi extends StatelessWidget {
         children: [
           CustomTextFormField(
             hintText: 'Email address',
-            controller: TextEditingController(),
+            controller: state.emailController,
             margin: defaultMargin,
             prefix: Padding(
               padding: const EdgeInsets.symmetric(vertical: 14),
@@ -157,7 +157,7 @@ class AuthUi extends StatelessWidget {
           ),
           CustomTextFormField(
             hintText: 'Password',
-            controller: TextEditingController(),
+            controller: state.passwordController,
             isPassword: true,
             margin: 3,
             prefix: Padding(
@@ -354,7 +354,7 @@ class AuthUi extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(
                   defaultMargin,
-                  MediaQuery.of(context).padding.top,
+                  MediaQuery.of(context).padding.top + defaultMargin,
                   defaultMargin,
                   0,
                 ),

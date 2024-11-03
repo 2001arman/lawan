@@ -20,12 +20,20 @@ class AuthLogic extends GetxController {
   void dispose() {
     super.dispose();
     videoPlayerController.dispose();
+    state.emailController.dispose();
+    state.codeController.dispose();
+    state.phoneController.dispose();
+    state.passwordController.dispose();
   }
 
   @override
   void onClose() {
     super.onClose();
     videoPlayerController.dispose();
+    state.emailController.dispose();
+    state.codeController.dispose();
+    state.phoneController.dispose();
+    state.passwordController.dispose();
   }
 
   void handleTapOptionLogin(int index) {
