@@ -126,6 +126,9 @@ class _ChooseArenaSectionModalState extends State<ChooseArenaSectionModal> {
                       child: SelectFieldImageWidget(
                         arenaModel: data.value,
                         isSelected: data.key == selectedArenaIndex.value,
+                        selectedCourt: data.key == selectedArenaIndex.value
+                            ? selectedCourtIndex.value
+                            : 0,
                         onChangeCourt: (courtIndex) {
                           selectedCourtIndex.value = courtIndex;
                           widget.onSelectedArena(data.key, courtIndex);

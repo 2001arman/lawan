@@ -14,7 +14,6 @@ class FriendlyMainState {
     'Private',
   ];
 
-  var selectedFriends = <AvatarModel>[].obs;
   var listFriends = <AvatarModel>[].obs;
   var sessionList = <SessionModel>[].obs;
 }

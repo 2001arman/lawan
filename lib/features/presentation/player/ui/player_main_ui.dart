@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/features/presentation/player/friendly/friendly_main_ui.dart';
+import 'package:lawan/features/presentation/player/ranked/ranked_main_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/create_session_button.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
@@ -22,6 +23,53 @@ class PlayerMainUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget addsOnButton() {
+      switch (state.selectedNavbarIndex.value) {
+        case 0:
+          return Visibility(
+            visible: logic.friendlyMainState.sessionList.isNotEmpty,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FilterButton(
+                  paddingVertical: 12,
+                  iconColor: kGreyColor,
+                  textColor: kWhiteColor,
+                  useBlur: true,
+                ),
+                SizedBox(width: defaultMargin),
+                CreateSessionButton(
+                  onTap: logic.friendlyMainLogic.showCreateDialog,
+                  selectedFriends: logic.state.selectedFriends,
+                ),
+              ],
+            ),
+          );
+        case 1:
+          return Visibility(
+            visible: logic.rankedlyMainLogic.state.sessionList.isNotEmpty,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FilterButton(
+                  paddingVertical: 12,
+                  iconColor: kGreyColor,
+                  textColor: kWhiteColor,
+                  useBlur: true,
+                ),
+                SizedBox(width: defaultMargin),
+                CreateSessionButton(
+                  onTap: logic.rankedlyMainLogic.showCreateDialog,
+                  selectedFriends: state.selectedFriends,
+                ),
+              ],
+            ),
+          );
+        default:
+          return const SizedBox();
+      }
+    }
+
     Widget customNavbar() {
       return Container(
         width: double.infinity,
@@ -41,25 +89,7 @@ class PlayerMainUi extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Obx(
-              () => Visibility(
-                visible: logic.friendlyMainState.sessionList.isNotEmpty,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FilterButton(
-                      paddingVertical: 12,
-                      iconColor: kGreyColor,
-                      textColor: kWhiteColor,
-                      useBlur: true,
-                    ),
-                    SizedBox(width: defaultMargin),
-                    CreateSessionButton(
-                      onTap: logic.friendlyMainLogic.showCreateDialog,
-                      selectedFriends: logic.friendlyMainState.selectedFriends,
-                    ),
-                  ],
-                ),
-              ),
+              () => addsOnButton(),
             ),
             CustomBottomNavbar(
               useGradient: false,
@@ -80,8 +110,7 @@ class PlayerMainUi extends StatelessWidget {
                             isActive:
                                 state.selectedNavbarIndex.value == data.key,
                             icon: data.value.icon,
-                            onTap: () =>
-                                state.selectedNavbarIndex.value = data.key,
+                            onTap: () => logic.changeIndex(data.key),
                           ),
                         ),
                       )
@@ -98,6 +127,8 @@ class PlayerMainUi extends StatelessWidget {
       switch (state.selectedNavbarIndex.value) {
         case 0:
           return FriendlyMainUi();
+        case 1:
+          return RankedMainUi();
         default:
           return const Center(
             child: Text('other'),

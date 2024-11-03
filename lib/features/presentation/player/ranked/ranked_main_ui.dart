@@ -1,19 +1,17 @@
-// ignore_for_file: deprecated_member_use
-
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/player/friendly/friendly_main_logic.dart';
-import 'package:lawan/features/presentation/player/widgets/player_empty_session.dart';
-import 'package:lawan/features/presentation/player/widgets/player_invite_friend_section.dart';
-import 'package:lawan/features/presentation/player/widgets/player_session_content_section.dart';
+import 'package:lawan/features/presentation/player/ranked/ranked_main_logic.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
+import '../widgets/player_empty_session.dart';
+import '../widgets/player_invite_friend_section.dart';
+import '../widgets/player_session_content_section.dart';
 
-class FriendlyMainUi extends StatelessWidget {
-  final logic = Get.find<FriendlyMainLogic>();
-  final state = Get.find<FriendlyMainLogic>().state;
-  FriendlyMainUi({super.key});
+class RankedMainUi extends StatelessWidget {
+  final logic = Get.find<RankedMainLogic>();
+  final state = Get.find<RankedMainLogic>().state;
+  RankedMainUi({super.key});
 
   @override
   Widget build(BuildContext context) {

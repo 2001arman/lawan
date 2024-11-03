@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../../domain/session/avatar_model.dart';
+
 class PlayerMainState {
   var selectedNavbarIndex = 0.obs;
 
@@ -10,6 +12,7 @@ class PlayerMainState {
     NavbarItem(name: 'Top', icon: 'assets/icons/trophy.svg'),
     NavbarItem(name: 'Stories', icon: 'assets/icons/stories.svg'),
   ];
+  var selectedFriends = <AvatarModel>[].obs;
 }
 
 class NavbarItem {
