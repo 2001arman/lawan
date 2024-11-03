@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 
 import '../../../../../domain/session/session_model.dart';
 import '../../../../admin/pages/session/admin_add_session.dart';
 import '../../../../admin/pages/session/admin_session_bottom_sheet.dart';
 import '../../../../admin/pages/session/session_logic.dart';
+import '../../../create-session/player_add_session_logic.dart';
 
 class CheckoutLogic extends GetxController {
   late SessionModel sessionModel;
@@ -17,13 +17,13 @@ class CheckoutLogic extends GetxController {
 
   void onCreateSession() async {
     SessionModel sessionModel = Get.arguments[0];
-    PlayerMainLogic playerMainLogic = Get.arguments[1];
+    Function(SessionModel session) sessionLogic = Get.arguments[1];
+    
+    final friendSessionLogic = Get.find<PlayerAddSessionLogic>();
+    friendSessionLogic.resetState();
 
-    playerMainLogic.state.sessionList.add(sessionModel);
-    playerMainLogic.resetState();
-
+    sessionLogic(sessionModel);
     Get.close(2);
-    playerMainLogic.disposeVideo();
     await Future.delayed(const Duration(seconds: 1));
     AdminSessionBottomSheet().successCreateSesssionSheet(
       arenaModel: sessionModel.arena,

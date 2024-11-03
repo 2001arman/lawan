@@ -13,8 +13,12 @@ class ChooseArenaSectionModal extends StatefulWidget {
   const ChooseArenaSectionModal({
     super.key,
     required this.onSelectedArena,
+    required this.selectedArena,
+    required this.selectedCourt,
   });
 
+  final RxInt selectedArena;
+  final RxInt selectedCourt;
   final Function(int selectedArenaIndex, int selectedCourtIndex)
       onSelectedArena;
 
@@ -44,6 +48,13 @@ class _ChooseArenaSectionModalState extends State<ChooseArenaSectionModal> {
         break;
     }
     return;
+  }
+
+  @override
+  void initState() {
+    selectedArenaIndex = widget.selectedArena;
+    selectedCourtIndex = widget.selectedCourt;
+    super.initState();
   }
 
   @override
@@ -113,12 +124,13 @@ class _ChooseArenaSectionModalState extends State<ChooseArenaSectionModal> {
                         widget.onSelectedArena(data.key, 0);
                       },
                       child: SelectFieldImageWidget(
-                          arenaModel: data.value,
-                          isSelected: data.key == selectedArenaIndex.value,
-                          onChangeCourt: (courtIndex) {
-                            selectedCourtIndex.value = courtIndex;
-                            widget.onSelectedArena(data.key, courtIndex);
-                          }),
+                        arenaModel: data.value,
+                        isSelected: data.key == selectedArenaIndex.value,
+                        onChangeCourt: (courtIndex) {
+                          selectedCourtIndex.value = courtIndex;
+                          widget.onSelectedArena(data.key, courtIndex);
+                        },
+                      ),
                     ),
                   )
                   .toList(),

@@ -12,19 +12,19 @@ import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 import 'package:lawan/utility/shared/widgets/text/text_pill_widget.dart';
 import 'package:lawan/utility/util/helper.dart';
+import 'package:lawan/utility/util/helper_data.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../domain/session/avatar_model.dart';
-import '../controller/player_main_logic.dart';
-import '../controller/player_main_state.dart';
 
-class PlayerAddPlayerBottomSheet {
-  final PlayerMainState state;
-  final PlayerMainLogic logic;
+class PlayerAddBottomSheet {
+  TextEditingController searchController = TextEditingController();
 
-  PlayerAddPlayerBottomSheet({required this.state, required this.logic});
-
-  Widget friendWidget({required AvatarModel data}) {
+  Widget friendWidget({
+    required AvatarModel data,
+    required VoidCallback onTapAdd,
+    required VoidCallback onTapRemove,
+  }) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -85,13 +85,14 @@ class PlayerAddPlayerBottomSheet {
           ),
           const SizedBox(width: 12),
           CircleButtonTransparentWidget(
-            onTap: () {
-              Helper.showToast(
-                  isSuccess: true,
-                  message: 'User added for invitation successfully');
-              state.selectedFriends.add(data);
-              state.listFriends.remove(data);
-            },
+            // onTap: () {
+            //   Helper.showToast(
+            //       isSuccess: true,
+            //       message: 'User added for invitation successfully');
+            //   state.selectedFriends.add(data);
+            //   state.listFriends.remove(data);
+            // },
+            onTap: onTapAdd,
             widget: SvgPicture.asset(
               'assets/icons/plus.svg',
               color: kDarkgreyColor,
@@ -104,9 +105,16 @@ class PlayerAddPlayerBottomSheet {
     );
   }
 
-  void addPlayerBottomSheet({required}) {
-    TextEditingController searchController = TextEditingController();
+  void addPlayerBottomSheet(
+      {required VoidCallback onBack,
+      required Function(List<AvatarModel> avatars) onSave}) {
     var showPlayer = false.obs;
+    var listFriends = <AvatarModel>[].obs;
+    var listFriendsRecent = <AvatarModel>[].obs;
+    var selectedFriends = <AvatarModel>[].obs;
+    listFriends.addAll(HelperData.listFriends);
+    listFriendsRecent.addAll(HelperData.listFriends);
+
     Get.bottomSheet(
       Padding(
         padding: const EdgeInsets.all(8),
@@ -243,14 +251,27 @@ class PlayerAddPlayerBottomSheet {
                 SizedBox(height: defaultMargin),
                 Expanded(
                   child: Obx(
-                    () => state.listFriends.isNotEmpty && showPlayer.value
+                    () => listFriends.isNotEmpty && showPlayer.value
                         ? Padding(
                             padding:
                                 EdgeInsets.symmetric(horizontal: defaultMargin),
                             child: SingleChildScrollView(
                               child: Column(
-                                children: state.listFriends
-                                    .map((data) => friendWidget(data: data))
+                                children: listFriends
+                                    .map(
+                                      (data) => friendWidget(
+                                        data: data,
+                                        onTapAdd: () {
+                                          Helper.showToast(
+                                              isSuccess: true,
+                                              message:
+                                                  'User added for invitation successfully');
+                                          selectedFriends.add(data);
+                                          listFriends.remove(data);
+                                        },
+                                        onTapRemove: () {},
+                                      ),
+                                    )
                                     .toList(),
                               ),
                             ),
@@ -290,7 +311,7 @@ class PlayerAddPlayerBottomSheet {
 
                 // recent people
                 Obx(
-                  () => state.listFriendsRecent.isNotEmpty
+                  () => listFriendsRecent.isNotEmpty
                       ? Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: defaultMargin),
@@ -313,14 +334,20 @@ class PlayerAddPlayerBottomSheet {
                     () => Row(
                       children: [
                         SizedBox(width: defaultMargin),
-                        ...state.listFriendsRecent.map(
+                        ...listFriendsRecent.map(
                           (data) => SelectFriendItem(
                             name: data.name,
                             asset: data.asset,
                             suffixWidget: data.isSelected.value
                                 ? CircleButtonWidget(
-                                    onTap: () =>
-                                        logic.removeInviteFriends(data),
+                                    onTap: () {
+                                      Helper.showToast(
+                                          isSuccess: true,
+                                          message:
+                                              'User removed for invitation successfully');
+                                      selectedFriends.remove(data);
+                                      data.isSelected.value = false;
+                                    },
                                     isActive: true,
                                     widget: Icon(
                                       Icons.done,
@@ -330,7 +357,14 @@ class PlayerAddPlayerBottomSheet {
                                     size: 36,
                                   )
                                 : CircleButtonTransparentWidget(
-                                    onTap: () => logic.inviteFriends(data),
+                                    onTap: () {
+                                      Helper.showToast(
+                                          isSuccess: true,
+                                          message:
+                                              'User added for invitation successfully');
+                                      selectedFriends.add(data);
+                                      data.isSelected.value = true;
+                                    },
                                     size: 36,
                                     widget: SvgPicture.asset(
                                       'assets/icons/plus.svg',
@@ -352,10 +386,7 @@ class PlayerAddPlayerBottomSheet {
                   child: Row(
                     children: [
                       CircleButtonTransparentWidget(
-                        onTap: () {
-                          Get.back();
-                          logic.showCreateDialog();
-                        },
+                        onTap: onBack,
                         widget: SvgPicture.asset(
                           'assets/icons/back.svg',
                           color: kDarkgreyColor,
@@ -369,8 +400,8 @@ class PlayerAddPlayerBottomSheet {
                             Helper.showToast(
                                 isSuccess: true,
                                 message: 'Users added to cart successfully');
-                            Get.back();
-                            logic.showCreateDialog();
+                            onBack();
+                            onSave(selectedFriends);
                           },
                           widget: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -393,7 +424,7 @@ class PlayerAddPlayerBottomSheet {
                       Obx(
                         () => Row(
                           children: [
-                            ...state.selectedFriends.take(3).map(
+                            ...selectedFriends.take(3).map(
                                   (friend) => Align(
                                     widthFactor: .55,
                                     child: SizedBox(
@@ -411,7 +442,7 @@ class PlayerAddPlayerBottomSheet {
                                     ),
                                   ),
                                 ),
-                            if (state.selectedFriends.length > 3)
+                            if (selectedFriends.length > 3)
                               Align(
                                 widthFactor: .55,
                                 child: SizedBox(
@@ -424,7 +455,7 @@ class PlayerAddPlayerBottomSheet {
                                       radius: 40,
                                       backgroundColor: Colors.black,
                                       child: Text(
-                                        '+${state.selectedFriends.length - 3}',
+                                        '+${selectedFriends.length - 3}',
                                         style: whiteTextStyle.copyWith(
                                           fontSize: 16,
                                           fontWeight: medium,

@@ -4,9 +4,9 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/player/ui/player_add_player_bottom_sheet.dart';
-import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
-import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
+import 'package:lawan/features/domain/session/session_model.dart';
+import 'package:lawan/features/presentation/player/create-session/player_add_session_state.dart';
+import 'package:lawan/features/presentation/player/create-session/player_add_bottom_sheet.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/fields/choose_arena_section_modal.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
@@ -23,12 +23,18 @@ import '../../../../utility/shared/widgets/calendar/calendar_picker_widget.dart'
 import '../../../../utility/shared/widgets/wheel_picker/choose_time_widget.dart';
 import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../domain/session/avatar_model.dart';
+import 'player_add_session_logic.dart';
 
 class PlayerAddSession {
-  final PlayerMainState state;
-  final PlayerMainLogic logic;
+  final PlayerAddSessionLogic logic = Get.find<PlayerAddSessionLogic>();
+  final PlayerAddSessionState state = Get.find<PlayerAddSessionLogic>().state;
+  final Function(SessionModel) onCreate;
+  final RxList<AvatarModel> selectedFriends;
 
-  PlayerAddSession({required this.state, required this.logic});
+  PlayerAddSession({
+    required this.onCreate,
+    required this.selectedFriends,
+  });
 
   Widget contentSection() {
     switch (state.selectedIndex.value) {
@@ -37,6 +43,8 @@ class PlayerAddSession {
       case 2:
         return ChooseArenaSectionModal(
           onSelectedArena: logic.onSelectedArena,
+          selectedArena: state.selectedArenaIndex,
+          selectedCourt: state.selectedCourtIndex,
         );
       default:
         return detailSection();
@@ -83,6 +91,7 @@ class PlayerAddSession {
   }
 
   void createNewSession() {
+    state.selectedFriends = selectedFriends;
     Get.bottomSheet(
       Padding(
         padding: const EdgeInsets.all(8),
@@ -176,7 +185,9 @@ class PlayerAddSession {
                                 ? 'Proceed to Pay'
                                 : 'Next',
                             isBlack: true,
-                            onTap: logic.handleNextButton,
+                            onTap: () => logic.handleNextButton(
+                              onCreate: onCreate,
+                            ),
                           ),
                         ),
                       ],
@@ -271,10 +282,14 @@ class PlayerAddSession {
                   CircleButtonTransparentWidget(
                     onTap: () {
                       Get.back();
-                      PlayerAddPlayerBottomSheet(
-                        logic: logic,
-                        state: state,
-                      ).addPlayerBottomSheet();
+                      PlayerAddBottomSheet().addPlayerBottomSheet(
+                        onBack: () {
+                          Get.back();
+                          createNewSession();
+                        },
+                        onSave: (avatars) =>
+                            state.selectedFriends.addAll(avatars),
+                      );
                     },
                     borderColor: kGreyColor,
                     size: 44,

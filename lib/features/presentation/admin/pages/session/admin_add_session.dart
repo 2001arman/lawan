@@ -34,6 +34,8 @@ class AdminAddSession {
       case 2:
         return ChooseArenaSectionModal(
           onSelectedArena: logic.onSelectedArena,
+          selectedArena: state.selectedArenaIndex,
+          selectedCourt: state.selectedCourtIndex,
         );
       case 3:
         return detailSection(sessionData: sessionData);
