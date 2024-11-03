@@ -16,9 +16,10 @@ import 'package:lawan/features/presentation/player/payment/payment/controllers/p
 import 'package:lawan/features/presentation/player/payment/payment/pages/payment_add_card_page.dart';
 import 'package:lawan/features/presentation/player/payment/payment/pages/payment_page.dart';
 import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
+import 'package:lawan/features/presentation/qr-profile/qr_profile_ui.dart';
 
 class AppRoute {
-  static const initialRoute = AuthUi.namePath;
+  static const initialRoute = AdminMainUi.namePath;
   static final routes = [
     GetPage(
       name: AdminMainUi.namePath,
@@ -64,6 +65,10 @@ class AppRoute {
       name: AuthRecoveryUi.namePath,
       page: () => AuthRecoveryUi(),
       binding: AuthRecoveryBinding(),
+    ),
+    GetPage(
+      name: QrProfileUi.namePath,
+      page: () => const QrProfileUi(),
     ),
   ];
 }

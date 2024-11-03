@@ -5,7 +5,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
 import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
+import 'package:lawan/features/presentation/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
+import 'package:lawan/utility/shared/widgets/avatar_shadow_with_text.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_circle_button.dart';
@@ -28,51 +30,11 @@ class CustomDialogProfile {
     );
   }
 
-  static Widget profilePicture() {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 44),
-          child: TextBorder(
-            textTitle: 'Novice',
-            backgroundColor: kWhiteColor,
-            paddingVertical: 2,
-            paddingHorizontal: 8,
-            fontSize: 10,
-            borderColor: kGreyColor,
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                offset: const Offset(0, 1),
-                blurRadius: 3,
-                color: kBlackColor.withOpacity(0.1),
-              ),
-              BoxShadow(
-                offset: const Offset(0, 5),
-                blurRadius: 5,
-                color: kBlackColor.withOpacity(0.09),
-              ),
-            ],
-          ),
-          child: Image.asset(
-            'assets/avatars/avatar1.png',
-            width: 48,
-            height: 48,
-          ),
-        ),
-      ],
-    );
-  }
-
   static Widget profileSection() {
     return Column(
       children: [
         // profile section
-        profilePicture(),
+        const AvatarShadowWithText(),
         const SizedBox(height: 12),
         Text(
           'Jese Leos',
@@ -491,7 +453,7 @@ class CustomDialogProfile {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: GradientCircleButton(
-                  onTap: () {},
+                  onTap: () => Get.toNamed(QrProfileUi.namePath),
                   size: 48,
                   widget: SvgPicture.asset('assets/icons/qrcode.svg'),
                 ),
