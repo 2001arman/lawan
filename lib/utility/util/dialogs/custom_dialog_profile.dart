@@ -3,11 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
+import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/buttons/gradient_circle_button.dart';
 import 'package:lawan/utility/shared/widgets/text/text_gradient.dart';
 
+import '../../shared/constants/mode_type.dart';
 import '../../shared/widgets/text/text_border.dart';
 
 class CustomDialogProfile {
@@ -223,7 +227,7 @@ class CustomDialogProfile {
     );
   }
 
-  static Widget modeSection() {
+  static Widget modeSection({required ModeType source}) {
     return Row(
       children: [
         Expanded(
@@ -257,21 +261,27 @@ class CustomDialogProfile {
         Expanded(
           child: CustomButton(
             isBlack: true,
-            onTap: () {},
+            onTap: () {
+              source == ModeType.admin
+                  ? Get.offAllNamed(PlayerMainUi.namePath)
+                  : Get.offAllNamed(AdminMainUi.namePath);
+            },
             paddingVertical: 12,
             radius: 20,
             widget: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  'assets/icons/arena.svg',
+                  source == ModeType.admin
+                      ? 'assets/icons/play.svg'
+                      : 'assets/icons/arena.svg',
                   color: kWhiteColor,
                   width: 24,
                   height: 24,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Admin Mode',
+                  source == ModeType.admin ? 'Player Mode' : 'Admin Mode',
                   style: whiteTextStyle.copyWith(
                     fontWeight: medium,
                     height: 14 / 14,
@@ -285,82 +295,205 @@ class CustomDialogProfile {
     );
   }
 
-  static void showDialogProfile() {
+  static Widget friendContainer() {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: defaultMargin, vertical: 12),
+      margin: const EdgeInsets.only(top: 8),
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: kGreyColor),
+        borderRadius: BorderRadius.circular(32),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Image.asset(
+            'assets/avatars/avatar1.png',
+            width: 40,
+            height: 40,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'arman maulana',
+                  style: blackTextStyle.copyWith(
+                    fontWeight: medium,
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                TextBorder(
+                  textTitle: 'Novice',
+                  backgroundColor: kWhiteColor,
+                  fontSize: 10,
+                  paddingVertical: 2,
+                  paddingHorizontal: 8,
+                )
+              ],
+            ),
+          ),
+          CircleButtonTransparentWidget(
+            onTap: () {},
+            widget: SvgPicture.asset(
+              'assets/icons/chat.svg',
+              color: kDarkgreyColor,
+            ),
+            borderColor: kGreyColor,
+            size: 40,
+          ),
+          const SizedBox(width: 4),
+          CircleButtonTransparentWidget(
+            onTap: () {},
+            widget: SvgPicture.asset(
+              'assets/icons/plus.svg',
+              color: kDarkgreyColor,
+            ),
+            borderColor: kGreyColor,
+            size: 40,
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget feedbackSection() {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: defaultMargin),
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: kGreyColor),
+        borderRadius: BorderRadius.circular(32),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SvgPicture.asset(
+            'assets/icons/headset.svg',
+            width: 24,
+            height: 24,
+            color: kDarkgreyColor,
+          ),
+          Text(
+            'Give Feedback',
+            style: blackTextStyle.copyWith(fontWeight: medium),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static void showDialogProfile({required ModeType source}) {
     Get.dialog(
       Dialog(
         backgroundColor: Colors.transparent,
         insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
-          // height: 400,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(32),
-            color: kBackgroundColor,
-          ),
+          height: 725,
           child: Stack(
             children: [
               Container(
                 width: double.infinity,
-                height: 180,
+                height: 701,
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32),
-                  ),
-                  gradient: backgroundGradient,
+                  borderRadius: BorderRadius.circular(32),
+                  color: kBackgroundColor,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(defaultMargin),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Stack(
                   children: [
-                    circularButtonIcon('assets/icons/bell.svg'),
-                    circularButtonIcon('assets/icons/chevron-down.svg'),
-                  ],
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                // height: Get.height,
-                padding: EdgeInsets.all(defaultMargin),
-                margin: const EdgeInsets.only(top: 8),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    profileSection(),
-                    const SizedBox(height: 12),
-                    settingAndProfileButton(),
-                    const SizedBox(height: 12),
-                    findAndRequestFriends(),
-                    const SizedBox(height: 12),
-                    modeSection(),
-                    const SizedBox(height: 12),
+                    // gradient background
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                          vertical: 10, horizontal: defaultMargin),
+                      height: 180,
                       decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: kGreyColor),
-                        borderRadius: BorderRadius.circular(32),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(32),
+                          topRight: Radius.circular(32),
+                        ),
+                        gradient: backgroundGradient,
                       ),
+                    ),
+                    // top action button
+                    Padding(
+                      padding: EdgeInsets.all(defaultMargin),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SvgPicture.asset(
-                            'assets/icons/headset.svg',
-                            width: 24,
-                            height: 24,
-                            color: kDarkgreyColor,
-                          ),
-                          Text(
-                            'Give Feedback',
-                            style: blackTextStyle.copyWith(fontWeight: medium),
-                          ),
+                          circularButtonIcon('assets/icons/bell.svg'),
+                          circularButtonIcon('assets/icons/chevron-down.svg'),
                         ],
                       ),
-                    )
+                    ),
+                    // content
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(defaultMargin),
+                      margin: const EdgeInsets.only(top: 8),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          profileSection(),
+                          const SizedBox(height: 12),
+                          settingAndProfileButton(),
+                          const SizedBox(height: 12),
+                          findAndRequestFriends(),
+                          const SizedBox(height: 12),
+                          SizedBox(
+                            height: 220,
+                            width: double.infinity,
+                            child: Stack(
+                              children: [
+                                ListView(
+                                  padding: EdgeInsets.zero,
+                                  children: [
+                                    friendContainer(),
+                                    friendContainer(),
+                                    friendContainer(),
+                                    friendContainer(),
+                                    friendContainer(),
+                                    friendContainer(),
+                                  ],
+                                ),
+                                Container(
+                                  width: double.infinity,
+                                  height: 16,
+                                  decoration: BoxDecoration(
+                                    gradient: whiteGradient,
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 16,
+                                    decoration: BoxDecoration(
+                                      gradient: whiteGradientBottomToTop,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          modeSection(source: source),
+                          const SizedBox(height: 12),
+                          feedbackSection(),
+                          SizedBox(height: defaultMargin),
+                        ],
+                      ),
+                    ),
                   ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: GradientCircleButton(
+                  onTap: () {},
+                  size: 48,
+                  widget: SvgPicture.asset('assets/icons/qrcode.svg'),
                 ),
               ),
             ],

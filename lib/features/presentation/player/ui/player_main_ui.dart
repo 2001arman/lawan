@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/container/select_friend_item.dart';
@@ -12,6 +11,7 @@ import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
+import '../../../../utility/shared/constants/mode_type.dart';
 import '../../../../utility/shared/widgets/bottom_navbar_item.dart';
 import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../utility/shared/widgets/buttons/circle_button_widget.dart';
@@ -20,6 +20,7 @@ import '../../../../utility/shared/widgets/navigations/custom_bottom_navbar.dart
 import '../../../../utility/shared/widgets/buttons/filter_button.dart';
 import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import '../../../../utility/shared/widgets/video/video_widget.dart';
+import '../../../../utility/util/dialogs/custom_dialog_profile.dart';
 
 class PlayerMainUi extends StatelessWidget {
   static const String namePath = '/player_main_page';
@@ -342,7 +343,9 @@ class PlayerMainUi extends StatelessWidget {
                 SizedBox(height: MediaQuery.paddingOf(context).top),
                 // appbar
                 CustomAppbarProfile(
-                  onTap: () => Get.offAndToNamed(AdminMainUi.namePath),
+                  onTap: () => CustomDialogProfile.showDialogProfile(
+                    source: ModeType.player,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Column(

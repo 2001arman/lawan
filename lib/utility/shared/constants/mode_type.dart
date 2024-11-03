@@ -1,0 +1,4 @@
+enum ModeType {
+  admin,
+  player;
+}

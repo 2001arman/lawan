@@ -85,6 +85,15 @@ LinearGradient whiteGradient = LinearGradient(
   ],
 );
 
+LinearGradient whiteGradientBottomToTop = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    kBackgroundColor.withOpacity(0),
+    kBackgroundColor,
+  ],
+);
+
 LinearGradient goldGradient = const LinearGradient(
   begin: Alignment.topCenter,
   end: Alignment.bottomCenter,

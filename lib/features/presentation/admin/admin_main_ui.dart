@@ -7,8 +7,8 @@ import 'package:lawan/features/presentation/admin/pages/arena/admin_arena_ui.dar
 import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_logic.dart';
 import 'package:lawan/features/presentation/admin/pages/sales/sales_ui.dart';
 import 'package:lawan/features/presentation/admin/pages/session/session_ui.dart';
-import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
+import 'package:lawan/utility/shared/constants/mode_type.dart';
 import 'package:lawan/utility/shared/widgets/bottom_navbar_item.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/navigations/custom_appbar_profile.dart';
@@ -128,9 +128,10 @@ class AdminMainUi extends StatelessWidget {
             Column(
               children: [
                 SizedBox(height: MediaQuery.paddingOf(context).top),
-                const CustomAppbarProfile(
-                  // onTap: () => Get.offAndToNamed(PlayerMainUi.namePath),
-                  onTap: CustomDialogProfile.showDialogProfile,
+                CustomAppbarProfile(
+                  onTap: () => CustomDialogProfile.showDialogProfile(
+                    source: ModeType.admin,
+                  ),
                 ),
                 Expanded(
                   child: Obx(() {

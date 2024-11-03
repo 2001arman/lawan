@@ -18,7 +18,7 @@ import 'package:lawan/features/presentation/player/payment/payment/pages/payment
 import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
 
 class AppRoute {
-  static const initialRoute = PlayerMainUi.namePath;
+  static const initialRoute = AdminMainUi.namePath;
   static final routes = [
     GetPage(
       name: AdminMainUi.namePath,

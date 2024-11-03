@@ -5,6 +5,7 @@ import 'package:lawan/features/domain/session/session_model.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/ui/checkout_ui.dart';
 import 'package:lawan/utility/util/helper.dart';
+import 'package:lawan/utility/util/helper_data.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../domain/session/avatar_model.dart';
@@ -26,6 +27,7 @@ class PlayerMainLogic extends GetxController {
       'assets/video/empty_session.mp4',
       videoPlayerOptions: VideoPlayerOptions(),
     );
+    state.listFriends.addAll(HelperData.listFriends);
   }
 
   @override
