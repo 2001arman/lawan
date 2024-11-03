@@ -13,9 +13,11 @@ class ChooseGenderWidget extends StatelessWidget {
     required this.isMaleSelected,
     required this.isFemaleSelected,
     this.borderColor,
+    this.isMultipe = true,
   });
   final RxBool isMaleSelected, isFemaleSelected;
   final Color? borderColor;
+  final bool isMultipe;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,16 @@ class ChooseGenderWidget extends StatelessWidget {
           () => Expanded(
             child: CustomButton(
               isBlack: isMaleSelected.value,
-              onTap: () => isMaleSelected.toggle(),
+              onTap: () {
+                if (isMultipe) {
+                  isMaleSelected.toggle();
+                } else {
+                  if (isMaleSelected.value == false) {
+                    isMaleSelected.value = true;
+                    isFemaleSelected.value = false;
+                  }
+                }
+              },
               borderColor: borderColor,
               widget: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +65,16 @@ class ChooseGenderWidget extends StatelessWidget {
           () => Expanded(
             child: CustomButton(
               isBlack: isFemaleSelected.value,
-              onTap: () => isFemaleSelected.toggle(),
+              onTap: () {
+                if (isMultipe) {
+                  isFemaleSelected.toggle();
+                } else {
+                  if (isFemaleSelected.value == false) {
+                    isFemaleSelected.value = true;
+                    isMaleSelected.value = false;
+                  }
+                }
+              },
               borderColor: borderColor,
               widget: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

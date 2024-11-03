@@ -44,6 +44,19 @@ class AuthRecoveryUi extends StatelessWidget {
             CustomTextFormField(
               hintText: 'Email address',
               controller: state.emailController,
+              showSuffix: true,
+              suffix: Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Optional',
+                      style: darkGreyTextStyle.copyWith(fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
               prefix: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 child: SvgPicture.asset(

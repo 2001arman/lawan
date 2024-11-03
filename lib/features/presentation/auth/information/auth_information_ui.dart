@@ -14,6 +14,7 @@ import 'package:lawan/utility/shared/widgets/inputs/choose_language_widget.dart'
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/widgets/navigations/custom_appbar.dart';
+import '../../../../utility/util/dialogs/custom_dialog.dart';
 import '../../../../utility/util/helper.dart';
 
 class AuthInformationUi extends StatelessWidget {
@@ -56,7 +57,7 @@ class AuthInformationUi extends StatelessWidget {
                         controller: TextEditingController(),
                       ),
                       CustomTextFormField(
-                        hintText: 'Last Name',
+                        hintText: 'Last Name / Family Name',
                         controller: TextEditingController(),
                       ),
                       Text('Nickname', style: darkGreyTextStyle),
@@ -120,6 +121,7 @@ class AuthInformationUi extends StatelessWidget {
                         isMaleSelected: false.obs,
                         isFemaleSelected: true.obs,
                         borderColor: kGreyColor,
+                        isMultipe: false,
                       ),
                       const SizedBox(height: 12),
                       ChooseLanguageWidget(
@@ -137,6 +139,7 @@ class AuthInformationUi extends StatelessWidget {
                               hintText: 'Date',
                               controller: TextEditingController(),
                               margin: defaultMargin,
+                              maxLength: 2,
                               textInputType: TextInputType.number,
                               validator: (data) => Helper.numberValidator(data),
                               inputFormatters: [
@@ -149,6 +152,12 @@ class AuthInformationUi extends StatelessWidget {
                             child: CustomTextFormField(
                               hintText: 'Month',
                               controller: TextEditingController(),
+                              isReadOnly: true,
+                              onTap: () => CustomDialog.chooseMonth(
+                                selectedMonth: 0,
+                                showAllData: false,
+                                onSelected: (index) {},
+                              ),
                               margin: defaultMargin,
                               textInputType: TextInputType.number,
                               validator: (data) => Helper.numberValidator(data),
@@ -171,6 +180,7 @@ class AuthInformationUi extends StatelessWidget {
                             child: CustomTextFormField(
                               hintText: 'Year',
                               controller: TextEditingController(),
+                              maxLength: 4,
                               margin: defaultMargin,
                               textInputType: TextInputType.number,
                               validator: (data) => Helper.numberValidator(data),
@@ -208,9 +218,6 @@ class AuthInformationUi extends StatelessWidget {
                         ),
                         Container(
                           color: kBackgroundColor,
-                          padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).padding.bottom,
-                          ),
                           child: GradientButton(
                             onTap: () => Get.toNamed(AuthRecoveryUi.namePath),
                             boxShadow: greenBoxShadow,

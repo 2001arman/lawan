@@ -19,7 +19,7 @@ import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
 import 'package:lawan/features/presentation/qr-profile/qr_profile_ui.dart';
 
 class AppRoute {
-  static const initialRoute = PlayerMainUi.namePath;
+  static const initialRoute = AuthUi.namePath;
   static final routes = [
     GetPage(
       name: AdminMainUi.namePath,
