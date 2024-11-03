@@ -1,8 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import '../../../../../domain/session/avatar_model.dart';
+import '../../../../domain/session/avatar_model.dart';
 
-class LineupState {
+class LineupRankedState {
+  var lineUpActiveAlignment = Alignment.centerLeft.obs;
+  var lineUpTabActive = 'Home'.obs;
+  List<String> lineUpTabBarTitle = [
+    'Home',
+    '',
+    'Away',
+  ];
+
   var listFriends = [
     AvatarModel(
       name: 'Sarah Yahya',

@@ -25,6 +25,7 @@ class AdminSessionBottomSheet {
     required VoidCallback onUpdate,
     required VoidCallback onShare,
     required VoidCallback onBackShare,
+    required SessionType sessionType,
     bool isAdmin = true,
   }) {
     var showShare = false.obs;
@@ -130,7 +131,12 @@ class AdminSessionBottomSheet {
                               Expanded(
                                 child: CustomButton(
                                   isBlack: true,
-                                  onTap: () => Get.toNamed(LobbyUi.namePath),
+                                  onTap: () => Get.toNamed(
+                                    LobbyUi.namePath,
+                                    arguments: [
+                                      sessionType,
+                                    ],
+                                  ),
                                   widget: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -225,6 +231,7 @@ class AdminSessionBottomSheet {
     return sessionContainerSheet(
       onDelete: onDelete,
       onUpdate: onUpdate,
+      sessionType: sessionType,
       onBackShare: () {
         showQr.toggle();
       },

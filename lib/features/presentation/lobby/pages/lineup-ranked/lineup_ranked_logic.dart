@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/lobby/controller/lobby_controller.dart';
 import 'package:lawan/features/presentation/lobby/controller/lobby_state.dart';
-import 'package:lawan/features/presentation/lobby/pages/lineup/controller/lineup_state.dart';
+import 'package:lawan/features/presentation/lobby/pages/lineup-ranked/lineup_ranked_state.dart';
 
-import '../../../../../../utility/shared/constants/action_type.dart';
-import '../../../../../../utility/util/dialogs/custom_dialog_success.dart';
-import '../../../../../../utility/util/helper.dart';
-import '../../../../../domain/session/avatar_model.dart';
+import '../../../../../utility/shared/constants/action_type.dart';
+import '../../../../../utility/util/dialogs/custom_dialog_success.dart';
+import '../../../../../utility/util/helper.dart';
+import '../../../../domain/session/avatar_model.dart';
 
-class LineupLogic {
-  LobbyState lobbyState = Get.find<LobbyState>();
-  LineupState state = LineupState();
+class LineupRankedLogic extends GetxController {
+  LobbyState lobbyState = Get.find<LobbyController>().state;
+  LineupRankedState state = LineupRankedState();
 
   void alignmentTabbar(String title) {
     switch (title) {

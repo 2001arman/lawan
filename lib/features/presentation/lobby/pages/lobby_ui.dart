@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/lobby/pages/lineup-ranked/lineup_ranked_ui.dart';
+import 'package:lawan/utility/shared/constants/session_type.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
@@ -8,7 +10,7 @@ import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import '../controller/lobby_controller.dart';
 import 'chat/chat_ui.dart';
-import 'lineup/lineup_ui.dart';
+import 'lineup-friendly/lineup_friendly_ui.dart';
 
 class LobbyUi extends StatelessWidget {
   static const String namePath = '/lobby_page';
@@ -21,7 +23,9 @@ class LobbyUi extends StatelessWidget {
     Widget body() {
       switch (state.lobbyTabActive.value) {
         case 'Line-Up':
-          return LineupUi();
+          return logic.sessionType == SessionType.friendly
+              ? LineupFriendlyUi()
+              : const LineupRankedUi();
         default:
           return ChatUi();
       }

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/lobby/pages/lineup/controller/lineup_logic.dart';
+import 'package:lawan/features/presentation/lobby/pages/lineup-friendly/lineup_friendly_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import '../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../utility/shared/widgets/container/select_friend_item.dart';
@@ -12,11 +12,11 @@ import '../../../../../utility/shared/widgets/text/text_border.dart';
 import '../../../../../utility/shared/widgets/text/text_pill_widget.dart';
 import '../../../../domain/session/avatar_model.dart';
 
-class LineupUi extends StatelessWidget {
-  final logic = Get.find<LineupLogic>();
-  final state = Get.find<LineupLogic>().state;
-  final lobbyState = Get.find<LineupLogic>().lobbyState;
-  LineupUi({super.key});
+class LineupFriendlyUi extends StatelessWidget {
+  final logic = Get.find<LineupFriendlyLogic>();
+  final state = Get.find<LineupFriendlyLogic>().state;
+  final lobbyState = Get.find<LineupFriendlyLogic>().lobbyState;
+  LineupFriendlyUi({super.key});
 
   @override
   Widget build(BuildContext context) {
