@@ -47,6 +47,115 @@ class _LineupRankedUiState extends State<LineupRankedUi>
     }
   }
 
+  Widget itemContent() {
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 35),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: kWhiteColor,
+                    boxShadow: [
+                      BoxShadow(
+                        offset: const Offset(-2, 1),
+                        blurRadius: 5,
+                        color: kBlackColor.withOpacity(0.1),
+                      ),
+                      BoxShadow(
+                        offset: const Offset(-8, 3),
+                        blurRadius: 9,
+                        color: kBlackColor.withOpacity(0.09),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Arman Maulana',
+                      style: blackTextStyle.copyWith(
+                        fontSize: 12,
+                        fontWeight: medium,
+                        color: kBlackColor,
+                        height: 1,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      // overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    offset: const Offset(0, 1),
+                    blurRadius: 3,
+                    color: kBlackColor.withOpacity(0.1),
+                  ),
+                  BoxShadow(
+                    offset: const Offset(0, 5),
+                    blurRadius: 5,
+                    color: kBlackColor.withOpacity(0.09),
+                  ),
+                ],
+              ),
+              child: Image.asset(
+                'assets/avatars/avatar1.png',
+                width: 40,
+                height: 40,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              margin: const EdgeInsets.only(left: 35),
+              decoration: BoxDecoration(
+                color: kBlackColor,
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Text(
+                'DF',
+                style: whiteTextStyle.copyWith(
+                  fontSize: 10,
+                  fontWeight: medium,
+                  height: 16 / 10,
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget item({double marginBottom = 0, double marginTop = 0}) {
+    return Expanded(
+      flex: 2,
+      child: Container(
+        height: 68,
+        margin: EdgeInsets.only(bottom: marginBottom, top: marginTop),
+        child: itemContent(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -170,35 +279,148 @@ class _LineupRankedUiState extends State<LineupRankedUi>
           ),
 
           // friendsList
-          SizedBox(height: defaultMargin),
+          // SizedBox(height: defaultMargin),
+          // Obx(
+          //   () => Visibility(
+          //     visible: lobbyState.lineUpTabActive.value != '',
+          //     child: SizedBox(
+          //       width: double.infinity,
+          //       child: SingleChildScrollView(
+          //         scrollDirection: Axis.horizontal,
+          //         padding: EdgeInsets.zero,
+          //         child: Obx(
+          //           () => Row(
+          //             mainAxisAlignment: MainAxisAlignment.start,
+          //             children: [
+          //               SizedBox(width: defaultMargin),
+          //               ...state.listFriends.map(
+          //                 (data) => SelectFriendItem(
+          //                   name: data.name,
+          //                   asset: data.asset,
+          //                   suffixWidget: CircleButtonTransparentWidget(
+          //                     onTap: () => logic.addInviteFriend(data),
+          //                     size: 36,
+          //                     widget: SvgPicture.asset(
+          //                       'assets/icons/plus.svg',
+          //                       color: kDarkgreyColor,
+          //                     ),
+          //                     borderColor: kGreyColor,
+          //                   ),
+          //                 ),
+          //               )
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
-          // selected friends
+          // arena fields
           SizedBox(height: defaultMargin),
-          Container(
-            width: double.infinity,
-            height: 867,
-            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-            child: AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return Transform(
-                  alignment: Alignment.center,
+          Stack(
+            children: [
+              Padding(
+                key: state.keyField,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: AspectRatio(
+                  aspectRatio: 363 / 867, // Approximately 0.4186
+                  child: AnimatedBuilder(
+                    animation: _controller,
+                    builder: (context, child) {
+                      return Transform(
+                        alignment: Alignment.center,
 
-                  transform: Matrix4.identity()
-                    ..rotateZ(_controller.value * math.pi) // Rotate 180 degrees
-                    ..scale(1.0,
-                        -1.0), // Flip vertically to complete the perspective swap
-                  child: child,
-                );
-              },
-              child: SvgPicture.asset(
-                'assets/icons/arena-football.svg',
-                width: double.infinity,
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
+                        transform: Matrix4.identity()
+                          ..rotateZ(
+                              _controller.value * math.pi) // Rotate 180 degrees
+                          ..scale(1.0,
+                              -1.0), // Flip vertically to complete the perspective swap
+                        child: child,
+                      );
+                    },
+                    child: SvgPicture.asset(
+                      'assets/icons/arena-football.svg',
+                      width: double.infinity,
+                      fit: BoxFit.fitWidth,
+                      alignment: Alignment.center,
+                    ),
+                  ),
+                ),
               ),
-            ),
+
+              // player
+              AspectRatio(
+                aspectRatio: 363 / 867, // Approximately 0.4186
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final halfHeight =
+                        (state.keyField.currentContext!.height / 2) + 14;
+                    return Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        width: double.infinity,
+                        height: halfHeight,
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 88,
+                                  height: 68,
+                                  child: itemContent(),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                item(),
+                                const SizedBox(width: 12),
+                                item(marginBottom: 22),
+                                const SizedBox(width: 12),
+                                item(marginBottom: 22),
+                                const SizedBox(width: 12),
+                                item(),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                const Spacer(),
+                                item(),
+                                const SizedBox(width: 12),
+                                item(marginBottom: 22),
+                                const SizedBox(width: 12),
+                                item(),
+                                const Spacer(),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Spacer(),
+                                item(),
+                                const SizedBox(width: 12),
+                                item(marginTop: 22),
+                                const SizedBox(width: 12),
+                                item(),
+                                const Spacer(),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
+          const SizedBox(height: 200)
         ],
       ),
     );

@@ -52,4 +52,6 @@ class LineupRankedState {
   var showTick = 0.obs;
 
   var availableSlot = 3.obs;
+
+  GlobalKey keyField = GlobalKey();
 }
