@@ -129,7 +129,7 @@ class LobbyUi extends StatelessWidget {
                 height: 68,
                 outerColor: const Color(0xFFE5E6E5),
                 elevation: 0,
-                onSubmit: () async {},
+                onSubmit: logic.handleCheckoutPage,
                 innerColor: kBlackColor,
                 gradient: logic.sessionType == SessionType.ranked
                     ? mainGradient

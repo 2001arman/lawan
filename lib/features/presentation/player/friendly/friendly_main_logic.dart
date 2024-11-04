@@ -61,13 +61,32 @@ class FriendlyMainLogic extends GetxController {
     return;
   }
 
-  void onCreate(SessionModel session) {
+  void onCreate(SessionModel session) async {
     state.sessionList.add(session);
     var data = state.listFriends.where((data) => data.isSelected.value == true);
     for (var friend in data) {
       friend.isSelected.value = false;
     }
     playerMainState.selectedFriends.clear();
+    Get.close(2);
+    await Future.delayed(const Duration(seconds: 1));
+    AdminSessionBottomSheet().successCreateSesssionSheet(
+      sessionType: SessionType.friendly,
+      arenaModel:  session.arena,
+      selectedCourt: session.selectedCourt,
+      session: session,
+      showPill: true,
+      successCreate: true,
+      isAdmin: false,
+      onUpdate: () {
+        Get.back();
+        AdminAddSession(
+          state: Get.find<SessionLogic>().state,
+          logic: Get.find<SessionLogic>(),
+        ).createNewSession();
+      },
+      onDelete: () {},
+    );
   }
 
   void showCreateDialog() => PlayerAddSession(

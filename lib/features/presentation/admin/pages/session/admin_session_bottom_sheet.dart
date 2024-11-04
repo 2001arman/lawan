@@ -26,6 +26,7 @@ class AdminSessionBottomSheet {
     required VoidCallback onShare,
     required VoidCallback onBackShare,
     required SessionType sessionType,
+    required SessionModel session,
     bool isAdmin = true,
   }) {
     var showShare = false.obs;
@@ -135,6 +136,7 @@ class AdminSessionBottomSheet {
                                     LobbyUi.namePath,
                                     arguments: [
                                       sessionType,
+                                      session,
                                     ],
                                   ),
                                   widget: Row(
@@ -232,6 +234,7 @@ class AdminSessionBottomSheet {
       onDelete: onDelete,
       onUpdate: onUpdate,
       sessionType: sessionType,
+      session: session,
       onBackShare: () {
         showQr.toggle();
       },
