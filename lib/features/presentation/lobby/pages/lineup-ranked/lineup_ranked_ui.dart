@@ -47,111 +47,153 @@ class _LineupRankedUiState extends State<LineupRankedUi>
     }
   }
 
-  Widget itemContent() {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 35),
-          child: Row(
+  Widget itemContent({
+    required String position,
+    required int index,
+  }) {
+    return GestureDetector(
+      onTap: () => logic.handleSelectedIndexLineUp(index),
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 35),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Obx(
+                    () => Container(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: state.homeLineUp[index] != null
+                            ? kBlackColor
+                            : kWhiteColor,
+                        gradient: lobbyState.selectedIndexLineUp.value == index
+                            ? mainGradient
+                            : null,
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(-2, 1),
+                            blurRadius: 5,
+                            color: kBlackColor.withOpacity(0.1),
+                          ),
+                          BoxShadow(
+                            offset: const Offset(-8, 3),
+                            blurRadius: 9,
+                            color: kBlackColor.withOpacity(0.09),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          lobbyState.selectedIndexLineUp.value == index
+                              ? state.myProfile.name
+                              : state.homeLineUp[index]?.name ?? 'Available',
+                          style: blackTextStyle.copyWith(
+                            fontSize: 12,
+                            fontWeight: medium,
+                            color: lobbyState.selectedIndexLineUp.value == index ||
+                                    state.homeLineUp[index] != null
+                                ? kWhiteColor
+                                : kBlackColor,
+                            height: 1,
+                          ),
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          // overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
+              Obx(
+                () => Container(
+                  width: 40,
+                  height: 40,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
                     color: kWhiteColor,
+                    shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        offset: const Offset(-2, 1),
-                        blurRadius: 5,
+                        offset: const Offset(0, 1),
+                        blurRadius: 3,
                         color: kBlackColor.withOpacity(0.1),
                       ),
                       BoxShadow(
-                        offset: const Offset(-8, 3),
-                        blurRadius: 9,
+                        offset: const Offset(0, 5),
+                        blurRadius: 5,
                         color: kBlackColor.withOpacity(0.09),
                       ),
                     ],
                   ),
-                  child: Center(
-                    child: Text(
-                      'Arman Maulana',
-                      style: blackTextStyle.copyWith(
-                        fontSize: 12,
-                        fontWeight: medium,
-                        color: kBlackColor,
-                        height: 1,
-                      ),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      // overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
+                  child: lobbyState.selectedIndexLineUp.value == index ||
+                          state.homeLineUp[index] != null
+                      ? Image.asset(
+                          lobbyState.selectedIndexLineUp.value == index
+                              ? state.myProfile.asset
+                              : state.homeLineUp[index]!.asset,
+                          width: 40,
+                          height: 40,
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: SvgPicture.asset(
+                            'assets/icons/add_user.svg',
+                            width: 40,
+                            height: 40,
+                          ),
+                        ),
                 ),
               ),
             ],
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(0, 1),
-                    blurRadius: 3,
-                    color: kBlackColor.withOpacity(0.1),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                margin: const EdgeInsets.only(left: 35),
+                decoration: BoxDecoration(
+                  color: kBlackColor,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: Text(
+                  position,
+                  style: whiteTextStyle.copyWith(
+                    fontSize: 10,
+                    fontWeight: medium,
+                    height: 16 / 10,
                   ),
-                  BoxShadow(
-                    offset: const Offset(0, 5),
-                    blurRadius: 5,
-                    color: kBlackColor.withOpacity(0.09),
-                  ),
-                ],
-              ),
-              child: Image.asset(
-                'assets/avatars/avatar1.png',
-                width: 40,
-                height: 40,
-              ),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              margin: const EdgeInsets.only(left: 35),
-              decoration: BoxDecoration(
-                color: kBlackColor,
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: Text(
-                'DF',
-                style: whiteTextStyle.copyWith(
-                  fontSize: 10,
-                  fontWeight: medium,
-                  height: 16 / 10,
                 ),
               ),
-            ),
-          ],
-        )
-      ],
+            ],
+          )
+        ],
+      ),
     );
   }
 
-  Widget item({double marginBottom = 0, double marginTop = 0}) {
+  Widget item(
+      {double marginBottom = 0,
+      double marginTop = 0,
+      required String position,
+      required int index}) {
     return Expanded(
       flex: 2,
       child: Container(
         height: 68,
         margin: EdgeInsets.only(bottom: marginBottom, top: marginTop),
-        child: itemContent(),
+        child: itemContent(
+          position: position,
+          index: index,
+        ),
       ),
     );
   }
@@ -371,31 +413,58 @@ class _LineupRankedUiState extends State<LineupRankedUi>
                                 SizedBox(
                                   width: 88,
                                   height: 68,
-                                  child: itemContent(),
+                                  child: itemContent(
+                                    position: 'GK',
+                                    index: 0,
+                                  ),
                                 ),
                               ],
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                item(),
+                                item(
+                                  position: 'DF',
+                                  index: 1,
+                                ),
                                 const SizedBox(width: 12),
-                                item(marginBottom: 22),
+                                item(
+                                  marginBottom: 22,
+                                  position: 'DF',
+                                  index: 2,
+                                ),
                                 const SizedBox(width: 12),
-                                item(marginBottom: 22),
+                                item(
+                                  marginBottom: 22,
+                                  position: 'DF',
+                                  index: 3,
+                                ),
                                 const SizedBox(width: 12),
-                                item(),
+                                item(
+                                  position: 'DF',
+                                  index: 4,
+                                ),
                               ],
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 const Spacer(),
-                                item(),
+                                item(
+                                  position: 'MF',
+                                  index: 5,
+                                ),
                                 const SizedBox(width: 12),
-                                item(marginBottom: 22),
+                                item(
+                                  marginBottom: 22,
+                                  position: 'MF',
+                                  index: 6,
+                                ),
                                 const SizedBox(width: 12),
-                                item(),
+                                item(
+                                  position: 'MF',
+                                  index: 7,
+                                ),
                                 const Spacer(),
                               ],
                             ),
@@ -403,11 +472,21 @@ class _LineupRankedUiState extends State<LineupRankedUi>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Spacer(),
-                                item(),
+                                item(
+                                  position: 'FW',
+                                  index: 8,
+                                ),
                                 const SizedBox(width: 12),
-                                item(marginTop: 22),
+                                item(
+                                  marginTop: 22,
+                                  position: 'FW',
+                                  index: 9,
+                                ),
                                 const SizedBox(width: 12),
-                                item(),
+                                item(
+                                  position: 'FW',
+                                  index: 10,
+                                ),
                                 const Spacer(),
                               ],
                             ),

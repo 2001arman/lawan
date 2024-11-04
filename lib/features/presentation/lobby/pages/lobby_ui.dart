@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -31,6 +33,77 @@ class LobbyUi extends StatelessWidget {
       }
     }
 
+    Widget refereeSlide() {
+      return Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              'Referee mode',
+              style: darkGreyTextStyle.copyWith(fontWeight: medium),
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: EdgeInsets.only(right: defaultMargin),
+              child: SvgPicture.asset(
+                'assets/icons/arrow_right_3.svg',
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    Widget selectPositionSlide() {
+      return Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              state.selectedIndexLineUp.value != -1
+                  ? 'Swipe to Join Session'
+                  : 'Select position to play',
+              style: darkGreyTextStyle.copyWith(
+                fontWeight: medium,
+                fontSize: 12,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: EdgeInsets.only(right: defaultMargin),
+              child: SvgPicture.asset(
+                'assets/icons/arrow_right_3.svg',
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    Widget sessionStartSlide() {
+      return Padding(
+        padding: const EdgeInsets.only(left: 8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Sesssion starting in',
+              style: darkGreyTextStyle.copyWith(fontSize: 12),
+            ),
+            Text(
+              '2 days 2 hours 6 mins 3 sec ',
+              style: blackTextStyle.copyWith(fontWeight: bold),
+            ),
+          ],
+        ),
+      );
+    }
+
     Widget bottomSlideableBar() {
       return Obx(
         () => Visibility(
@@ -56,47 +129,25 @@ class LobbyUi extends StatelessWidget {
                 height: 68,
                 outerColor: const Color(0xFFE5E6E5),
                 elevation: 0,
+                onSubmit: () async {},
                 innerColor: kBlackColor,
-                sliderButtonIcon: SvgPicture.asset('assets/icons/whistle.svg'),
+                gradient: logic.sessionType == SessionType.ranked
+                    ? mainGradient
+                    : null,
+                sliderButtonIcon: SvgPicture.asset(
+                  logic.sessionType == SessionType.ranked
+                      ? 'assets/icons/player-play.svg'
+                      : 'assets/icons/whistle.svg',
+                  width: 24,
+                  height: 24,
+                  color: kWhiteColor,
+                ),
                 child: Visibility(
                   visible: state.lineUpTabActive.value != '',
-                  replacement: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Referee mode',
-                          style: darkGreyTextStyle.copyWith(fontWeight: medium),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: defaultMargin),
-                          child: SvgPicture.asset(
-                            'assets/icons/arrow_right_3.svg',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Sesssion starting in',
-                          style: darkGreyTextStyle.copyWith(fontSize: 12),
-                        ),
-                        Text(
-                          '2 days 2 hours 6 mins 3 sec ',
-                          style: blackTextStyle.copyWith(fontWeight: bold),
-                        ),
-                      ],
-                    ),
-                  ),
+                  replacement: refereeSlide(),
+                  child: logic.sessionType == SessionType.ranked
+                      ? selectPositionSlide()
+                      : sessionStartSlide(),
                 ),
               ),
             ),

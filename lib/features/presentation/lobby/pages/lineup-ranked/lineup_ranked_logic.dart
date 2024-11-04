@@ -48,4 +48,15 @@ class LineupRankedLogic extends GetxController {
     state.listFriends.remove(data);
     state.availableSlot.value--;
   }
+
+  void handleSelectedIndexLineUp(int index) {
+    if (state.homeLineUp[index] != null) {
+      return;
+    }
+    if (index == lobbyState.selectedIndexLineUp.value) {
+      lobbyState.selectedIndexLineUp.value = -1;
+    } else {
+      lobbyState.selectedIndexLineUp.value = index;
+    }
+  }
 }

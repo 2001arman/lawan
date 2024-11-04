@@ -53,5 +53,46 @@ class LineupRankedState {
 
   var availableSlot = 3.obs;
 
+  var homeLineUp = <AvatarModel?>[
+    AvatarModel(
+      name: 'Samantha',
+      asset: 'assets/avatars/avatar4.png',
+      position: 'GK',
+      isSelected: false.obs,
+    ),
+    null,
+    null,
+    AvatarModel(
+      name: 'Sarah Yahya',
+      asset: 'assets/avatars/avatar1.png',
+      position: 'GK',
+      isSelected: false.obs,
+    ),
+    null,
+    null,
+    AvatarModel(
+      name: 'Jesse James',
+      asset: 'assets/avatars/avatar4.png',
+      position: 'GK',
+      isSelected: false.obs,
+    ),
+    null,
+    null,
+    null,
+    AvatarModel(
+      name: 'Saiful Bukhari',
+      asset: 'assets/avatars/avatar3.png',
+      position: 'GK',
+      isSelected: false.obs,
+    ),
+  ].obs;
+
+  AvatarModel myProfile = AvatarModel(
+    name: 'Arman Maulana',
+    asset: 'assets/avatars/avatar2.png',
+    position: 'GK',
+    isSelected: false.obs,
+  );
+
   GlobalKey keyField = GlobalKey();
 }

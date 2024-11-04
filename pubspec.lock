@@ -864,11 +864,12 @@ packages:
   slide_to_act:
     dependency: "direct main"
     description:
-      name: slide_to_act
-      sha256: cd4ea5019754347d5a2b0375e802ad948610a0e233adfe51a9cc5b3a1fc3a43b
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
+      path: "."
+      ref: HEAD
+      resolved-ref: dac7a601ffca590f97970b4d0067480a29069316
+      url: "https://github.com/2001arman/flutter-slide-to-act.git"
+    source: git
+    version: "2.0.4"
   source_span:
     dependency: transitive
     description:

@@ -20,4 +20,6 @@ class LobbyState {
     '',
     'Away',
   ];
+
+  var selectedIndexLineUp = (-1).obs;
 }
