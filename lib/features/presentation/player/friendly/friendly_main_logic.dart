@@ -72,7 +72,7 @@ class FriendlyMainLogic extends GetxController {
     await Future.delayed(const Duration(seconds: 1));
     AdminSessionBottomSheet().successCreateSesssionSheet(
       sessionType: SessionType.friendly,
-      arenaModel:  session.arena,
+      arenaModel: session.arena,
       selectedCourt: session.selectedCourt,
       session: session,
       showPill: true,

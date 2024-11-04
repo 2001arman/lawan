@@ -50,7 +50,7 @@ class PlayerAddSessionLogic {
 
       await Get.toNamed(
         CheckoutUi.namePath,
-        arguments: [sessionModel, onCreate, sessionType],
+        arguments: [sessionModel, onCreate],
       );
       return;
     }

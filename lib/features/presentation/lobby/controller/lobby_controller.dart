@@ -59,11 +59,7 @@ class LobbyController extends GetxController {
   Future<void> handleCheckoutPage() async {
     Get.toNamed(
       CheckoutUi.namePath,
-      arguments: [
-        sessionModel,
-        onCreate,
-        sessionType,
-      ],
+      arguments: [sessionModel, onCreate],
     );
   }
 }

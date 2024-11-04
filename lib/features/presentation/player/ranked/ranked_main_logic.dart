@@ -72,7 +72,7 @@ class RankedMainLogic extends GetxController {
     Get.close(2);
     await Future.delayed(const Duration(seconds: 1));
     AdminSessionBottomSheet().successCreateSesssionSheet(
-      sessionType: SessionType.friendly,
+      sessionType: SessionType.ranked,
       arenaModel: session.arena,
       selectedCourt: session.selectedCourt,
       session: session,
