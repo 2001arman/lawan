@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/lobby/pages/lineup-friendly/lineup_friendly_logic.dart';
+import 'package:lawan/features/presentation/lobby/pages/widgets/lobby_selected_friend_widget.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import '../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../utility/shared/widgets/container/select_friend_item.dart';
 import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import '../../../../../utility/shared/widgets/text/text_border.dart';
-import '../../../../../utility/shared/widgets/text/text_pill_widget.dart';
 import '../../../../domain/session/avatar_model.dart';
 
 class LineupFriendlyUi extends StatelessWidget {
@@ -21,87 +21,12 @@ class LineupFriendlyUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget selectedFriends({required AvatarModel data, required int index}) {
-      return Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(8),
-        margin: const EdgeInsets.only(bottom: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(32),
-          color: kWhiteColor,
-        ),
-        child: Row(
-          children: [
-            Image.asset(
-              data.asset,
-              width: 48,
-              height: 48,
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    data.name,
-                    style: blackTextStyle.copyWith(
-                        fontSize: 12, fontWeight: medium),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      TextPillWidget(
-                        verticalPadding: 2,
-                        backgroundColor: kBackgroundColor,
-                        prefix: Padding(
-                          padding: const EdgeInsets.only(right: 3),
-                          child: SvgPicture.asset('assets/icons/user.svg'),
-                        ),
-                        title: data.position,
-                        titleColor: kBlackColor,
-                      ),
-                      const SizedBox(width: 8),
-                      Visibility(
-                        visible: index == state.selectedRefereeIndex.value,
-                        child: SvgPicture.asset(
-                          'assets/icons/whistle.svg',
-                          color: kBlackColor,
-                          width: 16,
-                          height: 16,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-            TextBorder(
-              textTitle: 'Novice',
-              backgroundColor: kWhiteColor,
-              fontSize: 10,
-            ),
-            Obx(
-              () => Visibility(
-                visible: (lobbyState.lineUpTabActive.value == '') &&
-                    (index != state.selectedRefereeIndex.value),
-                child: CircleButtonTransparentWidget(
-                  onTap: () => logic.selectReferee(
-                    index: index,
-                    name: data.name,
-                  ),
-                  borderColor: kGreyColor,
-                  margin: const EdgeInsets.only(left: 12),
-                  widget: SvgPicture.asset(
-                    'assets/icons/whistle.svg',
-                    color: kBlackColor,
-                    width: 20,
-                    height: 20,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 4),
-          ],
-        ),
+      return LobbySelectedFriendWidget(
+        profile: data,
+        showReferee: (lobbyState.lineUpTabActive.value == '') &&
+            (index != state.selectedRefereeIndex.value),
+        isReferee: index == state.selectedRefereeIndex.value,
+        selecReferee: () => logic.selectReferee(index: index, name: data.name),
       );
     }
 

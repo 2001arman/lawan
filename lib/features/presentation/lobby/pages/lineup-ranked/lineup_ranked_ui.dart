@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/lobby/pages/lineup-ranked/lineup_ranked_logic.dart';
+import 'package:lawan/features/presentation/lobby/pages/widgets/lobby_selected_friend_widget.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import 'dart:math' as math;
@@ -66,7 +67,7 @@ class _LineupRankedUiState extends State<LineupRankedUi>
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
-                        color: state.homeLineUp[index] != null
+                        color: logic.getProfilePosition(index) != null
                             ? kBlackColor
                             : kWhiteColor,
                         gradient: lobbyState.selectedIndexLineUp.value == index
@@ -89,14 +90,16 @@ class _LineupRankedUiState extends State<LineupRankedUi>
                         child: Text(
                           lobbyState.selectedIndexLineUp.value == index
                               ? state.myProfile.name
-                              : state.homeLineUp[index]?.name ?? 'Available',
+                              : logic.getProfilePosition(index)?.name ??
+                                  'Available',
                           style: blackTextStyle.copyWith(
                             fontSize: 12,
                             fontWeight: medium,
-                            color: lobbyState.selectedIndexLineUp.value == index ||
-                                    state.homeLineUp[index] != null
-                                ? kWhiteColor
-                                : kBlackColor,
+                            color:
+                                lobbyState.selectedIndexLineUp.value == index ||
+                                        logic.getProfilePosition(index) != null
+                                    ? kWhiteColor
+                                    : kBlackColor,
                             height: 1,
                           ),
                           textAlign: TextAlign.center,
@@ -134,11 +137,11 @@ class _LineupRankedUiState extends State<LineupRankedUi>
                     ],
                   ),
                   child: lobbyState.selectedIndexLineUp.value == index ||
-                          state.homeLineUp[index] != null
+                          logic.getProfilePosition(index) != null
                       ? Image.asset(
                           lobbyState.selectedIndexLineUp.value == index
                               ? state.myProfile.asset
-                              : state.homeLineUp[index]!.asset,
+                              : logic.getProfilePosition(index)!.asset,
                           width: 40,
                           height: 40,
                         )
@@ -195,6 +198,173 @@ class _LineupRankedUiState extends State<LineupRankedUi>
           index: index,
         ),
       ),
+    );
+  }
+
+  Widget playerSection() {
+    return Stack(
+      children: [
+        Padding(
+          key: state.keyField,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: AspectRatio(
+            aspectRatio: 363 / 867, // Approximately 0.4186
+            child: AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Transform(
+                  alignment: Alignment.center,
+
+                  transform: Matrix4.identity()
+                    ..rotateZ(_controller.value * math.pi) // Rotate 180 degrees
+                    ..scale(1.0,
+                        -1.0), // Flip vertically to complete the perspective swap
+                  child: child,
+                );
+              },
+              child: SvgPicture.asset(
+                'assets/icons/arena-football.svg',
+                width: double.infinity,
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.center,
+              ),
+            ),
+          ),
+        ),
+
+        // player
+        AspectRatio(
+          aspectRatio: 363 / 867, // Approximately 0.4186
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final halfHeight =
+                  (state.keyField.currentContext!.height / 2) + 14;
+              return Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: double.infinity,
+                  height: halfHeight,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 88,
+                            height: 68,
+                            child: itemContent(
+                              position: 'GK',
+                              index: 0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          item(
+                            position: 'DF',
+                            index: 1,
+                          ),
+                          const SizedBox(width: 12),
+                          item(
+                            marginBottom: 22,
+                            position: 'DF',
+                            index: 2,
+                          ),
+                          const SizedBox(width: 12),
+                          item(
+                            marginBottom: 22,
+                            position: 'DF',
+                            index: 3,
+                          ),
+                          const SizedBox(width: 12),
+                          item(
+                            position: 'DF',
+                            index: 4,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Spacer(),
+                          item(
+                            position: 'MF',
+                            index: 5,
+                          ),
+                          const SizedBox(width: 12),
+                          item(
+                            marginBottom: 22,
+                            position: 'MF',
+                            index: 6,
+                          ),
+                          const SizedBox(width: 12),
+                          item(
+                            position: 'MF',
+                            index: 7,
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Spacer(),
+                          item(
+                            position: 'FW',
+                            index: 8,
+                          ),
+                          const SizedBox(width: 12),
+                          item(
+                            marginTop: 22,
+                            position: 'FW',
+                            index: 9,
+                          ),
+                          const SizedBox(width: 12),
+                          item(
+                            position: 'FW',
+                            index: 10,
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget body() {
+    return Obx(
+      () => lobbyState.lineUpTabActive.value == ''
+          ? Padding(
+              padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+              child: Column(
+                children: [
+                  ...state.selectedFriends.asMap().entries.map(
+                        (data) => LobbySelectedFriendWidget(
+                          profile: data.value,
+                          showReferee: (lobbyState.lineUpTabActive.value ==
+                                  '') &&
+                              (data.key != state.selectedRefereeIndex.value),
+                          isReferee:
+                              data.key == state.selectedRefereeIndex.value,
+                          selecReferee: () => logic.selectReferee(
+                              index: data.key, name: data.value.name),
+                        ),
+                      ),
+                ],
+              ),
+            )
+          : playerSection(),
     );
   }
 
@@ -360,146 +530,8 @@ class _LineupRankedUiState extends State<LineupRankedUi>
 
           // arena fields
           SizedBox(height: defaultMargin),
-          Stack(
-            children: [
-              Padding(
-                key: state.keyField,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: AspectRatio(
-                  aspectRatio: 363 / 867, // Approximately 0.4186
-                  child: AnimatedBuilder(
-                    animation: _controller,
-                    builder: (context, child) {
-                      return Transform(
-                        alignment: Alignment.center,
-
-                        transform: Matrix4.identity()
-                          ..rotateZ(
-                              _controller.value * math.pi) // Rotate 180 degrees
-                          ..scale(1.0,
-                              -1.0), // Flip vertically to complete the perspective swap
-                        child: child,
-                      );
-                    },
-                    child: SvgPicture.asset(
-                      'assets/icons/arena-football.svg',
-                      width: double.infinity,
-                      fit: BoxFit.fitWidth,
-                      alignment: Alignment.center,
-                    ),
-                  ),
-                ),
-              ),
-
-              // player
-              AspectRatio(
-                aspectRatio: 363 / 867, // Approximately 0.4186
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    final halfHeight =
-                        (state.keyField.currentContext!.height / 2) + 14;
-                    return Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        width: double.infinity,
-                        height: halfHeight,
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 88,
-                                  height: 68,
-                                  child: itemContent(
-                                    position: 'GK',
-                                    index: 0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                item(
-                                  position: 'DF',
-                                  index: 1,
-                                ),
-                                const SizedBox(width: 12),
-                                item(
-                                  marginBottom: 22,
-                                  position: 'DF',
-                                  index: 2,
-                                ),
-                                const SizedBox(width: 12),
-                                item(
-                                  marginBottom: 22,
-                                  position: 'DF',
-                                  index: 3,
-                                ),
-                                const SizedBox(width: 12),
-                                item(
-                                  position: 'DF',
-                                  index: 4,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                const Spacer(),
-                                item(
-                                  position: 'MF',
-                                  index: 5,
-                                ),
-                                const SizedBox(width: 12),
-                                item(
-                                  marginBottom: 22,
-                                  position: 'MF',
-                                  index: 6,
-                                ),
-                                const SizedBox(width: 12),
-                                item(
-                                  position: 'MF',
-                                  index: 7,
-                                ),
-                                const Spacer(),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Spacer(),
-                                item(
-                                  position: 'FW',
-                                  index: 8,
-                                ),
-                                const SizedBox(width: 12),
-                                item(
-                                  marginTop: 22,
-                                  position: 'FW',
-                                  index: 9,
-                                ),
-                                const SizedBox(width: 12),
-                                item(
-                                  position: 'FW',
-                                  index: 10,
-                                ),
-                                const Spacer(),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 200)
+          body(),
+          // const SizedBox(height: 200)
         ],
       ),
     );

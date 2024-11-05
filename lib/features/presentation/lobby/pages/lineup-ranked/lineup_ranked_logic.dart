@@ -59,4 +59,14 @@ class LineupRankedLogic extends GetxController {
       lobbyState.selectedIndexLineUp.value = index;
     }
   }
+
+  AvatarModel? getProfilePosition(int index) {
+    if (lobbyState.lineUpTabActive.value == 'Home') {
+      return state.homeLineUp[index];
+    } else if (lobbyState.lineUpTabActive.value == 'Away') {
+      return state.awayLineUp[index];
+    } else {
+      return null;
+    }
+  }
 }

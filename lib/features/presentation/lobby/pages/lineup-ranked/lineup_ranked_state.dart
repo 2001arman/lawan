@@ -87,6 +87,40 @@ class LineupRankedState {
     ),
   ].obs;
 
+  var awayLineUp = <AvatarModel?>[
+    AvatarModel(
+      name: 'Shahirah Liyana',
+      asset: 'assets/avatars/avatar1.png',
+      position: 'GK',
+      isSelected: false.obs,
+    ),
+    null,
+    null,
+    AvatarModel(
+      name: 'Saiful Bukhari',
+      asset: 'assets/avatars/avatar2.png',
+      position: 'GK',
+      isSelected: false.obs,
+    ),
+    null,
+    null,
+    AvatarModel(
+      name: 'Jakub Ehsan',
+      asset: 'assets/avatars/avatar3.png',
+      position: 'GK',
+      isSelected: false.obs,
+    ),
+    null,
+    null,
+    null,
+    AvatarModel(
+      name: 'Mike Asto',
+      asset: 'assets/avatars/avatar4.png',
+      position: 'GK',
+      isSelected: false.obs,
+    ),
+  ].obs;
+
   AvatarModel myProfile = AvatarModel(
     name: 'Arman Maulana',
     asset: 'assets/avatars/avatar2.png',
