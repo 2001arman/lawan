@@ -344,7 +344,7 @@ class PlayerAddBottomSheet {
                                       Helper.showToast(
                                           isSuccess: true,
                                           message:
-                                              'User removed for invitation successfully');
+                                              'User removed from invitation successfully');
                                       selectedFriends.remove(data);
                                       data.isSelected.value = false;
                                     },

@@ -9,7 +9,7 @@ class HorizontalWhiteGradient extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 16,
+      height: 24,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,

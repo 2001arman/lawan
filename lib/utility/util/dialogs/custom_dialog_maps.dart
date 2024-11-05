@@ -172,19 +172,23 @@ class CustomDialogMaps {
               padding: EdgeInsets.all(defaultMargin),
               child: Row(
                 children: [
-                  CustomButton(
-                    title: 'Cancel',
-                    isBlack: false,
-                    onTap: () => Get.back(),
+                  Expanded(
+                    child: CustomButton(
+                      title: 'Cancel',
+                      isBlack: false,
+                      onTap: () => Get.back(),
+                    ),
                   ),
                   const SizedBox(width: 16),
-                  CustomButton(
-                    title: 'Save',
-                    isBlack: true,
-                    onTap: () {
-                      Get.back();
-                      onSelected('Petaling Jaya');
-                    },
+                  Expanded(
+                    child: CustomButton(
+                      title: 'Save',
+                      isBlack: true,
+                      onTap: () {
+                        Get.back();
+                        onSelected('Petaling Jaya');
+                      },
+                    ),
                   ),
                 ],
               ),

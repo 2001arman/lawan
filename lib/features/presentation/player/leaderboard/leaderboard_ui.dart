@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/leaderboard/leaderboard_logic.dart';
@@ -286,13 +288,14 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                 slivers: [
                   // Collapsible Tabbar and Player of the Week section
                   SliverAppBarBuilder(
-                    initialContentHeight: 180,
-                    initialBarHeight: 0,
+                    initialContentHeight: Platform.isIOS ? 150 : 185,
                     pinned: false,
                     stretch: false,
                     contentBelowBar: false,
                     barHeight: 0,
                     contentPadding: EdgeInsets.zero,
+                    trailingActionsPadding: EdgeInsets.zero,
+                    leadingActionsPadding: EdgeInsets.zero,
                     backgroundColorAll: Colors.transparent,
                     contentBuilder: (context, expandRatio, contentHeight,
                             centerPadding, overlapsContent) =>
@@ -354,11 +357,6 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                         ],
                       ),
                     ),
-                    // backgroundColor: Colors.transparent,
-                    // contentBuilder: (context, expandRatio, contentHeight,
-                    //         overlapsContent) {
-                    //           return Container();
-                    //         }
                   ),
 
                   // Leaderboard list inside a scrollable container
@@ -366,7 +364,7 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: defaultMargin),
                       child: Container(
-                        height: Get.height - 275,
+                        height: Get.height - (Platform.isIOS ? 325 : 250),
                         margin: const EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                           color: kWhiteColor,
@@ -374,18 +372,13 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(32),
-                          child: Obx(
-                            () => ListView.builder(
-                              controller: _listViewController,
-                              physics: state.activeScroll.value
-                                  ? const AlwaysScrollableScrollPhysics()
-                                  : const NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.zero,
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return leaderboardItem(number: index + 1);
-                              },
-                            ),
+                          child: ListView.builder(
+                            controller: _listViewController,
+                            padding: EdgeInsets.zero,
+                            itemCount: 10,
+                            itemBuilder: (context, index) {
+                              return leaderboardItem(number: index + 1);
+                            },
                           ),
                         ),
                       ),
