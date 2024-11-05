@@ -4,6 +4,7 @@ import 'package:lawan/features/presentation/player/leaderboard/leaderboard_logic
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 import 'package:lawan/utility/shared/widgets/text/text_gradient.dart';
+import 'package:sliver_app_bar_builder/sliver_app_bar_builder.dart';
 
 import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 
@@ -266,7 +267,10 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
       body: Container(
         width: Get.width,
         height: Get.height,
-        padding: const EdgeInsets.only(bottom: 150, top: 100),
+        padding: EdgeInsets.only(
+          bottom: 150,
+          top: 58 + MediaQuery.of(context).padding.top,
+        ),
         decoration: BoxDecoration(
           gradient: backgroundGradient,
         ),
@@ -281,74 +285,80 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                 controller: _scrollController,
                 slivers: [
                   // Collapsible Tabbar and Player of the Week section
-                  SliverAppBar(
-                    expandedHeight: 167,
+                  SliverAppBarBuilder(
+                    initialContentHeight: 180,
+                    initialBarHeight: 0,
                     pinned: false,
-                    backgroundColor: Colors.transparent,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: defaultMargin),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Tabbar
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: TabbarWidget(
-                                    tabBarTitle: state.lobbyTabBarTitle,
-                                    tabBarIcon: state.lobbyTabBarIcon,
-                                    tabActive: state.lobbyTabActive,
-                                    backgroundColor: kBlackColor,
-                                    iconSize: 20,
-                                    onTap: (title) {
-                                      state.lobbyTabActive.value = title;
-                                      logic.lobbyAlignmentTabbar(title);
-                                    },
-                                    alignment: state.lobbyActiveAlignment,
-                                  ),
+                    stretch: false,
+                    contentBelowBar: false,
+                    barHeight: 0,
+                    contentPadding: EdgeInsets.zero,
+                    backgroundColorAll: Colors.transparent,
+                    contentBuilder: (context, expandRatio, contentHeight,
+                            centerPadding, overlapsContent) =>
+                        Padding(
+                      padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Tabbar
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TabbarWidget(
+                                  tabBarTitle: state.lobbyTabBarTitle,
+                                  tabBarIcon: state.lobbyTabBarIcon,
+                                  tabActive: state.lobbyTabActive,
+                                  backgroundColor: kBlackColor,
+                                  iconSize: 20,
+                                  onTap: (title) {
+                                    state.lobbyTabActive.value = title;
+                                    logic.lobbyAlignmentTabbar(title);
+                                  },
+                                  alignment: state.lobbyActiveAlignment,
                                 ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          // Player of the Week section
+                          Text(
+                            'Player of The Week',
+                            style: whiteTextStyle.copyWith(
+                              fontSize: 16,
+                              fontWeight: medium,
+                            ),
+                          ),
+                          SizedBox(height: defaultMargin),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                SizedBox(width: defaultMargin),
+                                playerWeekContainer(),
+                                playerWeekContainer(),
+                                playerWeekContainer(),
+                                playerWeekContainer(),
                               ],
                             ),
-                            const SizedBox(height: 20),
-                            // Player of the Week section
-                            Text(
-                              'Player of The Week',
-                              style: whiteTextStyle.copyWith(
-                                fontSize: 16,
-                                fontWeight: medium,
-                              ),
+                          ),
+                          SizedBox(height: defaultMargin),
+                          // Leaderboard title
+                          Text(
+                            'Leaderboard',
+                            style: whiteTextStyle.copyWith(
+                              fontSize: 16,
+                              fontWeight: medium,
                             ),
-                            SizedBox(height: defaultMargin),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  SizedBox(width: defaultMargin),
-                                  playerWeekContainer(),
-                                  playerWeekContainer(),
-                                  playerWeekContainer(),
-                                  playerWeekContainer(),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: defaultMargin),
-                            // Leaderboard title
-                            Text(
-                              'Leaderboard',
-                              style: whiteTextStyle.copyWith(
-                                fontSize: 16,
-                                fontWeight: medium,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: SizedBox(height: defaultMargin),
+                    // backgroundColor: Colors.transparent,
+                    // contentBuilder: (context, expandRatio, contentHeight,
+                    //         overlapsContent) {
+                    //           return Container();
+                    //         }
                   ),
 
                   // Leaderboard list inside a scrollable container
