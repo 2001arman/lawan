@@ -1,11 +1,14 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/features/presentation/player/friendly/friendly_main_ui.dart';
+import 'package:lawan/features/presentation/player/leaderboard/leaderboard_ui.dart';
 import 'package:lawan/features/presentation/player/ranked/ranked_main_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/create_session_button.dart';
+import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/constants/mode_type.dart';
@@ -64,6 +67,41 @@ class PlayerMainUi extends StatelessWidget {
                 ),
               ],
             ),
+          );
+        case 3:
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FilterButton(
+                paddingVertical: 12,
+                iconColor: kGreyColor,
+                textColor: kWhiteColor,
+                useBlur: true,
+              ),
+              SizedBox(width: defaultMargin),
+              Container(
+                decoration: BoxDecoration(
+                  boxShadow: greenBoxShadow,
+                ),
+                child: CustomButton(
+                  isBlack: true,
+                  paddingVertical: 12,
+                  paddingHorizontal: defaultMargin,
+                  onTap: () {},
+                  widget: Row(
+                    children: [
+                      SvgPicture.asset('assets/icons/rotate.svg'),
+                      const SizedBox(width: 4),
+                      Text(
+                        'By Rank',
+                        style: whiteTextStyle.copyWith(
+                            fontSize: 14, fontWeight: medium),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
           );
         default:
           return const SizedBox();
@@ -129,6 +167,8 @@ class PlayerMainUi extends StatelessWidget {
           return FriendlyMainUi();
         case 1:
           return RankedMainUi();
+        case 3:
+          return const LeaderboardUi();
         default:
           return const Center(
             child: Text('other'),
@@ -145,21 +185,21 @@ class PlayerMainUi extends StatelessWidget {
           children: [
             Column(
               children: [
-                SizedBox(height: MediaQuery.paddingOf(context).top),
-                // appbar
-                CustomAppbarProfile(
-                  onTap: () => CustomDialogProfile.showDialogProfile(
-                    source: ModeType.player,
-                  ),
-                ),
-                const SizedBox(height: 8),
-
                 Expanded(
                   child: Obx(
                     () => body(),
                   ),
                 ),
               ],
+            ),
+            // appbar
+            Padding(
+              padding: EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
+              child: CustomAppbarProfile(
+                onTap: () => CustomDialogProfile.showDialogProfile(
+                  source: ModeType.player,
+                ),
+              ),
             ),
             // buttons
             Align(

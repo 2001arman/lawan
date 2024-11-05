@@ -41,6 +41,7 @@ class RankedMainUi extends StatelessWidget {
 
     return Column(
       children: [
+        const SizedBox(height: 100),
         // tabbar
         Padding(
           padding: EdgeInsets.symmetric(horizontal: defaultMargin),

@@ -104,6 +104,26 @@ LinearGradient goldGradient = const LinearGradient(
   ],
 );
 
+LinearGradient silverGradient = const LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    Color(0xFFEDEDED),
+    Color(0xFFCCCCCC),
+    Color(0xFFA6A6A6),
+  ],
+);
+
+LinearGradient bronzeGradient = const LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    Color(0xFFD1926E),
+    Color(0xFFB56E29),
+    Color(0xFF8C4B08),
+  ],
+);
+
 LinearGradient shadowGradient = LinearGradient(
   begin: Alignment.bottomCenter,
   end: Alignment.topCenter,

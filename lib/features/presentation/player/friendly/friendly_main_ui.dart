@@ -43,6 +43,8 @@ class FriendlyMainUi extends StatelessWidget {
 
     return Column(
       children: [
+        const SizedBox(height: 100),
+
         // tabbar
         Padding(
           padding: EdgeInsets.symmetric(horizontal: defaultMargin),

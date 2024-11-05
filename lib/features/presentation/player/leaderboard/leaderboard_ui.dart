@@ -1,0 +1,410 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lawan/features/presentation/player/leaderboard/leaderboard_logic.dart';
+import 'package:lawan/utility/shared/constants/constants_ui.dart';
+import 'package:lawan/utility/shared/widgets/text/text_border.dart';
+import 'package:lawan/utility/shared/widgets/text/text_gradient.dart';
+
+import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
+
+class LeaderboardUi extends StatefulWidget {
+  const LeaderboardUi({super.key});
+
+  @override
+  State<LeaderboardUi> createState() => _LeaderboardUiState();
+}
+
+class _LeaderboardUiState extends State<LeaderboardUi> {
+  final logic = Get.find<LeaderboardLogic>();
+
+  final state = Get.find<LeaderboardLogic>().state;
+  late ScrollController _scrollController;
+  late ScrollController _listViewController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+    _listViewController = ScrollController()
+      ..addListener(_scrollListenerListView); // Add listener for ListView
+  }
+
+  void _scrollListener() {
+    Get.log('cek position ${_scrollController.position.pixels}');
+    if (_scrollController.position.pixels > 212) {
+      state.activeScroll.value = true;
+    } else {
+      state.activeScroll.value = false;
+    }
+  }
+
+  void _scrollListenerListView() {
+    if (_listViewController.position.pixels > 0) {
+      state.activeScroll.value = true;
+    } else {
+      state.activeScroll.value = false;
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget playerWeekContainer() {
+      return Container(
+        width: 160,
+        height: 56,
+        padding: EdgeInsets.symmetric(horizontal: defaultMargin, vertical: 12),
+        margin: const EdgeInsets.only(right: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32),
+          color: kWhiteColor,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              'assets/avatars/avatar1.png',
+              width: 32,
+              height: 32,
+            ),
+            const SizedBox(width: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Saiful Bukhari',
+                  style: blackTextStyle.copyWith(
+                    fontSize: 10,
+                    fontWeight: semiBold,
+                  ),
+                ),
+                TextGradient(
+                  gradient: mainGradient,
+                  textTitle: '2 Goals',
+                  fontSize: 12,
+                  textColor: kGreenColor,
+                ),
+              ],
+            )
+          ],
+        ),
+      );
+    }
+
+    LinearGradient? handleGradienti(int number) {
+      if (number == 1) {
+        return goldGradient;
+      } else if (number == 2) {
+        return silverGradient;
+      } else if (number == 3) {
+        return bronzeGradient;
+      } else {
+        return null;
+      }
+    }
+
+    Widget leaderboardItem({
+      bool useShadow = false,
+      double paddingVertical = 0,
+      double height = 66,
+      double marginTop = 12,
+      required int number,
+    }) {
+      return Container(
+        width: double.infinity,
+        height: height,
+        padding: EdgeInsets.symmetric(
+          horizontal: defaultMargin,
+          vertical: paddingVertical,
+        ),
+        margin: EdgeInsets.only(top: marginTop),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32),
+          color: kWhiteColor,
+          boxShadow: useShadow
+              ? [
+                  BoxShadow(
+                    offset: const Offset(0, -3),
+                    blurRadius: 7,
+                    color: kBlackColor.withOpacity(0.1),
+                  ),
+                  BoxShadow(
+                    offset: const Offset(0, -13),
+                    blurRadius: 13,
+                    color: kBlackColor.withOpacity(0.09),
+                  ),
+                ]
+              : null,
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: kBlackColor,
+                gradient: handleGradienti(number),
+              ),
+              child: Center(
+                child: Text(
+                  number == -1 ? 'N/A' : '$number',
+                  style:
+                      whiteTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+                ),
+              ),
+            ),
+            SizedBox(width: defaultMargin),
+            Image.asset(
+              'assets/avatars/avatar2.png',
+              width: 48,
+              height: 48,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Jese Leos',
+                    style: blackTextStyle.copyWith(
+                        fontSize: 12, fontWeight: medium),
+                  ),
+                  const SizedBox(height: 8),
+                  const TextBorder(
+                    textTitle: 'Novice',
+                    paddingVertical: 0,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: 88,
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  width: 1,
+                  color: const Color(0xFF23A991).withOpacity(0.08),
+                ),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      TextGradient(
+                        gradient: mainGradient,
+                        textTitle: 'Goal',
+                        fontSize: 11,
+                        textColor: kGreenColor,
+                        lineHeight: 16 / 11,
+                      ),
+                      const Spacer(),
+                      TextGradient(
+                        gradient: mainGradient,
+                        textTitle: '3',
+                        fontSize: 11,
+                        textColor: kGreenColor,
+                        lineHeight: 16 / 11,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      TextGradient(
+                        gradient: mainGradient,
+                        textTitle: 'Assist',
+                        fontSize: 11,
+                        textColor: kGreenColor,
+                        lineHeight: 16 / 11,
+                      ),
+                      const Spacer(),
+                      TextGradient(
+                        gradient: mainGradient,
+                        textTitle: '6',
+                        fontSize: 11,
+                        textColor: kGreenColor,
+                        lineHeight: 16 / 11,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      TextGradient(
+                        gradient: mainGradient,
+                        textTitle: 'Save',
+                        fontSize: 11,
+                        textColor: kGreenColor,
+                        lineHeight: 16 / 11,
+                      ),
+                      const Spacer(),
+                      TextGradient(
+                        gradient: mainGradient,
+                        textTitle: '0',
+                        fontSize: 11,
+                        textColor: kGreenColor,
+                        lineHeight: 16 / 11,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Scaffold(
+      body: Container(
+        width: Get.width,
+        height: Get.height,
+        padding: const EdgeInsets.only(bottom: 150, top: 100),
+        decoration: BoxDecoration(
+          gradient: backgroundGradient,
+        ),
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(70),
+                bottomRight: Radius.circular(70),
+              ),
+              child: CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  // Collapsible Tabbar and Player of the Week section
+                  SliverAppBar(
+                    expandedHeight: 167,
+                    pinned: false,
+                    backgroundColor: Colors.transparent,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: defaultMargin),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Tabbar
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TabbarWidget(
+                                    tabBarTitle: state.lobbyTabBarTitle,
+                                    tabBarIcon: state.lobbyTabBarIcon,
+                                    tabActive: state.lobbyTabActive,
+                                    backgroundColor: kBlackColor,
+                                    iconSize: 20,
+                                    onTap: (title) {
+                                      state.lobbyTabActive.value = title;
+                                      logic.lobbyAlignmentTabbar(title);
+                                    },
+                                    alignment: state.lobbyActiveAlignment,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            // Player of the Week section
+                            Text(
+                              'Player of The Week',
+                              style: whiteTextStyle.copyWith(
+                                fontSize: 16,
+                                fontWeight: medium,
+                              ),
+                            ),
+                            SizedBox(height: defaultMargin),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  SizedBox(width: defaultMargin),
+                                  playerWeekContainer(),
+                                  playerWeekContainer(),
+                                  playerWeekContainer(),
+                                  playerWeekContainer(),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: defaultMargin),
+                            // Leaderboard title
+                            Text(
+                              'Leaderboard',
+                              style: whiteTextStyle.copyWith(
+                                fontSize: 16,
+                                fontWeight: medium,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(height: defaultMargin),
+                  ),
+
+                  // Leaderboard list inside a scrollable container
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                      child: Container(
+                        height: Get.height - 275,
+                        margin: const EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                          color: kWhiteColor,
+                          borderRadius: BorderRadius.circular(32),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(32),
+                          child: Obx(
+                            () => ListView.builder(
+                              controller: _listViewController,
+                              physics: state.activeScroll.value
+                                  ? const AlwaysScrollableScrollPhysics()
+                                  : const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.zero,
+                              itemCount: 10,
+                              itemBuilder: (context, index) {
+                                return leaderboardItem(number: index + 1);
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(height: 10),
+                  ),
+                ],
+              ),
+            ),
+
+            // Fixed item at the bottom
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                child: leaderboardItem(
+                  useShadow: true,
+                  paddingVertical: 12,
+                  height: 90,
+                  marginTop: 0,
+                  number: -1,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

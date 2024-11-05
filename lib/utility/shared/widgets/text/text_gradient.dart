@@ -9,11 +9,13 @@ class TextGradient extends StatelessWidget {
     required this.textTitle,
     required this.fontSize,
     required this.textColor,
+    this.lineHeight
   });
   final LinearGradient gradient;
   final String textTitle;
   final double fontSize;
   final Color textColor;
+  final double? lineHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class TextGradient extends StatelessWidget {
           fontSize: fontSize,
           fontWeight: medium,
           color: textColor,
+          height: lineHeight,
         ),
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,

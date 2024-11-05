@@ -4,6 +4,7 @@ import 'package:lawan/features/presentation/player/controller/player_main_logic.
 import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
 import 'package:lawan/features/presentation/player/create-session/player_add_session_logic.dart';
 import 'package:lawan/features/presentation/player/friendly/friendly_main_logic.dart';
+import 'package:lawan/features/presentation/player/leaderboard/leaderboard_logic.dart';
 import 'package:lawan/features/presentation/player/ranked/ranked_main_logic.dart';
 
 class PlayerMainBinding extends Bindings {
@@ -15,5 +16,7 @@ class PlayerMainBinding extends Bindings {
     Get.lazyPut(() => FriendlyMainLogic());
     Get.lazyPut(() => RankedMainLogic());
     Get.lazyPut(() => PlayerAddSessionLogic());
+
+    Get.lazyPut(() => LeaderboardLogic());
   }
 }
