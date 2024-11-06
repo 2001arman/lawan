@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/controller/checkout_logic.dart';
-import 'package:lawan/features/presentation/player/payment/payment/pages/payment_page.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
-import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/fields/field_image_widget.dart';
+import 'package:lawan/utility/shared/widgets/navigations/payment_bottom_bar.dart';
 import 'package:lawan/utility/util/helper.dart';
 
 import '../../../../../../utility/shared/widgets/buttons/custom_button.dart';
@@ -196,127 +195,12 @@ class CheckoutUi extends StatelessWidget {
             ),
 
             // bottom navbar
-            Align(
+             Align(
               alignment: Alignment.bottomCenter,
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      kBlackColor.withOpacity(0),
-                      kBlackColor.withOpacity(0.3),
-                    ],
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    GestureDetector(
-                      onTap: () => Get.toNamed(
-                        PaymentPage.namePath,
-                        arguments: Get.arguments,
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: defaultMargin,
-                          vertical: 8,
-                        ),
-                        margin: const EdgeInsets.only(bottom: 8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40),
-                          color: kModalColor,
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset('assets/icons/voucher.svg'),
-                            const SizedBox(width: 4),
-                            Text(
-                              'Voucher',
-                              style:
-                                  blackTextStyle.copyWith(fontWeight: medium),
-                            ),
-                            const SizedBox(width: 16),
-                            Text(
-                              'Change',
-                              style:
-                                  blackTextStyle.copyWith(fontWeight: medium),
-                            ),
-                            const SizedBox(width: 4),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              weight: 5,
-                              color: kDarkgreyColor,
-                              size: 13,
-                            ),
-                            SvgPicture.asset('assets/icons/mastercard.svg'),
-                            Text(
-                              '7041',
-                              style:
-                                  blackTextStyle.copyWith(fontWeight: medium),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: kGreyColor),
-                        borderRadius: BorderRadius.circular(40),
-                        color: kModalColor,
-                      ),
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 12),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Total Payment',
-                                style: darkGreyTextStyle.copyWith(
-                                  fontSize: 12,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'RM21.60 ',
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 24,
-                                      fontWeight: bold,
-                                      height: 1,
-                                    ),
-                                  ),
-                                  Text(
-                                    '(incl. SST)',
-                                    style: darkGreyTextStyle.copyWith(
-                                      fontWeight: reguler,
-                                      fontSize: 12,
-                                      height: 1,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const Spacer(),
-                          GradientButton(
-                            onTap: logic.onCreateSession,
-                            widget: Text(
-                              'Pay Now',
-                              style:
-                                  whiteTextStyle.copyWith(fontWeight: medium),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+              child: PaymentBottomBar(
+                totalPayment: 'RM21.60',
+                textButton: 'Pay Now',
+                onTapPay: logic.onCreateSession,
               ),
             )
           ],

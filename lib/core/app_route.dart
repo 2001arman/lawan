@@ -9,6 +9,8 @@ import 'package:lawan/features/presentation/auth/information/recovery/auth_recov
 import 'package:lawan/features/presentation/auth/information/recovery/auth_recovery_ui.dart';
 import 'package:lawan/features/presentation/lobby/controller/lobby_binding.dart';
 import 'package:lawan/features/presentation/lobby/pages/lobby_ui.dart';
+import 'package:lawan/features/presentation/player/club/create-club/create_club_binding.dart';
+import 'package:lawan/features/presentation/player/club/create-club/create_club_ui.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/controller/checkout_binding.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/ui/checkout_ui.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_binding.dart';
@@ -69,6 +71,11 @@ class AppRoute {
     GetPage(
       name: QrProfileUi.namePath,
       page: () => const QrProfileUi(),
+    ),
+    GetPage(
+      name: CreateClubUi.namePath,
+      page: () => CreateClubUi(),
+      binding: CreateClubBinding(),
     ),
   ];
 }

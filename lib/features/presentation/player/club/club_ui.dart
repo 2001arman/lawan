@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/club/club_logic.dart';
+import 'package:lawan/features/presentation/player/club/create-club/create_club_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/gradient/horizontal_white_gradient.dart';
@@ -18,29 +19,36 @@ class ClubUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget appBarItem({required String icon, required String title}) {
+    Widget appBarItem({
+      required String icon,
+      required String title,
+      required VoidCallback onTap,
+    }) {
       return Expanded(
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          decoration: BoxDecoration(
-            border: Border.all(width: 1, color: kGreyColor),
-            borderRadius: BorderRadius.circular(32),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                icon,
-                width: 16,
-                color: kDarkgreyColor,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                title,
-                style:
-                    blackTextStyle.copyWith(fontSize: 15, fontWeight: medium),
-              ),
-            ],
+        child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: kGreyColor),
+              borderRadius: BorderRadius.circular(32),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  icon,
+                  width: 16,
+                  color: kDarkgreyColor,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  title,
+                  style:
+                      blackTextStyle.copyWith(fontSize: 15, fontWeight: medium),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -158,11 +166,13 @@ class ClubUi extends StatelessWidget {
               appBarItem(
                 icon: 'assets/icons/users.svg',
                 title: 'Transfer',
+                onTap: () {},
               ),
               SizedBox(width: defaultMargin),
               appBarItem(
                 icon: 'assets/icons/plus.svg',
                 title: 'New Club',
+                onTap: () => Get.toNamed(CreateClubUi.namePath),
               ),
             ],
           ),
