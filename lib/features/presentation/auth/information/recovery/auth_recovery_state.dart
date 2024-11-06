@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AuthRecoveryState {
   var stepIndex = 0.obs;
@@ -53,4 +54,6 @@ class AuthRecoveryState {
 
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+
+  Rxn<XFile> selectedImage = Rxn();
 }

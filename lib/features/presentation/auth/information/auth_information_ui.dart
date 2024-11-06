@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:country_state_city_pro/country_state_city_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,6 +22,7 @@ class AuthInformationUi extends StatelessWidget {
   static const String namePath = '/auth_information_page';
   AuthInformationUi({super.key});
   final logic = Get.find<AuthInformationLogic>();
+  final state = Get.find<AuthInformationLogic>().state;
 
   @override
   Widget build(BuildContext context) {
@@ -81,42 +83,51 @@ class AuthInformationUi extends StatelessWidget {
                       const SizedBox(height: 12),
                       Text('Where are you located', style: darkGreyTextStyle),
                       const SizedBox(height: 8),
-                      CustomTextFormField(
-                        hintText: 'First Name',
-                        controller: TextEditingController(text: 'Malaysia'),
-                        showSuffix: true,
-                        suffix: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          child: SvgPicture.asset(
-                            'assets/icons/chevron-down.svg',
-                            color: kBlackColor,
+                      CountryStateCityPicker(
+                        country: state.countryController,
+                        state: state.stateController,
+                        city: state.cityController,
+                        dialogColor: Colors.grey.shade200,
+                        textFieldDecoration: InputDecoration(
+                          counterText: "",
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: SvgPicture.asset(
+                              'assets/icons/chevron-down.svg',
+                              color: kBlackColor,
+                            ),
+                          ),
+                          hintStyle: midGreyTextStyle.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                          ),
+                          isDense: false,
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                          filled: true,
+                          focusColor: kWhiteColor,
+                          fillColor: kWhiteColor,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(30.0), // Rounded corners
+                            borderSide:
+                                const BorderSide(color: Colors.transparent),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(30.0), // Rounded corners
+                            borderSide:
+                                const BorderSide(color: Colors.transparent),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(30.0), // Rounded corners
+                            borderSide:
+                                const BorderSide(color: Colors.transparent),
                           ),
                         ),
                       ),
-                      CustomTextFormField(
-                        hintText: 'State',
-                        controller: TextEditingController(),
-                        showSuffix: true,
-                        suffix: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          child: SvgPicture.asset(
-                            'assets/icons/chevron-down.svg',
-                            color: kBlackColor,
-                          ),
-                        ),
-                      ),
-                      CustomTextFormField(
-                        hintText: 'Region',
-                        controller: TextEditingController(),
-                        showSuffix: true,
-                        suffix: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          child: SvgPicture.asset(
-                            'assets/icons/chevron-down.svg',
-                            color: kBlackColor,
-                          ),
-                        ),
-                      ),
+                      const SizedBox(height: 12),
                       ChooseGenderWidget(
                         isMaleSelected: false.obs,
                         isFemaleSelected: true.obs,
@@ -151,12 +162,15 @@ class AuthInformationUi extends StatelessWidget {
                           Expanded(
                             child: CustomTextFormField(
                               hintText: 'Month',
-                              controller: TextEditingController(),
+                              controller: state.monthController,
                               isReadOnly: true,
                               onTap: () => CustomDialog.chooseMonth(
                                 selectedMonth: 0,
                                 showAllData: false,
-                                onSelected: (index) {},
+                                onSelected: (index) {
+                                  state.monthController.text =
+                                      Helper.monthNames[index + 1];
+                                },
                               ),
                               margin: defaultMargin,
                               textInputType: TextInputType.number,
@@ -220,6 +234,7 @@ class AuthInformationUi extends StatelessWidget {
                           color: kBackgroundColor,
                           child: GradientButton(
                             onTap: () => Get.toNamed(AuthRecoveryUi.namePath),
+                            paddingVertical: 19.5,
                             boxShadow: greenBoxShadow,
                             widget: Text(
                               'Continue',

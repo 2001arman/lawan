@@ -25,7 +25,7 @@ class QrProfileUi extends StatelessWidget {
             children: [
               SvgPicture.asset(
                 icon,
-                color: kBlackColor,
+                color: kDarkgreyColor,
                 width: 16,
                 height: 16,
               ),

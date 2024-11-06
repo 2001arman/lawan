@@ -315,7 +315,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     },
                   );
                 }),
-                const HorizontalWhiteGradient(),
+                const HorizontalWhiteGradient(height: 24),
               ],
             ),
           )

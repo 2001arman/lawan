@@ -243,7 +243,7 @@ class CustomDialogProfile {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  source == ModeType.admin ? 'Player Mode' : 'Admin Mode',
+                  source == ModeType.admin ? 'Play Mode' : 'Admin Mode',
                   style: whiteTextStyle.copyWith(
                     fontWeight: medium,
                     height: 14 / 14,
@@ -354,12 +354,12 @@ class CustomDialogProfile {
         insetPadding: const EdgeInsets.symmetric(horizontal: 16),
         child: SizedBox(
           width: double.infinity,
-          height: 725,
+          height: Get.height * 0.8,
           child: Stack(
             children: [
               Container(
                 width: double.infinity,
-                height: 701,
+                margin: const EdgeInsets.only(bottom: 24),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(32),
                   color: kBackgroundColor,
@@ -385,7 +385,7 @@ class CustomDialogProfile {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           circularButtonIcon('assets/icons/bell.svg'),
-                          circularButtonIcon('assets/icons/chevron-down.svg'),
+                          circularButtonIcon('assets/icons/chevron-up.svg'),
                         ],
                       ),
                     ),
@@ -400,12 +400,9 @@ class CustomDialogProfile {
                           profileSection(),
                           const SizedBox(height: 12),
                           settingAndProfileButton(),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 8),
                           findAndRequestFriends(),
-                          const SizedBox(height: 12),
-                          SizedBox(
-                            height: 220,
-                            width: double.infinity,
+                          Expanded(
                             child: Stack(
                               children: [
                                 ListView(

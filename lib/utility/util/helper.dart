@@ -127,6 +127,7 @@ class Helper {
     'July',
     'August',
     'September',
+    'Oktober',
     'November',
     'Desember',
   ];

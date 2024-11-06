@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -85,7 +87,18 @@ class AuthRecoveryUi extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
-              child: SvgPicture.asset(state.listIcons[index - 1]),
+              child: index == state.listIcons.length &&
+                      state.selectedImage.value != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(80),
+                      child: Image.file(
+                        File(state.selectedImage.value!.path),
+                        width: 160,
+                        height: 160,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : SvgPicture.asset(state.listIcons[index - 1]),
             ),
             SizedBox(height: defaultMargin),
             Text(
@@ -148,8 +161,9 @@ class AuthRecoveryUi extends StatelessWidget {
                     if (state.stepIndex.value == 6)
                       Expanded(
                         child: GradientButton(
-                          onTap: logic.nextIndex,
+                          onTap: logic.image,
                           boxShadow: greenBoxShadow,
+                          paddingVertical: 19.5,
                           widget: SvgPicture.asset('assets/icons/camera.svg'),
                         ),
                       ),
@@ -158,6 +172,7 @@ class AuthRecoveryUi extends StatelessWidget {
                       child: GradientButton(
                         onTap: logic.nextIndex,
                         boxShadow: greenBoxShadow,
+                        paddingVertical: 19.5,
                         widget: Text(
                           state.textButton[state.stepIndex.value],
                           style: whiteTextStyle.copyWith(fontWeight: medium),

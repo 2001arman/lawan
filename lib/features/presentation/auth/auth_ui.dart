@@ -109,6 +109,7 @@ class AuthUi extends StatelessWidget {
           SizedBox(height: defaultMargin),
           GradientButton(
             onTap: logic.goToSecondScreen,
+            paddingVertical: 19.5,
             boxShadow: greenBoxShadow,
             widget: Text(
               'Create Account',
@@ -244,6 +245,7 @@ class AuthUi extends StatelessWidget {
           GradientButton(
             onTap: logic.goToSecondScreen,
             boxShadow: greenBoxShadow,
+            paddingVertical: 19.5,
             widget: Text(
               'Log In',
               style: whiteTextStyle.copyWith(fontWeight: medium),
@@ -265,31 +267,38 @@ class AuthUi extends StatelessWidget {
           () => AnimatedContainer(
             duration: const Duration(milliseconds: 600),
             curve: Curves.easeOutSine,
-            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
             width: double.infinity,
             // height:442,
             height: state.heightContainer.value,
             margin: const EdgeInsets.only(bottom: 24),
-            child: ListView(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
+            child: Stack(
               children: [
-                TabbarWidget(
-                  tabBarTitle: state.lobbyTabBarTitle,
-                  tabActive: state.lobbyTabActive,
-                  backgroundColor: kGreyColor,
-                  onTap: (title) {
-                    state.lobbyTabActive.value = title;
-                    logic.lobbyAlignmentTabbar(title);
-                  },
-                  alignment: state.lobbyActiveAlignment,
+                Container(
+                  color: kBackgroundColor,
+                  margin: const EdgeInsets.only(top: 20),
                 ),
-                SizedBox(height: defaultMargin),
-                state.lobbyTabActive.value == 'Login'
-                    ? loginSection()
-                    : signUpSection(),
-                SizedBox(height: defaultMargin),
+                ListView(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    TabbarWidget(
+                      tabBarTitle: state.lobbyTabBarTitle,
+                      tabActive: state.lobbyTabActive,
+                      backgroundColor: kGreyColor,
+                      onTap: (title) {
+                        state.lobbyTabActive.value = title;
+                        logic.lobbyAlignmentTabbar(title);
+                      },
+                      alignment: state.lobbyActiveAlignment,
+                    ),
+                    SizedBox(height: defaultMargin),
+                    state.lobbyTabActive.value == 'Login'
+                        ? loginSection()
+                        : signUpSection(),
+                    SizedBox(height: defaultMargin),
+                  ],
+                ),
               ],
             ),
           ),
@@ -312,8 +321,8 @@ class AuthUi extends StatelessWidget {
                 curve: Curves.easeOutSine,
                 width: Get.width,
                 height: Get.height - state.heightContainer.value,
-                child:
-                    VideoWidget(videoController: logic.videoPlayerController),
+                // child:
+                //     VideoWidget(videoController: logic.videoPlayerController),
               ),
               Container(
                 width: double.infinity,
@@ -378,9 +387,9 @@ class AuthUi extends StatelessWidget {
                             'assets/icons/logo_and_title.png',
                             width: 236,
                           ),
-                          const Spacer(),
+                          const SizedBox(height: 30),
                           Text(
-                            'Pahlawan.\nEnpowered.',
+                            'Pahlawan.\nEmpowered.',
                             style: whiteTextStyle.copyWith(
                               fontSize: 28,
                               fontWeight: reguler,
@@ -414,7 +423,7 @@ class AuthUi extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           backgroundSection(),
