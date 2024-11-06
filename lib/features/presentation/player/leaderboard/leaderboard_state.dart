@@ -14,8 +14,5 @@ class LeaderboardState {
   ];
   RxBool activeScroll = false.obs;
 
-  GlobalKey appBarKey = GlobalKey();
-
   var showWidget = true.obs;
-  var height = 0.0.obs;
 }

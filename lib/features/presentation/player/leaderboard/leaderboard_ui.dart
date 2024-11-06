@@ -34,11 +34,10 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
   }
 
   void _scrollListener() {
-    Get.log('cek position ${_scrollController.position.pixels}');
-    if (_scrollController.position.pixels > 212) {
-      state.activeScroll.value = true;
+    if (_scrollController.offset > 150) {
+      _listViewController.jumpTo(2);
     } else {
-      state.activeScroll.value = false;
+      _listViewController.jumpTo(0);
     }
   }
 
@@ -299,13 +298,15 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                     backgroundColorAll: Colors.transparent,
                     contentBuilder: (context, expandRatio, contentHeight,
                             centerPadding, overlapsContent) =>
+                        Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Tabbar
                         Padding(
-                      padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Tabbar
-                          Row(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: defaultMargin),
+                          child: Row(
                             children: [
                               Expanded(
                                 child: TabbarWidget(
@@ -323,39 +324,47 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 20),
-                          // Player of the Week section
-                          Text(
+                        ),
+                        const SizedBox(height: 20),
+                        // Player of the Week section
+                        Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: defaultMargin),
+                          child: Text(
                             'Player of The Week',
                             style: whiteTextStyle.copyWith(
                               fontSize: 16,
                               fontWeight: medium,
                             ),
                           ),
-                          SizedBox(height: defaultMargin),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                SizedBox(width: defaultMargin),
-                                playerWeekContainer(),
-                                playerWeekContainer(),
-                                playerWeekContainer(),
-                                playerWeekContainer(),
-                              ],
-                            ),
+                        ),
+                        SizedBox(height: defaultMargin),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              SizedBox(width: defaultMargin),
+                              playerWeekContainer(),
+                              playerWeekContainer(),
+                              playerWeekContainer(),
+                              playerWeekContainer(),
+                            ],
                           ),
-                          SizedBox(height: defaultMargin),
-                          // Leaderboard title
-                          Text(
+                        ),
+                        SizedBox(height: defaultMargin),
+                        // Leaderboard title
+                        Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: defaultMargin),
+                          child: Text(
                             'Leaderboard',
                             style: whiteTextStyle.copyWith(
                               fontSize: 16,
                               fontWeight: medium,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
 
@@ -364,7 +373,10 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: defaultMargin),
                       child: Container(
-                        height: Get.height - (Platform.isIOS ? 325 : 250),
+                        height: Get.height -
+                            150 -
+                            78 -
+                            MediaQuery.of(context).padding.top,
                         margin: const EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                           color: kWhiteColor,
@@ -372,13 +384,18 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(32),
-                          child: ListView.builder(
-                            controller: _listViewController,
-                            padding: EdgeInsets.zero,
-                            itemCount: 10,
-                            itemBuilder: (context, index) {
-                              return leaderboardItem(number: index + 1);
-                            },
+                          child: Obx(
+                            () => ListView.builder(
+                              controller: _listViewController,
+                              padding: EdgeInsets.zero,
+                              physics: state.activeScroll.value
+                                  ? const AlwaysScrollableScrollPhysics()
+                                  : const NeverScrollableScrollPhysics(),
+                              itemCount: 10,
+                              itemBuilder: (context, index) {
+                                return leaderboardItem(number: index + 1);
+                              },
+                            ),
                           ),
                         ),
                       ),

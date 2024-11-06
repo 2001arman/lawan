@@ -16,13 +16,4 @@ class LeaderboardLogic extends GetxController {
     }
     return;
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-    final RenderBox renderBox =
-        state.appBarKey.currentContext?.findRenderObject() as RenderBox;
-    Get.log('cek height dong ${renderBox.size.height}');
-    state.height.value = renderBox.size.height;
-  }
 }
