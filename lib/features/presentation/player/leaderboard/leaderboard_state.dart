@@ -15,4 +15,6 @@ class LeaderboardState {
   RxBool activeScroll = false.obs;
 
   var showWidget = true.obs;
+
+  var showStarMode = true.obs;
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -13,9 +15,10 @@ import '../../shared/widgets/selected_container_widget.dart';
 
 class DialogFilter {
   static Widget selectableItem({
-    required String title,
+    String title = '',
     required List<String> listData,
     required RxString selectedData,
+    String? iconAsset,
   }) {
     return Padding(
       padding: const EdgeInsets.only(top: 12, left: 16),
@@ -23,11 +26,18 @@ class DialogFilter {
         () => Row(
           children: [
             SizedBox(
-              width: 80,
-              child: Text(
-                title,
-                style: darkGreyTextStyle,
-              ),
+              width: iconAsset != null ? 40 : 80,
+              child: iconAsset != null
+                  ? SvgPicture.asset(
+                      iconAsset,
+                      width: 24,
+                      height: 24,
+                      color: kDarkgreyColor,
+                    )
+                  : Text(
+                      title,
+                      style: darkGreyTextStyle,
+                    ),
             ),
             Expanded(
               flex: 1,
@@ -218,6 +228,115 @@ class DialogFilter {
                 title: 'Arena Type',
                 listData: arenaData,
                 selectedData: selectedArena,
+              ),
+
+              SizedBox(height: defaultMargin),
+              Container(
+                padding: EdgeInsets.all(defaultMargin),
+                decoration: BoxDecoration(
+                  color: kBackgroundColor,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(32),
+                    bottomRight: Radius.circular(32),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    CircleButtonTransparentWidget(
+                      size: 48,
+                      onTap: resetData,
+                      borderColor: kGreyColor,
+                      widget: SvgPicture.asset('assets/icons/refresh.svg'),
+                    ),
+                    SizedBox(width: defaultMargin),
+                    Expanded(
+                      child: CustomButton(
+                        isBlack: false,
+                        onTap: Get.back,
+                        title: 'Cancel',
+                        borderColor: kGreyColor,
+                      ),
+                    ),
+                    SizedBox(width: defaultMargin),
+                    Expanded(
+                      child: CustomButton(
+                        isBlack: true,
+                        onTap: Get.back,
+                        title: 'Apply',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Future<void> showFilterLeaderDialog() {
+    List<String> agesData = [
+      'All',
+      '18 - 22',
+      '22 - 35',
+      '35 - 45',
+      '45 - 60',
+    ];
+
+    List<String> genderData = [
+      'All',
+      'Male',
+      'Female',
+    ];
+
+    List<String> positionData = [
+      'All',
+      'FW',
+      'MF',
+      'DF',
+      'GK',
+    ];
+
+    var selectedAge = 'All'.obs;
+    var selectedGender = 'All'.obs;
+    var selectedPosition = 'All'.obs;
+
+    void resetData() {
+      selectedGender.value = 'All';
+      selectedPosition.value = 'All';
+      selectedAge.value = 'All';
+    }
+
+    return Get.dialog(
+      Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Container(
+          width: Get.width * .9,
+          decoration: BoxDecoration(
+            color: kWhiteColor,
+            borderRadius: BorderRadius.circular(32),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 16),
+              // states
+              DialogFilter.selectableItem(
+                listData: genderData,
+                selectedData: selectedGender,
+                iconAsset: 'assets/icons/gender.svg',
+              ),
+              DialogFilter.selectableItem(
+                listData: agesData,
+                selectedData: selectedAge,
+                iconAsset: 'assets/icons/hourglass.svg',
+              ),
+              DialogFilter.selectableItem(
+                listData: positionData,
+                selectedData: selectedPosition,
+                iconAsset: 'assets/icons/user.svg',
               ),
 
               SizedBox(height: defaultMargin),

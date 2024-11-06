@@ -11,6 +11,7 @@ class FilterButton extends StatelessWidget {
   final double paddingVertical;
   final Color iconColor;
   final Color textColor;
+  final bool fromLeaderBoard;
 
   const FilterButton({
     super.key,
@@ -18,12 +19,15 @@ class FilterButton extends StatelessWidget {
     this.paddingVertical = 14,
     required this.iconColor,
     required this.textColor,
+    this.fromLeaderBoard = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: DialogFilter.showFilterDialog,
+      onTap: fromLeaderBoard
+          ? DialogFilter.showFilterLeaderDialog
+          : DialogFilter.showFilterDialog,
       child: Container(
         width: 90,
         height: 45,

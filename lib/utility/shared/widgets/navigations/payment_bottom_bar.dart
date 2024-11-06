@@ -56,7 +56,7 @@ class PaymentBottomBar extends StatelessWidget {
                       : 'assets/icons/voucher.svg'),
                   const SizedBox(width: 4),
                   Text(
-                    'Voucher',
+                    useCoin ? 'Recharge' : 'Voucher',
                     style: blackTextStyle.copyWith(fontWeight: medium),
                   ),
                   const SizedBox(width: 16),

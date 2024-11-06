@@ -78,6 +78,7 @@ class PlayerMainUi extends StatelessWidget {
                 iconColor: kGreyColor,
                 textColor: kWhiteColor,
                 useBlur: true,
+                fromLeaderBoard: true,
               ),
               SizedBox(width: defaultMargin),
               Container(
@@ -88,7 +89,7 @@ class PlayerMainUi extends StatelessWidget {
                   isBlack: true,
                   paddingVertical: 12,
                   paddingHorizontal: defaultMargin,
-                  onTap: () {},
+                  onTap: logic.leaderboardLogic.state.showStarMode.toggle,
                   widget: Row(
                     children: [
                       SvgPicture.asset('assets/icons/rotate.svg'),

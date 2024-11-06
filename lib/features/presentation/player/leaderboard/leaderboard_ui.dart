@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/leaderboard/leaderboard_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
@@ -59,42 +60,61 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
   Widget build(BuildContext context) {
     Widget playerWeekContainer() {
       return Container(
-        width: 160,
-        height: 56,
         padding: EdgeInsets.symmetric(horizontal: defaultMargin, vertical: 12),
         margin: const EdgeInsets.only(right: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
           color: kWhiteColor,
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(
-              'assets/avatars/avatar1.png',
-              width: 32,
-              height: 32,
-            ),
-            const SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Saiful Bukhari',
-                  style: blackTextStyle.copyWith(
-                    fontSize: 10,
-                    fontWeight: semiBold,
+        child: Obx(
+          () => Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                state.lobbyTabActive.value == 'Club'
+                    ? 'assets/icons/club-arsenal.png'
+                    : 'assets/avatars/avatar1.png',
+                width: 32,
+                height: 32,
+              ),
+              const SizedBox(width: 8),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Saiful Bukhari',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 10,
+                      fontWeight: semiBold,
+                    ),
                   ),
-                ),
-                TextGradient(
-                  gradient: mainGradient,
-                  textTitle: '2 Goals',
-                  fontSize: 12,
-                  textColor: kGreenColor,
-                ),
-              ],
-            )
-          ],
+                  state.lobbyTabActive.value == 'Club'
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Row(
+                            children: [
+                              const TextBorder(
+                                textTitle: 'Grassroots',
+                                paddingHorizontal: 6,
+                                paddingVertical: 0,
+                              ),
+                              const SizedBox(width: 4),
+                              SvgPicture.asset(
+                                'assets/icons/gradient-arrow-circle-up.svg',
+                              ),
+                            ],
+                          ),
+                        )
+                      : TextGradient(
+                          gradient: mainGradient,
+                          textTitle: '2 Goals',
+                          fontSize: 12,
+                          textColor: kGreenColor,
+                        ),
+                ],
+              )
+            ],
+          ),
         ),
       );
     }
@@ -109,6 +129,70 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
       } else {
         return null;
       }
+    }
+
+    Widget numberSection() {
+      return Column(
+        children: [
+          Row(
+            children: [
+              TextGradient(
+                gradient: mainGradient,
+                textTitle: 'Goal',
+                fontSize: 11,
+                textColor: kGreenColor,
+                lineHeight: 16 / 11,
+              ),
+              const Spacer(),
+              TextGradient(
+                gradient: mainGradient,
+                textTitle: '3',
+                fontSize: 11,
+                textColor: kGreenColor,
+                lineHeight: 16 / 11,
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              TextGradient(
+                gradient: mainGradient,
+                textTitle: 'Assist',
+                fontSize: 11,
+                textColor: kGreenColor,
+                lineHeight: 16 / 11,
+              ),
+              const Spacer(),
+              TextGradient(
+                gradient: mainGradient,
+                textTitle: '6',
+                fontSize: 11,
+                textColor: kGreenColor,
+                lineHeight: 16 / 11,
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              TextGradient(
+                gradient: mainGradient,
+                textTitle: 'Save',
+                fontSize: 11,
+                textColor: kGreenColor,
+                lineHeight: 16 / 11,
+              ),
+              const Spacer(),
+              TextGradient(
+                gradient: mainGradient,
+                textTitle: '0',
+                fontSize: 11,
+                textColor: kGreenColor,
+                lineHeight: 16 / 11,
+              ),
+            ],
+          ),
+        ],
+      );
     }
 
     Widget leaderboardItem({
@@ -145,6 +229,7 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
               : null,
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               width: 48,
@@ -163,10 +248,14 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
               ),
             ),
             SizedBox(width: defaultMargin),
-            Image.asset(
-              'assets/avatars/avatar2.png',
-              width: 48,
-              height: 48,
+            Obx(
+              () => Image.asset(
+                state.lobbyTabActive.value == 'Club'
+                    ? 'assets/icons/club-arsenal.png'
+                    : 'assets/avatars/avatar2.png',
+                width: 48,
+                height: 48,
+              ),
             ),
             const SizedBox(width: 8),
             Expanded(
@@ -180,84 +269,52 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                         fontSize: 12, fontWeight: medium),
                   ),
                   const SizedBox(height: 8),
-                  const TextBorder(
-                    textTitle: 'Novice',
-                    paddingVertical: 0,
+                  Obx(
+                    () => TextBorder(
+                      textTitle: state.lobbyTabActive.value == 'Club'
+                          ? 'World Class'
+                          : 'Novice',
+                      paddingVertical: 0,
+                    ),
                   ),
                 ],
               ),
             ),
-            Container(
-              width: 88,
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  width: 1,
-                  color: const Color(0xFF23A991).withOpacity(0.08),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 88,
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      width: 1,
+                      color: const Color(0xFF23A991).withOpacity(0.08),
+                    ),
+                  ),
+                  child: Obx(
+                    () => state.showStarMode.value
+                        ? Column(
+                            children: [
+                              SvgPicture.asset(useShadow
+                                  ? 'assets/icons/stars.svg'
+                                  : 'assets/icons/star.svg'),
+                              Visibility(
+                                visible: useShadow == false,
+                                child: TextGradient(
+                                  gradient: mainGradient,
+                                  textTitle: '21300',
+                                  fontSize: 11,
+                                  textColor: kGreenColor,
+                                ),
+                              ),
+                            ],
+                          )
+                        : numberSection(),
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      TextGradient(
-                        gradient: mainGradient,
-                        textTitle: 'Goal',
-                        fontSize: 11,
-                        textColor: kGreenColor,
-                        lineHeight: 16 / 11,
-                      ),
-                      const Spacer(),
-                      TextGradient(
-                        gradient: mainGradient,
-                        textTitle: '3',
-                        fontSize: 11,
-                        textColor: kGreenColor,
-                        lineHeight: 16 / 11,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      TextGradient(
-                        gradient: mainGradient,
-                        textTitle: 'Assist',
-                        fontSize: 11,
-                        textColor: kGreenColor,
-                        lineHeight: 16 / 11,
-                      ),
-                      const Spacer(),
-                      TextGradient(
-                        gradient: mainGradient,
-                        textTitle: '6',
-                        fontSize: 11,
-                        textColor: kGreenColor,
-                        lineHeight: 16 / 11,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      TextGradient(
-                        gradient: mainGradient,
-                        textTitle: 'Save',
-                        fontSize: 11,
-                        textColor: kGreenColor,
-                        lineHeight: 16 / 11,
-                      ),
-                      const Spacer(),
-                      TextGradient(
-                        gradient: mainGradient,
-                        textTitle: '0',
-                        fontSize: 11,
-                        textColor: kGreenColor,
-                        lineHeight: 16 / 11,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              ],
             ),
           ],
         ),
@@ -330,11 +387,15 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                         Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: defaultMargin),
-                          child: Text(
-                            'Player of The Week',
-                            style: whiteTextStyle.copyWith(
-                              fontSize: 16,
-                              fontWeight: medium,
+                          child: Obx(
+                            () => Text(
+                              state.lobbyTabActive.value == 'Club'
+                                  ? 'Club of The Week'
+                                  : 'Player of The Week',
+                              style: whiteTextStyle.copyWith(
+                                fontSize: 16,
+                                fontWeight: medium,
+                              ),
                             ),
                           ),
                         ),
@@ -351,7 +412,12 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                             ],
                           ),
                         ),
-                        SizedBox(height: defaultMargin),
+                        Obx(
+                          () => SizedBox(
+                            height:
+                                state.lobbyTabActive.value == 'Club' ? 13 : 20,
+                          ),
+                        ),
                         // Leaderboard title
                         Padding(
                           padding:
@@ -373,10 +439,16 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: defaultMargin),
                       child: Container(
-                        height: Get.height -
-                            150 -
-                            78 -
-                            MediaQuery.of(context).padding.top,
+                        height: Platform.isAndroid
+                            ? (Get.height -
+                                150 -
+                                78 -
+                                MediaQuery.of(context).padding.top)
+                            : (Get.height -
+                                150 -
+                                78 -
+                                MediaQuery.of(context).padding.top -
+                                37),
                         margin: const EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                           color: kWhiteColor,
