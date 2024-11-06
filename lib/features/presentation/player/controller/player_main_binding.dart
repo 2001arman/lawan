@@ -1,5 +1,6 @@
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:lawan/features/presentation/player/club/club_logic.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
 import 'package:lawan/features/presentation/player/create-session/player_add_session_logic.dart';
@@ -18,5 +19,6 @@ class PlayerMainBinding extends Bindings {
     Get.lazyPut(() => PlayerAddSessionLogic());
 
     Get.lazyPut(() => LeaderboardLogic());
+    Get.lazyPut(() => ClubLogic());
   }
 }

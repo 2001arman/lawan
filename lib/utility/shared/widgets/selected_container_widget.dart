@@ -7,6 +7,7 @@ class SelectedContainerWidget extends StatelessWidget {
   final bool isTransparent;
   final Color? borderColor;
   final VoidCallback onTap;
+  final double marginRight;
   const SelectedContainerWidget({
     super.key,
     required this.title,
@@ -14,6 +15,7 @@ class SelectedContainerWidget extends StatelessWidget {
     this.isTransparent = false,
     this.borderColor,
     required this.onTap,
+    this.marginRight = 12,
   });
 
   @override
@@ -22,7 +24,7 @@ class SelectedContainerWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 11.5, horizontal: 16),
-        margin: const EdgeInsets.only(right: 12),
+        margin: EdgeInsets.only(right: marginRight),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           border: Border.all(

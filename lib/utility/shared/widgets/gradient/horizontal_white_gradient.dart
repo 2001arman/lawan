@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import '../../constants/constants_ui.dart';
 
 class HorizontalWhiteGradient extends StatelessWidget {
-  const HorizontalWhiteGradient({super.key});
+  final double height;
+  const HorizontalWhiteGradient({super.key, this.height = 16});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 24,
+      height: height,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,

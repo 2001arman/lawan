@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/player/club/club_ui.dart';
 import 'package:lawan/features/presentation/player/controller/player_main_logic.dart';
 import 'package:lawan/features/presentation/player/friendly/friendly_main_ui.dart';
 import 'package:lawan/features/presentation/player/leaderboard/leaderboard_ui.dart';
@@ -167,6 +168,8 @@ class PlayerMainUi extends StatelessWidget {
           return FriendlyMainUi();
         case 1:
           return RankedMainUi();
+        case 2:
+          return ClubUi();
         case 3:
           return const LeaderboardUi();
         default:
