@@ -4,6 +4,7 @@ import 'package:video_player/video_player.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../utility/shared/widgets/buttons/create_session_button.dart';
+import '../../../../utility/shared/widgets/video/video_widget.dart';
 import '../../../domain/session/avatar_model.dart';
 
 class PlayerEmptySession extends StatelessWidget {
@@ -30,7 +31,7 @@ class PlayerEmptySession extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 height: Get.height,
-                // child: VideoWidget(videoController: videoPlayerController),
+                child: VideoWidget(videoController: videoPlayerController),
               ),
               Container(
                 width: double.infinity,
