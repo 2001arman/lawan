@@ -53,6 +53,7 @@ class Helper {
   static Widget successToast({required String message}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      margin: const EdgeInsets.only(bottom: 70),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
         color: kWhiteColor,
