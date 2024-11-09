@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/constants_ui.dart';
-
 class CustomBottomNavbar extends StatelessWidget {
   final Widget navbarItemWidget;
   final bool useGradient;
@@ -14,20 +12,7 @@ class CustomBottomNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
       padding: const EdgeInsets.only(top: 12),
-      decoration: BoxDecoration(
-        gradient: useGradient
-            ? LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  kBlackColor.withOpacity(0),
-                  kBlackColor.withOpacity(0.3),
-                ],
-              )
-            : null,
-      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

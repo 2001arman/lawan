@@ -11,6 +11,7 @@ class CardDetailSession extends StatelessWidget {
   final double fontSize;
   final String? description;
   final bool showPax;
+  final bool centerContent;
   const CardDetailSession({
     super.key,
     required this.title,
@@ -19,6 +20,7 @@ class CardDetailSession extends StatelessWidget {
     required this.fontSize,
     this.description,
     this.showPax = false,
+    this.centerContent = false,
   });
 
   @override
@@ -32,9 +34,17 @@ class CardDetailSession extends StatelessWidget {
           border: Border.all(width: 1, color: kGreyColor),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: centerContent
+              ? CrossAxisAlignment.center
+              : CrossAxisAlignment.start,
+          mainAxisAlignment: centerContent
+              ? MainAxisAlignment.center
+              : MainAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: centerContent
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.start,
               children: [
                 SvgPicture.asset(
                   icon,

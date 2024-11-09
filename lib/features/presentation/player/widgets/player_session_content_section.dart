@@ -6,14 +6,19 @@ import '../../../../utility/shared/widgets/fields/field_session_widget.dart';
 import '../../../domain/session/session_model.dart';
 
 class PlayerSessionContentSection extends StatelessWidget {
-  const PlayerSessionContentSection(
-      {super.key,
-      required this.emptySessionWidget,
-      required this.showDetailSession,
-      required this.sessionList});
+  const PlayerSessionContentSection({
+    super.key,
+    required this.emptySessionWidget,
+    required this.showDetailSession,
+    required this.sessionList,
+    this.paddingHorizontal = 16,
+    this.paddingVertical = 16,
+  });
   final Widget emptySessionWidget;
   final Function(SessionModel data) showDetailSession;
   final RxList<SessionModel> sessionList;
+  final double paddingHorizontal;
+  final double paddingVertical;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,10 @@ class PlayerSessionContentSection extends StatelessWidget {
               visible: sessionList.isNotEmpty,
               replacement: emptySessionWidget,
               child: ListView(
-                padding: EdgeInsets.all(defaultMargin),
+                padding: EdgeInsets.symmetric(
+                  vertical: paddingVertical,
+                  horizontal: paddingHorizontal,
+                ),
                 children: [
                   ...sessionList.asMap().entries.map(
                         (data) => GestureDetector(

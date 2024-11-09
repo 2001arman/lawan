@@ -28,6 +28,7 @@ class AdminSessionBottomSheet {
     required SessionType sessionType,
     required SessionModel session,
     bool isAdmin = true,
+    bool isReferee = false,
   }) {
     var showShare = false.obs;
     return Get.bottomSheet(
@@ -101,16 +102,17 @@ class AdminSessionBottomSheet {
                           color: kWhiteColor,
                           child: Row(
                             children: [
-                              CircleButtonTransparentWidget(
-                                onTap: isAdmin ? onDelete : onUpdate,
-                                borderColor: kGreyColor,
-                                widget: SvgPicture.asset(
-                                  isAdmin
-                                      ? 'assets/icons/trash.svg'
-                                      : 'assets/icons/pencil.svg',
+                              if (!isReferee)
+                                CircleButtonTransparentWidget(
+                                  onTap: isAdmin ? onDelete : onUpdate,
+                                  borderColor: kGreyColor,
+                                  widget: SvgPicture.asset(
+                                    isAdmin
+                                        ? 'assets/icons/trash.svg'
+                                        : 'assets/icons/pencil.svg',
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 16),
+                              if (!isReferee) const SizedBox(width: 16),
                               CircleButtonTransparentWidget(
                                 onTap: () {
                                   showShare.value = true;
@@ -224,6 +226,7 @@ class AdminSessionBottomSheet {
     required VoidCallback onUpdate,
     required VoidCallback onDelete,
     required SessionType sessionType,
+    bool isReferee = false,
     bool successCreate = true,
     bool showPill = false,
     String title = 'Session Succesfully Created',
@@ -235,6 +238,7 @@ class AdminSessionBottomSheet {
       onUpdate: onUpdate,
       sessionType: sessionType,
       session: session,
+      isReferee: isReferee,
       onBackShare: () {
         showQr.toggle();
       },
@@ -378,15 +382,17 @@ class AdminSessionBottomSheet {
                   title: 'Location',
                   icon: 'assets/icons/location.svg',
                   fontSize: 14,
+                  centerContent: isReferee,
                 ),
-                const SizedBox(width: 8),
-                CardDetailSession(
-                  contentText: 'RM${session.price}',
-                  title: 'Price',
-                  icon: 'assets/icons/currency.svg',
-                  fontSize: 20,
-                  showPax: true,
-                ),
+                if (!isReferee) const SizedBox(width: 8),
+                if (!isReferee)
+                  CardDetailSession(
+                    contentText: 'RM${session.price}',
+                    title: 'Price',
+                    icon: 'assets/icons/currency.svg',
+                    fontSize: 20,
+                    showPax: true,
+                  ),
               ],
             ),
             Obx(

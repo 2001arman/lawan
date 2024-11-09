@@ -19,9 +19,11 @@ import 'package:lawan/features/presentation/player/payment/payment/pages/payment
 import 'package:lawan/features/presentation/player/payment/payment/pages/payment_page.dart';
 import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
 import 'package:lawan/features/presentation/qr-profile/qr_profile_ui.dart';
+import 'package:lawan/features/presentation/referee/referee_binding.dart';
+import 'package:lawan/features/presentation/referee/referee_ui.dart';
 
 class AppRoute {
-  static const initialRoute = AuthUi.namePath;
+  static const initialRoute = PlayerMainUi.namePath;
   static final routes = [
     GetPage(
       name: AdminMainUi.namePath,
@@ -76,6 +78,11 @@ class AppRoute {
       name: CreateClubUi.namePath,
       page: () => CreateClubUi(),
       binding: CreateClubBinding(),
+    ),
+    GetPage(
+      name: RefereeUi.namePath,
+      page: () => RefereeUi(),
+      binding: RefereeBinding(),
     ),
   ];
 }

@@ -31,31 +31,44 @@ class AdminMainUi extends StatelessWidget {
       return Obx(
         () => Visibility(
           visible: arenaState.isEditing.value,
-          replacement: CustomBottomNavbar(
-            navbarItemWidget: Obx(
-              () => Row(
-                children: [
-                  BottomNavbarItem(
-                    title: 'Session',
-                    isActive: logic.selectedNavbarIndex.value == 0,
-                    icon: 'assets/icons/session.svg',
-                    onTap: () => logic.selectedNavbarIndex.value = 0,
-                  ),
-                  const SizedBox(width: 4),
-                  BottomNavbarItem(
-                    title: 'Arena',
-                    isActive: logic.selectedNavbarIndex.value == 1,
-                    icon: 'assets/icons/arena.svg',
-                    onTap: () => logic.selectedNavbarIndex.value = 1,
-                  ),
-                  const SizedBox(width: 4),
-                  BottomNavbarItem(
-                    title: 'Sales',
-                    isActive: logic.selectedNavbarIndex.value == 2,
-                    icon: 'assets/icons/sales.svg',
-                    onTap: () => logic.selectedNavbarIndex.value = 2,
-                  ),
+          replacement: Container(
+            padding: const EdgeInsets.only(top: 12),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  kBlackColor.withOpacity(0),
+                  kBlackColor.withOpacity(0.4),
                 ],
+              ),
+            ),
+            child: CustomBottomNavbar(
+              navbarItemWidget: Obx(
+                () => Row(
+                  children: [
+                    BottomNavbarItem(
+                      title: 'Session',
+                      isActive: logic.selectedNavbarIndex.value == 0,
+                      icon: 'assets/icons/session.svg',
+                      onTap: () => logic.selectedNavbarIndex.value = 0,
+                    ),
+                    const SizedBox(width: 4),
+                    BottomNavbarItem(
+                      title: 'Arena',
+                      isActive: logic.selectedNavbarIndex.value == 1,
+                      icon: 'assets/icons/arena.svg',
+                      onTap: () => logic.selectedNavbarIndex.value = 1,
+                    ),
+                    const SizedBox(width: 4),
+                    BottomNavbarItem(
+                      title: 'Sales',
+                      isActive: logic.selectedNavbarIndex.value == 2,
+                      icon: 'assets/icons/sales.svg',
+                      onTap: () => logic.selectedNavbarIndex.value = 2,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
