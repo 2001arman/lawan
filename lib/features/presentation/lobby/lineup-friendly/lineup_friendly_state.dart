@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../../../domain/session/avatar_model.dart';
+import '../../../domain/session/avatar_model.dart';
 
 class LineupFriendlyState {
   var listFriends = [

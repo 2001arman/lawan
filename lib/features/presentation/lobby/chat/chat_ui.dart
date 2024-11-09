@@ -5,14 +5,14 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/lobby/pages/chat/controller/chat_controller.dart';
+import 'package:lawan/features/presentation/lobby/chat/controller/chat_controller.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/util/dialogs/custom_dialog_success.dart';
 
-import '../../../../../utility/shared/constants/action_type.dart';
-import '../../../../../utility/shared/widgets/buttons/circle_button_widget.dart';
-import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
-import '../../../../../utility/shared/widgets/text/text_border.dart';
+import '../../../../utility/shared/constants/action_type.dart';
+import '../../../../utility/shared/widgets/buttons/circle_button_widget.dart';
+import '../../../../utility/shared/widgets/custom_text_form_fields.dart';
+import '../../../../utility/shared/widgets/text/text_border.dart';
 import 'controller/chat_state.dart';
 
 // ignore: must_be_immutable

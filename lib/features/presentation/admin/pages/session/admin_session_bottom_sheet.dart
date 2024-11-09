@@ -2,7 +2,7 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/lobby/pages/lobby_ui.dart';
+import 'package:lawan/features/presentation/lobby/lobby_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/constants/session_type.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
@@ -139,6 +139,7 @@ class AdminSessionBottomSheet {
                                     arguments: [
                                       sessionType,
                                       session,
+                                      isReferee,
                                     ],
                                   ),
                                   widget: Row(

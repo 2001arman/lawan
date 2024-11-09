@@ -3,10 +3,11 @@ import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/ui/checkout_ui.dart';
 import 'package:lawan/utility/shared/constants/session_type.dart';
 
-import '../../../domain/session/session_model.dart';
-import '../../admin/pages/session/admin_add_session.dart';
-import '../../admin/pages/session/admin_session_bottom_sheet.dart';
-import '../../admin/pages/session/session_logic.dart';
+import '../../domain/session/session_model.dart';
+import '../admin/pages/session/admin_add_session.dart';
+import '../admin/pages/session/admin_session_bottom_sheet.dart';
+import '../admin/pages/session/session_logic.dart';
+import '../player/controller/player_main_state.dart';
 import 'lobby_state.dart';
 
 class LobbyController extends GetxController {
@@ -19,6 +20,7 @@ class LobbyController extends GetxController {
     super.onInit();
     sessionType = Get.arguments[0];
     sessionModel = Get.arguments[1];
+    state.isReferee = Get.arguments[2];
   }
 
   void lobbyAlignmentTabbar(String title) {
@@ -56,10 +58,26 @@ class LobbyController extends GetxController {
     );
   }
 
-  Future<void> handleCheckoutPage() async {
-    Get.toNamed(
-      CheckoutUi.namePath,
-      arguments: [sessionModel, onCreate],
-    );
+  Future<void> handleSlideLogic() async {
+    if (sessionType == SessionType.ranked && !state.isReferee) {
+      if (state.selectedPlayerIndex.value != -1) {
+        return Get.toNamed(
+          CheckoutUi.namePath,
+          arguments: [sessionModel, onCreate],
+        );
+      }
+    } else {
+      state.isStarting.value = true;
+    }
+  }
+
+  Future<void> handleSlideAction() async {
+    state.selectedAction.value = null;
+    state.selectedPlayerIndex.value = -1;
+  }
+
+  void handleSelectedAction(NavbarItem navbarItem) {
+    // if (state.selectedPlayerIndex.value == -1) return;
+    state.selectedAction.value = navbarItem;
   }
 }

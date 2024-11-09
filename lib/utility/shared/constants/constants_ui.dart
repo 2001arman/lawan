@@ -133,6 +133,24 @@ LinearGradient shadowGradient = LinearGradient(
   ],
 );
 
+LinearGradient redGradient = LinearGradient(
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+  colors: [
+    kRedColor,
+    const Color(0xFF8A3434),
+  ],
+);
+
+LinearGradient blueGradient = const LinearGradient(
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+  colors: [
+    Color(0xFF2A65F8),
+    Color(0xFF193B92),
+  ],
+);
+
 List<BoxShadow> greenBoxShadow = [
   BoxShadow(
     blurRadius: 10,

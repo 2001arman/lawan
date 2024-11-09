@@ -7,11 +7,13 @@ class GradientCircleButton extends StatelessWidget {
   final VoidCallback onTap;
   final Widget? widget;
   final double size;
+  final LinearGradient? gradient;
   const GradientCircleButton({
     super.key,
     required this.onTap,
     this.widget,
     this.size = 44,
+    this.gradient,
   });
 
   @override
@@ -23,7 +25,7 @@ class GradientCircleButton extends StatelessWidget {
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          gradient: mainGradient,
+          gradient: gradient ?? mainGradient,
         ),
         child: Padding(
           padding: const EdgeInsets.all(12),

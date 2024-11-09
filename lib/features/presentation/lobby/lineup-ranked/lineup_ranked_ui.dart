@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/lobby/pages/lineup-ranked/lineup_ranked_logic.dart';
-import 'package:lawan/features/presentation/lobby/pages/widgets/lobby_selected_friend_widget.dart';
+import 'package:lawan/features/presentation/lobby/lineup-ranked/lineup_ranked_logic.dart';
+import 'package:lawan/features/presentation/lobby/widgets/lobby_selected_friend_widget.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
-import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
+import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import 'dart:math' as math;
 
 class LineupRankedUi extends StatefulWidget {
@@ -53,7 +53,7 @@ class _LineupRankedUiState extends State<LineupRankedUi>
     required int index,
   }) {
     return GestureDetector(
-      onTap: () => logic.handleSelectedIndexLineUp(index),
+      onTap: () => logic.handleselectedPlayerIndex(index),
       child: Stack(
         children: [
           Padding(
@@ -70,7 +70,7 @@ class _LineupRankedUiState extends State<LineupRankedUi>
                         color: logic.getProfilePosition(index) != null
                             ? kBlackColor
                             : kWhiteColor,
-                        gradient: lobbyState.selectedIndexLineUp.value == index
+                        gradient: lobbyState.selectedPlayerIndex.value == index
                             ? mainGradient
                             : null,
                         boxShadow: [
@@ -88,18 +88,21 @@ class _LineupRankedUiState extends State<LineupRankedUi>
                       ),
                       child: Center(
                         child: Text(
-                          lobbyState.selectedIndexLineUp.value == index
-                              ? state.myProfile.name
+                          lobbyState.selectedPlayerIndex.value == index
+                              ? lobbyState.isReferee
+                                  ? 'Selected'
+                                  : state.myProfile.name
                               : logic.getProfilePosition(index)?.name ??
                                   'Available',
                           style: blackTextStyle.copyWith(
                             fontSize: 12,
                             fontWeight: medium,
-                            color:
-                                lobbyState.selectedIndexLineUp.value == index ||
-                                        logic.getProfilePosition(index) != null
-                                    ? kWhiteColor
-                                    : kBlackColor,
+                            color: !lobbyState.isReferee &&
+                                        lobbyState.selectedPlayerIndex.value ==
+                                            index ||
+                                    logic.getProfilePosition(index) != null
+                                ? kWhiteColor
+                                : kBlackColor,
                             height: 1,
                           ),
                           textAlign: TextAlign.center,
@@ -136,10 +139,11 @@ class _LineupRankedUiState extends State<LineupRankedUi>
                       ),
                     ],
                   ),
-                  child: lobbyState.selectedIndexLineUp.value == index ||
+                  child: lobbyState.selectedPlayerIndex.value == index ||
                           logic.getProfilePosition(index) != null
                       ? Image.asset(
-                          lobbyState.selectedIndexLineUp.value == index
+                          !lobbyState.isReferee &&
+                                  lobbyState.selectedPlayerIndex.value == index
                               ? state.myProfile.asset
                               : logic.getProfilePosition(index)!.asset,
                           width: 40,
@@ -351,6 +355,8 @@ class _LineupRankedUiState extends State<LineupRankedUi>
                 children: [
                   ...state.selectedFriends.asMap().entries.map(
                         (data) => LobbySelectedFriendWidget(
+                          onTap: () {},
+                          isActive: false,
                           profile: data.value,
                           showReferee: (lobbyState.lineUpTabActive.value ==
                                   '') &&

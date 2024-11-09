@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import '../../../../domain/session/avatar_model.dart';
+import '../../../domain/session/avatar_model.dart';
 
 class LineupRankedState {
   var lineUpActiveAlignment = Alignment.centerLeft.obs;
@@ -52,6 +52,13 @@ class LineupRankedState {
   var showTick = 0.obs;
 
   var availableSlot = 3.obs;
+
+  var avatar = AvatarModel(
+    name: 'Samantha',
+    asset: 'assets/avatars/avatar4.png',
+    position: 'GK',
+    isSelected: false.obs,
+  );
 
   var homeLineUp = <AvatarModel?>[
     AvatarModel(

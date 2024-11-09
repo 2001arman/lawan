@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/session/avatar_model.dart';
@@ -17,6 +18,12 @@ class PlayerMainState {
 
 class NavbarItem {
   final String name, icon;
+  final LinearGradient? gradient, activeGradient;
 
-  NavbarItem({required this.name, required this.icon});
+  NavbarItem({
+    required this.name,
+    required this.icon,
+    this.gradient,
+    this.activeGradient,
+  });
 }

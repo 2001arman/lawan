@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/lobby/pages/lineup-friendly/lineup_friendly_logic.dart';
-import 'package:lawan/features/presentation/lobby/pages/widgets/lobby_selected_friend_widget.dart';
+import 'package:lawan/features/presentation/lobby/lineup-friendly/lineup_friendly_logic.dart';
+import 'package:lawan/features/presentation/lobby/widgets/lobby_selected_friend_widget.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
-import '../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
-import '../../../../../utility/shared/widgets/container/select_friend_item.dart';
-import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
-import '../../../../../utility/shared/widgets/text/text_border.dart';
-import '../../../../domain/session/avatar_model.dart';
+import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
+import '../../../../utility/shared/widgets/container/select_friend_item.dart';
+import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
+import '../../../../utility/shared/widgets/text/text_border.dart';
+import '../../../domain/session/avatar_model.dart';
 
 class LineupFriendlyUi extends StatelessWidget {
   final logic = Get.find<LineupFriendlyLogic>();
@@ -20,13 +20,19 @@ class LineupFriendlyUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget selectedFriends({required AvatarModel data, required int index}) {
+    Widget selectedFriends({
+      required AvatarModel data,
+      required int index,
+    }) {
       return LobbySelectedFriendWidget(
+        isActive: (lobbyState.lineUpTabActive.value != '') &&
+            lobbyState.selectedPlayerIndex.value == index,
         profile: data,
         showReferee: (lobbyState.lineUpTabActive.value == '') &&
             (index != state.selectedRefereeIndex.value),
         isReferee: index == state.selectedRefereeIndex.value,
         selecReferee: () => logic.selectReferee(index: index, name: data.name),
+        onTap: () => logic.handleSelectedPlayerIndex(index),
       );
     }
 
