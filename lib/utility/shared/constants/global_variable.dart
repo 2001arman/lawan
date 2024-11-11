@@ -6,7 +6,7 @@ class GlobalVariable {
   Rxn<FieldModel> selectedSport = Rxn();
 
   Future<GlobalVariable> init() async {
-    selectedSport.value = FieldDataSource().listFieldModel.first;
+    selectedSport.value = FieldDataSource().listFieldModel[7];
     return this;
   }
 
