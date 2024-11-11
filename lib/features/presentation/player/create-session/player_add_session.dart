@@ -170,10 +170,12 @@ class PlayerAddSession {
                     ),
                   ),
                   contentSection(),
-                  Container(
-                    padding: EdgeInsets.all(defaultMargin),
-                    margin: EdgeInsets.only(
-                      bottom: MediaQuery.of(Get.context!).padding.bottom,
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      defaultMargin,
+                      defaultMargin,
+                      defaultMargin,
+                      MediaQuery.of(Get.context!).padding.bottom,
                     ),
                     child: Row(
                       children: [
