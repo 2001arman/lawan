@@ -7,6 +7,8 @@ import 'package:lawan/core/app_route.dart';
 import 'package:lawan/features/presentation/admin/controller/admin_main_binding.dart';
 import 'package:lawan/firebase_options.dart';
 
+import 'core/depedency_injectore.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -17,6 +19,8 @@ void main() async {
   if (imagePickerImplementation is ImagePickerAndroid) {
     imagePickerImplementation.useAndroidPhotoPicker = true;
   }
+  await DependencyInjection.init();
+
   runApp(const MainApp());
 }
 

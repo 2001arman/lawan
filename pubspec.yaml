@@ -49,6 +49,8 @@ dependencies:
 
   country_state_city_pro: ^0.0.6
 
+  expansion_widget: ^0.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -67,6 +69,7 @@ flutter:
     - assets/avatars/
     - assets/banks/
     - assets/video/
+    - assets/fields/
 
   fonts:
     - family: Lufga
