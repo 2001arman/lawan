@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
-import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
+import 'package:lawan/features/presentation/player/player_main_ui.dart';
 import 'package:lawan/features/presentation/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';

@@ -11,7 +11,7 @@ import '../../../domain/session/session_model.dart';
 import '../../admin/pages/session/admin_add_session.dart';
 import '../../admin/pages/session/admin_session_bottom_sheet.dart';
 import '../../admin/pages/session/session_logic.dart';
-import '../controller/player_main_state.dart';
+import '../player_main_state.dart';
 import '../create-session/player_add_session.dart';
 
 class RankedMainLogic extends GetxController {

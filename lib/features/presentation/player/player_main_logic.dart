@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/player/controller/player_main_state.dart';
+import 'package:lawan/features/presentation/player/player_main_state.dart';
 import 'package:lawan/features/presentation/player/friendly/friendly_main_logic.dart';
 import 'package:lawan/features/presentation/player/friendly/friendly_main_state.dart';
 import 'package:lawan/features/presentation/player/leaderboard/leaderboard_logic.dart';

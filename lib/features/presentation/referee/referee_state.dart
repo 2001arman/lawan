@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../domain/session/session_model.dart';
-import '../player/controller/player_main_state.dart';
+import '../player/player_main_state.dart';
 
 class RefereeState {
   var selectedNavbarIndex = 0.obs;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 
-import '../player/controller/player_main_state.dart';
+import '../player/player_main_state.dart';
 
 class LobbyState {
   var lobbyActiveAlignment = Alignment.centerLeft.obs;

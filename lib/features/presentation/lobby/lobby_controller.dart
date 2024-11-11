@@ -7,7 +7,7 @@ import '../../domain/session/session_model.dart';
 import '../admin/pages/session/admin_add_session.dart';
 import '../admin/pages/session/admin_session_bottom_sheet.dart';
 import '../admin/pages/session/session_logic.dart';
-import '../player/controller/player_main_state.dart';
+import '../player/player_main_state.dart';
 import 'lobby_state.dart';
 
 class LobbyController extends GetxController {

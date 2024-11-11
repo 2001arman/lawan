@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../domain/session/avatar_model.dart';
+import '../../domain/session/avatar_model.dart';
 
 class PlayerMainState {
   var selectedNavbarIndex = 0.obs;

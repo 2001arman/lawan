@@ -13,11 +13,11 @@ import 'package:lawan/features/presentation/player/club/create-club/create_club_
 import 'package:lawan/features/presentation/player/club/create-club/create_club_ui.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/controller/checkout_binding.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/ui/checkout_ui.dart';
-import 'package:lawan/features/presentation/player/controller/player_main_binding.dart';
+import 'package:lawan/features/presentation/player/player_main_binding.dart';
 import 'package:lawan/features/presentation/player/payment/payment/controllers/payment_binding.dart';
 import 'package:lawan/features/presentation/player/payment/payment/pages/payment_add_card_page.dart';
 import 'package:lawan/features/presentation/player/payment/payment/pages/payment_page.dart';
-import 'package:lawan/features/presentation/player/ui/player_main_ui.dart';
+import 'package:lawan/features/presentation/player/player_main_ui.dart';
 import 'package:lawan/features/presentation/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_binding.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
