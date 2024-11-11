@@ -24,6 +24,7 @@ class LineupRankedLogic extends GetxController {
       for (int i = 0; i < state.homeLineUp.length; i++) {
         // If the current item is null, set it to the default avatar
         state.homeLineUp[i] ??= state.avatar;
+        state.awayLineUp[i] ??= state.avatar;
       }
       state.homeLineUp.refresh(); // Refresh the observable list
     }
