@@ -5,7 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/payment/payment/add_card/payment_add_card_page.dart';
 import 'package:lawan/features/presentation/player/player_main_ui.dart';
-import 'package:lawan/features/presentation/qr-profile/qr_profile_ui.dart';
+import 'package:lawan/features/presentation/profile/feedback/feedback_ui.dart';
+import 'package:lawan/features/presentation/profile/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/avatar_shadow_with_text.dart';
@@ -326,27 +327,30 @@ class CustomDialogProfile {
   }
 
   static Widget feedbackSection() {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: defaultMargin),
-      decoration: BoxDecoration(
-        border: Border.all(width: 1, color: kGreyColor),
-        borderRadius: BorderRadius.circular(32),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SvgPicture.asset(
-            'assets/icons/headset.svg',
-            width: 24,
-            height: 24,
-            color: kDarkgreyColor,
-          ),
-          Text(
-            'Give Feedback',
-            style: blackTextStyle.copyWith(fontWeight: medium),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => Get.toNamed(FeedbackUi.namePath),
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: defaultMargin),
+        decoration: BoxDecoration(
+          border: Border.all(width: 1, color: kGreyColor),
+          borderRadius: BorderRadius.circular(32),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SvgPicture.asset(
+              'assets/icons/headset.svg',
+              width: 24,
+              height: 24,
+              color: kDarkgreyColor,
+            ),
+            Text(
+              'Give Feedback',
+              style: blackTextStyle.copyWith(fontWeight: medium),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -15,8 +15,9 @@ class CustomAppbar extends StatelessWidget {
     required this.borderColor,
     required this.textColor,
     this.onTap,
+    this.icon = 'assets/icons/back.svg',
   });
-  final String title;
+  final String title, icon;
   final Color iconColor, borderColor, textColor;
   final VoidCallback? onTap;
 
@@ -27,7 +28,7 @@ class CustomAppbar extends StatelessWidget {
         CircleButtonTransparentWidget(
           onTap: onTap ?? Get.back,
           widget: SvgPicture.asset(
-            'assets/icons/back.svg',
+            icon,
             color: iconColor,
           ),
           margin: EdgeInsets.only(right: defaultMargin),

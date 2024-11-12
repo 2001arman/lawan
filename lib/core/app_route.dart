@@ -23,12 +23,14 @@ import 'package:lawan/features/presentation/player/payment/payment/payment_bindi
 import 'package:lawan/features/presentation/player/payment/payment/add_card/payment_add_card_page.dart';
 import 'package:lawan/features/presentation/player/payment/payment/payment_page.dart';
 import 'package:lawan/features/presentation/player/player_main_ui.dart';
-import 'package:lawan/features/presentation/qr-profile/qr_profile_ui.dart';
+import 'package:lawan/features/presentation/profile/feedback/feedback_binding.dart';
+import 'package:lawan/features/presentation/profile/feedback/feedback_ui.dart';
+import 'package:lawan/features/presentation/profile/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_binding.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
 
 class AppRoute {
-  static const initialRoute = AuthUi.namePath;
+  static const initialRoute = PlayerMainUi.namePath;
   static final routes = [
     GetPage(
       name: AdminMainUi.namePath,
@@ -98,6 +100,11 @@ class AppRoute {
       name: ForgotPasswordUi.namePath,
       page: () => ForgotPasswordUi(),
       binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: FeedbackUi.namePath,
+      page: () => FeedbackUi(),
+      binding: FeedbackBinding(),
     ),
   ];
 }

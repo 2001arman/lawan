@@ -186,6 +186,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                 ),
               ),
             ),
+            
             maxLines: widget.minLines,
             keyboardType: widget.textInputType,
           ),
