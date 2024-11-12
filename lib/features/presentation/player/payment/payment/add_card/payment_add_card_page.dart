@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/player/payment/payment/add_card/payment_add_card_logic.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/util/formatter/alphabet_formatter.dart';
 import 'package:lawan/utility/util/formatter/expired_date_format.dart';
@@ -12,11 +13,10 @@ import '../../../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../../utility/shared/widgets/custom_text_form_fields.dart';
 import '../../../../../../utility/shared/widgets/payment/card_widget.dart';
-import '../controllers/payment_controller.dart';
 
 class PaymentAddCardPage extends StatelessWidget {
   static const String namePath = '/payment_add_card_page';
-  final ctrl = Get.find<PaymentController>();
+  final ctrl = Get.find<PaymentAddCardLogic>();
   PaymentAddCardPage({super.key});
 
   @override
@@ -59,6 +59,17 @@ class PaymentAddCardPage extends StatelessWidget {
       ),
       body: Column(
         children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(defaultMargin, 12, defaultMargin, 0),
+            child: CustomTextFormField(
+              hintText: 'SSM Number',
+              controller: TextEditingController(),
+              title: 'SSM Number',
+              textInputType: TextInputType.number,
+              maxLength: 19,
+              onChanged: (value) {},
+            ),
+          ),
           Obx(
             () => CardWidget(
               icon: "assets/icons/mastercard.svg",

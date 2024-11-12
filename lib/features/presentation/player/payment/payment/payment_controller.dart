@@ -1,19 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/payment/payment/models/bank_model.dart';
 import 'package:lawan/features/presentation/player/payment/payment/models/card_model.dart';
 
 class PaymentController extends GetxController {
-  TextEditingController cardNumberCtrl = TextEditingController();
-  TextEditingController expDateCtrl = TextEditingController();
-  TextEditingController cvvCtrl = TextEditingController();
-  TextEditingController bankNameCtrl = TextEditingController();
-  TextEditingController nameCtrl = TextEditingController();
-  TextEditingController addressCtrl = TextEditingController();
-  TextEditingController postCodeCtrl = TextEditingController();
-
   // key for form
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -57,46 +47,8 @@ class PaymentController extends GetxController {
     super.onInit();
   }
 
-  bool _doValidate() {
-    if (formKey.currentState!.validate()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  void addCard() {
-    if (_doValidate()) {
-      listCard.add(
-        CardModel(
-          cardNumber: cardNumberCtrl.text,
-          bankName: bankNameCtrl.text,
-          ownerName: nameCtrl.text,
-          expDate: expDateCtrl.text,
-          cvv: cvvCtrl.text,
-          address: addressCtrl.text,
-          postCode: postCodeCtrl.text,
-        ),
-      );
-      log('Success');
-      clearData();
-      Get.back();
-    }
-  }
-
-  void clearData() {
-    cardNumberCtrl.clear();
-    bankNameCtrl.clear();
-    nameCtrl.clear();
-    expDateCtrl.clear();
-    cvvCtrl.clear();
-    addressCtrl.clear();
-    postCodeCtrl.clear();
-  }
-
-  @override
-  void dispose() {
-    clearData();
-    super.dispose();
+  void addCard(CardModel cardModel) {
+    listCard.add(cardModel);
+    Get.back();
   }
 }

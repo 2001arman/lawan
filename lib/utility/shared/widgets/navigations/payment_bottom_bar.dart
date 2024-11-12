@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/player/payment/payment/pages/payment_page.dart';
+import 'package:lawan/features/presentation/player/payment/payment/payment_page.dart';
 
 import '../../constants/constants_ui.dart';
 import '../buttons/gradient_button.dart';

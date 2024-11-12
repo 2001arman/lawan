@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/gradient/horizontal_white_gradient.dart';
 
-import '../../../../../../utility/shared/constants/constants_ui.dart';
-import '../../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
-import '../../../../../../utility/shared/widgets/payment/card_widget.dart';
-import '../controllers/payment_controller.dart';
-import 'payment_add_card_page.dart';
+import '../../../../../utility/shared/constants/constants_ui.dart';
+import '../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
+import '../../../../../utility/shared/widgets/payment/card_widget.dart';
+import 'payment_controller.dart';
+import 'add_card/payment_add_card_page.dart';
 
 class PaymentPage extends StatefulWidget {
   static const String namePath = '/payment_page';
@@ -119,7 +119,13 @@ class _PaymentPageState extends State<PaymentPage> {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () => Get.toNamed(PaymentAddCardPage.namePath),
+            onTap: () => Get.toNamed(
+              PaymentAddCardPage.namePath,
+              arguments: [
+                false,
+                widget.ctrl.addCard,
+              ],
+            ),
             child: Container(
               height: 150,
               padding: const EdgeInsets.symmetric(horizontal: 10),

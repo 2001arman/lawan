@@ -1,6 +1,8 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:lawan/features/presentation/admin/admin_main_binding.dart';
 import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
+import 'package:lawan/features/presentation/admin/bank/admin_bank_binding.dart';
+import 'package:lawan/features/presentation/admin/bank/admin_bank_ui.dart';
 import 'package:lawan/features/presentation/auth/auth_binding.dart';
 import 'package:lawan/features/presentation/auth/auth_ui.dart';
 import 'package:lawan/features/presentation/auth/information/auth_information_binding.dart';
@@ -13,10 +15,11 @@ import 'package:lawan/features/presentation/player/club/create-club/create_club_
 import 'package:lawan/features/presentation/player/club/create-club/create_club_ui.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/controller/checkout_binding.dart';
 import 'package:lawan/features/presentation/player/payment/checkout/ui/checkout_ui.dart';
+import 'package:lawan/features/presentation/player/payment/payment/add_card/payment_add_card_binding.dart';
 import 'package:lawan/features/presentation/player/player_main_binding.dart';
-import 'package:lawan/features/presentation/player/payment/payment/controllers/payment_binding.dart';
-import 'package:lawan/features/presentation/player/payment/payment/pages/payment_add_card_page.dart';
-import 'package:lawan/features/presentation/player/payment/payment/pages/payment_page.dart';
+import 'package:lawan/features/presentation/player/payment/payment/payment_binding.dart';
+import 'package:lawan/features/presentation/player/payment/payment/add_card/payment_add_card_page.dart';
+import 'package:lawan/features/presentation/player/payment/payment/payment_page.dart';
 import 'package:lawan/features/presentation/player/player_main_ui.dart';
 import 'package:lawan/features/presentation/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_binding.dart';
@@ -48,7 +51,7 @@ class AppRoute {
     GetPage(
       name: PaymentAddCardPage.namePath,
       page: () => PaymentAddCardPage(),
-      binding: PaymentBinding(),
+      binding: PaymentAddCardBinding(),
     ),
     GetPage(
       name: LobbyUi.namePath,
@@ -83,6 +86,11 @@ class AppRoute {
       name: RefereeUi.namePath,
       page: () => RefereeUi(),
       binding: RefereeBinding(),
+    ),
+    GetPage(
+      name: AdminBankUi.namePath,
+      page: () => AdminBankUi(),
+      binding: AdminBankBinding(),
     ),
   ];
 }
