@@ -252,9 +252,12 @@ class AuthUi extends StatelessWidget {
             ),
           ),
           SizedBox(height: defaultMargin),
-          Text(
-            'Trouble logging in?',
-            style: greenTextStyle.copyWith(fontWeight: medium),
+          GestureDetector(
+            onTap: logic.showForgotPasswordDialog,
+            child: Text(
+              'Trouble logging in?',
+              style: greenTextStyle.copyWith(fontWeight: medium),
+            ),
           ),
         ],
       );
@@ -321,8 +324,8 @@ class AuthUi extends StatelessWidget {
                 curve: Curves.easeOutSine,
                 width: Get.width,
                 height: Get.height - state.heightContainer.value,
-                child:
-                    VideoWidget(videoController: logic.videoPlayerController),
+                // child:
+                //     VideoWidget(videoController: logic.videoPlayerController),
               ),
               Container(
                 width: double.infinity,

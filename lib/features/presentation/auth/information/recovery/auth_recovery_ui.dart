@@ -114,6 +114,7 @@ class AuthRecoveryUi extends StatelessWidget {
               state.listDescription[index - 1],
               style: darkGreyTextStyle.copyWith(
                 fontSize: 12,
+                height: 18 / 12,
               ),
               textAlign: TextAlign.center,
             ),

@@ -5,6 +5,8 @@ import 'package:lawan/features/presentation/admin/bank/admin_bank_binding.dart';
 import 'package:lawan/features/presentation/admin/bank/admin_bank_ui.dart';
 import 'package:lawan/features/presentation/auth/auth_binding.dart';
 import 'package:lawan/features/presentation/auth/auth_ui.dart';
+import 'package:lawan/features/presentation/auth/forgot-password/forgot_password_binding.dart';
+import 'package:lawan/features/presentation/auth/forgot-password/forgot_password_ui.dart';
 import 'package:lawan/features/presentation/auth/information/auth_information_binding.dart';
 import 'package:lawan/features/presentation/auth/information/auth_information_ui.dart';
 import 'package:lawan/features/presentation/auth/information/recovery/auth_recovery_binding.dart';
@@ -26,7 +28,7 @@ import 'package:lawan/features/presentation/referee/referee_binding.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
 
 class AppRoute {
-  static const initialRoute = PlayerMainUi.namePath;
+  static const initialRoute = AuthUi.namePath;
   static final routes = [
     GetPage(
       name: AdminMainUi.namePath,
@@ -91,6 +93,11 @@ class AppRoute {
       name: AdminBankUi.namePath,
       page: () => AdminBankUi(),
       binding: AdminBankBinding(),
+    ),
+    GetPage(
+      name: ForgotPasswordUi.namePath,
+      page: () => ForgotPasswordUi(),
+      binding: ForgotPasswordBinding(),
     ),
   ];
 }
