@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../../../utility/util/helper.dart';
-import '../../../../../domain/arena/arena_model.dart';
+import '../../../../../utility/util/helper.dart';
+import '../../../../domain/arena/arena_model.dart';
 
 class AdminArenaState {
   final textFormKey = GlobalKey<FormState>();

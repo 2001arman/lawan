@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/admin/pages/session/session_logic.dart';
+import 'package:lawan/features/presentation/admin/session/session_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/calendar/calendar_picker_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_circle_button.dart';
 import 'package:lawan/utility/shared/widgets/session_item_card.dart';
 
-import '../../../../../utility/shared/widgets/calendar/calendar_month_widget.dart';
+import '../../../../utility/shared/widgets/calendar/calendar_month_widget.dart';
 
 class SessionUi extends StatelessWidget {
   SessionUi({super.key});

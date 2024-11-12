@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_state.dart';
+import 'package:lawan/features/presentation/admin/arena/controller/admin_arena_state.dart';
 
-import '../../../../../../utility/shared/constants/arena_type.dart';
-import '../../../../../../utility/util/dialogs/custom_dialog.dart';
-import '../../../../../../utility/util/dialogs/custom_dialog_success.dart';
-import '../../../../../../utility/util/helper.dart';
-import '../../../../../domain/arena/arena_model.dart';
-import '../../../../../infrastructure/arena/arena_data_source.dart';
+import '../../../../../utility/shared/constants/arena_type.dart';
+import '../../../../../utility/util/dialogs/custom_dialog.dart';
+import '../../../../../utility/util/dialogs/custom_dialog_success.dart';
+import '../../../../../utility/util/helper.dart';
+import '../../../../domain/arena/arena_model.dart';
+import '../../../../infrastructure/arena/arena_data_source.dart';
 import '../admin_add_arena.dart';
 
 class AdminArenaLogic extends GetxController {

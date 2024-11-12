@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../../utility/shared/constants/constants_ui.dart';
+import '../../../../utility/shared/constants/constants_ui.dart';
 import 'controller/admin_arena_logic.dart';
 
 class AdminEmptyArena extends StatelessWidget {

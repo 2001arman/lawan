@@ -5,7 +5,7 @@ import 'package:lawan/features/presentation/referee/referee_state.dart';
 import '../../../utility/shared/constants/session_type.dart';
 import '../../domain/session/session_model.dart';
 import '../../infrastructure/arena/arena_data_source.dart';
-import '../admin/pages/session/admin_session_bottom_sheet.dart';
+import '../admin/session/admin_session_bottom_sheet.dart';
 
 class RefereeLogic extends GetxController {
   RefereeState state = RefereeState();

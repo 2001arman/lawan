@@ -2,22 +2,22 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/admin/pages/arena/admin_empty_arena.dart';
-import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_logic.dart';
+import 'package:lawan/features/presentation/admin/arena/admin_empty_arena.dart';
+import 'package:lawan/features/presentation/admin/arena/controller/admin_arena_logic.dart';
 import 'package:lawan/utility/util/dialogs/custom_dialog_maps.dart';
 
-import '../../../../../utility/shared/constants/arena_type.dart';
-import '../../../../../utility/shared/constants/constants_ui.dart';
-import '../../../../../utility/shared/widgets/add_picture_button_widget.dart';
-import '../../../../../utility/shared/widgets/buttons/circle_button_widget.dart';
-import '../../../../../utility/shared/widgets/buttons/gradient_button.dart';
-import '../../../../../utility/shared/widgets/container/selectable_text_field.dart';
-import '../../../../../utility/shared/widgets/custom_image_widget.dart';
-import '../../../../../utility/shared/widgets/custom_text_form_fields.dart';
-import '../../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
-import '../../../../../utility/shared/widgets/selected_container_widget.dart';
-import '../../../../../utility/shared/widgets/wheel_picker/choose_time_widget.dart';
-import '../../../../../utility/util/dialogs/dialog_wheel_picker.dart';
+import '../../../../utility/shared/constants/arena_type.dart';
+import '../../../../utility/shared/constants/constants_ui.dart';
+import '../../../../utility/shared/widgets/add_picture_button_widget.dart';
+import '../../../../utility/shared/widgets/buttons/circle_button_widget.dart';
+import '../../../../utility/shared/widgets/buttons/gradient_button.dart';
+import '../../../../utility/shared/widgets/container/selectable_text_field.dart';
+import '../../../../utility/shared/widgets/custom_image_widget.dart';
+import '../../../../utility/shared/widgets/custom_text_form_fields.dart';
+import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
+import '../../../../utility/shared/widgets/selected_container_widget.dart';
+import '../../../../utility/shared/widgets/wheel_picker/choose_time_widget.dart';
+import '../../../../utility/util/dialogs/dialog_wheel_picker.dart';
 
 class AdminArenaUi extends StatelessWidget {
   final logic = Get.find<AdminArenaLogic>();

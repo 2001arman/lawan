@@ -3,10 +3,10 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lawan/features/presentation/admin/pages/arena/admin_arena_ui.dart';
-import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_logic.dart';
-import 'package:lawan/features/presentation/admin/pages/sales/sales_ui.dart';
-import 'package:lawan/features/presentation/admin/pages/session/session_ui.dart';
+import 'package:lawan/features/presentation/admin/arena/admin_arena_ui.dart';
+import 'package:lawan/features/presentation/admin/arena/controller/admin_arena_logic.dart';
+import 'package:lawan/features/presentation/admin/sales/sales_ui.dart';
+import 'package:lawan/features/presentation/admin/session/session_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/constants/mode_type.dart';
 import 'package:lawan/utility/shared/widgets/bottom_navbar_item.dart';
@@ -15,7 +15,7 @@ import 'package:lawan/utility/shared/widgets/navigations/custom_appbar_profile.d
 import 'package:lawan/utility/shared/widgets/navigations/custom_bottom_navbar.dart';
 import 'package:lawan/utility/util/dialogs/custom_dialog_profile.dart';
 
-import 'controller/admin_main_logic.dart';
+import 'admin_main_logic.dart';
 
 class AdminMainUi extends StatelessWidget {
   static const namePath = '/main_page';

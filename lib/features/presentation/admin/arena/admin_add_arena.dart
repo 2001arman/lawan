@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/domain/arena/arena_model.dart';
-import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_logic.dart';
-import 'package:lawan/features/presentation/admin/pages/arena/controller/admin_arena_state.dart';
+import 'package:lawan/features/presentation/admin/arena/controller/admin_arena_logic.dart';
+import 'package:lawan/features/presentation/admin/arena/controller/admin_arena_state.dart';
 import 'package:lawan/utility/shared/constants/arena_type.dart';
 import 'package:lawan/utility/shared/widgets/add_picture_button_widget.dart';
 import 'package:lawan/utility/shared/widgets/container/selectable_text_field.dart';
@@ -17,8 +17,8 @@ import 'package:lawan/utility/util/dialogs/custom_dialog_maps.dart';
 import 'package:lawan/utility/util/dialogs/dialog_wheel_picker.dart';
 import 'package:lawan/utility/util/dialogs/glass_effect_dialog_container.dart';
 
-import '../../../../../utility/shared/constants/constants_ui.dart';
-import '../../../../../utility/util/helper.dart';
+import '../../../../utility/shared/constants/constants_ui.dart';
+import '../../../../utility/util/helper.dart';
 
 class AdminAddArena {
   final AdminArenaLogic logic;

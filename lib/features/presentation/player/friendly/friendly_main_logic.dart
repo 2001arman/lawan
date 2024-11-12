@@ -9,9 +9,9 @@ import '../../../../utility/util/helper.dart';
 import '../../../../utility/util/helper_data.dart';
 import '../../../domain/session/avatar_model.dart';
 import '../../../domain/session/session_model.dart';
-import '../../admin/pages/session/admin_add_session.dart';
-import '../../admin/pages/session/admin_session_bottom_sheet.dart';
-import '../../admin/pages/session/session_logic.dart';
+import '../../admin/session/admin_add_session.dart';
+import '../../admin/session/admin_session_bottom_sheet.dart';
+import '../../admin/session/session_logic.dart';
 import '../create-session/player_add_session.dart';
 
 class FriendlyMainLogic extends GetxController {
