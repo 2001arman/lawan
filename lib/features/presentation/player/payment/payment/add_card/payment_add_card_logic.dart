@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/admin/bank/admin_bank_ui.dart';
 import 'package:lawan/features/presentation/player/payment/payment/models/card_model.dart';
 
 class PaymentAddCardLogic extends GetxController {
@@ -12,12 +13,14 @@ class PaymentAddCardLogic extends GetxController {
   TextEditingController addressCtrl = TextEditingController();
   TextEditingController postCodeCtrl = TextEditingController();
   bool isAdmin = false;
-  late void Function(CardModel data) functionLogic;
+  late void Function(CardModel data)? functionLogic;
 
   @override
   onInit() {
     isAdmin = Get.arguments[0];
-    functionLogic = Get.arguments[1];
+    if (Get.arguments.length > 1) {
+      functionLogic = Get.arguments[1];
+    }
     super.onInit();
   }
 
@@ -50,7 +53,11 @@ class PaymentAddCardLogic extends GetxController {
         address: addressCtrl.text,
         postCode: postCodeCtrl.text,
       );
-      functionLogic(card);
+      if (Get.arguments.length > 1) {
+        functionLogic!(card);
+      } else {
+        Get.toNamed(AdminBankUi.namePath);
+      }
       clearData();
     }
   }
