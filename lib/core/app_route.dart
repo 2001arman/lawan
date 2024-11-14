@@ -32,7 +32,7 @@ import 'package:lawan/features/presentation/referee/referee_binding.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
 
 class AppRoute {
-  static const initialRoute = ProfileUi.namePath;
+  static const initialRoute = PlayerMainUi.namePath;
   static final routes = [
     GetPage(
       name: AdminMainUi.namePath,

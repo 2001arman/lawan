@@ -90,9 +90,10 @@ class ProfileUi extends StatelessWidget {
         children: [
           circularButtonIcon('assets/icons/pencil.svg', color: kDarkgreyColor),
           const SizedBox(width: 8),
-          circularButtonIcon('assets/icons/pencil.svg', color: kDarkgreyColor),
+          circularButtonIcon('assets/icons/add_user.svg',
+              color: kDarkgreyColor),
           const SizedBox(width: 8),
-          circularButtonIcon('assets/icons/pencil.svg', color: kDarkgreyColor),
+          circularButtonIcon('assets/icons/upload.svg', color: kDarkgreyColor),
         ],
       );
     }
@@ -102,7 +103,7 @@ class ProfileUi extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(defaultMargin),
         margin: EdgeInsets.only(
-          top: MediaQuery.paddingOf(context).top + 58 + defaultMargin,
+          top: MediaQuery.paddingOf(context).top + 58,
         ),
         decoration: BoxDecoration(
           color: kModalColor,
@@ -231,7 +232,7 @@ class ProfileUi extends StatelessWidget {
               backgroundColor: kGreyColor,
               onTap: (title) {
                 state.lobbyTabActive.value = title;
-                              logic.lobbyAlignmentTabbar(title);
+                logic.lobbyAlignmentTabbar(title);
               },
               alignment: state.lobbyActiveAlignment,
             ),

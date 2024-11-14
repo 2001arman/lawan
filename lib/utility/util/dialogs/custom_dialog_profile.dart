@@ -15,6 +15,7 @@ import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_circle_button.dart';
 import 'package:lawan/utility/shared/widgets/text/text_gradient.dart';
 
+import '../../../features/presentation/profile/profile_ui.dart';
 import '../../shared/constants/mode_type.dart';
 import '../../shared/widgets/text/text_border.dart';
 
@@ -119,7 +120,7 @@ class CustomDialogProfile {
         Expanded(
           child: CustomButton(
             isBlack: true,
-            onTap: () {},
+            onTap: () => Get.toNamed(ProfileUi.namePath),
             widget: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
