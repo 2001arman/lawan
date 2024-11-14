@@ -25,12 +25,14 @@ import 'package:lawan/features/presentation/player/payment/payment/payment_page.
 import 'package:lawan/features/presentation/player/player_main_ui.dart';
 import 'package:lawan/features/presentation/profile/feedback/feedback_binding.dart';
 import 'package:lawan/features/presentation/profile/feedback/feedback_ui.dart';
+import 'package:lawan/features/presentation/profile/profile_binding.dart';
+import 'package:lawan/features/presentation/profile/profile_ui.dart';
 import 'package:lawan/features/presentation/profile/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_binding.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
 
 class AppRoute {
-  static const initialRoute = PlayerMainUi.namePath;
+  static const initialRoute = ProfileUi.namePath;
   static final routes = [
     GetPage(
       name: AdminMainUi.namePath,
@@ -105,6 +107,11 @@ class AppRoute {
       name: FeedbackUi.namePath,
       page: () => FeedbackUi(),
       binding: FeedbackBinding(),
+    ),
+    GetPage(
+      name: ProfileUi.namePath,
+      page: () => ProfileUi(),
+      binding: ProfileBinding(),
     ),
   ];
 }

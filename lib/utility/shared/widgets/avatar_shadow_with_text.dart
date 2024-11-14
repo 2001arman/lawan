@@ -8,42 +8,47 @@ class AvatarShadowWithText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 44),
-          child: TextBorder(
-            textTitle: 'Novice',
-            backgroundColor: kWhiteColor,
-            paddingVertical: 2,
-            paddingHorizontal: 8,
-            fontSize: 10,
-            borderColor: kGreyColor,
+    return SizedBox(
+      width: 53,
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 44),
+            child: TextBorder(
+              textTitle: 'Novice',
+              backgroundColor: kWhiteColor,
+              paddingVertical: 2,
+              paddingHorizontal: 8,
+              fontSize: 10,
+              borderColor: kGreyColor,
+            ),
           ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                offset: const Offset(0, 1),
-                blurRadius: 3,
-                color: kBlackColor.withOpacity(0.1),
+          Center(
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    offset: const Offset(0, 1),
+                    blurRadius: 3,
+                    color: kBlackColor.withOpacity(0.1),
+                  ),
+                  BoxShadow(
+                    offset: const Offset(0, 5),
+                    blurRadius: 5,
+                    color: kBlackColor.withOpacity(0.09),
+                  ),
+                ],
               ),
-              BoxShadow(
-                offset: const Offset(0, 5),
-                blurRadius: 5,
-                color: kBlackColor.withOpacity(0.09),
+              child: Image.asset(
+                'assets/avatars/avatar1.png',
+                width: 48,
+                height: 48,
               ),
-            ],
+            ),
           ),
-          child: Image.asset(
-            'assets/avatars/avatar1.png',
-            width: 48,
-            height: 48,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
