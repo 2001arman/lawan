@@ -114,7 +114,10 @@ class PlayerMainUi extends StatelessWidget {
       return Container(
         width: double.infinity,
         height: 183,
-        padding: const EdgeInsets.only(top: 12),
+        padding: EdgeInsets.only(
+          top: 12,
+          bottom: MediaQuery.of(context).padding.bottom,
+        ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -206,11 +209,7 @@ class PlayerMainUi extends StatelessWidget {
           // buttons
           Align(
             alignment: Alignment.bottomCenter,
-            child: Container(
-              margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).padding.bottom),
-              child: customNavbar(),
-            ),
+            child: customNavbar(),
           ),
         ],
       ),
