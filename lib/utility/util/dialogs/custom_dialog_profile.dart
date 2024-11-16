@@ -234,7 +234,10 @@ class CustomDialogProfile {
               source == ModeType.player
                   ? Get.toNamed(
                       PaymentAddCardPage.namePath,
-                      arguments: [true],
+                      arguments: [
+                        true,
+                        true,
+                      ],
                     )
                   : Get.offAllNamed(PlayerMainUi.namePath);
             },

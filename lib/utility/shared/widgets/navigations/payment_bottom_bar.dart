@@ -37,7 +37,10 @@ class PaymentBottomBar extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           GestureDetector(
-            onTap: () => Get.toNamed(PaymentPage.namePath),
+            onTap: () => Get.toNamed(
+              PaymentPage.namePath,
+              arguments: [true],
+            ),
             child: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: defaultMargin,

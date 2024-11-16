@@ -39,11 +39,13 @@ class PaymentController extends GetxController {
   var listCard = <CardModel>[].obs;
   var listBank = <BankModel>[].obs;
   var idx = 0.obs;
+  late bool isShowBank;
 
   @override
   void onInit() {
     listBank.addAll(bank);
     listBank.refresh();
+    isShowBank = Get.arguments[0];
     super.onInit();
   }
 

@@ -202,21 +202,22 @@ class PaymentAddCardPage extends StatelessWidget {
                   ),
                 ],
               ),
-              CustomTextFormField(
-                hintText: 'Bank Name',
-                controller: ctrl.bankNameCtrl,
-                title: 'Bank Name',
-                inputFormatters: [
-                  AlphabeticFormatter(),
-                ],
-                validator: (v) {
-                  if (v!.isEmpty) {
-                    return 'please fill out this field.';
-                  } else {
-                    return null;
-                  }
-                },
-              ),
+              if (ctrl.showBank)
+                CustomTextFormField(
+                  hintText: 'Bank Name',
+                  controller: ctrl.bankNameCtrl,
+                  title: 'Bank Name',
+                  inputFormatters: [
+                    AlphabeticFormatter(),
+                  ],
+                  validator: (v) {
+                    if (v!.isEmpty) {
+                      return 'please fill out this field.';
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
               CustomTextFormField(
                 hintText: 'Name',
                 controller: ctrl.nameCtrl,

@@ -13,13 +13,15 @@ class PaymentAddCardLogic extends GetxController {
   TextEditingController addressCtrl = TextEditingController();
   TextEditingController postCodeCtrl = TextEditingController();
   bool isAdmin = false;
+  bool showBank = true;
   late void Function(CardModel data)? functionLogic;
 
   @override
   onInit() {
     isAdmin = Get.arguments[0];
-    if (Get.arguments.length > 1) {
-      functionLogic = Get.arguments[1];
+    showBank = Get.arguments[1];
+    if (Get.arguments.length > 2) {
+      functionLogic = Get.arguments[2];
     }
     super.onInit();
   }

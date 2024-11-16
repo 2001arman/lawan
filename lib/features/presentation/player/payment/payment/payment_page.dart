@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/gradient/horizontal_white_gradient.dart';
 
@@ -56,8 +57,12 @@ class _PaymentPageState extends State<PaymentPage> {
             children: [
               SizedBox(height: defaultMargin),
               _buildListCard(),
-              Expanded(
-                child: _buildListBank(),
+              Visibility(
+                visible: widget.ctrl.isShowBank,
+                replacement: infoSection(),
+                child: Expanded(
+                  child: _buildListBank(),
+                ),
               ),
             ],
           ),
@@ -123,6 +128,7 @@ class _PaymentPageState extends State<PaymentPage> {
               PaymentAddCardPage.namePath,
               arguments: [
                 false,
+                widget.ctrl.isShowBank,
                 widget.ctrl.addCard,
               ],
             ),
@@ -234,6 +240,64 @@ class _PaymentPageState extends State<PaymentPage> {
               );
             }),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget infoSection() {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: defaultMargin, horizontal: 24),
+      margin: EdgeInsets.all(defaultMargin),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(32),
+        border: Border.all(width: 2, color: kWhiteColor),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SvgPicture.asset(
+            'assets/icons/hand.svg',
+            width: 60,
+            height: 60,
+          ),
+          SizedBox(height: defaultMargin),
+          Text(
+            'Make all payments through Lawan',
+            style: blackTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: medium,
+            ),
+          ),
+          const SizedBox(height: 8),
+          RichText(
+            text: TextSpan(
+              text:
+                  'Always pay and communicate through Lawan to ensure you’re protected under our ',
+              style: darkGreyTextStyle.copyWith(
+                fontSize: 12,
+                height: 18 / 12,
+              ),
+              children: [
+                TextSpan(
+                  text: 'Terms of Service, Payments Terms of Service',
+                  style:
+                      greenTextStyle.copyWith(fontSize: 12, fontWeight: medium),
+                ),
+                const TextSpan(
+                  text: ', cancellation and other safeguards.',
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: defaultMargin),
+          CustomButton(
+            isBlack: false,
+            onTap: () {},
+            title: 'Learn More',
+            borderColor: kGreyColor,
+          )
         ],
       ),
     );

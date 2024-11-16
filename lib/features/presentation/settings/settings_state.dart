@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/player/payment/payment/payment_page.dart';
 import 'package:lawan/features/presentation/settings/notification_setting/notification_setting_ui.dart';
 import 'package:lawan/features/presentation/settings/personal_details/personal_details_ui.dart';
 import 'package:lawan/features/presentation/settings/privacy_and_security/privacy_and_security_ui.dart';
@@ -48,7 +49,12 @@ class SettingsState {
       icon: 'assets/icons/credit-card.svg',
       title: 'Payment Method',
       subTitle: 'Update your preferred payment method',
-      onTap: () {},
+      onTap: () => Get.toNamed(
+        PaymentPage.namePath,
+        arguments: [
+          false,
+        ],
+      ),
     ),
     SettingItem(
       icon: 'assets/icons/user_thin.svg',
