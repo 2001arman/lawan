@@ -243,7 +243,7 @@ class AuthUi extends StatelessWidget {
           ),
           SizedBox(height: defaultMargin),
           GradientButton(
-            onTap: logic.goToSecondScreen,
+            onTap: logic.loginLogic,
             boxShadow: greenBoxShadow,
             paddingVertical: 19.5,
             widget: Text(

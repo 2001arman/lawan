@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/auth/auth_ui.dart';
 import 'package:lawan/features/presentation/player/payment/payment/add_card/payment_add_card_page.dart';
 import 'package:lawan/features/presentation/player/player_main_ui.dart';
 import 'package:lawan/features/presentation/profile/feedback/feedback_ui.dart';
@@ -10,9 +11,11 @@ import 'package:lawan/features/presentation/profile/qr-profile/qr_profile_ui.dar
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
 import 'package:lawan/features/presentation/settings/settings_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
+import 'package:lawan/utility/shared/constants/global_variable.dart';
 import 'package:lawan/utility/shared/widgets/avatar_shadow_with_text.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
+import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_circle_button.dart';
 import 'package:lawan/utility/shared/widgets/text/text_gradient.dart';
 
@@ -358,6 +361,10 @@ class CustomDialogProfile {
   }
 
   static void showDialogProfile({required ModeType source}) {
+    final GlobalVariable global = Get.find<GlobalVariable>();
+    if (global.isLogin.value == false) {
+      return showLoginDialog();
+    }
     Get.dialog(
       Dialog(
         backgroundColor: Colors.transparent,
@@ -466,6 +473,88 @@ class CustomDialogProfile {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  static void showLoginDialog() {
+    Get.dialog(
+      Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(32),
+            color: kBackgroundColor,
+          ),
+          child: Container(
+            height: 184,
+            width: double.infinity,
+            padding: EdgeInsets.all(defaultMargin),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(32),
+              gradient: backgroundGradient,
+            ),
+            child: Stack(
+              children: [
+                // top action button
+                Align(
+                  alignment: Alignment.topRight,
+                  child: circularButtonIcon('assets/icons/chevron-up.svg'),
+                ),
+                // content
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.only(top: defaultMargin),
+                  margin: const EdgeInsets.only(top: 8),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset('assets/icons/logo.svg'),
+                      SizedBox(height: defaultMargin),
+                      Text(
+                        'Pahlawan. Empowered.',
+                        style: darkGreyTextStyle.copyWith(
+                            fontSize: 16, fontWeight: medium),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomButton(
+                              isBlack: true,
+                              onTap: () => Get.toNamed(AuthUi.namePath),
+                              title: 'Login',
+                              paddingVertical: 11.5,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Text(
+                              'Or',
+                              style: darkGreyTextStyle.copyWith(fontSize: 12),
+                            ),
+                          ),
+                          Expanded(
+                            child: GradientButton(
+                              onTap: () => Get.toNamed(AuthUi.namePath),
+                              paddingVertical: 11.5,
+                              widget: Text(
+                                'Sign Up',
+                                style:
+                                    whiteTextStyle.copyWith(fontWeight: medium),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

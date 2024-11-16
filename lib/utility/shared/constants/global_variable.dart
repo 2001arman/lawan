@@ -4,6 +4,7 @@ import 'package:lawan/features/infrastructure/field/field_data_source.dart';
 
 class GlobalVariable {
   Rxn<FieldModel> selectedSport = Rxn();
+  RxBool isLogin = false.obs;
 
   Future<GlobalVariable> init() async {
     selectedSport.value = FieldDataSource().listFieldModel[7];
