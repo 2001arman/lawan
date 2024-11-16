@@ -231,12 +231,12 @@ class CustomDialogProfile {
           child: CustomButton(
             isBlack: true,
             onTap: () {
-              source == ModeType.admin
-                  ? Get.offAllNamed(PlayerMainUi.namePath)
-                  : Get.toNamed(
+              source == ModeType.player
+                  ? Get.toNamed(
                       PaymentAddCardPage.namePath,
                       arguments: [true],
-                    );
+                    )
+                  : Get.offAllNamed(PlayerMainUi.namePath);
             },
             paddingVertical: 12,
             radius: 20,
@@ -244,16 +244,16 @@ class CustomDialogProfile {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  source == ModeType.admin
-                      ? 'assets/icons/play.svg'
-                      : 'assets/icons/arena.svg',
+                  source == ModeType.player
+                      ? 'assets/icons/arena.svg'
+                      : 'assets/icons/play.svg',
                   color: kWhiteColor,
                   width: 24,
                   height: 24,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  source == ModeType.admin ? 'Play Mode' : 'Admin Mode',
+                  source == ModeType.player ? 'Admin Mode' : 'Play Mode',
                   style: whiteTextStyle.copyWith(
                     fontWeight: medium,
                     height: 14 / 14,
