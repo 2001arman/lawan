@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lawan/features/presentation/settings/notification_setting/notification_setting_ui.dart';
 import 'package:lawan/features/presentation/settings/personal_details/personal_details_ui.dart';
 import 'package:lawan/features/presentation/settings/privacy_and_security/privacy_and_security_ui.dart';
+import 'package:lawan/features/presentation/settings/settings_logic.dart';
 
 class SettingsState {
   final List<SettingItem> generalItems = [
@@ -20,13 +21,13 @@ class SettingsState {
       icon: 'assets/icons/theme.svg',
       title: 'Appearance',
       subTitle: 'Light',
-      onTap: () {},
+      onTap: () => SettingsLogic().appearanceSheet(),
     ),
     SettingItem(
       icon: 'assets/icons/globe.svg',
       title: 'App language',
       subTitle: 'English',
-      onTap: () {},
+      onTap: () => SettingsLogic().languageSheet(),
     ),
   ];
 
@@ -80,6 +81,9 @@ class SettingsState {
       onTap: () {},
     ),
   ];
+
+  var selectedTheme = 'Light'.obs;
+  var selectedLanguage = 'English'.obs;
 }
 
 class SettingItem {
