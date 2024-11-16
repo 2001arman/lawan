@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/settings/notification_setting/notification_setting_ui.dart';
 import 'package:lawan/features/presentation/settings/personal_details/personal_details_ui.dart';
+import 'package:lawan/features/presentation/settings/privacy_and_security/privacy_and_security_ui.dart';
 
 class SettingsState {
   final List<SettingItem> generalItems = [
     SettingItem(
       icon: 'assets/icons/shield.svg',
       title: 'Privacy and security',
-      onTap: () {},
+      onTap: () => Get.toNamed(PrivacyAndSecurityUi.namePath),
     ),
     SettingItem(
       icon: 'assets/icons/bell.svg',
       title: 'Notifications',
-      onTap: () {},
+      onTap: () => Get.toNamed(NotificationSettingUi.namePath),
     ),
     SettingItem(
       icon: 'assets/icons/theme.svg',
@@ -60,6 +62,7 @@ class SettingsState {
       onTap: () {},
     ),
   ];
+
   final List<SettingItem> moreItems = [
     SettingItem(
       icon: 'assets/icons/question-mark.svg',
@@ -84,11 +87,13 @@ class SettingItem {
   final String title;
   final String? subTitle;
   final VoidCallback onTap;
+  bool? valueRadio;
 
   SettingItem({
     required this.icon,
     required this.title,
     this.subTitle,
     required this.onTap,
+    this.valueRadio,
   });
 }

@@ -30,8 +30,12 @@ import 'package:lawan/features/presentation/profile/profile_ui.dart';
 import 'package:lawan/features/presentation/profile/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_binding.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
+import 'package:lawan/features/presentation/settings/notification_setting/notification_setting_binding.dart';
+import 'package:lawan/features/presentation/settings/notification_setting/notification_setting_ui.dart';
 import 'package:lawan/features/presentation/settings/personal_details/personal_details_binding.dart';
 import 'package:lawan/features/presentation/settings/personal_details/personal_details_ui.dart';
+import 'package:lawan/features/presentation/settings/privacy_and_security/privacy_and_security_binding.dart';
+import 'package:lawan/features/presentation/settings/privacy_and_security/privacy_and_security_ui.dart';
 import 'package:lawan/features/presentation/settings/settings_binding.dart';
 import 'package:lawan/features/presentation/settings/settings_ui.dart';
 
@@ -126,6 +130,16 @@ class AppRoute {
       name: PersonalDetailsUi.namePath,
       page: () => PersonalDetailsUi(),
       binding: PersonalDetailsBinding(),
+    ),
+    GetPage(
+      name: PrivacyAndSecurityUi.namePath,
+      page: () => PrivacyAndSecurityUi(),
+      binding: PrivacyAndSecurityBinding(),
+    ),
+    GetPage(
+      name: NotificationSettingUi.namePath,
+      page: () => NotificationSettingUi(),
+      binding: NotificationSettingBinding(),
     ),
   ];
 }
