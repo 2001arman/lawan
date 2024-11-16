@@ -18,7 +18,7 @@ class NotificationSettingState {
       valueRadio: true,
     ),
     SettingItem(
-      icon: 'assets/icons/device-mobile.svg',
+      icon: 'assets/icons/device-mobile-bold.svg',
       title: 'Email',
       onTap: () {},
       valueRadio: true,
@@ -32,7 +32,7 @@ class NotificationSettingState {
       valueRadio: true,
     ),
     SettingItem(
-      icon: 'assets/icons/device-mobile.svg',
+      icon: 'assets/icons/device-mobile-bold.svg',
       title: 'Email',
       onTap: () {},
       valueRadio: true,
@@ -47,7 +47,7 @@ class NotificationSettingState {
       valueRadio: true,
     ),
     SettingItem(
-      icon: 'assets/icons/device-mobile.svg',
+      icon: 'assets/icons/device-mobile-bold.svg',
       title: 'Email',
       onTap: () {},
       valueRadio: true,

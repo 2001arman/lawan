@@ -209,6 +209,29 @@ class SessionItemWidget extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 24,
+                height: 6,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: kDarkgreyColor,
+                ),
+              ),
+              const SizedBox(width: 4),
+              Container(
+                width: 6,
+                height: 6,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: kMidgreyColor,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

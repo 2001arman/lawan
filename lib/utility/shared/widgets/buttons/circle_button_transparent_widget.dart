@@ -5,15 +5,17 @@ class CircleButtonTransparentWidget extends StatelessWidget {
   final VoidCallback onTap;
   final Widget widget;
   final EdgeInsets? margin;
-  final Color? borderColor;
+  final Color? borderColor, backgroundColor;
   final double size;
-  const CircleButtonTransparentWidget(
-      {super.key,
-      required this.onTap,
-      required this.widget,
-      this.margin,
-      this.borderColor,
-      this.size = 48});
+  const CircleButtonTransparentWidget({
+    super.key,
+    required this.onTap,
+    required this.widget,
+    this.margin,
+    this.borderColor,
+    this.size = 48,
+    this.backgroundColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class CircleButtonTransparentWidget extends StatelessWidget {
         margin: margin,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.transparent,
+          color: backgroundColor ?? Colors.transparent,
           border: Border.all(
             width: 1,
             color: borderColor ?? kWhiteColor,

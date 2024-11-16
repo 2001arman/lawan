@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/profile/edit-profile/edit_profile_ui.dart';
 import 'package:lawan/features/presentation/profile/profile_logic.dart';
 import 'package:lawan/features/presentation/profile/widgets/session_section.dart';
 import 'package:lawan/features/presentation/profile/widgets/statistic_section.dart';
@@ -12,7 +13,6 @@ import 'package:lawan/utility/shared/widgets/gradient/horizontal_white_gradient.
 import '../../../utility/shared/constants/constants_ui.dart';
 import '../../../utility/shared/constants/mode_type.dart';
 import '../../../utility/shared/widgets/avatar_shadow_with_text.dart';
-import '../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../utility/shared/widgets/navigations/custom_appbar_profile.dart';
 import '../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import '../../../utility/util/dialogs/custom_dialog_profile.dart';
@@ -29,10 +29,15 @@ class ProfileUi extends StatelessWidget {
       String icon, {
       Color? color,
     }) {
-      return CircleButtonTransparentWidget(
-        onTap: () {},
-        size: 44,
-        widget: Padding(
+      return Container(
+        width: 44,
+        height: 44,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: kModalColor,
+          border: Border.all(width: 1, color: kWhiteColor),
+        ),
+        child: Padding(
           padding: const EdgeInsets.all(14),
           child: SvgPicture.asset(
             icon,
@@ -88,9 +93,13 @@ class ProfileUi extends StatelessWidget {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          circularButtonIcon('assets/icons/pencil.svg', color: kDarkgreyColor),
+          GestureDetector(
+            onTap: () => Get.toNamed(EditProfileUi.namePath),
+            child: circularButtonIcon('assets/icons/pencil.svg',
+                color: kDarkgreyColor),
+          ),
           const SizedBox(width: 8),
-          circularButtonIcon('assets/icons/add_user.svg',
+          circularButtonIcon('assets/icons/user-plus-bold.svg',
               color: kDarkgreyColor),
           const SizedBox(width: 8),
           circularButtonIcon('assets/icons/upload.svg', color: kDarkgreyColor),
@@ -113,9 +122,12 @@ class ProfileUi extends StatelessWidget {
           children: [
             Row(
               children: [
-                circularButtonIcon(
-                  'assets/icons/back.svg',
-                  color: kDarkgreyColor,
+                GestureDetector(
+                  onTap: Get.back,
+                  child: circularButtonIcon(
+                    'assets/icons/back.svg',
+                    color: kDarkgreyColor,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Text(
@@ -198,7 +210,7 @@ class ProfileUi extends StatelessWidget {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      'Arsenal FC',
+                      'MF GK',
                       style: blackTextStyle.copyWith(fontWeight: medium),
                     ),
                   ],

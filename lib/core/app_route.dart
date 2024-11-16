@@ -23,6 +23,8 @@ import 'package:lawan/features/presentation/player/payment/payment/payment_bindi
 import 'package:lawan/features/presentation/player/payment/payment/add_card/payment_add_card_page.dart';
 import 'package:lawan/features/presentation/player/payment/payment/payment_page.dart';
 import 'package:lawan/features/presentation/player/player_main_ui.dart';
+import 'package:lawan/features/presentation/profile/edit-profile/edit_profile_binding.dart';
+import 'package:lawan/features/presentation/profile/edit-profile/edit_profile_ui.dart';
 import 'package:lawan/features/presentation/profile/feedback/feedback_binding.dart';
 import 'package:lawan/features/presentation/profile/feedback/feedback_ui.dart';
 import 'package:lawan/features/presentation/profile/profile_binding.dart';
@@ -154,6 +156,11 @@ class AppRoute {
       name: BalanceCheckoutUi.namePath,
       page: () => BalanceCheckoutUi(),
       binding: BalanceCheckoutBinding(),
+    ),
+    GetPage(
+      name: EditProfileUi.namePath,
+      page: () => EditProfileUi(),
+      binding: EditProfileBinding(),
     ),
   ];
 }

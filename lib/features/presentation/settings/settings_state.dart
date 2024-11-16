@@ -10,12 +10,12 @@ import 'package:lawan/features/presentation/settings/settings_logic.dart';
 class SettingsState {
   final List<SettingItem> generalItems = [
     SettingItem(
-      icon: 'assets/icons/shield.svg',
+      icon: 'assets/icons/shield-outline.svg',
       title: 'Privacy and security',
       onTap: () => Get.toNamed(PrivacyAndSecurityUi.namePath),
     ),
     SettingItem(
-      icon: 'assets/icons/bell.svg',
+      icon: 'assets/icons/bell-bold.svg',
       title: 'Notifications',
       onTap: () => Get.toNamed(NotificationSettingUi.namePath),
     ),

@@ -12,7 +12,11 @@ class StatisticSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget statisticTotalGame() {
+    Widget statisticTotalGame({
+      required String totalGame,
+      required String title,
+      bool useBlackText = false,
+    }) {
       return Expanded(
         child: Container(
           decoration: BoxDecoration(
@@ -22,14 +26,20 @@ class StatisticSection extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextGradient(
-                gradient: mainGradient,
-                textTitle: '330',
-                fontSize: 20,
-                textColor: kGreenColor,
-              ),
+              useBlackText
+                  ? Text(
+                      totalGame,
+                      style: blackTextStyle.copyWith(
+                          fontSize: 20, fontWeight: semiBold),
+                    )
+                  : TextGradient(
+                      gradient: mainGradient,
+                      textTitle: totalGame,
+                      fontSize: 20,
+                      textColor: kGreenColor,
+                    ),
               Text(
-                'Goal',
+                title,
                 style: blackTextStyle.copyWith(fontSize: 12),
               ),
             ],
@@ -92,6 +102,7 @@ class StatisticSection extends StatelessWidget {
                   const TextBorder(
                     textTitle: 'Professional',
                     paddingHorizontal: 6,
+                    paddingVertical: 0,
                   ),
                   const Spacer(),
                   Text(
@@ -156,15 +167,28 @@ class StatisticSection extends StatelessWidget {
           height: 84,
           child: Row(
             children: [
-              statisticTotalGame(),
+              statisticTotalGame(title: 'Goal', totalGame: '330'),
               const SizedBox(width: 8),
-              statisticTotalGame(),
+              statisticTotalGame(
+                title: 'Assist',
+                totalGame: '213',
+              ),
               const SizedBox(width: 8),
-              statisticTotalGame(),
+              statisticTotalGame(
+                title: 'Save',
+                totalGame: '213',
+              ),
               const SizedBox(width: 8),
-              statisticTotalGame(),
+              statisticTotalGame(
+                title: 'Goal',
+                totalGame: '214',
+              ),
               const SizedBox(width: 8),
-              statisticTotalGame(),
+              statisticTotalGame(
+                title: 'Matches',
+                totalGame: '2133',
+                useBlackText: true,
+              ),
             ],
           ),
         ),
