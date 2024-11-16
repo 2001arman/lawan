@@ -16,10 +16,12 @@ class CustomAppbar extends StatelessWidget {
     required this.textColor,
     this.onTap,
     this.icon = 'assets/icons/back.svg',
+    this.prefixIcon,
   });
   final String title, icon;
   final Color iconColor, borderColor, textColor;
   final VoidCallback? onTap;
+  final String? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,17 @@ class CustomAppbar extends StatelessWidget {
           margin: EdgeInsets.only(right: defaultMargin),
           borderColor: borderColor,
         ),
+        prefixIcon != null
+            ? Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: SvgPicture.asset(
+                  prefixIcon!,
+                  width: 20,
+                  height: 20,
+                  color: kDarkgreyColor,
+                ),
+              )
+            : const SizedBox(),
         Text(
           title,
           style: whiteTextStyle.copyWith(

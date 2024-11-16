@@ -8,6 +8,7 @@ import 'package:lawan/features/presentation/player/player_main_ui.dart';
 import 'package:lawan/features/presentation/profile/feedback/feedback_ui.dart';
 import 'package:lawan/features/presentation/profile/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
+import 'package:lawan/features/presentation/settings/settings_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/avatar_shadow_with_text.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
@@ -95,7 +96,7 @@ class CustomDialogProfile {
         Expanded(
           child: CustomButton(
             isBlack: true,
-            onTap: () {},
+            onTap: () => Get.toNamed(SettingsUi.namePath),
             widget: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

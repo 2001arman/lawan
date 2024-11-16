@@ -30,6 +30,10 @@ import 'package:lawan/features/presentation/profile/profile_ui.dart';
 import 'package:lawan/features/presentation/profile/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_binding.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
+import 'package:lawan/features/presentation/settings/personal_details/personal_details_binding.dart';
+import 'package:lawan/features/presentation/settings/personal_details/personal_details_ui.dart';
+import 'package:lawan/features/presentation/settings/settings_binding.dart';
+import 'package:lawan/features/presentation/settings/settings_ui.dart';
 
 class AppRoute {
   static const initialRoute = PlayerMainUi.namePath;
@@ -112,6 +116,16 @@ class AppRoute {
       name: ProfileUi.namePath,
       page: () => ProfileUi(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: SettingsUi.namePath,
+      page: () => SettingsUi(),
+      binding: SettingsBinding(),
+    ),
+    GetPage(
+      name: PersonalDetailsUi.namePath,
+      page: () => PersonalDetailsUi(),
+      binding: PersonalDetailsBinding(),
     ),
   ];
 }
