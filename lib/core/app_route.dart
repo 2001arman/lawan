@@ -30,6 +30,10 @@ import 'package:lawan/features/presentation/profile/profile_ui.dart';
 import 'package:lawan/features/presentation/profile/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_binding.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
+import 'package:lawan/features/presentation/settings/balance/balance_binding.dart';
+import 'package:lawan/features/presentation/settings/balance/balance_ui.dart';
+import 'package:lawan/features/presentation/settings/balance/checkout/balance_checkout_binding.dart';
+import 'package:lawan/features/presentation/settings/balance/checkout/balance_checkout_ui.dart';
 import 'package:lawan/features/presentation/settings/notification_setting/notification_setting_binding.dart';
 import 'package:lawan/features/presentation/settings/notification_setting/notification_setting_ui.dart';
 import 'package:lawan/features/presentation/settings/personal_details/personal_details_binding.dart';
@@ -140,6 +144,16 @@ class AppRoute {
       name: NotificationSettingUi.namePath,
       page: () => NotificationSettingUi(),
       binding: NotificationSettingBinding(),
+    ),
+    GetPage(
+      name: BalanceUi.namePath,
+      page: () => BalanceUi(),
+      binding: BalanceBinding(),
+    ),
+    GetPage(
+      name: BalanceCheckoutUi.namePath,
+      page: () => BalanceCheckoutUi(),
+      binding: BalanceCheckoutBinding(),
     ),
   ];
 }
