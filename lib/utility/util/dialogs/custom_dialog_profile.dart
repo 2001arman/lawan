@@ -7,6 +7,7 @@ import 'package:lawan/features/presentation/auth/auth_ui.dart';
 import 'package:lawan/features/presentation/player/payment/payment/add_card/payment_add_card_page.dart';
 import 'package:lawan/features/presentation/player/player_main_ui.dart';
 import 'package:lawan/features/presentation/profile/feedback/feedback_ui.dart';
+import 'package:lawan/features/presentation/profile/notifications/notifications_ui.dart';
 import 'package:lawan/features/presentation/profile/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
 import 'package:lawan/features/presentation/settings/settings_ui.dart';
@@ -24,9 +25,9 @@ import '../../shared/constants/mode_type.dart';
 import '../../shared/widgets/text/text_border.dart';
 
 class CustomDialogProfile {
-  static Widget circularButtonIcon(String icon) {
+  static Widget circularButtonIcon(String icon, VoidCallback onTap) {
     return CircleButtonTransparentWidget(
-      onTap: () {},
+      onTap: onTap,
       widget: Padding(
         padding: const EdgeInsets.all(14),
         child: SvgPicture.asset(
@@ -99,7 +100,10 @@ class CustomDialogProfile {
         Expanded(
           child: CustomButton(
             isBlack: true,
-            onTap: () => Get.toNamed(SettingsUi.namePath),
+            onTap: () {
+              Get.back();
+              Get.toNamed(SettingsUi.namePath);
+            },
             widget: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -404,8 +408,17 @@ class CustomDialogProfile {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          circularButtonIcon('assets/icons/bell.svg'),
-                          circularButtonIcon('assets/icons/chevron-up.svg'),
+                          circularButtonIcon(
+                            'assets/icons/bell.svg',
+                            () {
+                              Get.back();
+                              Get.toNamed(NotificationsUi.namePath);
+                            },
+                          ),
+                          circularButtonIcon(
+                            'assets/icons/chevron-up.svg',
+                            Get.back,
+                          ),
                         ],
                       ),
                     ),
@@ -470,7 +483,10 @@ class CustomDialogProfile {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: GradientCircleButton(
-                  onTap: () => Get.toNamed(QrProfileUi.namePath),
+                  onTap: () {
+                    Get.back();
+                    Get.toNamed(QrProfileUi.namePath);
+                  },
                   size: 48,
                   widget: SvgPicture.asset('assets/icons/qrcode.svg'),
                 ),
@@ -505,7 +521,10 @@ class CustomDialogProfile {
                 // top action button
                 Align(
                   alignment: Alignment.topRight,
-                  child: circularButtonIcon('assets/icons/chevron-up.svg'),
+                  child: circularButtonIcon(
+                    'assets/icons/chevron-up.svg',
+                    Get.back,
+                  ),
                 ),
                 // content
                 Container(

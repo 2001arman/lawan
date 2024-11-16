@@ -27,6 +27,8 @@ import 'package:lawan/features/presentation/profile/edit-profile/edit_profile_bi
 import 'package:lawan/features/presentation/profile/edit-profile/edit_profile_ui.dart';
 import 'package:lawan/features/presentation/profile/feedback/feedback_binding.dart';
 import 'package:lawan/features/presentation/profile/feedback/feedback_ui.dart';
+import 'package:lawan/features/presentation/profile/notifications/notifications_binding.dart';
+import 'package:lawan/features/presentation/profile/notifications/notifications_ui.dart';
 import 'package:lawan/features/presentation/profile/profile_binding.dart';
 import 'package:lawan/features/presentation/profile/profile_ui.dart';
 import 'package:lawan/features/presentation/profile/qr-profile/qr_profile_ui.dart';
@@ -161,6 +163,11 @@ class AppRoute {
       name: EditProfileUi.namePath,
       page: () => EditProfileUi(),
       binding: EditProfileBinding(),
+    ),
+    GetPage(
+      name: NotificationsUi.namePath,
+      page: () => NotificationsUi(),
+      binding: NotificationsBinding(),
     ),
   ];
 }
