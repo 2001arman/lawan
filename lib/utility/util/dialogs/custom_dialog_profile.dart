@@ -7,6 +7,7 @@ import 'package:lawan/features/presentation/auth/auth_ui.dart';
 import 'package:lawan/features/presentation/player/payment/payment/add_card/payment_add_card_page.dart';
 import 'package:lawan/features/presentation/player/player_main_ui.dart';
 import 'package:lawan/features/presentation/profile/feedback/feedback_ui.dart';
+import 'package:lawan/features/presentation/profile/find-friend/find_friend_ui.dart';
 import 'package:lawan/features/presentation/profile/notifications/notifications_ui.dart';
 import 'package:lawan/features/presentation/profile/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
@@ -128,7 +129,10 @@ class CustomDialogProfile {
         Expanded(
           child: CustomButton(
             isBlack: true,
-            onTap: () => Get.toNamed(ProfileUi.namePath),
+            onTap: () {
+              Get.back();
+              Get.toNamed(ProfileUi.namePath);
+            },
             widget: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -159,40 +163,52 @@ class CustomDialogProfile {
       child: Row(
         children: [
           Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/add_user.svg',
-                  color: kDarkgreyColor,
-                  width: 16,
-                  height: 16,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Find Friends',
-                  style: blackTextStyle.copyWith(fontWeight: medium),
-                ),
-              ],
+            child: GestureDetector(
+              onTap: () {
+                Get.back();
+                Get.toNamed(FindFriendUi.namePath);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/add_user.svg',
+                    color: kDarkgreyColor,
+                    width: 16,
+                    height: 16,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Find Friends',
+                    style: blackTextStyle.copyWith(fontWeight: medium),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(width: 12),
           Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/user-check.svg',
-                  color: kDarkgreyColor,
-                  width: 16,
-                  height: 16,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Friend Request',
-                  style: blackTextStyle.copyWith(fontWeight: medium),
-                ),
-              ],
+            child: GestureDetector(
+              onTap: () {
+                Get.back();
+                Get.toNamed(NotificationsUi.namePath);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/user-check.svg',
+                    color: kDarkgreyColor,
+                    width: 16,
+                    height: 16,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Friend Request',
+                    style: blackTextStyle.copyWith(fontWeight: medium),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
