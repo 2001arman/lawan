@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -96,10 +98,11 @@ class AdminAddSession {
     }
 
     Get.bottomSheet(
-      Padding(
+      Container(
         padding: const EdgeInsets.all(8),
+        margin: EdgeInsets.only(bottom: Platform.isIOS ? 12 : 0),
         child: SizedBox(
-          height: Get.height * 0.9,
+          height: Get.height * 0.85,
           width: Get.width,
         ).blurred(
           blur: 7,
@@ -284,7 +287,10 @@ class AdminAddSession {
                   child: CustomTextFormField(
                     hintText: '12 345 6789',
                     controller: state.contactController,
-                    textInputType: TextInputType.number,
+                    textInputType: const TextInputType.numberWithOptions(
+                      signed: true,
+                      decimal: false,
+                    ),
                     validator: (data) => Helper.numberValidator(data),
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -297,7 +303,8 @@ class AdminAddSession {
               hintText: 'Enter Identification Number',
               controller: state.identificationController,
               title: 'Identification Number',
-              textInputType: TextInputType.number,
+              textInputType: const TextInputType.numberWithOptions(
+                  signed: true, decimal: false),
               validator: (data) => Helper.numberValidator(data),
               maxLength: 14,
               inputFormatters: [
@@ -320,7 +327,8 @@ class AdminAddSession {
             CustomTextFormField(
               hintText: '0.00',
               controller: state.priceController,
-              textInputType: TextInputType.number,
+              textInputType: const TextInputType.numberWithOptions(
+                  signed: true, decimal: false),
               title: 'Price',
               validator: (data) => Helper.numberValidator(data),
               maxLength: 7,

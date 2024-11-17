@@ -75,18 +75,32 @@ class FeedbackUi extends StatelessWidget {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Very Poor',
-                      style: darkGreyTextStyle.copyWith(fontSize: 12),
+                Obx(
+                  () => Visibility(
+                    visible: logic.rating.value == -1,
+                    replacement: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          logic.rating.value == 0 ? 'Very Poor' : 'Excelent',
+                          style: darkGreyTextStyle.copyWith(fontSize: 12),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'Excellent',
-                      style: darkGreyTextStyle.copyWith(fontSize: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Very Poor',
+                          style: darkGreyTextStyle.copyWith(fontSize: 12),
+                        ),
+                        Text(
+                          'Excellent',
+                          style: darkGreyTextStyle.copyWith(fontSize: 12),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
                 SizedBox(height: defaultMargin),
                 Text(

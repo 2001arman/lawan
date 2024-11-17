@@ -35,7 +35,11 @@ class CardWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SvgPicture.asset(icon),
+              SvgPicture.asset(
+                icon,
+                width: 60,
+                height: 40,
+              ),
               Text(
                 expDate,
                 style: darkGreyTextStyle.copyWith(

@@ -8,6 +8,7 @@ import 'package:lawan/features/presentation/player/payment/payment/add_card/paym
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/util/formatter/alphabet_formatter.dart';
 import 'package:lawan/utility/util/formatter/expired_date_format.dart';
+import 'package:lawan/utility/util/helper.dart';
 
 import '../../../../../../utility/shared/constants/constants_ui.dart';
 import '../../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
@@ -29,6 +30,7 @@ class PaymentAddCardPage extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: kBackgroundColor,
+        surfaceTintColor: Colors.transparent,
         title: Row(
           children: [
             SvgPicture.asset(
@@ -37,7 +39,7 @@ class PaymentAddCardPage extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Text(
-              'Add Card',
+              ctrl.isAdmin ? 'Company and Bank Details' : 'Add Card',
               style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
             ),
           ],
@@ -67,7 +69,8 @@ class PaymentAddCardPage extends StatelessWidget {
                 hintText: 'SSM Number',
                 controller: TextEditingController(),
                 title: 'SSM Number',
-                textInputType: TextInputType.number,
+                textInputType: const TextInputType.numberWithOptions(
+                    signed: true, decimal: false),
                 maxLength: 19,
                 onChanged: (value) {},
               ),
@@ -75,7 +78,7 @@ class PaymentAddCardPage extends StatelessWidget {
           ),
           Obx(
             () => CardWidget(
-              icon: "assets/icons/mastercard.svg",
+              icon: Helper.getCardType(cardNumber.value),
               expDate: expired.value,
               cardNumber: cardNumber.value,
               cardOwner: name.value,
@@ -90,7 +93,8 @@ class PaymentAddCardPage extends StatelessWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            margin: EdgeInsets.fromLTRB(
+                16, 0, 16, MediaQuery.of(context).padding.bottom),
             height: 48,
             child: GradientButton(
               widget: Text(
@@ -125,8 +129,21 @@ class PaymentAddCardPage extends StatelessWidget {
                 hintText: 'Card Number',
                 controller: ctrl.cardNumberCtrl,
                 title: 'Card Number',
-                textInputType: TextInputType.number,
+                textInputType: const TextInputType.numberWithOptions(
+                    signed: true, decimal: false),
                 maxLength: 19,
+                showSuffix: true,
+                suffix: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/camera.svg',
+                      width: 24,
+                      height: 24,
+                      color: kDarkgreyColor,
+                    ),
+                  ],
+                ),
                 onChanged: (value) {
                   // Remove non-digit characters
                   String digits = value.replaceAll(RegExp(r'\D'), '');
@@ -166,7 +183,8 @@ class PaymentAddCardPage extends StatelessWidget {
                       controller: ctrl.expDateCtrl,
                       title: 'Expired Date',
                       onChanged: (data) => expired.value = data,
-                      textInputType: TextInputType.number,
+                      textInputType: const TextInputType.numberWithOptions(
+                          signed: true, decimal: false),
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         ExpirationDateFormatter(), // Apply the custom formatter here
@@ -186,7 +204,8 @@ class PaymentAddCardPage extends StatelessWidget {
                       hintText: 'CVV',
                       controller: ctrl.cvvCtrl,
                       title: 'CVV',
-                      textInputType: TextInputType.number,
+                      textInputType: const TextInputType.numberWithOptions(
+                          signed: true, decimal: false),
                       maxLength: 3,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -249,7 +268,8 @@ class PaymentAddCardPage extends StatelessWidget {
               CustomTextFormField(
                 hintText: 'Postal Code',
                 controller: ctrl.postCodeCtrl,
-                textInputType: TextInputType.number,
+                textInputType: const TextInputType.numberWithOptions(
+                    signed: true, decimal: false),
                 maxLength: 8,
                 validator: (v) {
                   if (v!.isEmpty) {

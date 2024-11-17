@@ -83,7 +83,12 @@ class LobbyUi extends StatelessWidget {
       return Container(
         width: double.infinity,
         height: 100,
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: EdgeInsets.fromLTRB(
+          defaultMargin,
+          12,
+          defaultMargin,
+          MediaQuery.of(context).padding.bottom,
+        ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -211,6 +216,9 @@ class LobbyUi extends StatelessWidget {
                         .toList(),
                   ),
                 ),
+                SizedBox(
+                  height: MediaQuery.of(context).padding.bottom,
+                )
               ],
             ),
           ),
@@ -222,7 +230,12 @@ class LobbyUi extends StatelessWidget {
       return Container(
         width: double.infinity,
         height: 100,
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: EdgeInsets.fromLTRB(
+          defaultMargin,
+          12,
+          defaultMargin,
+          MediaQuery.of(context).padding.bottom,
+        ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -271,85 +284,82 @@ class LobbyUi extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: SafeArea(
-        top: false,
-        child: Stack(
-          children: [
-            Obx(
-              () => Container(
-                width: Get.width,
-                height: Get.height *
-                    (state.lobbyTabActive.value == 'Chat' ? 0.7 : 0.3),
-                decoration: BoxDecoration(
-                  gradient: backgroundGradient,
-                ),
+      body: Stack(
+        children: [
+          Obx(
+            () => Container(
+              width: Get.width,
+              height: Get.height *
+                  (state.lobbyTabActive.value == 'Chat' ? 0.7 : 0.3),
+              decoration: BoxDecoration(
+                gradient: backgroundGradient,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + defaultMargin,
-                bottom: defaultMargin,
-              ),
-              child: Column(
-                children: [
-                  // appbar
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      defaultMargin,
-                      0,
-                      defaultMargin,
-                      defaultMargin,
-                    ),
-                    child: Row(
-                      children: [
-                        CircleButtonTransparentWidget(
-                          onTap: Get.back,
-                          widget: SvgPicture.asset('assets/icons/back.svg'),
-                          margin: const EdgeInsets.only(right: 8),
-                        ),
-                        Expanded(
-                          child: TabbarWidget(
-                            tabBarTitle: state.lobbyTabBarTitle,
-                            tabBarIcon: state.lobbyTabBarIcon,
-                            tabActive: state.lobbyTabActive,
-                            backgroundColor: kBlackColor,
-                            onTap: (title) {
-                              state.lobbyTabActive.value = title;
-                              logic.lobbyAlignmentTabbar(title);
-                            },
-                            alignment: state.lobbyActiveAlignment,
-                          ),
-                        ),
-                      ],
-                    ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + defaultMargin,
+              bottom: defaultMargin,
+            ),
+            child: Column(
+              children: [
+                // appbar
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    defaultMargin,
+                    0,
+                    defaultMargin,
+                    defaultMargin,
                   ),
+                  child: Row(
+                    children: [
+                      CircleButtonTransparentWidget(
+                        onTap: Get.back,
+                        widget: SvgPicture.asset('assets/icons/back.svg'),
+                        margin: const EdgeInsets.only(right: 8),
+                      ),
+                      Expanded(
+                        child: TabbarWidget(
+                          tabBarTitle: state.lobbyTabBarTitle,
+                          tabBarIcon: state.lobbyTabBarIcon,
+                          tabActive: state.lobbyTabActive,
+                          backgroundColor: kBlackColor,
+                          onTap: (title) {
+                            state.lobbyTabActive.value = title;
+                            logic.lobbyAlignmentTabbar(title);
+                          },
+                          alignment: state.lobbyActiveAlignment,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
-                  // content body
-                  Expanded(
-                    child: Obx(
-                      () => body(),
-                    ),
+                // content body
+                Expanded(
+                  child: Obx(
+                    () => body(),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Obx(
-              () => Visibility(
-                visible: state.lobbyTabActive.value == 'Line-Up',
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Visibility(
-                    visible: state.isStarting.value,
-                    replacement: bottomSlideableBar(),
-                    child: state.selectedAction.value != null
-                        ? bottomActiveSlideableBar()
-                        : bottomBarStarting(),
-                  ),
+          ),
+          Obx(
+            () => Visibility(
+              visible: state.lobbyTabActive.value == 'Line-Up',
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Visibility(
+                  visible: state.isStarting.value,
+                  replacement: bottomSlideableBar(),
+                  child: state.selectedAction.value != null
+                      ? bottomActiveSlideableBar()
+                      : bottomBarStarting(),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

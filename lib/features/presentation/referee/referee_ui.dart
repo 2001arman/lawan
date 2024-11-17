@@ -90,6 +90,7 @@ class RefereeUi extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: MediaQuery.of(context).padding.bottom)
               ],
             ),
           ),
@@ -109,17 +110,17 @@ class RefereeUi extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: kBackgroundColor,
-      body: SafeArea(
-        top: false,
-        child: Stack(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-              child: Column(
-                children: [
-                  SizedBox(height: 58 + MediaQuery.of(context).padding.top),
-                  const SizedBox(height: 8),
-                  Container(
+      body: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Column(
+              children: [
+                SizedBox(height: 58 + MediaQuery.of(context).padding.top),
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap: logic.image,
+                  child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
@@ -147,58 +148,58 @@ class RefereeUi extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // available session
-                  SizedBox(height: defaultMargin),
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: kWhiteColor,
-                        ),
-                        child: Obx(
-                          () => Text(
-                            '${state.sessionList.length}',
-                            style: blackTextStyle.copyWith(
-                                fontSize: 11, fontWeight: medium),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Available Session',
-                        style: darkGreyTextStyle.copyWith(fontSize: 12),
-                      ),
-                    ],
-                  ),
-                  Obx(
-                    () => Visibility(
-                      visible: state.sessionList.isEmpty,
-                      child: SizedBox(height: defaultMargin),
-                    ),
-                  ),
-                  sessionContentSection(),
-                ],
-              ),
-            ),
-            // appbar
-            Padding(
-              padding: EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
-              child: CustomAppbarProfile(
-                onTap: () => CustomDialogProfile.showDialogProfile(
-                  source: ModeType.referee,
                 ),
+                // available session
+                SizedBox(height: defaultMargin),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: kWhiteColor,
+                      ),
+                      child: Obx(
+                        () => Text(
+                          '${state.sessionList.length}',
+                          style: blackTextStyle.copyWith(
+                              fontSize: 11, fontWeight: medium),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Available Session',
+                      style: darkGreyTextStyle.copyWith(fontSize: 12),
+                    ),
+                  ],
+                ),
+                Obx(
+                  () => Visibility(
+                    visible: state.sessionList.isEmpty,
+                    child: SizedBox(height: defaultMargin),
+                  ),
+                ),
+                sessionContentSection(),
+              ],
+            ),
+          ),
+          // appbar
+          Padding(
+            padding: EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
+            child: CustomAppbarProfile(
+              onTap: () => CustomDialogProfile.showDialogProfile(
+                source: ModeType.referee,
               ),
             ),
+          ),
 
-            // buttons
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: customNavbar(),
-            ),
-          ],
-        ),
+          // buttons
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: customNavbar(),
+          ),
+        ],
       ),
     );
   }

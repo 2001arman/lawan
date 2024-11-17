@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/admin/admin_main_ui.dart';
 import 'package:lawan/features/presentation/auth/auth_ui.dart';
 import 'package:lawan/features/presentation/player/payment/payment/add_card/payment_add_card_page.dart';
 import 'package:lawan/features/presentation/player/player_main_ui.dart';
@@ -69,6 +70,15 @@ class CustomDialogProfile {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            TextBorder(
+              textTitle: 'Not verified',
+              paddingVertical: 0,
+              paddingHorizontal: 6,
+              backgroundColor: kWhiteColor,
+              fontSize: 11,
+              borderColor: Colors.transparent,
+            ),
+            const SizedBox(width: 8),
             SvgPicture.asset(
               'assets/images/malaysia.svg',
               width: 16,
@@ -257,6 +267,7 @@ class CustomDialogProfile {
                       arguments: [
                         true,
                         true,
+                        (_) => Get.offAllNamed(AdminMainUi.namePath),
                       ],
                     )
                   : Get.offAllNamed(PlayerMainUi.namePath);

@@ -9,7 +9,7 @@ class LeaderboardState {
     'Club',
   ];
   List<String> lobbyTabBarIcon = [
-    'assets/icons/user.svg',
+    'assets/icons/user_thin.svg',
     'assets/icons/club.svg',
   ];
   RxBool activeScroll = false.obs;

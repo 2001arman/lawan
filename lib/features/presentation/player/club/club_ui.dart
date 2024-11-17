@@ -54,7 +54,7 @@ class ClubUi extends StatelessWidget {
       );
     }
 
-    Widget textItem() {
+    Widget textItem({required String type}) {
       return Expanded(
         child: Column(
           children: [
@@ -64,7 +64,7 @@ class ClubUi extends StatelessWidget {
                   blackTextStyle.copyWith(fontSize: 16, fontWeight: semiBold),
             ),
             Text(
-              'Win',
+              type,
               style: darkGreyTextStyle.copyWith(fontSize: 12),
             ),
           ],
@@ -105,6 +105,7 @@ class ClubUi extends StatelessWidget {
                       const TextBorder(
                         textTitle: 'Grassroots',
                         paddingVertical: 0,
+                        paddingHorizontal: 6,
                       ),
                     ],
                   ),
@@ -114,19 +115,19 @@ class ClubUi extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                textItem(),
+                textItem(type: 'Win'),
                 Container(
                   width: 2,
                   height: 40,
                   color: kBackgroundColor,
                 ),
-                textItem(),
+                textItem(type: 'Draw'),
                 Container(
                   width: 2,
                   height: 40,
                   color: kBackgroundColor,
                 ),
-                textItem(),
+                textItem(type: 'Loss'),
               ],
             ),
             const SizedBox(height: 12),
@@ -164,7 +165,7 @@ class ClubUi extends StatelessWidget {
           child: Row(
             children: [
               appBarItem(
-                icon: 'assets/icons/users.svg',
+                icon: 'assets/icons/users-outline.svg',
                 title: 'Transfer',
                 onTap: () {},
               ),

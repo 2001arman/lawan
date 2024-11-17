@@ -62,7 +62,7 @@ class FindFriendUi extends StatelessWidget {
                 isBlack: true,
                 paddingVertical: 11.5,
                 paddingHorizontal: defaultMargin,
-                onTap: () {},
+                onTap: logic.image,
                 widget: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

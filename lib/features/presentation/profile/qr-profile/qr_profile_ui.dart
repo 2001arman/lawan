@@ -1,11 +1,16 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/avatar_shadow_with_text.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
+import 'package:share_plus/share_plus.dart';
+
+import '../../../../utility/util/helper.dart';
 
 class QrProfileUi extends StatelessWidget {
   static const String namePath = '/qr_page';
@@ -13,28 +18,35 @@ class QrProfileUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget actionContainer({required String title, required String icon}) {
+    Widget actionContainer({
+      required String title,
+      required String icon,
+      required VoidCallback onTap,
+    }) {
       return Expanded(
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: kWhiteColor,
-          ),
-          child: Column(
-            children: [
-              SvgPicture.asset(
-                icon,
-                color: kDarkgreyColor,
-                width: 16,
-                height: 16,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                title,
-                style: blackTextStyle.copyWith(fontWeight: medium),
-              ),
-            ],
+        child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: kWhiteColor,
+            ),
+            child: Column(
+              children: [
+                SvgPicture.asset(
+                  icon,
+                  color: kDarkgreyColor,
+                  width: 16,
+                  height: 16,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  title,
+                  style: blackTextStyle.copyWith(fontWeight: medium),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -122,16 +134,29 @@ class QrProfileUi extends StatelessWidget {
                     actionContainer(
                       icon: 'assets/icons/copy.svg',
                       title: 'Copy link',
+                      onTap: () async {
+                        await Clipboard.setData(
+                            const ClipboardData(text: "Lawan link text"));
+                        Helper.showToast(
+                          isSuccess: true,
+                          message: 'Link copied successfully',
+                        );
+                      },
                     ),
                     const SizedBox(width: 12),
                     actionContainer(
                       icon: 'assets/icons/qrcode.svg',
                       title: 'Scan QR',
+                      onTap: () async {
+                        final ImagePicker picker = ImagePicker();
+                        await picker.pickImage(source: ImageSource.camera);
+                      },
                     ),
                     const SizedBox(width: 12),
                     actionContainer(
                       icon: 'assets/icons/upload.svg',
                       title: 'Share via',
+                      onTap: () => Share.share('yoyo'),
                     ),
                   ],
                 )

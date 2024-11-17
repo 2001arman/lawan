@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:lawan/features/presentation/lobby/lineup-ranked/lineup_ranked_logic.dart';
 import 'package:lawan/features/presentation/lobby/widgets/lobby_selected_friend_widget.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
+import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
+import '../../../../utility/shared/widgets/container/select_friend_item.dart';
 import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import 'dart:math' as math;
 
@@ -149,12 +151,12 @@ class _LineupRankedUiState extends State<LineupRankedUi>
                           width: 40,
                           height: 40,
                         )
-                      : Padding(
-                          padding: const EdgeInsets.all(10),
+                      : Center(
                           child: SvgPicture.asset(
                             'assets/icons/add_user.svg',
-                            width: 40,
-                            height: 40,
+                            width: 20,
+                            height: 20,
+                            color: kMidgreyColor,
                           ),
                         ),
                 ),
@@ -497,42 +499,43 @@ class _LineupRankedUiState extends State<LineupRankedUi>
           ),
 
           // friendsList
-          // SizedBox(height: defaultMargin),
-          // Obx(
-          //   () => Visibility(
-          //     visible: lobbyState.lineUpTabActive.value != '',
-          //     child: SizedBox(
-          //       width: double.infinity,
-          //       child: SingleChildScrollView(
-          //         scrollDirection: Axis.horizontal,
-          //         padding: EdgeInsets.zero,
-          //         child: Obx(
-          //           () => Row(
-          //             mainAxisAlignment: MainAxisAlignment.start,
-          //             children: [
-          //               SizedBox(width: defaultMargin),
-          //               ...state.listFriends.map(
-          //                 (data) => SelectFriendItem(
-          //                   name: data.name,
-          //                   asset: data.asset,
-          //                   suffixWidget: CircleButtonTransparentWidget(
-          //                     onTap: () => logic.addInviteFriend(data),
-          //                     size: 36,
-          //                     widget: SvgPicture.asset(
-          //                       'assets/icons/plus.svg',
-          //                       color: kDarkgreyColor,
-          //                     ),
-          //                     borderColor: kGreyColor,
-          //                   ),
-          //                 ),
-          //               )
-          //             ],
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          if (lobbyState.isReferee == false) SizedBox(height: defaultMargin),
+          if (lobbyState.isReferee == false)
+            Obx(
+              () => Visibility(
+                visible: lobbyState.lineUpTabActive.value != '',
+                child: SizedBox(
+                  width: double.infinity,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.zero,
+                    child: Obx(
+                      () => Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(width: defaultMargin),
+                          ...state.listFriends.map(
+                            (data) => SelectFriendItem(
+                              name: data.name,
+                              asset: data.asset,
+                              suffixWidget: CircleButtonTransparentWidget(
+                                onTap: () => logic.addInviteFriend(data),
+                                size: 36,
+                                widget: SvgPicture.asset(
+                                  'assets/icons/plus.svg',
+                                  color: kDarkgreyColor,
+                                ),
+                                borderColor: kGreyColor,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
 
           // arena fields
           SizedBox(height: defaultMargin),

@@ -336,7 +336,7 @@ class DialogFilter {
               DialogFilter.selectableItem(
                 listData: positionData,
                 selectedData: selectedPosition,
-                iconAsset: 'assets/icons/user.svg',
+                iconAsset: 'assets/icons/user_thin.svg',
               ),
 
               SizedBox(height: defaultMargin),

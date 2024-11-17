@@ -339,6 +339,11 @@ class AdminArenaLogic extends GetxController {
   }
 
   void saveUpdate() {
+    if (state.selectedListCourt.value == -1) {
+      Helper.showToast(
+          isSuccess: false, message: 'Please select court to proceed');
+      return;
+    }
     arenaDataSource.listArena[state.selectedListArena.value]
             .courtData[state.selectedListCourt.value] =
         state.selectedCourt.value.copy();

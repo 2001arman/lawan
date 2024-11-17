@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/profile/edit-profile/edit_profile_ui.dart';
+import 'package:lawan/features/presentation/profile/find-friend/find_friend_ui.dart';
 import 'package:lawan/features/presentation/profile/profile_logic.dart';
 import 'package:lawan/features/presentation/profile/widgets/session_section.dart';
 import 'package:lawan/features/presentation/profile/widgets/statistic_section.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/gradient/horizontal_white_gradient.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../utility/shared/constants/constants_ui.dart';
 import '../../../utility/shared/constants/mode_type.dart';
@@ -99,10 +101,17 @@ class ProfileUi extends StatelessWidget {
                 color: kDarkgreyColor),
           ),
           const SizedBox(width: 8),
-          circularButtonIcon('assets/icons/user-plus-bold.svg',
-              color: kDarkgreyColor),
+          GestureDetector(
+            onTap: () => Get.toNamed(FindFriendUi.namePath),
+            child: circularButtonIcon('assets/icons/user-plus-bold.svg',
+                color: kDarkgreyColor),
+          ),
           const SizedBox(width: 8),
-          circularButtonIcon('assets/icons/upload.svg', color: kDarkgreyColor),
+          GestureDetector(
+            onTap: () => Share.share('iqweuo'),
+            child: circularButtonIcon('assets/icons/upload.svg',
+                color: kDarkgreyColor),
+          ),
         ],
       );
     }

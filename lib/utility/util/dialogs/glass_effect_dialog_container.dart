@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,8 +18,9 @@ class GlassEffectDialogContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(8),
+      margin: EdgeInsets.only(bottom: Platform.isIOS ? 12 : 0),
       child: SizedBox(
         height: Get.height * height,
         width: Get.width,

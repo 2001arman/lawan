@@ -75,7 +75,7 @@ class PlayerAddSessionLogic {
     state.selectedFriends.remove(data);
     Helper.showToast(
       isSuccess: true,
-      message: 'User removed from card successfully',
+      message: 'User removed from invitiation successfully',
     );
   }
 

@@ -94,10 +94,14 @@ class PlayerMainUi extends StatelessWidget {
                     children: [
                       SvgPicture.asset('assets/icons/rotate.svg'),
                       const SizedBox(width: 4),
-                      Text(
-                        'By Rank',
-                        style: whiteTextStyle.copyWith(
-                            fontSize: 14, fontWeight: medium),
+                      Obx(
+                        () => Text(
+                          logic.leaderboardLogic.state.showStarMode.value
+                              ? 'By Merit'
+                              : 'By Rank',
+                          style: whiteTextStyle.copyWith(
+                              fontSize: 14, fontWeight: medium),
+                        ),
                       ),
                     ],
                   ),

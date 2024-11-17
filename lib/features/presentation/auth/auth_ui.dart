@@ -54,7 +54,8 @@ class AuthUi extends StatelessWidget {
               hintText: 'Phone number',
               controller: state.phoneController,
               margin: defaultMargin,
-              textInputType: TextInputType.number,
+              textInputType: const TextInputType.numberWithOptions(
+                  signed: true, decimal: false),
               validator: (data) => Helper.numberValidator(data),
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
@@ -73,7 +74,8 @@ class AuthUi extends StatelessWidget {
             child: CustomTextFormField(
               hintText: 'Enter 6-digit code',
               controller: state.codeController,
-              textInputType: TextInputType.number,
+              textInputType: const TextInputType.numberWithOptions(
+                  signed: true, decimal: false),
               validator: (data) => Helper.numberValidator(data),
               margin: 0,
               maxLength: 6,

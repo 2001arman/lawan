@@ -55,23 +55,28 @@ class CustomDialogSport {
             child: ListView(
               children: FieldDataSource()
                   .listFieldModel
+                  .asMap()
+                  .entries
                   .map(
                     (data) => Container(
                       decoration: BoxDecoration(
                         border: Border(
-                          bottom: BorderSide(
-                            width: 1,
-                            color: kGreyColor,
-                          ),
+                          bottom: data.key !=
+                                  FieldDataSource().listFieldModel.length - 1
+                              ? BorderSide(
+                                  width: 1,
+                                  color: kGreyColor,
+                                )
+                              : BorderSide.none,
                         ),
                       ),
                       child: ExpansionWidget(
                         titleBuilder: (double animationValue, _, bool isExpaned,
                                 toogleFunction) =>
                             GestureDetector(
-                          onTap: data.options == null
+                          onTap: data.value.options == null
                               ? () {
-                                  globalVariable.setSport(data);
+                                  globalVariable.setSport(data.value);
                                   Get.back();
                                 }
                               : () => toogleFunction(animated: true),
@@ -83,13 +88,13 @@ class CustomDialogSport {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  data.icon,
+                                  data.value.icon,
                                   width: 32,
                                   height: 32,
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  data.name,
+                                  data.value.name,
                                   style: blackTextStyle.copyWith(
                                     fontWeight: medium,
                                   ),
@@ -101,11 +106,11 @@ class CustomDialogSport {
                                   paddingHorizontal: 7,
                                 ),
                                 const SizedBox(width: 8),
-                                data.options != null
+                                data.value.options != null
                                     ? SvgPicture.asset(
                                         isExpaned
-                                            ? 'assets/icons/chevron-down.svg'
-                                            : 'assets/icons/chevron-up.svg',
+                                            ? 'assets/icons/chevron-up.svg'
+                                            : 'assets/icons/chevron-down.svg',
                                         width: 24,
                                         height: 24,
                                         color: kBlackColor,
@@ -115,7 +120,7 @@ class CustomDialogSport {
                             ),
                           ),
                         ),
-                        content: data.options != null
+                        content: data.value.options != null
                             ? Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -124,12 +129,13 @@ class CustomDialogSport {
                                     Expanded(
                                       child: GestureDetector(
                                         onTap: () {
-                                          globalVariable.setSport(data);
+                                          globalVariable.setSport(data.value);
                                           Get.back();
                                         },
                                         child: containerItem(
-                                          name: data.options![0].name,
-                                          totalGame: data.options![0].totalGame
+                                          name: data.value.options![0].name,
+                                          totalGame: data
+                                              .value.options![0].totalGame
                                               .toString(),
                                         ),
                                       ),
@@ -138,12 +144,13 @@ class CustomDialogSport {
                                     Expanded(
                                       child: GestureDetector(
                                         onTap: () {
-                                          globalVariable.setSport(data);
+                                          globalVariable.setSport(data.value);
                                           Get.back();
                                         },
                                         child: containerItem(
-                                          name: data.options![1].name,
-                                          totalGame: data.options![1].totalGame
+                                          name: data.value.options![1].name,
+                                          totalGame: data
+                                              .value.options![1].totalGame
                                               .toString(),
                                         ),
                                       ),

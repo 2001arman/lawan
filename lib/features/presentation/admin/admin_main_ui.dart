@@ -32,7 +32,10 @@ class AdminMainUi extends StatelessWidget {
         () => Visibility(
           visible: arenaState.isEditing.value,
           replacement: Container(
-            padding: const EdgeInsets.only(top: 12),
+            padding: EdgeInsets.only(
+              top: 12,
+              bottom: MediaQuery.of(context).padding.bottom,
+            ),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -74,7 +77,7 @@ class AdminMainUi extends StatelessWidget {
           ),
           child: Container(
             width: double.infinity,
-            height: 80,
+            height: 100,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -90,14 +93,20 @@ class AdminMainUi extends StatelessWidget {
             blurColor: kModalColor,
             colorOpacity: 0,
             overlay: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              height: 50,
+              padding: EdgeInsets.fromLTRB(
+                defaultMargin,
+                12,
+                defaultMargin,
+                MediaQuery.of(context).padding.bottom,
+              ),
+              height: 100,
               child: Row(
                 children: [
                   Expanded(
                     child: CustomButton(
                       isBlack: false,
                       onTap: arenaLogic.updateCancel,
+                      paddingVertical: 0,
                       title: 'Cancel',
                       backgroundColor: Colors.transparent,
                       textColor: kBlackColor,
@@ -107,6 +116,7 @@ class AdminMainUi extends StatelessWidget {
                   Expanded(
                     child: CustomButton(
                       isBlack: true,
+                      paddingVertical: 0,
                       onTap: arenaLogic.saveUpdate,
                       title: 'Save and Update',
                     ),
@@ -122,50 +132,47 @@ class AdminMainUi extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: kBackgroundColor,
-      body: SafeArea(
-        top: false,
-        child: Stack(
-          children: [
-            Obx(
-              () => Visibility(
-                visible: logic.selectedNavbarIndex.value == 2,
-                child: Container(
-                  width: double.infinity,
-                  height: Get.height * 0.4,
-                  decoration: BoxDecoration(
-                    gradient: backgroundGradient,
-                  ),
+      body: Stack(
+        children: [
+          Obx(
+            () => Visibility(
+              visible: logic.selectedNavbarIndex.value == 2,
+              child: Container(
+                width: double.infinity,
+                height: Get.height * 0.4,
+                decoration: BoxDecoration(
+                  gradient: backgroundGradient,
                 ),
               ),
             ),
-            Column(
-              children: [
-                SizedBox(height: MediaQuery.paddingOf(context).top),
-                CustomAppbarProfile(
-                  onTap: () => CustomDialogProfile.showDialogProfile(
-                    source: ModeType.admin,
-                  ),
+          ),
+          Column(
+            children: [
+              SizedBox(height: MediaQuery.paddingOf(context).top),
+              CustomAppbarProfile(
+                onTap: () => CustomDialogProfile.showDialogProfile(
+                  source: ModeType.admin,
                 ),
-                Expanded(
-                  child: Obx(() {
-                    switch (logic.selectedNavbarIndex.value) {
-                      case 0:
-                        return SessionUi();
-                      case 2:
-                        return SalesUi();
-                      default:
-                        return AdminArenaUi();
-                    }
-                  }),
-                ),
-              ],
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: customNavbar(),
-            ),
-          ],
-        ),
+              ),
+              Expanded(
+                child: Obx(() {
+                  switch (logic.selectedNavbarIndex.value) {
+                    case 0:
+                      return SessionUi();
+                    case 2:
+                      return SalesUi();
+                    default:
+                      return AdminArenaUi();
+                  }
+                }),
+              ),
+            ],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: customNavbar(),
+          ),
+        ],
       ),
     );
   }

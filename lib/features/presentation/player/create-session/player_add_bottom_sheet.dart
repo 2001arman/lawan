@@ -399,7 +399,7 @@ class PlayerAddBottomSheet {
                           onTap: () {
                             Helper.showToast(
                                 isSuccess: true,
-                                message: 'Users added to cart successfully');
+                                message: 'Users added to invitation successfully');
                             onBack();
                             onSave(selectedFriends);
                           },

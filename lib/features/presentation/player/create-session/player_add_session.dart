@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -96,10 +98,11 @@ class PlayerAddSession {
   void createNewSession() {
     state.selectedFriends = selectedFriends;
     Get.bottomSheet(
-      Padding(
+      Container(
         padding: const EdgeInsets.all(8),
+        margin: EdgeInsets.only(bottom: Platform.isIOS ? 12 : 0),
         child: SizedBox(
-          height: Get.height * 0.9,
+          height: Get.height * 0.85,
           width: Get.width,
         ).blurred(
           blur: 7,
@@ -175,7 +178,7 @@ class PlayerAddSession {
                       defaultMargin,
                       defaultMargin,
                       defaultMargin,
-                      MediaQuery.of(Get.context!).padding.bottom,
+                      defaultMargin,
                     ),
                     child: Row(
                       children: [

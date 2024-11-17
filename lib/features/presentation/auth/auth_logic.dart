@@ -8,6 +8,7 @@ import 'package:lawan/features/presentation/auth/auth_state.dart';
 import 'package:lawan/features/presentation/auth/forgot-password/forgot_password_ui.dart';
 import 'package:lawan/features/presentation/auth/information/auth_information_ui.dart';
 import 'package:lawan/features/presentation/player/player_main_ui.dart';
+import 'package:lawan/features/presentation/profile/profile_ui.dart';
 import 'package:lawan/utility/shared/constants/global_variable.dart';
 import 'package:video_player/video_player.dart';
 
@@ -83,8 +84,10 @@ class AuthLogic extends GetxController {
   }
 
   void loginLogic() async {
-    Get.offAllNamed(PlayerMainUi.namePath);
     _globalVariable.isLogin.value = true;
+    Get.offAllNamed(PlayerMainUi.namePath);
+    await Future.delayed(const Duration(milliseconds: 100));
+    Get.toNamed(ProfileUi.namePath);
   }
 
   void showForgotPasswordDialog() {

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lawan/features/presentation/profile/find-friend/find_friend_state.dart';
 
 class FindFriendLogic extends GetxController {
   FindFriendState state = FindFriendState();
+  void image() async {
+    final ImagePicker picker = ImagePicker();
+
+    await picker.pickImage(source: ImageSource.camera);
+  }
 
   void alignmentTabbar(String title) {
     switch (title) {

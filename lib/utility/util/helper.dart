@@ -197,4 +197,18 @@ class Helper {
     );
     Add2Calendar.addEvent2Cal(event);
   }
+
+  static String getCardType(String cardNumber) {
+    if (cardNumber.isEmpty) return "assets/icons/mastercard.svg";
+
+    // Remove any spaces or dashes for checking
+    String cleanedNumber = cardNumber.replaceAll(RegExp(r'\D'), '');
+
+    // Visa: Starts with 4
+    if (cleanedNumber.startsWith('4')) {
+      return "assets/icons/visa.svg";
+    } else {
+      return "assets/icons/mastercard.svg";
+    }
+  }
 }

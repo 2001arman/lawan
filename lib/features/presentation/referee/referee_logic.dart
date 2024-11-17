@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lawan/features/presentation/referee/referee_state.dart';
 
 import '../../../utility/shared/constants/session_type.dart';
@@ -15,6 +16,12 @@ class RefereeLogic extends GetxController {
   void onInit() {
     addDummySession();
     super.onInit();
+  }
+
+  void image() async {
+    final ImagePicker picker = ImagePicker();
+
+    await picker.pickImage(source: ImageSource.gallery);
   }
 
   void addDummySession() {
