@@ -50,6 +50,8 @@ dependencies:
   country_state_city_pro: ^0.0.6
 
   expansion_widget: ^0.1.0
+  dotted_border: ^2.1.0
+  mime: ^2.0.0
 
 dev_dependencies:
   flutter_test:

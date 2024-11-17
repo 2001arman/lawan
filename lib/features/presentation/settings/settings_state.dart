@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/payment/payment/payment_page.dart';
+import 'package:lawan/features/presentation/settings/ads/ads_ui.dart';
 import 'package:lawan/features/presentation/settings/balance/balance_ui.dart';
 import 'package:lawan/features/presentation/settings/notification_setting/notification_setting_ui.dart';
 import 'package:lawan/features/presentation/settings/personal_details/personal_details_ui.dart';
@@ -59,7 +60,7 @@ class SettingsState {
       icon: 'assets/icons/user_thin.svg',
       title: 'Ads',
       subTitle: 'Promote your ads on Lawan',
-      onTap: () {},
+      onTap: () => Get.toNamed(AdsUi.namePath),
     ),
     SettingItem(
       icon: 'assets/icons/x-circle.svg',

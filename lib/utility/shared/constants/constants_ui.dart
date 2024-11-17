@@ -133,6 +133,24 @@ LinearGradient shadowGradient = LinearGradient(
   ],
 );
 
+LinearGradient shadowGradientTopBottom = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    Colors.black.withOpacity(0.4),
+    Colors.black.withOpacity(0),
+  ],
+);
+
+LinearGradient shadowGradientTopBar = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    Colors.black.withOpacity(0.8),
+    Colors.black.withOpacity(0),
+  ],
+);
+
 LinearGradient redGradient = LinearGradient(
   begin: Alignment.bottomCenter,
   end: Alignment.topCenter,

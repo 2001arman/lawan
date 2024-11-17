@@ -36,6 +36,15 @@ import 'package:lawan/features/presentation/profile/profile_ui.dart';
 import 'package:lawan/features/presentation/profile/qr-profile/qr_profile_ui.dart';
 import 'package:lawan/features/presentation/referee/referee_binding.dart';
 import 'package:lawan/features/presentation/referee/referee_ui.dart';
+import 'package:lawan/features/presentation/settings/ads/ads_binding.dart';
+import 'package:lawan/features/presentation/settings/ads/ads_checkout/ads_checkout_ui.dart';
+import 'package:lawan/features/presentation/settings/ads/ads_choose/ads_choose_binding.dart';
+import 'package:lawan/features/presentation/settings/ads/ads_choose/ads_choose_ui.dart';
+import 'package:lawan/features/presentation/settings/ads/ads_create/ads_create_binding.dart';
+import 'package:lawan/features/presentation/settings/ads/ads_create/ads_create_ui.dart';
+import 'package:lawan/features/presentation/settings/ads/ads_topup/ads_topup_binding.dart';
+import 'package:lawan/features/presentation/settings/ads/ads_topup/ads_topup_ui.dart';
+import 'package:lawan/features/presentation/settings/ads/ads_ui.dart';
 import 'package:lawan/features/presentation/settings/balance/balance_binding.dart';
 import 'package:lawan/features/presentation/settings/balance/balance_ui.dart';
 import 'package:lawan/features/presentation/settings/balance/checkout/balance_checkout_binding.dart';
@@ -175,6 +184,30 @@ class AppRoute {
       name: FindFriendUi.namePath,
       page: () => FindFriendUi(),
       binding: FindFriendBinding(),
+    ),
+    GetPage(
+      name: AdsUi.namePath,
+      page: () => AdsUi(),
+      binding: AdsBinding(),
+    ),
+    GetPage(
+      name: AdsTopupUi.namePath,
+      page: () => AdsTopupUi(),
+      binding: AdsTopupBinding(),
+    ),
+    GetPage(
+      name: AdsChooseUi.namePath,
+      page: () => AdsChooseUi(),
+      binding: AdsChooseBinding(),
+    ),
+    GetPage(
+      name: AdsCheckoutUi.namePath,
+      page: () => const AdsCheckoutUi(),
+    ),
+    GetPage(
+      name: AdsCreateUi.namePath,
+      page: () => AdsCreateUi(),
+      binding: AdsCreateBinding(),
     ),
   ];
 }
