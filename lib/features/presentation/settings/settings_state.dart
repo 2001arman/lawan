@@ -84,7 +84,7 @@ class SettingsState {
     SettingItem(
       icon: 'assets/icons/logout.svg',
       title: 'Log out',
-      onTap: () {},
+      onTap: () => SettingsLogic().logout(),
     ),
   ];
 

@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/settings/settings_state.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
+import 'package:lawan/utility/shared/constants/global_variable.dart';
 import 'package:lawan/utility/shared/widgets/bottom_sheet/custom_bottom_sheet.dart';
 
 class SettingsLogic extends GetxController {
   SettingsState state = SettingsState();
+  final GlobalVariable _globalVariable = Get.find<GlobalVariable>();
 
   String getSelectedLanguage() {
     return state.selectedLanguage.value;
+  }
+
+  void logout() {
+    _globalVariable.isLogin.value = false;
+    Get.back();
   }
 
   Widget radioButtonOption({
