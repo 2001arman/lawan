@@ -45,12 +45,6 @@ class _LineupRankedUiState extends State<LineupRankedUi>
     );
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   void _startAnimation({bool reverse = false}) {
     if (reverse) {
       _controller.reverse();

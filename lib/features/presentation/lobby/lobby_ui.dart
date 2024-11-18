@@ -84,7 +84,7 @@ class LobbyUi extends StatelessWidget {
     Widget bottomSlideableBar() {
       return Container(
         width: double.infinity,
-        height: 100,
+        height: 120,
         padding: EdgeInsets.fromLTRB(
           defaultMargin,
           12,

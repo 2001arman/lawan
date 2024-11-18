@@ -19,6 +19,7 @@ class LobbyController extends GetxController {
   void onInit() {
     super.onInit();
     sessionType = Get.arguments[0];
+    Get.log('cek session Type $sessionType');
     sessionModel = Get.arguments[1];
     state.isReferee = Get.arguments[2];
   }
