@@ -63,21 +63,31 @@ class PaymentAddCardPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Visibility(
-            visible: ctrl.isAdmin,
-            child: Padding(
+          if (ctrl.isAdmin)
+            Padding(
               padding: EdgeInsets.fromLTRB(defaultMargin, 12, defaultMargin, 0),
+              child: CustomTextFormField(
+                hintText: 'Business Name',
+                controller: TextEditingController(),
+                title: 'Business Name',
+                textInputType: TextInputType.text,
+                maxLength: 19,
+                onChanged: (value) {},
+              ),
+            ),
+          if (ctrl.isAdmin)
+            Padding(
+              padding: EdgeInsets.fromLTRB(defaultMargin, 0, defaultMargin, 0),
               child: CustomTextFormField(
                 hintText: 'SSM Number',
                 controller: TextEditingController(),
-                title: 'SSM Number',
+                title: 'Registration Number',
                 textInputType: const TextInputType.numberWithOptions(
                     signed: true, decimal: false),
                 maxLength: 19,
                 onChanged: (value) {},
               ),
             ),
-          ),
           Obx(
             () => CardWidget(
               icon: Helper.getCardType(cardNumber.value),

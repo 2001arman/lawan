@@ -128,9 +128,9 @@ class CustomDialog {
                       WheelPickerController(itemCount: tempArena.length);
                 },
                 borderColor: kGreyColor,
-                prefix: Icon(
-                  Icons.search,
-                  color: kDarkgreyColor,
+                prefix: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: SvgPicture.asset('assets/icons/search.svg'),
                 ),
                 suffix: GestureDetector(
                   onTap: () => nameController.text = '',
