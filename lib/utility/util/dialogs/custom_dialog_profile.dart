@@ -141,7 +141,7 @@ class CustomDialogProfile {
             isBlack: true,
             onTap: () {
               Get.back();
-              Get.toNamed(ProfileUi.namePath);
+              Get.toNamed(ProfileUi.namePath, arguments: false);
             },
             widget: Row(
               mainAxisAlignment: MainAxisAlignment.center,

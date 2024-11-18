@@ -116,10 +116,55 @@ class ProfileUi extends StatelessWidget {
       );
     }
 
+    Widget settingAndProfileAnotherButton() {
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () => Get.toNamed(EditProfileUi.namePath),
+              child: circularButtonIcon('assets/icons/flag.svg',
+                  color: kDarkgreyColor),
+            ),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: () => Get.toNamed(FindFriendUi.namePath),
+              child: circularButtonIcon('assets/icons/upload.svg',
+                  color: kDarkgreyColor),
+            ),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: () => Share.share('iqweuo'),
+              child: circularButtonIcon('assets/icons/invite-to-club.svg',
+                  color: kDarkgreyColor),
+            ),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: () => Share.share('iqweuo'),
+              child: circularButtonIcon('assets/icons/chat.svg',
+                  color: kDarkgreyColor),
+            ),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: () => Share.share('iqweuo'),
+              child: circularButtonIcon('assets/icons/plus.svg',
+                  color: kDarkgreyColor),
+            ),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: () => Share.share('iqweuo'),
+              child: circularButtonIcon('assets/icons/user-plus-bold.svg',
+                  color: kDarkgreyColor),
+            ),
+          ],
+        ),
+      );
+    }
+
     Widget profileSection() {
       return Container(
         width: double.infinity,
-        padding: EdgeInsets.all(defaultMargin),
         margin: EdgeInsets.only(
           top: MediaQuery.paddingOf(context).top + 58,
         ),
@@ -129,40 +174,57 @@ class ProfileUi extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: Get.back,
-                  child: circularButtonIcon(
-                    'assets/icons/back.svg',
-                    color: kDarkgreyColor,
+            Padding(
+              padding: EdgeInsets.all(defaultMargin),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: Get.back,
+                    child: circularButtonIcon(
+                      'assets/icons/back.svg',
+                      color: kDarkgreyColor,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  '1255 views',
-                  style: darkGreyTextStyle.copyWith(fontSize: 10),
-                ),
-                const Spacer(),
-                Text(
-                  '1255 likes',
-                  style: darkGreyTextStyle.copyWith(fontSize: 10),
-                ),
-                const SizedBox(width: 8),
-                circularButtonIcon('assets/icons/heart.svg'),
-              ],
+                  const SizedBox(width: 8),
+                  Text(
+                    '1255 views',
+                    style: darkGreyTextStyle.copyWith(fontSize: 10),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '1255 likes',
+                    style: darkGreyTextStyle.copyWith(fontSize: 10),
+                  ),
+                  const SizedBox(width: 8),
+                  Obx(
+                    () => GestureDetector(
+                      onTap: state.isFavorite.toggle,
+                      child: circularButtonIcon(
+                        state.isFavorite.value
+                            ? 'assets/icons/heart.svg'
+                            : 'assets/icons/heart-outline.svg',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
 
             // content
             Container(
               width: double.infinity,
+              padding: EdgeInsets.symmetric(vertical: defaultMargin),
               margin: const EdgeInsets.only(top: 8),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   detailProfileSection(),
                   const SizedBox(height: 12),
-                  settingAndProfileButton(),
+                  Obx(
+                    () => logic.isAnotherProfile.value
+                        ? settingAndProfileAnotherButton()
+                        : settingAndProfileButton(),
+                  ),
                 ],
               ),
             ),
@@ -269,7 +331,7 @@ class ProfileUi extends StatelessWidget {
                         children: [
                           state.lobbyTabActive.value == 'Sessions'
                               ? const SessionSection()
-                              : const StatisticSection()
+                              : StatisticSection()
                         ],
                       ),
                     ),

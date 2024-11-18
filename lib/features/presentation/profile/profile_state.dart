@@ -8,4 +8,6 @@ class ProfileState {
     'Sessions',
     'Statistics',
   ];
+
+  RxBool isFavorite = true.obs;
 }

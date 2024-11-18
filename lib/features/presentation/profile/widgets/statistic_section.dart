@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:lawan/features/presentation/profile/profile_logic.dart';
+import 'package:lawan/features/presentation/profile/profile_ui.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
@@ -8,7 +11,8 @@ import '../../../../utility/shared/widgets/text/text_border.dart';
 import '../../../../utility/shared/widgets/text/text_gradient.dart';
 
 class StatisticSection extends StatelessWidget {
-  const StatisticSection({super.key});
+  final logic = Get.find<ProfileLogic>();
+  StatisticSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +76,21 @@ class StatisticSection extends StatelessWidget {
             const Spacer(),
             CircleButtonTransparentWidget(
               borderColor: kGreyColor,
-              onTap: () {},
+              onTap: () async {
+                logic.changeState(
+                  anotherProfile: true,
+                  isFavorite: false,
+                );
+                await Get.toNamed(
+                  ProfileUi.namePath,
+                  arguments: true,
+                  preventDuplicates: false,
+                );
+                logic.changeState(
+                  anotherProfile: false,
+                  isFavorite: true,
+                );
+              },
               size: 44,
               widget: SvgPicture.asset('assets/icons/eye.svg'),
             ),
