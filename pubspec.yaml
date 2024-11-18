@@ -73,6 +73,7 @@ flutter:
     - assets/video/
     - assets/fields/
     - assets/achievement/
+    - assets/arena/
 
   fonts:
     - family: Lufga

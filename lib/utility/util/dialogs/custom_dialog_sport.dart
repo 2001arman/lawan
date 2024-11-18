@@ -76,7 +76,7 @@ class CustomDialogSport {
                             GestureDetector(
                           onTap: data.value.options == null
                               ? () {
-                                  globalVariable.setSport(data.value);
+                                  globalVariable.setSport(data.value, true);
                                   Get.back();
                                 }
                               : () => toogleFunction(animated: true),
@@ -129,7 +129,8 @@ class CustomDialogSport {
                                     Expanded(
                                       child: GestureDetector(
                                         onTap: () {
-                                          globalVariable.setSport(data.value);
+                                          globalVariable.setSport(
+                                              data.value, true);
                                           Get.back();
                                         },
                                         child: containerItem(
@@ -144,7 +145,8 @@ class CustomDialogSport {
                                     Expanded(
                                       child: GestureDetector(
                                         onTap: () {
-                                          globalVariable.setSport(data.value);
+                                          globalVariable.setSport(
+                                              data.value, false);
                                           Get.back();
                                         },
                                         child: containerItem(

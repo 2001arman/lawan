@@ -1,15 +1,23 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lawan/features/presentation/lobby/lineup-ranked/arenas/badminton_arena_widget.dart';
+import 'package:lawan/features/presentation/lobby/lineup-ranked/arenas/football_arena_widget.dart';
+import 'package:lawan/features/presentation/lobby/lineup-ranked/arenas/basketball_arena_widget.dart';
+import 'package:lawan/features/presentation/lobby/lineup-ranked/arenas/futsal_arena_widget.dart';
+import 'package:lawan/features/presentation/lobby/lineup-ranked/arenas/martial_arena_widget.dart';
+import 'package:lawan/features/presentation/lobby/lineup-ranked/arenas/pickleball_arena_widget.dart';
+import 'package:lawan/features/presentation/lobby/lineup-ranked/arenas/rugby_arena_widget.dart';
+import 'package:lawan/features/presentation/lobby/lineup-ranked/arenas/takraw_arena_widget.dart';
+import 'package:lawan/features/presentation/lobby/lineup-ranked/arenas/tennis_arena_widget.dart';
+import 'package:lawan/features/presentation/lobby/lineup-ranked/arenas/volley_arena_widget.dart';
 import 'package:lawan/features/presentation/lobby/lineup-ranked/lineup_ranked_logic.dart';
 import 'package:lawan/features/presentation/lobby/widgets/lobby_selected_friend_widget.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
+import 'package:lawan/utility/shared/constants/global_variable.dart';
 import '../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../utility/shared/widgets/container/select_friend_item.dart';
 import '../../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
-import 'dart:math' as math;
 
 class LineupRankedUi extends StatefulWidget {
   const LineupRankedUi({super.key});
@@ -23,6 +31,7 @@ class _LineupRankedUiState extends State<LineupRankedUi>
   final logic = Get.find<LineupRankedLogic>();
   final state = Get.find<LineupRankedLogic>().state;
   final lobbyState = Get.find<LineupRankedLogic>().lobbyState;
+  final _globalVariable = Get.find<GlobalVariable>();
   late AnimationController _controller;
 
   @override
@@ -50,302 +59,33 @@ class _LineupRankedUiState extends State<LineupRankedUi>
     }
   }
 
-  Widget itemContent({
-    required String position,
-    required int index,
-  }) {
-    return GestureDetector(
-      onTap: () => logic.handleselectedPlayerIndex(index),
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 35),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Obx(
-                    () => Container(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: logic.getProfilePosition(index) != null
-                            ? kBlackColor
-                            : kWhiteColor,
-                        gradient: lobbyState.selectedPlayerIndex.value == index
-                            ? mainGradient
-                            : null,
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(-2, 1),
-                            blurRadius: 5,
-                            color: kBlackColor.withOpacity(0.1),
-                          ),
-                          BoxShadow(
-                            offset: const Offset(-8, 3),
-                            blurRadius: 9,
-                            color: kBlackColor.withOpacity(0.09),
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          lobbyState.selectedPlayerIndex.value == index
-                              ? lobbyState.isReferee
-                                  ? 'Selected'
-                                  : state.myProfile.name
-                              : logic.getProfilePosition(index)?.name ??
-                                  'Available',
-                          style: blackTextStyle.copyWith(
-                            fontSize: 12,
-                            fontWeight: medium,
-                            color: !lobbyState.isReferee &&
-                                        lobbyState.selectedPlayerIndex.value ==
-                                            index ||
-                                    logic.getProfilePosition(index) != null
-                                ? kWhiteColor
-                                : kBlackColor,
-                            height: 1,
-                          ),
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          // overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Obx(
-                () => Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: kWhiteColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0, 1),
-                        blurRadius: 3,
-                        color: kBlackColor.withOpacity(0.1),
-                      ),
-                      BoxShadow(
-                        offset: const Offset(0, 5),
-                        blurRadius: 5,
-                        color: kBlackColor.withOpacity(0.09),
-                      ),
-                    ],
-                  ),
-                  child: lobbyState.selectedPlayerIndex.value == index ||
-                          logic.getProfilePosition(index) != null
-                      ? Image.asset(
-                          !lobbyState.isReferee &&
-                                  lobbyState.selectedPlayerIndex.value == index
-                              ? state.myProfile.asset
-                              : logic.getProfilePosition(index)!.asset,
-                          width: 40,
-                          height: 40,
-                        )
-                      : Center(
-                          child: SvgPicture.asset(
-                            'assets/icons/add_user.svg',
-                            width: 20,
-                            height: 20,
-                            color: kMidgreyColor,
-                          ),
-                        ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                margin: const EdgeInsets.only(left: 35),
-                decoration: BoxDecoration(
-                  color: kBlackColor,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: Text(
-                  position,
-                  style: whiteTextStyle.copyWith(
-                    fontSize: 10,
-                    fontWeight: medium,
-                    height: 16 / 10,
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget item(
-      {double marginBottom = 0,
-      double marginTop = 0,
-      required String position,
-      required int index}) {
-    return Expanded(
-      flex: 2,
-      child: Container(
-        height: 68,
-        margin: EdgeInsets.only(bottom: marginBottom, top: marginTop),
-        child: itemContent(
-          position: position,
-          index: index,
-        ),
-      ),
-    );
-  }
-
-  Widget playerSection() {
-    return Stack(
-      children: [
-        Padding(
-          key: state.keyField,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: AspectRatio(
-            aspectRatio: 363 / 867, // Approximately 0.4186
-            child: AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return Transform(
-                  alignment: Alignment.center,
-
-                  transform: Matrix4.identity()
-                    ..rotateZ(_controller.value * math.pi) // Rotate 180 degrees
-                    ..scale(1.0,
-                        -1.0), // Flip vertically to complete the perspective swap
-                  child: child,
-                );
-              },
-              child: SvgPicture.asset(
-                'assets/icons/arena-football.svg',
-                width: double.infinity,
-                fit: BoxFit.fitWidth,
-                alignment: Alignment.center,
-              ),
-            ),
-          ),
-        ),
-
-        // player
-        AspectRatio(
-          aspectRatio: 363 / 867, // Approximately 0.4186
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final halfHeight =
-                  (state.keyField.currentContext!.height / 2) + 14;
-              return Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  width: double.infinity,
-                  height: halfHeight,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 88,
-                            height: 68,
-                            child: itemContent(
-                              position: 'GK',
-                              index: 0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          item(
-                            position: 'DF',
-                            index: 1,
-                          ),
-                          const SizedBox(width: 12),
-                          item(
-                            marginBottom: 22,
-                            position: 'DF',
-                            index: 2,
-                          ),
-                          const SizedBox(width: 12),
-                          item(
-                            marginBottom: 22,
-                            position: 'DF',
-                            index: 3,
-                          ),
-                          const SizedBox(width: 12),
-                          item(
-                            position: 'DF',
-                            index: 4,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          const Spacer(),
-                          item(
-                            position: 'MF',
-                            index: 5,
-                          ),
-                          const SizedBox(width: 12),
-                          item(
-                            marginBottom: 22,
-                            position: 'MF',
-                            index: 6,
-                          ),
-                          const SizedBox(width: 12),
-                          item(
-                            position: 'MF',
-                            index: 7,
-                          ),
-                          const Spacer(),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Spacer(),
-                          item(
-                            position: 'FW',
-                            index: 8,
-                          ),
-                          const SizedBox(width: 12),
-                          item(
-                            marginTop: 22,
-                            position: 'FW',
-                            index: 9,
-                          ),
-                          const SizedBox(width: 12),
-                          item(
-                            position: 'FW',
-                            index: 10,
-                          ),
-                          const Spacer(),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
+  Widget arenaWidget() {
+    switch (_globalVariable.selectedSport.value!.id) {
+      case 1:
+        return BadmintonArenaWidget(controller: _controller);
+      case 2:
+        return BasketballArenaWidget(controller: _controller);
+      case 3:
+        return FutsalArenaWidget(controller: _controller);
+      case 4:
+        return FutsalArenaWidget(controller: _controller);
+      case 5:
+        return MartialArenaWidget(controller: _controller);
+      case 6:
+        return PickleballArenaWidget(controller: _controller);
+      case 7:
+        return RugbyArenaWidget(controller: _controller);
+      case 8:
+        return FootballArenaWidget(controller: _controller);
+      case 9:
+        return TakrawArenaWidget(controller: _controller);
+      case 10:
+        return TennisArenaWidget(controller: _controller);
+      case 11:
+        return VolleyArenaWidget(controller: _controller);
+      default:
+        return FootballArenaWidget(controller: _controller);
+    }
   }
 
   Widget body() {
@@ -372,7 +112,7 @@ class _LineupRankedUiState extends State<LineupRankedUi>
                 ],
               ),
             )
-          : playerSection(),
+          : arenaWidget(),
     );
   }
 
