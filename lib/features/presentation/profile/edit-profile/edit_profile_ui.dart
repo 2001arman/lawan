@@ -65,17 +65,16 @@ class EditProfileUi extends StatelessWidget {
     }
 
     Widget body() {
-      return Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: defaultMargin,
-          vertical: defaultMargin,
-        ),
-        child: Stack(
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      return Expanded(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: defaultMargin,
+            vertical: defaultMargin,
+          ),
+          child: Stack(
+            children: [
+              ListView(
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Center(child: AvatarShadowWithText()),
                   SizedBox(height: defaultMargin),
@@ -123,49 +122,86 @@ class EditProfileUi extends StatelessWidget {
                       color: kWhiteColor,
                     ),
                     child: Obx(
-                      () => Wrap(
-                        spacing: defaultMargin,
-                        runSpacing: defaultMargin,
-                        children: state.listAchievement
-                            .map(
-                              (data) => Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: data.isSelected.toggle,
-                                    child: AchievementContainer(
-                                      icon: data.icon,
-                                      size: 53,
-                                      isSelected: data.isSelected.value,
+                      () => Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: state.listAchievement
+                                .map(
+                                  (data) => Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: data.isSelected.toggle,
+                                          child: AchievementContainer(
+                                            icon: data.icon,
+                                            size: 53,
+                                            isSelected: data.isSelected.value,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          data.title,
+                                          style: darkGreyTextStyle.copyWith(
+                                              fontSize: 10, fontWeight: medium),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    data.title,
-                                    style: darkGreyTextStyle.copyWith(
-                                        fontSize: 10, fontWeight: medium),
+                                )
+                                .toList(),
+                          ),
+                          SizedBox(height: defaultMargin),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: state.listAchievement2
+                                .map(
+                                  (data) => Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: data.isSelected.toggle,
+                                          child: AchievementContainer(
+                                            icon: data.icon,
+                                            size: 53,
+                                            isSelected: data.isSelected.value,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          data.title,
+                                          style: darkGreyTextStyle.copyWith(
+                                              fontSize: 10, fontWeight: medium),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
-                            )
-                            .toList(),
+                                )
+                                .toList(),
+                          ),
+                        ],
                       ),
                     ),
                   )
                 ],
               ),
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: CircleButtonTransparentWidget(
-                onTap: Get.back,
-                widget: SvgPicture.asset(
-                  'assets/icons/back.svg',
-                  color: kDarkgreyColor,
+              Align(
+                alignment: Alignment.topLeft,
+                child: CircleButtonTransparentWidget(
+                  onTap: Get.back,
+                  widget: SvgPicture.asset(
+                    'assets/icons/back.svg',
+                    color: kDarkgreyColor,
+                  ),
+                  backgroundColor: kModalColor,
                 ),
-                backgroundColor: kModalColor,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     }

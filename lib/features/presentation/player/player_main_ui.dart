@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -120,7 +122,7 @@ class PlayerMainUi extends StatelessWidget {
         height: 183,
         padding: EdgeInsets.only(
           top: 12,
-          bottom: MediaQuery.of(context).padding.bottom,
+          bottom: Platform.isIOS ? MediaQuery.of(context).padding.bottom : 12,
         ),
         decoration: BoxDecoration(
           gradient: LinearGradient(

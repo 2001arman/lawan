@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -94,7 +96,11 @@ class PaymentAddCardPage extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.fromLTRB(
-                16, 0, 16, MediaQuery.of(context).padding.bottom),
+              16,
+              0,
+              16,
+              Platform.isIOS ? MediaQuery.of(context).padding.bottom : 12,
+            ),
             height: 48,
             child: GradientButton(
               widget: Text(

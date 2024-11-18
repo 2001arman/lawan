@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -180,7 +182,7 @@ class AdsUi extends StatelessWidget {
                 defaultMargin,
                 defaultMargin,
                 defaultMargin,
-                MediaQuery.of(context).padding.bottom,
+                Platform.isIOS ? MediaQuery.of(context).padding.bottom : 12,
               ),
               decoration: BoxDecoration(
                 gradient: shadowGradient,

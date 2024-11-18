@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -96,7 +98,9 @@ class _PaymentPageState extends State<PaymentPage> {
                           16,
                           0,
                           16,
-                          MediaQuery.of(context).padding.bottom,
+                          Platform.isIOS
+                              ? MediaQuery.of(context).padding.bottom
+                              : 12,
                         ),
                         height: 48,
                         child: GradientButton(

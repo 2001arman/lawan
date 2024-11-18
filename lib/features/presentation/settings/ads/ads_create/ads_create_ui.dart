@@ -32,7 +32,7 @@ class AdsCreateUi extends StatelessWidget {
             defaultMargin,
             defaultMargin,
             defaultMargin,
-            MediaQuery.of(context).padding.bottom,
+            Platform.isIOS ? MediaQuery.of(context).padding.bottom : 12,
           ),
           decoration: BoxDecoration(
             gradient: shadowGradient,

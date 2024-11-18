@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -90,7 +92,11 @@ class RefereeUi extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).padding.bottom)
+                SizedBox(
+                  height: Platform.isIOS
+                      ? MediaQuery.of(context).padding.bottom
+                      : 12,
+                ),
               ],
             ),
           ),

@@ -32,6 +32,9 @@ class EditProfileState {
       title: 'MVP\nHunter',
       isSelected: false.obs,
     ),
+  ];
+
+  final List<AchievementItem> listAchievement2 = [
     AchievementItem(
       icon: 'assets/achievement/Award.svg',
       title: 'LPL 2021\nChampion',

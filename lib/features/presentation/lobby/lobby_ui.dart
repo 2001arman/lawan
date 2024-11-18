@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -87,7 +89,7 @@ class LobbyUi extends StatelessWidget {
           defaultMargin,
           12,
           defaultMargin,
-          MediaQuery.of(context).padding.bottom,
+          Platform.isIOS ? MediaQuery.of(context).padding.bottom : 12,
         ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -217,7 +219,9 @@ class LobbyUi extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).padding.bottom,
+                  height: Platform.isIOS
+                      ? MediaQuery.of(context).padding.bottom
+                      : 12,
                 )
               ],
             ),
@@ -234,7 +238,7 @@ class LobbyUi extends StatelessWidget {
           defaultMargin,
           12,
           defaultMargin,
-          MediaQuery.of(context).padding.bottom,
+          Platform.isIOS ? MediaQuery.of(context).padding.bottom : 12,
         ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
