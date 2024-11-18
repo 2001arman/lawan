@@ -11,9 +11,16 @@ import 'package:lawan/utility/shared/widgets/buttons/gradient_circle_button.dart
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 
-class SessionItemWidget extends StatelessWidget {
+class SessionItemWidget extends StatefulWidget {
+  const SessionItemWidget({super.key});
+
+  @override
+  State<SessionItemWidget> createState() => _SessionItemWidgetState();
+}
+
+class _SessionItemWidgetState extends State<SessionItemWidget> {
   final logic = Get.find<ProfileLogic>();
-  SessionItemWidget({super.key});
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +68,18 @@ class SessionItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleButtonTransparentWidget(
-                onTap: () {},
+                onTap: () {
+                  setState(() {});
+                  isFavorite ? isFavorite = false : isFavorite = true;
+                },
                 borderColor: kGreyColor,
                 widget: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SvgPicture.asset(
-                      'assets/icons/heart-outline.svg',
+                      isFavorite
+                          ? 'assets/icons/heart.svg'
+                          : 'assets/icons/heart-outline.svg',
                       width: 16,
                       height: 16,
                     ),

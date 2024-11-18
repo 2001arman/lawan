@@ -8,6 +8,7 @@ import 'package:lawan/features/presentation/profile/find-friend/find_friend_ui.d
 import 'package:lawan/features/presentation/profile/profile_logic.dart';
 import 'package:lawan/features/presentation/profile/widgets/session_section.dart';
 import 'package:lawan/features/presentation/profile/widgets/statistic_section.dart';
+import 'package:lawan/utility/shared/constants/action_type.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/gradient/horizontal_white_gradient.dart';
 import 'package:share_plus/share_plus.dart';
@@ -123,37 +124,38 @@ class ProfileUi extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: () => Get.toNamed(EditProfileUi.namePath),
+              onTap: () => logic.showAlert(ActionType.report),
               child: circularButtonIcon('assets/icons/flag.svg',
                   color: kDarkgreyColor),
             ),
             const SizedBox(width: 8),
             GestureDetector(
-              onTap: () => Get.toNamed(FindFriendUi.namePath),
+              onTap: () => Share.share('iqweuo'),
               child: circularButtonIcon('assets/icons/upload.svg',
                   color: kDarkgreyColor),
             ),
             const SizedBox(width: 8),
             GestureDetector(
-              onTap: () => Share.share('iqweuo'),
+              onTap: () =>
+                  logic.showToast('Invitation to club sent successfully'),
               child: circularButtonIcon('assets/icons/invite-to-club.svg',
                   color: kDarkgreyColor),
             ),
             const SizedBox(width: 8),
             GestureDetector(
-              onTap: () => Share.share('iqweuo'),
+              onTap: logic.showComment,
               child: circularButtonIcon('assets/icons/chat.svg',
                   color: kDarkgreyColor),
             ),
             const SizedBox(width: 8),
             GestureDetector(
-              onTap: () => Share.share('iqweuo'),
+              onTap: () => logic.showToast('Added to session successfully'),
               child: circularButtonIcon('assets/icons/plus.svg',
                   color: kDarkgreyColor),
             ),
             const SizedBox(width: 8),
             GestureDetector(
-              onTap: () => Share.share('iqweuo'),
+              onTap: () => logic.showToast('Friend request sent successfully'),
               child: circularButtonIcon('assets/icons/user-plus-bold.svg',
                   color: kDarkgreyColor),
             ),

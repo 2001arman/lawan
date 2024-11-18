@@ -7,6 +7,7 @@ enum ActionType {
   alertAdmin,
   badWeather,
   assignReferee,
+  report,
   ;
 
   String title({String name = ''}) {
@@ -27,6 +28,8 @@ enum ActionType {
         return 'Report for Bad Weather?';
       case ActionType.assignReferee:
         return 'Assign $name as the referee?';
+      case ActionType.report:
+        return 'Report?';
       default:
         return '';
     }
@@ -50,6 +53,8 @@ enum ActionType {
         return 'This will add the Admin to the chat for confirmation.';
       case ActionType.assignReferee:
         return 'This will give him/her referee permissions for the match.';
+      case ActionType.report:
+        return 'Are you sure to report this user?';
       default:
         return '';
     }

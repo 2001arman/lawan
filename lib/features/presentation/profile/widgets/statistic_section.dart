@@ -301,17 +301,22 @@ class StatisticSection extends StatelessWidget {
 
         // recent visit
         SizedBox(height: defaultMargin),
-        Text('Recent Visits', style: darkGreyTextStyle),
+        if (!logic.isAnotherProfile.value)
+          Text('Recent Visits', style: darkGreyTextStyle),
         const SizedBox(height: 8),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              recentViewWidget(),
-              recentViewWidget(),
-              recentViewWidget(),
-            ],
-          ),
+        Obx(
+          () => logic.isAnotherProfile.value
+              ? const SizedBox()
+              : SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      recentViewWidget(),
+                      recentViewWidget(),
+                      recentViewWidget(),
+                    ],
+                  ),
+                ),
         ),
         const SizedBox(height: 100),
       ],

@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/profile/profile_state.dart';
+import 'package:lawan/utility/shared/constants/action_type.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
+
+import '../../../utility/util/dialogs/custom_dialog_success.dart';
+import '../../../utility/util/helper.dart';
 
 class ProfileLogic extends GetxController {
   ProfileState state = ProfileState();
@@ -36,6 +40,15 @@ class ProfileLogic extends GetxController {
         break;
     }
     return;
+  }
+
+  void showAlert(ActionType actionType) {
+    CustomDialogSuccess.confirmDialog(
+        actionType: actionType, onAction: Get.back);
+  }
+
+  void showToast(String message) {
+    return Helper.showToast(isSuccess: true, message: message);
   }
 
   Widget commentItem() {
