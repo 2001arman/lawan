@@ -6,12 +6,12 @@ class SessionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         SessionItemWidget(),
         SessionItemWidget(),
         SessionItemWidget(),
-        SizedBox(height: 100),
+        const SizedBox(height: 100),
       ],
     );
   }

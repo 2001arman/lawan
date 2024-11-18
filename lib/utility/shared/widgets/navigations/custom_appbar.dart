@@ -17,11 +17,13 @@ class CustomAppbar extends StatelessWidget {
     this.onTap,
     this.icon = 'assets/icons/back.svg',
     this.prefixIcon,
+    this.prefixColor,
   });
   final String title, icon;
   final Color iconColor, borderColor, textColor;
   final VoidCallback? onTap;
   final String? prefixIcon;
+  final Color? prefixColor;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class CustomAppbar extends StatelessWidget {
                   prefixIcon!,
                   width: 20,
                   height: 20,
-                  color: kDarkgreyColor,
+                  color: prefixColor ?? kDarkgreyColor,
                 ),
               )
             : const SizedBox(),

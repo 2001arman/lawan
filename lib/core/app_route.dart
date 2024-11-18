@@ -29,6 +29,8 @@ import 'package:lawan/features/presentation/profile/feedback/feedback_binding.da
 import 'package:lawan/features/presentation/profile/feedback/feedback_ui.dart';
 import 'package:lawan/features/presentation/profile/find-friend/find_friend_binding.dart';
 import 'package:lawan/features/presentation/profile/find-friend/find_friend_ui.dart';
+import 'package:lawan/features/presentation/profile/lineup/lineup_binding.dart';
+import 'package:lawan/features/presentation/profile/lineup/lineup_ui.dart';
 import 'package:lawan/features/presentation/profile/notifications/notifications_binding.dart';
 import 'package:lawan/features/presentation/profile/notifications/notifications_ui.dart';
 import 'package:lawan/features/presentation/profile/profile_binding.dart';
@@ -208,6 +210,11 @@ class AppRoute {
       name: AdsCreateUi.namePath,
       page: () => AdsCreateUi(),
       binding: AdsCreateBinding(),
+    ),
+    GetPage(
+      name: LineupUi.namePath,
+      page: () => LineupUi(),
+      binding: LineupBinding(),
     ),
   ];
 }

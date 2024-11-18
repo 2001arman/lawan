@@ -2,13 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:lawan/features/presentation/profile/lineup/lineup_ui.dart';
+import 'package:lawan/features/presentation/profile/profile_logic.dart';
+import 'package:lawan/features/presentation/profile/widgets/home_away_score_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_circle_button.dart';
 
 import '../../../../utility/shared/constants/constants_ui.dart';
 
 class SessionItemWidget extends StatelessWidget {
-  const SessionItemWidget({super.key});
+  final logic = Get.find<ProfileLogic>();
+  SessionItemWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,101 +55,7 @@ class SessionItemWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          children: [
-                            SvgPicture.asset('assets/icons/home_shield.svg'),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Home',
-                              style: blackTextStyle.copyWith(
-                                  fontSize: 12, fontWeight: medium),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 15,
-                            left: 6,
-                          ),
-                          child: false
-                              ? SvgPicture.asset(
-                                  'assets/icons/check-circle.svg')
-                              : const SizedBox(width: 16),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      '3',
-                      style: blackTextStyle.copyWith(fontSize: 40),
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                children: [
-                  Text(
-                    'W',
-                    style: darkGreyTextStyle.copyWith(
-                        fontSize: 10, height: 10 / 10),
-                  ),
-                  Text(
-                    ':',
-                    style: midGreyTextStyle.copyWith(
-                      fontSize: 40,
-                      height: 40 / 40,
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                ],
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      '0',
-                      style: blackTextStyle.copyWith(fontSize: 40),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 15,
-                            right: 6,
-                          ),
-                          child: true
-                              ? SvgPicture.asset(
-                                  'assets/icons/check-circle.svg')
-                              : const SizedBox(width: 16),
-                        ),
-                        Column(
-                          children: [
-                            SvgPicture.asset('assets/icons/away_shield.svg'),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Away',
-                              style: blackTextStyle.copyWith(
-                                  fontSize: 12, fontWeight: medium),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          const HomeAwayScoreWidget(),
           const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -169,7 +80,7 @@ class SessionItemWidget extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               CircleButtonTransparentWidget(
-                onTap: () {},
+                onTap: logic.showComment,
                 borderColor: kGreyColor,
                 widget: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -188,7 +99,7 @@ class SessionItemWidget extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               CircleButtonTransparentWidget(
-                onTap: () {},
+                onTap: () => Get.toNamed(LineupUi.namePath),
                 borderColor: kGreyColor,
                 widget: SvgPicture.asset(
                   'assets/icons/users_group.svg',

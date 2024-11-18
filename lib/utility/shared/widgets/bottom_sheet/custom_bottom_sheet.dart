@@ -8,6 +8,7 @@ class CustomBottomSheet {
   static void showContainerSheet({
     required Widget child,
     required double height,
+    Color? color,
   }) {
     Get.bottomSheet(
       ClipRRect(
@@ -15,9 +16,10 @@ class CustomBottomSheet {
           topLeft: Radius.circular(32),
           topRight: Radius.circular(32),
         ),
-        child:  SizedBox(
+        child: Container(
           width: double.infinity,
           height: height,
+          color: color,
         ).blurred(
           blur: 20,
           overlay: Container(
@@ -52,6 +54,7 @@ class CustomBottomSheet {
           ),
         ),
       ),
+      isScrollControlled: true,
     );
   }
 }
