@@ -92,7 +92,7 @@ class AdminAddArena {
     }
     Get.bottomSheet(
       GlassEffectDialogContainer(
-        height: 0.9,
+        height: 0.84,
         padding: EdgeInsets.all(defaultMargin),
         child: Obx(
           () => Column(

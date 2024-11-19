@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -33,7 +35,12 @@ class AdminSessionBottomSheet {
     var showShare = false.obs;
     return Get.bottomSheet(
       Padding(
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.fromLTRB(
+          8,
+          0,
+          8,
+          Platform.isIOS ? 20 : 0,
+        ),
         child: Obx(
           () => SizedBox(
             height: showShare.value ? Get.height * 0.88 : Get.height * 0.75,
