@@ -31,7 +31,7 @@ class PlayerEmptySession extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 height: Get.height,
-                // child: VideoWidget(videoController: videoPlayerController),
+                child: VideoWidget(videoController: videoPlayerController),
               ),
               Container(
                 width: double.infinity,

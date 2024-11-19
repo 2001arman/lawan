@@ -358,8 +358,8 @@ class AuthUi extends StatelessWidget {
                 curve: Curves.easeOutSine,
                 width: Get.width,
                 height: Get.height - state.heightContainer.value,
-                // child:
-                //     VideoWidget(videoController: logic.videoPlayerController),
+                child:
+                    VideoWidget(videoController: logic.videoPlayerController),
               ),
               Container(
                 width: double.infinity,
