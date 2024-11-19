@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/club/club_logic.dart';
 import 'package:lawan/features/presentation/player/club/create-club/create_club_ui.dart';
+import 'package:lawan/features/presentation/settings/comming-soon/comming_soon_ui.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
 import 'package:lawan/utility/shared/widgets/custom_text_form_fields.dart';
 import 'package:lawan/utility/shared/widgets/gradient/horizontal_white_gradient.dart';
@@ -167,7 +168,7 @@ class ClubUi extends StatelessWidget {
               appBarItem(
                 icon: 'assets/icons/users-outline.svg',
                 title: 'Transfer',
-                onTap: () {},
+                onTap: () => Get.toNamed(CommingSoonUi.namePath),
               ),
               SizedBox(width: defaultMargin),
               appBarItem(

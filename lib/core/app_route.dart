@@ -51,6 +51,7 @@ import 'package:lawan/features/presentation/settings/balance/balance_binding.dar
 import 'package:lawan/features/presentation/settings/balance/balance_ui.dart';
 import 'package:lawan/features/presentation/settings/balance/checkout/balance_checkout_binding.dart';
 import 'package:lawan/features/presentation/settings/balance/checkout/balance_checkout_ui.dart';
+import 'package:lawan/features/presentation/settings/comming-soon/comming_soon_ui.dart';
 import 'package:lawan/features/presentation/settings/notification_setting/notification_setting_binding.dart';
 import 'package:lawan/features/presentation/settings/notification_setting/notification_setting_ui.dart';
 import 'package:lawan/features/presentation/settings/personal_details/personal_details_binding.dart';
@@ -215,6 +216,10 @@ class AppRoute {
       name: LineupUi.namePath,
       page: () => LineupUi(),
       binding: LineupBinding(),
+    ),
+    GetPage(
+      name: CommingSoonUi.namePath,
+      page: () => const CommingSoonUi(),
     ),
   ];
 }
