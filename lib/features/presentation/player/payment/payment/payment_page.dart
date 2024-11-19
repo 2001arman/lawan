@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -10,8 +11,10 @@ import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/gradient/horizontal_white_gradient.dart';
 
 import '../../../../../utility/shared/constants/constants_ui.dart';
+import '../../../../../utility/shared/constants/html_data.dart';
 import '../../../../../utility/shared/widgets/buttons/circle_button_transparent_widget.dart';
 import '../../../../../utility/shared/widgets/payment/card_widget.dart';
+import '../../../auth/html_viewer/html_viewer_ui.dart';
 import 'payment_controller.dart';
 import 'add_card/payment_add_card_page.dart';
 
@@ -288,6 +291,13 @@ class _PaymentPageState extends State<PaymentPage> {
                   text: 'Terms of Service, Payments Terms of Service',
                   style:
                       greenTextStyle.copyWith(fontSize: 12, fontWeight: medium),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => Get.to(
+                          HtmlViewerUi(
+                            html: htmlPaymentMethod,
+                            title: 'Payment Terms of Service',
+                          ),
+                        ),
                 ),
                 const TextSpan(
                   text: ', cancellation and other safeguards.',

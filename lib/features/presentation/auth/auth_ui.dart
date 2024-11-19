@@ -1,11 +1,13 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/auth/auth_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
+import 'package:lawan/utility/shared/constants/html_data.dart';
 import 'package:lawan/utility/shared/widgets/buttons/custom_button.dart';
 import 'package:lawan/utility/shared/widgets/buttons/gradient_button.dart';
 import 'package:lawan/utility/shared/widgets/navigations/custom_appbar.dart';
@@ -14,6 +16,7 @@ import '../../../utility/shared/widgets/custom_text_form_fields.dart';
 import '../../../utility/shared/widgets/navigations/tab_bar_widget.dart';
 import '../../../utility/shared/widgets/video/video_widget.dart';
 import '../../../utility/util/helper.dart';
+import 'html_viewer/html_viewer_ui.dart';
 
 class AuthUi extends StatelessWidget {
   static const String namePath = '/auth_page';
@@ -129,11 +132,25 @@ class AuthUi extends StatelessWidget {
                 TextSpan(
                   text: 'Terms of Service ',
                   style: greenTextStyle.copyWith(fontWeight: medium),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => Get.to(
+                          HtmlViewerUi(
+                            html: htmlTermAndCondition,
+                            title: 'Terms and Conditions',
+                          ),
+                        ),
                 ),
                 const TextSpan(text: 'and '),
                 TextSpan(
                   text: 'Privacy Policy',
                   style: greenTextStyle.copyWith(fontWeight: medium),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => Get.to(
+                          HtmlViewerUi(
+                            html: htmlPrivacyPolicy,
+                            title: 'Privacy Policy',
+                          ),
+                        ),
                 ),
                 const TextSpan(text: '.'),
               ],
