@@ -22,6 +22,7 @@ class CreateClubUi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Padding(
