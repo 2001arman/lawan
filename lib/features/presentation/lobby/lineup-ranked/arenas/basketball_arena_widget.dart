@@ -39,24 +39,6 @@ class _BasketballArenaWidgetState extends State<BasketballArenaWidget>
       return ArenaItemContentWidget(index: index, position: position);
     }
 
-    Widget item(
-        {double marginBottom = 0,
-        double marginTop = 0,
-        required String position,
-        required int index}) {
-      return Expanded(
-        flex: 2,
-        child: Container(
-          height: 68,
-          margin: EdgeInsets.only(bottom: marginBottom, top: marginTop),
-          child: itemContent(
-            position: position,
-            index: index,
-          ),
-        ),
-      );
-    }
-
     return Stack(
       children: [
         Padding(
@@ -133,7 +115,7 @@ class _BasketballArenaWidgetState extends State<BasketballArenaWidget>
                           SizedBox(
                             width: 88,
                             height: 68,
-                            child: item(
+                            child: itemContent(
                               position: 'C',
                               index: 2,
                             ),
@@ -141,7 +123,7 @@ class _BasketballArenaWidgetState extends State<BasketballArenaWidget>
                           SizedBox(
                             width: 88,
                             height: 68,
-                            child: item(
+                            child: itemContent(
                               position: 'SG',
                               index: 3,
                             ),
@@ -156,7 +138,7 @@ class _BasketballArenaWidgetState extends State<BasketballArenaWidget>
                           SizedBox(
                             width: 88,
                             height: 68,
-                            child: item(
+                            child: itemContent(
                               position: 'PG',
                               index: 4,
                             ),

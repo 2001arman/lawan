@@ -38,14 +38,12 @@ class _MartialArenaWidgetState extends State<MartialArenaWidget>
 
     return Stack(
       children: [
-        Expanded(
-          child: Padding(
-            key: state.keyField,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SvgPicture.asset(
-              'assets/arena/martial_arena.svg',
-              alignment: Alignment.center,
-            ),
+        Padding(
+          key: state.keyField,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SvgPicture.asset(
+            'assets/arena/martial_arena.svg',
+            alignment: Alignment.center,
           ),
         ),
 
