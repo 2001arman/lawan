@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../../utility/shared/constants/global_variable.dart';
 import '../lineup_ranked_logic.dart';
 import 'dart:math' as math;
 
@@ -22,6 +23,7 @@ class _RugbyArenaWidgetState extends State<RugbyArenaWidget>
   final logic = Get.find<LineupRankedLogic>();
   final state = Get.find<LineupRankedLogic>().state;
   final lobbyState = Get.find<LineupRankedLogic>().lobbyState;
+  final _globalVariable = Get.find<GlobalVariable>();
 
   @override
   void dispose() {
@@ -53,6 +55,151 @@ class _RugbyArenaWidgetState extends State<RugbyArenaWidget>
             index: index,
           ),
         ),
+      );
+    }
+
+    Widget unionSection() {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 88,
+                height: 68,
+                child: itemContent(
+                  position: 'GK',
+                  index: 0,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Spacer(flex: 2),
+              item(
+                marginBottom: 0,
+                position: 'DF',
+                index: 2,
+              ),
+              const SizedBox(width: 12),
+              item(
+                marginBottom: 22,
+                position: 'DF',
+                index: 3,
+              ),
+              const SizedBox(width: 12),
+              item(
+                marginBottom: 44,
+                position: 'DF',
+                index: 4,
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              item(
+                position: 'MF',
+                index: 5,
+                marginBottom: 22,
+              ),
+              const SizedBox(width: 12),
+              item(
+                position: 'MF',
+                index: 6,
+              ),
+              const SizedBox(width: 12),
+              item(
+                position: 'MF',
+                index: 7,
+                marginBottom: 22,
+              ),
+              const Spacer(flex: 2),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 88,
+                height: 68,
+                child: itemContent(
+                  position: 'FW',
+                  index: 9,
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
+
+    Widget sevensSection() {
+      return Column(
+        children: [
+          const SizedBox(height: 30),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Spacer(flex: 2),
+              item(
+                marginBottom: 0,
+                position: 'FH',
+                index: 2,
+              ),
+              const SizedBox(width: 12),
+              item(
+                marginBottom: 22,
+                position: 'C',
+                index: 3,
+              ),
+              const SizedBox(width: 12),
+              item(
+                marginBottom: 44,
+                position: 'WG',
+                index: 4,
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              item(
+                position: 'HK',
+                index: 5,
+              ),
+              const SizedBox(width: 12),
+              item(
+                position: 'SH',
+                index: 6,
+                marginBottom: 32,
+              ),
+              const SizedBox(width: 12),
+              const Spacer(flex: 4),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              item(
+                position: 'PR',
+                index: 9,
+              ),
+              const SizedBox(width: 12),
+              item(
+                position: 'PR',
+                index: 9,
+              ),
+              const SizedBox(width: 12),
+              const Spacer(flex: 4),
+            ],
+          ),
+        ],
       );
     }
 
@@ -100,82 +247,9 @@ class _RugbyArenaWidgetState extends State<RugbyArenaWidget>
                   width: double.infinity,
                   height: halfHeight,
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 88,
-                            height: 68,
-                            child: itemContent(
-                              position: 'GK',
-                              index: 0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          const Spacer(flex: 2),
-                          item(
-                            marginBottom: 0,
-                            position: 'DF',
-                            index: 2,
-                          ),
-                          const SizedBox(width: 12),
-                          item(
-                            marginBottom: 22,
-                            position: 'DF',
-                            index: 3,
-                          ),
-                          const SizedBox(width: 12),
-                          item(
-                            marginBottom: 44,
-                            position: 'DF',
-                            index: 4,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          item(
-                            position: 'MF',
-                            index: 5,
-                            marginBottom: 22,
-                          ),
-                          const SizedBox(width: 12),
-                          item(
-                            position: 'MF',
-                            index: 6,
-                          ),
-                          const SizedBox(width: 12),
-                          item(
-                            position: 'MF',
-                            index: 7,
-                            marginBottom: 22,
-                          ),
-                          const Spacer(flex: 2),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 88,
-                            height: 68,
-                            child: itemContent(
-                              position: 'FW',
-                              index: 9,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  child: _globalVariable.isSingle.value
+                      ? unionSection()
+                      : sevensSection(),
                 ),
               );
             },

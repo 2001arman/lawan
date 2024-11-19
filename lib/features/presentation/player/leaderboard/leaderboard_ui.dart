@@ -248,7 +248,7 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                 ),
               ),
             ),
-            SizedBox(width: defaultMargin),
+            const SizedBox(width: 12),
             Obx(
               () => Image.asset(
                 state.lobbyTabActive.value == 'Club'
