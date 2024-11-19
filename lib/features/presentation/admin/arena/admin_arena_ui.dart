@@ -231,6 +231,7 @@ class AdminArenaUi extends StatelessWidget {
                 onTap: logic.updateAddimage,
               ),
               child: CarouselSlider(
+                
                 options: CarouselOptions(
                   height: 130,
                   viewportFraction: 1.0,

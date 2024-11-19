@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, dead_code
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -21,18 +22,12 @@ class SessionItemWidget extends StatefulWidget {
 class _SessionItemWidgetState extends State<SessionItemWidget> {
   final logic = Get.find<ProfileLogic>();
   bool isFavorite = false;
+  int activeIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(defaultMargin),
-      margin: EdgeInsets.only(bottom: defaultMargin),
-      decoration: BoxDecoration(
-        color: kWhiteColor,
-        borderRadius: BorderRadius.circular(32),
-      ),
-      child: Column(
+    Widget sessionItem() {
+      return Column(
         children: [
           Row(
             children: [
@@ -133,28 +128,56 @@ class _SessionItemWidgetState extends State<SessionItemWidget> {
             ],
           ),
           const SizedBox(height: 12),
+        ],
+      );
+    }
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(defaultMargin),
+      margin: EdgeInsets.only(bottom: defaultMargin),
+      decoration: BoxDecoration(
+        color: kWhiteColor,
+        borderRadius: BorderRadius.circular(32),
+      ),
+      child: Column(
+        children: [
+          CarouselSlider(
+            options: CarouselOptions(
+                viewportFraction: 1.0,
+                enlargeCenterPage: false,
+                enableInfiniteScroll: false,
+                onPageChanged: (index, _) {
+                  activeIndex = index;
+                  setState(() {});
+                }),
+            items: [
+              sessionItem(),
+              sessionItem(),
+            ],
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 24,
+                width: activeIndex == 0 ? 24 : 6,
                 height: 6,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: kDarkgreyColor,
+                  color: activeIndex == 0 ? kDarkgreyColor : kMidgreyColor,
                 ),
               ),
               const SizedBox(width: 4),
               Container(
-                width: 6,
+                width: activeIndex == 1 ? 24 : 6,
                 height: 6,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: kMidgreyColor,
+                  color: activeIndex == 1 ? kDarkgreyColor : kMidgreyColor,
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
