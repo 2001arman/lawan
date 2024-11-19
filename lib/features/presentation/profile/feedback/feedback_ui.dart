@@ -82,7 +82,7 @@ class FeedbackUi extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          logic.rating.value == 0 ? 'Very Poor' : 'Excelent',
+                          logic.selectedByStar(logic.rating.value),
                           style: darkGreyTextStyle.copyWith(fontSize: 12),
                         ),
                       ],

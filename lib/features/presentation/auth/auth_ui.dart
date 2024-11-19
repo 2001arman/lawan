@@ -147,7 +147,7 @@ class AuthUi extends StatelessWidget {
       return Column(
         children: [
           CustomTextFormField(
-            hintText: 'Email address',
+            hintText: 'Email',
             controller: state.emailController,
             margin: defaultMargin,
             prefix: Padding(
@@ -392,7 +392,7 @@ class AuthUi extends StatelessWidget {
                             'assets/icons/logo_and_title.png',
                             width: 236,
                           ),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 10),
                           Text(
                             'Pahlawan.\nEmpowered.',
                             style: whiteTextStyle.copyWith(

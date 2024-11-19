@@ -17,4 +17,13 @@ class LeaderboardState {
   var showWidget = true.obs;
 
   var showStarMode = true.obs;
+
+  var lineUpActiveAlignment = Alignment.centerLeft.obs;
+  var lineUpTabActive = 'Home'.obs;
+  List<String> lineUpTabBarTitle = [
+    'Gombak',
+    'Selangor',
+    'Malaysia',
+    '',
+  ];
 }

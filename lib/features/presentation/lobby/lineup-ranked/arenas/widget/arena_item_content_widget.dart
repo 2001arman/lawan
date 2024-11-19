@@ -58,9 +58,7 @@ class ArenaItemContentWidget extends StatelessWidget {
                       child: Center(
                         child: Text(
                           lobbyState.selectedPlayerIndex.value == index
-                              ? lobbyState.isReferee
-                                  ? 'Selected'
-                                  : state.myProfile.name
+                              ? 'Selected'
                               : logic.getProfilePosition(index)?.name ??
                                   'Available',
                           style: blackTextStyle.copyWith(

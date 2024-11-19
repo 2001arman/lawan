@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -52,6 +54,7 @@ class ProfileLogic extends GetxController {
   }
 
   Widget commentItem() {
+    RxBool isFavorite = false.obs;
     return Padding(
       padding: EdgeInsets.only(top: defaultMargin),
       child: Row(
@@ -104,10 +107,17 @@ class ProfileLogic extends GetxController {
                           fontSize: 12, fontWeight: medium),
                     ),
                     const Spacer(),
-                    SvgPicture.asset(
-                      'assets/icons/heart-outline.svg',
-                      width: 20,
-                      height: 20,
+                    Obx(
+                      () => GestureDetector(
+                        onTap: isFavorite.toggle,
+                        child: SvgPicture.asset(
+                          isFavorite.value
+                              ? 'assets/icons/heart.svg'
+                              : 'assets/icons/heart-outline.svg',
+                          width: 20,
+                          height: 20,
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 4),
                     Text(
@@ -211,6 +221,10 @@ class ProfileLogic extends GetxController {
                 ],
               ),
             ),
+            SizedBox(
+                height: Platform.isIOS
+                    ? MediaQuery.of(Get.context!).padding.bottom
+                    : defaultMargin),
           ],
         ),
       ),

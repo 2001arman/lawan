@@ -16,4 +16,25 @@ class LeaderboardLogic extends GetxController {
     }
     return;
   }
+
+  void alignmentTabbar(String title) {
+    switch (title) {
+      case 'Gombak':
+        state.lineUpActiveAlignment.value = Alignment.centerLeft;
+        break;
+      case 'Selangor':
+        state.lineUpActiveAlignment.value = Alignment.center;
+        break;
+      case 'Malaysia':
+        state.lineUpActiveAlignment.value = Alignment.centerRight;
+        break;
+      case '':
+        state.lineUpActiveAlignment.value = Alignment.centerRight;
+        break;
+      default:
+        state.lineUpActiveAlignment.value = Alignment.center;
+        break;
+    }
+    return;
+  }
 }

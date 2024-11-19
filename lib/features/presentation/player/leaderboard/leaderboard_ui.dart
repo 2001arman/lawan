@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lawan/features/presentation/player/leaderboard/leaderboard_logic.dart';
 import 'package:lawan/utility/shared/constants/constants_ui.dart';
+import 'package:lawan/utility/shared/widgets/navigations/leaderboard_tabbar_widget.dart';
 import 'package:lawan/utility/shared/widgets/text/text_border.dart';
 import 'package:lawan/utility/shared/widgets/text/text_gradient.dart';
 import 'package:sliver_app_bar_builder/sliver_app_bar_builder.dart';
@@ -29,26 +30,26 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
-    _listViewController = ScrollController()
-      ..addListener(_scrollListenerListView); // Add listener for ListView
+    _listViewController = ScrollController();
+    // _scrollController.addListener(_scrollListener);
+    // _listViewController.addListener(_scrollListenerListView);
   }
 
-  void _scrollListener() {
-    if (_scrollController.offset > 150) {
-      _listViewController.jumpTo(2);
-    } else {
-      _listViewController.jumpTo(0);
-    }
-  }
+  // void _scrollListener() {
+  //   if (_scrollController.offset > 150) {
+  //     _listViewController.jumpTo(2);
+  //   } else {
+  //     _listViewController.jumpTo(0);
+  //   }
+  // }
 
-  void _scrollListenerListView() {
-    if (_listViewController.position.pixels > 0) {
-      state.activeScroll.value = true;
-    } else {
-      state.activeScroll.value = false;
-    }
-  }
+  // void _scrollListenerListView() {
+  //   if (_listViewController.position.pixels > 0) {
+  //     state.activeScroll.value = true;
+  //   } else {
+  //     state.activeScroll.value = false;
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -344,7 +345,7 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                 slivers: [
                   // Collapsible Tabbar and Player of the Week section
                   SliverAppBarBuilder(
-                    initialContentHeight: Platform.isIOS ? 150 : 185,
+                    initialContentHeight: Platform.isIOS ? 105 : 140,
                     pinned: false,
                     stretch: false,
                     contentBelowBar: false,
@@ -418,61 +419,119 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                                 state.lobbyTabActive.value == 'Club' ? 13 : 20,
                           ),
                         ),
-                        // Leaderboard title
+                      ],
+                    ),
+                  ),
+
+                  SliverAppBarBuilder(
+                    initialContentHeight: 700,
+                    pinned: true,
+                    stretch: false,
+                    contentBelowBar: false,
+                    barHeight: 50,
+                    contentPadding: EdgeInsets.zero,
+                    trailingActionsPadding: EdgeInsets.zero,
+                    leadingActionsPadding: EdgeInsets.zero,
+                    backgroundColorAll: Colors.transparent,
+                    floating: false,
+                    leadingActions: const [],
+                    initialBarHeight: 50,
+                    contentBuilder: (context, expandRatio, contentHeight,
+                            centerPadding, overlapsContent) =>
                         Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: defaultMargin),
-                          child: Text(
+                      padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Leaderboard title
+                          Obx(
+                            () => LeaderboardTabbarWidget(
+                              tabBarIcon: const [
+                                null,
+                                null,
+                                'assets/images/malaysia.svg',
+                                'assets/icons/globe.svg',
+                              ],
+                              useMarginRight: state.lineUpTabActive.value != ''
+                                  ? true
+                                  : false,
+                              tabBarTitle: state.lineUpTabBarTitle,
+                              tabActive: state.lineUpTabActive,
+                              iconSize: 20,
+                              useIconColor: false,
+                              onTap: (title) {
+                                state.lineUpTabActive.value = title;
+                                logic.alignmentTabbar(title);
+                              },
+                              alignment: state.lineUpActiveAlignment,
+                            ),
+                          ),
+                          Text(
                             'Leaderboard',
                             style: whiteTextStyle.copyWith(
                               fontSize: 16,
                               fontWeight: medium,
                             ),
                           ),
-                        ),
-                      ],
+                          Container(
+                            height: 600,
+                            margin: const EdgeInsets.only(bottom: 10),
+                            decoration: BoxDecoration(
+                              color: kWhiteColor,
+                              borderRadius: BorderRadius.circular(32),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(32),
+                              child: ListView.builder(
+                                controller: _listViewController,
+                                padding: EdgeInsets.zero,
+
+                                // physics: state.activeScroll.value
+                                //     ? const AlwaysScrollableScrollPhysics()
+                                //     : const NeverScrollableScrollPhysics(),
+                                itemCount: 10,
+                                itemBuilder: (context, index) {
+                                  return leaderboardItem(number: index + 1);
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
 
                   // Leaderboard list inside a scrollable container
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-                      child: Container(
-                        height: Platform.isAndroid
-                            ? (Get.height -
-                                150 -
-                                78 -
-                                MediaQuery.of(context).padding.top)
-                            : (Get.height -
-                                150 -
-                                78 -
-                                MediaQuery.of(context).padding.top -
-                                37),
-                        margin: const EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                          color: kWhiteColor,
-                          borderRadius: BorderRadius.circular(32),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(32),
-                          child: Obx(
-                            () => ListView.builder(
-                              controller: _listViewController,
-                              padding: EdgeInsets.zero,
-                              physics: state.activeScroll.value
-                                  ? const AlwaysScrollableScrollPhysics()
-                                  : const NeverScrollableScrollPhysics(),
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return leaderboardItem(number: index + 1);
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // SliverToBoxAdapter(
+                  //   child: Padding(
+                  //     padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  //     child: Container(
+                  //       height: 600,
+                  //       margin: const EdgeInsets.only(bottom: 10),
+                  //       decoration: BoxDecoration(
+                  //         color: kWhiteColor,
+                  //         borderRadius: BorderRadius.circular(32),
+                  //       ),
+                  //       child: ClipRRect(
+                  //         borderRadius: BorderRadius.circular(32),
+                  //         child: Obx(
+                  //           () => ListView.builder(
+                  //             controller: _listViewController,
+                  //             padding: EdgeInsets.zero,
+                  //             physics: state.activeScroll.value
+                  //                 ? const AlwaysScrollableScrollPhysics()
+                  //                 : const NeverScrollableScrollPhysics(),
+                  //             itemCount: 10,
+                  //             itemBuilder: (context, index) {
+                  //               return leaderboardItem(number: index + 1);
+                  //             },
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   const SliverToBoxAdapter(
                     child: SizedBox(height: 10),
                   ),
