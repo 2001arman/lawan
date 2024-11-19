@@ -49,6 +49,12 @@ class AuthUi extends StatelessWidget {
               isReadOnly: true,
               verticalPadding: 14,
               horizontalPadding: 16,
+              validator: (data) {
+                if (state.phoneController.text.isEmpty) {
+                  return '';
+                }
+                return null;
+              },
             ),
           ),
           const SizedBox(width: 12),
@@ -101,103 +107,114 @@ class AuthUi extends StatelessWidget {
     }
 
     Widget signUpSection() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Phone',
-            style: darkGreyTextStyle,
-          ),
-          const SizedBox(height: 4),
-          phoneNumberSection(),
-          digitCodeSection(),
-          SizedBox(height: defaultMargin),
-          GradientButton(
-            onTap: logic.goToSecondScreen,
-            paddingVertical: 19.5,
-            boxShadow: greenBoxShadow,
-            widget: Text(
-              'Create Account',
-              style: whiteTextStyle.copyWith(fontWeight: medium),
+      return Form(
+        key: state.registerFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Phone',
+              style: darkGreyTextStyle,
             ),
-          ),
-          SizedBox(height: defaultMargin),
-          RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              text:
-                  "By continuing with ’Create Account’, you agree to the Lawan ",
-              style: blackTextStyle.copyWith(fontSize: 12),
-              children: [
-                TextSpan(
-                  text: 'Terms of Service ',
-                  style: greenTextStyle.copyWith(fontWeight: medium),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => Get.to(
-                          HtmlViewerUi(
-                            html: htmlTermAndCondition,
-                            title: 'Terms and Conditions',
-                          ),
-                        ),
-                ),
-                const TextSpan(text: 'and '),
-                TextSpan(
-                  text: 'Privacy Policy',
-                  style: greenTextStyle.copyWith(fontWeight: medium),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => Get.to(
-                          HtmlViewerUi(
-                            html: htmlPrivacyPolicy,
-                            title: 'Privacy Policy',
-                          ),
-                        ),
-                ),
-                const TextSpan(text: '.'),
-              ],
+            const SizedBox(height: 4),
+            phoneNumberSection(),
+            digitCodeSection(),
+            SizedBox(height: defaultMargin),
+            GradientButton(
+              onTap: logic.goToSecondScreen,
+              paddingVertical: 19.5,
+              boxShadow: greenBoxShadow,
+              widget: Text(
+                'Create Account',
+                style: whiteTextStyle.copyWith(fontWeight: medium),
+              ),
             ),
-          ),
-        ],
+            SizedBox(height: defaultMargin),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text:
+                    "By continuing with ’Create Account’, you agree to the Lawan ",
+                style: blackTextStyle.copyWith(fontSize: 12),
+                children: [
+                  TextSpan(
+                    text: 'Terms of Service ',
+                    style: greenTextStyle.copyWith(fontWeight: medium),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => Get.to(
+                            HtmlViewerUi(
+                              html: htmlTermAndCondition,
+                              title: 'Terms and Conditions',
+                            ),
+                          ),
+                  ),
+                  const TextSpan(text: 'and '),
+                  TextSpan(
+                    text: 'Privacy Policy',
+                    style: greenTextStyle.copyWith(fontWeight: medium),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => Get.to(
+                            HtmlViewerUi(
+                              html: htmlPrivacyPolicy,
+                              title: 'Privacy Policy',
+                            ),
+                          ),
+                  ),
+                  const TextSpan(text: '.'),
+                ],
+              ),
+            ),
+          ],
+        ),
       );
     }
 
     Widget loginWithEmail() {
-      return Column(
-        children: [
-          CustomTextFormField(
-            hintText: 'Email',
-            controller: state.emailController,
-            margin: defaultMargin,
-            prefix: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              child: SvgPicture.asset(
-                'assets/icons/mail.svg',
-                color: kMidgreyColor,
+      return Form(
+        key: state.emailFormKey,
+        child: Column(
+          children: [
+            CustomTextFormField(
+              hintText: 'Email',
+              controller: state.emailController,
+              margin: defaultMargin,
+              validator: (data) => Helper.regularValidator(data),
+              prefix: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                child: SvgPicture.asset(
+                  'assets/icons/mail.svg',
+                  color: kMidgreyColor,
+                ),
               ),
             ),
-          ),
-          CustomTextFormField(
-            hintText: 'Password',
-            controller: state.passwordController,
-            isPassword: true,
-            margin: 3,
-            prefix: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              child: SvgPicture.asset(
-                'assets/icons/key.svg',
-                color: kMidgreyColor,
+            CustomTextFormField(
+              hintText: 'Password',
+              controller: state.passwordController,
+              isPassword: true,
+              margin: 3,
+              validator: (data) => Helper.regularValidator(data),
+              prefix: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                child: SvgPicture.asset(
+                  'assets/icons/key.svg',
+                  color: kMidgreyColor,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     }
 
     Widget loginWithPhone() {
-      return Column(
-        children: [
-          phoneNumberSection(),
-          digitCodeSection(),
-        ],
+      return Form(
+        key: state.phoneFormKey,
+        child: Column(
+          children: [
+            phoneNumberSection(),
+            digitCodeSection(),
+          ],
+        ),
       );
     }
 

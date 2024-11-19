@@ -20,6 +20,9 @@ class AuthState {
 
   var loginPhone = true.obs;
 
+  final phoneFormKey = GlobalKey<FormState>();
+  final emailFormKey = GlobalKey<FormState>();
+  final registerFormKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();

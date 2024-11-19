@@ -78,16 +78,28 @@ class AuthLogic extends GetxController {
   }
 
   goToSecondScreen() async {
-    videoPlayerController.pause();
-    await Get.toNamed(AuthInformationUi.namePath);
-    videoPlayerController.play();
+    bool validator = state.registerFormKey.currentState!.validate();
+
+    if (validator) {
+      videoPlayerController.pause();
+      await Get.toNamed(AuthInformationUi.namePath);
+      videoPlayerController.play();
+    }
   }
 
   void loginLogic() async {
-    _globalVariable.isLogin.value = true;
-    Get.offAllNamed(PlayerMainUi.namePath);
-    await Future.delayed(const Duration(milliseconds: 100));
-    Get.toNamed(ProfileUi.namePath);
+    late bool validator;
+    if (state.loginPhone.value) {
+      validator = state.phoneFormKey.currentState!.validate();
+    } else {
+      validator = state.emailFormKey.currentState!.validate();
+    }
+    if (validator) {
+      _globalVariable.isLogin.value = true;
+      Get.offAllNamed(PlayerMainUi.namePath);
+      await Future.delayed(const Duration(milliseconds: 100));
+      Get.toNamed(ProfileUi.namePath);
+    }
   }
 
   void showForgotPasswordDialog() {
