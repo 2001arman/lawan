@@ -27,102 +27,83 @@ class PaymentAddCardPage extends StatelessWidget {
     var cardNumber = ''.obs;
     var expired = ''.obs;
     var name = ''.obs;
-    return Scaffold(
-      backgroundColor: kBackgroundColor,
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
         backgroundColor: kBackgroundColor,
-        surfaceTintColor: Colors.transparent,
-        title: Row(
-          children: [
-            SvgPicture.asset(
-              'assets/icons/credit-card.svg',
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          backgroundColor: kBackgroundColor,
+          surfaceTintColor: Colors.transparent,
+          title: Row(
+            children: [
+              SvgPicture.asset(
+                'assets/icons/credit-card.svg',
+                color: kBlackColor,
+              ),
+              const SizedBox(width: 10),
+              Text(
+                ctrl.isAdmin ? 'Company and Bank Details' : 'Add Card',
+                style:
+                    blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+              ),
+            ],
+          ),
+          leadingWidth: 48 + defaultMargin,
+          leading: CircleButtonTransparentWidget(
+            borderColor: kGreyColor,
+            margin: EdgeInsets.only(left: defaultMargin),
+            onTap: () {
+              Get.back();
+              ctrl.clearData();
+            },
+            size: 48,
+            widget: SvgPicture.asset(
+              'assets/icons/back.svg',
               color: kBlackColor,
             ),
-            const SizedBox(width: 10),
-            Text(
-              ctrl.isAdmin ? 'Company and Bank Details' : 'Add Card',
-              style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+          ),
+        ),
+        body: Column(
+          children: [
+            Obx(
+              () => CardWidget(
+                icon: Helper.getCardType(cardNumber.value),
+                expDate: expired.value,
+                cardNumber: cardNumber.value,
+                cardOwner: name.value,
+                cardType: 'Debit Card',
+              ),
             ),
+            Expanded(
+              child: _buildForm(
+                cardNumber: cardNumber,
+                expired: expired,
+                name: name,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(
+                16,
+                0,
+                16,
+                Platform.isIOS ? MediaQuery.of(context).padding.bottom : 12,
+              ),
+              height: 48,
+              child: GradientButton(
+                widget: Text(
+                  'Add Card',
+                  style: whiteTextStyle,
+                ),
+                onTap: () {
+                  ctrl.addCard();
+                },
+              ),
+            )
           ],
         ),
-        leadingWidth: 48 + defaultMargin,
-        leading: CircleButtonTransparentWidget(
-          borderColor: kGreyColor,
-          margin: EdgeInsets.only(left: defaultMargin),
-          onTap: () {
-            Get.back();
-            ctrl.clearData();
-          },
-          size: 48,
-          widget: SvgPicture.asset(
-            'assets/icons/back.svg',
-            color: kBlackColor,
-          ),
-        ),
-      ),
-      body: Column(
-        children: [
-          if (ctrl.isAdmin)
-            Padding(
-              padding: EdgeInsets.fromLTRB(defaultMargin, 12, defaultMargin, 0),
-              child: CustomTextFormField(
-                hintText: 'Business Name',
-                controller: TextEditingController(),
-                title: 'Business Name',
-                textInputType: TextInputType.text,
-                maxLength: 19,
-                onChanged: (value) {},
-              ),
-            ),
-          if (ctrl.isAdmin)
-            Padding(
-              padding: EdgeInsets.fromLTRB(defaultMargin, 0, defaultMargin, 0),
-              child: CustomTextFormField(
-                hintText: 'SSM Number',
-                controller: TextEditingController(),
-                title: 'Registration Number',
-                textInputType: const TextInputType.numberWithOptions(
-                    signed: true, decimal: false),
-                maxLength: 19,
-                onChanged: (value) {},
-              ),
-            ),
-          Obx(
-            () => CardWidget(
-              icon: Helper.getCardType(cardNumber.value),
-              expDate: expired.value,
-              cardNumber: cardNumber.value,
-              cardOwner: name.value,
-              cardType: 'Debit Card',
-            ),
-          ),
-          Expanded(
-            child: _buildForm(
-              cardNumber: cardNumber,
-              expired: expired,
-              name: name,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(
-              16,
-              0,
-              16,
-              Platform.isIOS ? MediaQuery.of(context).padding.bottom : 12,
-            ),
-            height: 48,
-            child: GradientButton(
-              widget: Text(
-                'Add Card',
-                style: whiteTextStyle,
-              ),
-              onTap: () {
-                ctrl.addCard();
-              },
-            ),
-          )
-        ],
       ),
     );
   }
@@ -141,12 +122,29 @@ class PaymentAddCardPage extends StatelessWidget {
           key: ctrl.formKey,
           child: Column(
             children: [
+              if (ctrl.isAdmin)
+                CustomTextFormField(
+                  hintText: 'Business Name',
+                  controller: TextEditingController(),
+                  title: 'Business Name',
+                  textInputType: TextInputType.text,
+                  maxLength: 19,
+                  onChanged: (value) {},
+                ),
+              if (ctrl.isAdmin)
+                CustomTextFormField(
+                  hintText: 'SSM Number',
+                  controller: TextEditingController(),
+                  title: 'Registration Number',
+                  textInputType: TextInputType.number,
+                  maxLength: 19,
+                  onChanged: (value) {},
+                ),
               CustomTextFormField(
                 hintText: 'Card Number',
                 controller: ctrl.cardNumberCtrl,
                 title: 'Card Number',
-                textInputType: const TextInputType.numberWithOptions(
-                    signed: true, decimal: false),
+                textInputType: TextInputType.number,
                 maxLength: 19,
                 showSuffix: true,
                 suffix: Column(
@@ -199,8 +197,7 @@ class PaymentAddCardPage extends StatelessWidget {
                       controller: ctrl.expDateCtrl,
                       title: 'Expired Date',
                       onChanged: (data) => expired.value = data,
-                      textInputType: const TextInputType.numberWithOptions(
-                          signed: true, decimal: false),
+                      textInputType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         ExpirationDateFormatter(), // Apply the custom formatter here
@@ -220,8 +217,7 @@ class PaymentAddCardPage extends StatelessWidget {
                       hintText: 'CVV',
                       controller: ctrl.cvvCtrl,
                       title: 'CVV',
-                      textInputType: const TextInputType.numberWithOptions(
-                          signed: true, decimal: false),
+                      textInputType: TextInputType.number,
                       maxLength: 3,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -284,8 +280,7 @@ class PaymentAddCardPage extends StatelessWidget {
               CustomTextFormField(
                 hintText: 'Postal Code',
                 controller: ctrl.postCodeCtrl,
-                textInputType: const TextInputType.numberWithOptions(
-                    signed: true, decimal: false),
+                textInputType: TextInputType.number,
                 maxLength: 8,
                 validator: (v) {
                   if (v!.isEmpty) {

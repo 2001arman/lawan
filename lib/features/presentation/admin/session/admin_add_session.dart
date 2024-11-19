@@ -287,10 +287,7 @@ class AdminAddSession {
                   child: CustomTextFormField(
                     hintText: '12 345 6789',
                     controller: state.contactController,
-                    textInputType: const TextInputType.numberWithOptions(
-                      signed: true,
-                      decimal: false,
-                    ),
+                    textInputType: TextInputType.number,
                     validator: (data) => Helper.numberValidator(data),
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -303,8 +300,7 @@ class AdminAddSession {
               hintText: 'Enter Identification Number',
               controller: state.identificationController,
               title: 'Identification Number',
-              textInputType: const TextInputType.numberWithOptions(
-                  signed: true, decimal: false),
+              textInputType: TextInputType.number,
               validator: (data) => Helper.numberValidator(data),
               maxLength: 14,
               inputFormatters: [
@@ -327,8 +323,7 @@ class AdminAddSession {
             CustomTextFormField(
               hintText: '0.00',
               controller: state.priceController,
-              textInputType: const TextInputType.numberWithOptions(
-                  signed: true, decimal: false),
+              textInputType: TextInputType.number,
               title: 'Price',
               validator: (data) => Helper.numberValidator(data),
               maxLength: 7,

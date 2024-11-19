@@ -24,8 +24,8 @@ class AuthRecoveryState {
   ];
 
   List<String> listDescription = [
-    'You can instantly  and securely log in to\nyour account using biometirc data',
-    'You can instantly  and securely log in to\nyour account using biometirc data',
+    'You can instantly and securely log in to\nyour account using biometirc data',
+    'You can instantly and securely log in to\nyour account using biometirc data',
     'We won’t ask to verify your identity again if you trust this device. Only select “Always trust” if this device is not shared',
     'You’ll need to enable your location in order to use Lawan',
     'Turn on notifications to track your activity, plus find our about new features and rewards',

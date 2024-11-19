@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -79,17 +80,22 @@ class CreateClubUi extends StatelessWidget {
                             ),
                             Align(
                               alignment: Alignment.bottomCenter,
-                              child: Container(
-                                width: 22,
-                                height: 22,
-                                padding: const EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: kModalColor,
-                                ),
-                                child: SvgPicture.asset(
-                                  'assets/icons/pencil.svg',
-                                  color: kDarkgreyColor,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(40),
+                                child: const SizedBox(
+                                  width: 22,
+                                  height: 22,
+                                ).blurred(
+                                  blur: 10,
+                                  overlay: Container(
+                                    width: 22,
+                                    height: 22,
+                                    padding: const EdgeInsets.all(4),
+                                    child: SvgPicture.asset(
+                                      'assets/icons/pencil.svg',
+                                      color: kDarkgreyColor,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

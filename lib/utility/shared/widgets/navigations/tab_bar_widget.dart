@@ -135,6 +135,10 @@ class TabbarWidget extends StatelessWidget {
                                         child: TextBorder(
                                           textTitle: listNumber![title.key]!
                                               .toString(),
+                                          backgroundColor:
+                                              tabActive.value == title.value
+                                                  ? kGreyColor
+                                                  : null,
                                           paddingHorizontal: 6,
                                           paddingVertical: 0,
                                           borderColor: kWhiteColor,

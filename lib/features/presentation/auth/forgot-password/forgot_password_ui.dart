@@ -51,8 +51,7 @@ class ForgotPasswordUi extends StatelessWidget {
               hintText: 'Phone number',
               controller: TextEditingController(),
               margin: defaultMargin,
-              textInputType: const TextInputType.numberWithOptions(
-                  signed: true, decimal: false),
+              textInputType: TextInputType.number,
               validator: (data) => Helper.numberValidator(data),
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
@@ -71,8 +70,7 @@ class ForgotPasswordUi extends StatelessWidget {
             child: CustomTextFormField(
               hintText: 'Enter 6-digit code',
               controller: TextEditingController(),
-              textInputType: const TextInputType.numberWithOptions(
-                  signed: true, decimal: false),
+              textInputType: TextInputType.number,
               validator: (data) => Helper.numberValidator(data),
               margin: 0,
               maxLength: 6,

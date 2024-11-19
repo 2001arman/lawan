@@ -151,9 +151,7 @@ class AuthInformationUi extends StatelessWidget {
                               controller: TextEditingController(),
                               margin: defaultMargin,
                               maxLength: 2,
-                              textInputType:
-                                  const TextInputType.numberWithOptions(
-                                      signed: true, decimal: false),
+                              textInputType: TextInputType.number,
                               validator: (data) => Helper.numberValidator(data),
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,
@@ -175,9 +173,7 @@ class AuthInformationUi extends StatelessWidget {
                                 },
                               ),
                               margin: defaultMargin,
-                              textInputType:
-                                  const TextInputType.numberWithOptions(
-                                      signed: true, decimal: false),
+                              textInputType: TextInputType.number,
                               validator: (data) => Helper.numberValidator(data),
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,
@@ -200,9 +196,7 @@ class AuthInformationUi extends StatelessWidget {
                               controller: TextEditingController(),
                               maxLength: 4,
                               margin: defaultMargin,
-                              textInputType:
-                                  const TextInputType.numberWithOptions(
-                                      signed: true, decimal: false),
+                              textInputType: TextInputType.number,
                               validator: (data) => Helper.numberValidator(data),
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,

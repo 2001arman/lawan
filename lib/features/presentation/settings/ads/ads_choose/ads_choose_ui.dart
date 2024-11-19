@@ -103,8 +103,7 @@ class AdsChooseUi extends StatelessWidget {
         ),
         child: TextField(
           textAlign: TextAlign.center,
-          keyboardType: const TextInputType.numberWithOptions(
-              signed: true, decimal: false),
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.zero,
             border: InputBorder.none,
