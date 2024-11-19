@@ -5,12 +5,13 @@ import 'package:get/get.dart';
 import '../../constants/constants_ui.dart';
 
 class CustomBottomSheet {
-  static void showContainerSheet({
+  static Future<void> showContainerSheet({
     required Widget child,
     required double height,
     Color? color,
+    double horizontalPadding = 16,
   }) {
-    Get.bottomSheet(
+    return Get.bottomSheet(
       ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(32),
@@ -26,9 +27,9 @@ class CustomBottomSheet {
             width: double.infinity,
             height: height,
             padding: EdgeInsets.fromLTRB(
-              defaultMargin,
+              horizontalPadding,
               12,
-              defaultMargin,
+              horizontalPadding,
               MediaQuery.of(Get.context!).padding.bottom,
             ),
             decoration: const BoxDecoration(

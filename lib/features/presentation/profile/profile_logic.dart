@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -51,6 +52,22 @@ class ProfileLogic extends GetxController {
 
   void showToast(String message) {
     return Helper.showToast(isSuccess: true, message: message);
+  }
+
+  void _addEmojiToComment(String emoji) {
+    // Append the emoji to the current text in the commentController
+    state.commentController.text += emoji;
+    // Move the cursor to the end of the text
+    state.commentController.selection = TextSelection.fromPosition(
+      TextPosition(offset: state.commentController.text.length),
+    );
+  }
+
+  Widget emojiItem(String emoji) {
+    return GestureDetector(
+      onTap: () => _addEmojiToComment(emoji),
+      child: Text(emoji, style: const TextStyle(fontSize: 24)),
+    );
   }
 
   Widget commentItem() {
@@ -136,98 +153,127 @@ class ProfileLogic extends GetxController {
     );
   }
 
-  void showComment() {
-    CustomBottomSheet.showContainerSheet(
+  void showComment() async {
+    var showEmoji = false.obs;
+    await CustomBottomSheet.showContainerSheet(
+      horizontalPadding: 0,
       color: kModalColor.withOpacity(0.4),
       height: Get.height * 0.7,
       child: Expanded(
-        child: Column(
-          children: [
-            Text(
-              '3 Comments',
-              style: blackTextStyle.copyWith(fontSize: 12, fontWeight: medium),
-            ),
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  commentItem(),
-                  commentItem(),
-                  commentItem(),
-                  commentItem(),
-                ],
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(Get.context!).unfocus();
+            showEmoji.value = false;
+          },
+          child: Column(
+            children: [
+              Text(
+                '3 Comments',
+                style:
+                    blackTextStyle.copyWith(fontSize: 12, fontWeight: medium),
               ),
-            ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '👍',
-                  style: TextStyle(fontSize: 24),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  children: [
+                    commentItem(),
+                    commentItem(),
+                    commentItem(),
+                    commentItem(),
+                  ],
                 ),
-                Text(
-                  '❤️',
-                  style: TextStyle(fontSize: 24),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    emojiItem('👍'),
+                    emojiItem('❤️'),
+                    emojiItem('😂'),
+                    emojiItem('😮'),
+                    emojiItem('🎉'),
+                    emojiItem('🙌'),
+                    emojiItem('👏'),
+                  ],
                 ),
-                Text(
-                  '😂',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Text(
-                  '😮',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Text(
-                  '🎉',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Text(
-                  '🙌',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Text(
-                  '👏',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ],
-            ),
-            SizedBox(height: defaultMargin),
-            CustomTextFormField(
-              hintText: 'Add comment',
-              controller: TextEditingController(),
-              showSuffix: true,
-              margin: 0,
-              suffix: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
+              ),
+              SizedBox(height: defaultMargin),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                child: CustomTextFormField(
+                  hintText: 'Add comment',
+                  controller: state.commentController,
+                  showSuffix: true,
+                  margin: 0,
+                  suffix: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset(
-                        'assets/icons/@.svg',
-                        width: 16,
-                        height: 16,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () => _addEmojiToComment('@'),
+                            child: SvgPicture.asset(
+                              'assets/icons/@.svg',
+                              width: 16,
+                              height: 16,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          GestureDetector(
+                            onTap: () {
+                              showEmoji.toggle();
+                              if (showEmoji.value) {
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              }
+                            },
+                            child: SvgPicture.asset(
+                              'assets/icons/smile.svg',
+                              width: 16,
+                              height: 16,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                        ],
                       ),
-                      const SizedBox(width: 8),
-                      SvgPicture.asset(
-                        'assets/icons/smile.svg',
-                        width: 16,
-                        height: 16,
-                      ),
-                      const SizedBox(width: 16),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-            SizedBox(
-                height: Platform.isIOS
-                    ? MediaQuery.of(Get.context!).padding.bottom
-                    : defaultMargin),
-          ],
+              if (showEmoji.value) const SizedBox(height: 8),
+              Obx(
+                () => AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  height: showEmoji.value
+                      ? 200
+                      : 0, // Adjust height based on your design
+                  child: SingleChildScrollView(
+                    child: Visibility(
+                      visible: showEmoji.value,
+                      child: EmojiPicker(
+                        textEditingController: state.commentController,
+                        onEmojiSelected: (category, emoji) {
+                          // state.controller.text = state.controller.text + emoji.emoji;
+                        },
+                        config: const Config(
+                          bottomActionBarConfig: BottomActionBarConfig(
+                            enabled: false,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: Platform.isIOS ? 0 : defaultMargin),
+            ],
+          ),
         ),
       ),
     );
+    state.commentController.text = '';
   }
 }

@@ -10,4 +10,5 @@ class ProfileState {
   ];
 
   RxBool isFavorite = true.obs;
+  TextEditingController commentController = TextEditingController();
 }
