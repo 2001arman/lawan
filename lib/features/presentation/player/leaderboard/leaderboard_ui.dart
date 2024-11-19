@@ -345,7 +345,7 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                 slivers: [
                   // Collapsible Tabbar and Player of the Week section
                   SliverAppBarBuilder(
-                    initialContentHeight: Platform.isIOS ? 105 : 140,
+                    initialContentHeight: Platform.isIOS ? 115 : 140,
                     pinned: false,
                     stretch: false,
                     contentBelowBar: false,
@@ -444,6 +444,14 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          Text(
+                            'Leaderboard',
+                            style: whiteTextStyle.copyWith(
+                              fontSize: 16,
+                              fontWeight: medium,
+                            ),
+                          ),
+                          SizedBox(height: defaultMargin),
                           // Leaderboard title
                           Obx(
                             () => LeaderboardTabbarWidget(
@@ -467,13 +475,8 @@ class _LeaderboardUiState extends State<LeaderboardUi> {
                               alignment: state.lineUpActiveAlignment,
                             ),
                           ),
-                          Text(
-                            'Leaderboard',
-                            style: whiteTextStyle.copyWith(
-                              fontSize: 16,
-                              fontWeight: medium,
-                            ),
-                          ),
+
+                          SizedBox(height: defaultMargin),
                           Container(
                             height: 600,
                             margin: const EdgeInsets.only(bottom: 10),

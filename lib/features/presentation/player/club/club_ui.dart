@@ -159,7 +159,7 @@ class ClubUi extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: 58 + MediaQuery.of(context).padding.top + defaultMargin,
+          height: 50 + MediaQuery.of(context).padding.top + defaultMargin,
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: defaultMargin),
